@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <template active="False" id="list_assets_backend" name="List View Assets" inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <link rel="stylesheet"
+                  href="/sh_all_in_one_sticky/list_sticky/static/src/scss/list_custom.scss"
+                  />
+        </xpath>
+    </template>
+    <template active="False" id="list_footer_assets_backend" name="List Footer View Assets" inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <link rel="stylesheet"
+                  href="/sh_all_in_one_sticky/list_sticky/static/src/scss/list_footer_custom.scss"
+                  />
+        </xpath>
+    </template>
+</odoo>

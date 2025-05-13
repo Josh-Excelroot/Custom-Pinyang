@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_soa_inherit_layout" inherit_id="goexcel_customer_statement.cust_statement_main_template">
+        <xpath expr="//t[@t-call='web.external_layout']" position="replace">
+            <t t-call="web.basic_layout">
+                <t t-if="not o" t-set="o" t-value="doc"/>
+
+                <t t-if="not company">
+                    <!-- Multicompany -->
+                    <t t-if="company_id">
+                        <t t-set="company" t-value="company_id"/>
+                    </t>
+                    <t t-elif="o and 'company_id' in o">
+                        <t t-set="company" t-value="o.company_id.sudo()"/>
+                    </t>
+                    <t t-else="else">
+                        <t t-set="company" t-value="res_company"/>
+                    </t>
+                </t>
+                <!-- <t t-if="company.external_report_layout_id" t-call="{{company.external_report_layout_id.key}}">
+                <t t-raw="0"/>
+            </t> -->
+                <!-- <t t-else="else" t-call="web.external_layout_standard">
+                <t t-raw="0"/>
+            </t> -->
+                <div class="page">
+                    <style>.aging_table{
+                        width:100%;
+                        font-size:12px;
+                        }
+                        .aging_table td{
+                        padding:5px;
+                        border:1px solid black;
+                        }
+                        .my_table{
+                        width:100%;
+                        }
+                        .my_table th{
+                        padding:3px;
+                        border-bottom:1px solid black;
+                        }
+                        .my_table td{
+                        padding:3px;
+                        }
+                        .text-center {
+                        text-align:center;
+                        }
+                    </style>
+
+                </div>
+                <div class="row" name="header">
+                    <br/>
+                    <br/>
+                    <div class="col-12 text-center">
+                        <h3>
+                            <t t-if="o.account_type == 'ar'">Customer Statement Of Account
+                            </t>
+                            <t t-if="o.account_type == 'ap'">Supplier Statement Of Account
+                            </t>
+                            <t t-if="o.account_type == 'both'">Statement Of Account
+                            </t>
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="header">
+                    <div class="row">
+                        <div class="col-3 mb4">
+                            <img t-if="company.logo" align="right" t-att-src="image_data_uri(company.logo)"
+                                 style="max-height: 90px;" alt="Logo"/>
+                        </div>
+
+                        <div class="col-8" name="company_address" style="font-family:sans-serif;font-size: 10pt;">
+                            <center>
+                                <t t-if="company.partner_id">
+                                    <b>
+                                        <span style="font-size: 14pt;" t-field="company.partner_id.name"/>
+                                    </b>
+                                    <br/>
+                                    <span style="font-size: 8pt;">
+                                        Company Register No : 201501041442 (
+                                        <span t-field="company.company_registry"/>
+                                        )
+                                        Service Tax Reg No:
+                                        <t t-if="company.partner_id.vat">
+                                            <span t-field="company.partner_id.vat"/>
+                                        </t>
+                                        <br/>
+                                    </span>
+                                    <t t-if="o.category_id">
+                                        <t t-if="o.category_id[0].name == 'JOHOR'">
+                                            89-02, Jalan Molek 3/1, Taman Molek,
+                                            <br/>
+                                            81000 Johor Bahru, Johor, Malaysia.
+                                            <br/>
+                                            TEL: +60 (7) 355-1188
+                                            <![CDATA[&nbsp;&nbsp;]]>
+                                            FAX: +60 (7) 351-8495 / 96
+                                            <br/>
+
+
+                                        </t>
+                                        <t t-if="o.category_id[0].name == 'PENANG'">
+                                            MWE Plaza, 18th Floor, Suite 18.07,
+                                            <br/>
+                                            No.8, Farquhar Street, 10200 Penang, Malaysia
+                                            <br/>
+                                            TEL: +60 (4) 264-4185 / 87
+                                            <![CDATA[&nbsp;&nbsp;]]>
+                                            FAX: +60 (4) 264-4186
+                                            <br/>
+                                        </t>
+                                        <t t-if="o.category_id[0].name == 'SELANGOR'">
+                                            No.22A (4th floor), Jalan Tiara 2A/KU 1, Pusat Perniagaan BBK,
+                                            <br/>
+                                            Bandar Baru Klang, 41150 Klang Selangor D.E.
+                                            <br/>
+                                            TEL: +60 (3) 3082-9588/ 9669
+                                            <br/>
+                                        </t>
+                                    </t>
+                                    <t t-if="not o.category_id">
+                                        <span t-field="company.partner_id.street"/>
+                                        <t t-if="company.partner_id.street2">
+                                            <span t-field="company.partner_id.street2"/>
+                                            <br/>
+                                        </t>
+                                        <span t-field="company.partner_id.zip"/>
+                                        <span t-field="company.partner_id.city"/>
+                                        ,
+                                        <span t-field="company.partner_id.state_id.name"/>
+                                        TEL:
+                                        <span t-field="company.partner_id.phone"/>
+                                        <![CDATA[&nbsp;&nbsp;]]>
+                                        FAX:
+                                        <span t-field="company.fax"/>
+                                        <br/>
+
+                                    </t>
+                                </t>
+                            </center>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="row" name="partner_info">
+                    <div class="col-7" style="font-size:13px">
+                        <strong>
+                            <u>
+                                <span t-esc="o.name"/>
+                            </u>
+                        </strong>
+                        <br/>
+                        <t t-if="o.street">
+                            <span t-esc="o.street"/>
+                            <br/>
+                        </t>
+                        <t t-if="o.street2">
+                            <span t-esc="o.street2"/>
+                        </t>
+                        <t t-if="o.zip">
+                            <span t-esc="o.zip"/>
+                            ,
+                        </t>
+                        <t t-if="o.city">
+                            <span t-esc="o.city"/>
+                            ,
+                        </t>
+                        <t t-if="o.state_id">
+                            <span t-esc="o.state_id.name"/>
+                            ,
+                        </t>
+                        <t t-if="o.country_id">
+                            <span t-esc="o.country_id.name"/>
+                            <br/>
+                        </t>
+                        <t t-if="o.phone">Tel:
+
+
+                            <span t-esc="o.phone"/>
+                            <br/>
+                        </t>
+                        <t t-if="o.attention">
+                            <b>Attn: 
+
+                                <span t-esc="o.attention"/>
+                            </b>
+                        </t>
+                    </div>
+                    <div class="col-5 pull-right" name="date_info" style="font-size:13px;">
+                        <div class="col-12 text-left">
+                            <b>As of
+
+
+                                <span t-esc="o.overdue_date.strftime('%d-%m-%Y')"/>
+                            </b>
+                            <br/>
+                        </div>
+                        <div class="col-12 text-left">
+                            <b>Currency:</b>
+                            <span t-esc="o.soa_currency_id.name"/>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <!-- For All Invoice -->
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <t t-if="o.aging_by == 'inv_date'">
+                                <th class="text-center" style="width:14%">Date</th>
+                            </t>
+                            <t t-if="o.aging_by == 'due_date'">
+                                <th class="text-center" style="width:14%">Due Date</th>
+                            </t>
+                            <th class="text-center" style="width:20%">Invoice #</th>
+                            <th class="text-center" style="width:20%">Ref</th>
+                            <t t-if="o.account_type == 'ar' and o.show_payment_term">
+                                <th class="text-center" style="width:10%">Term</th>
+                            </t>
+                            <th class="text-center" style="width:7%">Debit</th>
+                            <th class="text-center" style="width:7%">Credit</th>
+                            <th class="text-center" style="width:7%">Balance</th>
+                        </tr>
+                    </thead>
+                    <t class="invoice_tbody">
+                        <t t-set="get_lines" t-value="get_lines(o)"/>
+                        <t t-set="l_debit" t-value="0"/>
+                        <t t-set="l_credit" t-value="0"/>
+                        <t t-set="l_balance" t-value="0"/>
+                        <t t-set="l_total" t-value="0"/>
+                        <t t-as="l" t-foreach="get_lines">
+                            <t t-if="not l.get('date')">
+                                <tr>
+                                    <td class="text-center"/>
+                                    <td class="text-center" style="color:blue">
+                                        <span t-esc="l.get('ref')"/>
+                                    </td>
+                                    <t t-if="o.account_type == 'ar' and o.show_payment_term">
+                                        <td class="text-center"/>
+                                    </t>
+                                    <td class="text-center"/>
+                                    <td class="text-center"/>
+                                    <td class="text-right"/>
+                                    <td class="text-right" style="color:blue">
+                                        <span t-esc="set_amount(l.get('total'))"/>
+                                    </td>
+                                    <t t-set="l_total" t-value="l_total+ l.get('total')"/>
+                                </tr>
+                            </t>
+                            <t t-else="">
+                                <tr>
+                                    <t t-if="o.aging_by == 'inv_date'">
+                                        <td class="text-left">
+                                            <span t-esc="l.get('date').strftime('%d-%m-%Y')"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="o.aging_by == 'due_date'">
+                                        <td class="text-left">
+                                            <span t-esc="l.get('date_maturity').strftime('%d-%m-%Y')"/>
+                                        </td>
+                                    </t>
+                                    <td class="text-center">
+                                        <span t-esc="l.get('inv_ref')"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="l.get('payment_ref')"/>
+                                    </td>
+                                    <t t-if="o.account_type == 'ar' and o.show_payment_term">
+                                        <td class="text-center">
+                                            <span t-esc="l.get('payment_term')"/>
+                                        </td>
+                                    </t>
+                                    <td class="text-right">
+                                        <t t-set="l_debit" t-value="l_debit + l.get('debit')"/>
+                                        <t t-if="l.get('debit') == 0.00">-</t>
+                                        <t t-else="">
+                                            <span t-esc="set_amount(l.get('debit'))"/>
+                                        </t>
+                                    </td>
+                                    <td class="text-right">
+                                        <t t-set="l_credit" t-value="l_credit + l.get('credit')"/>
+                                        <t t-if="l.get('credit') == 0.00">-</t>
+                                        <t t-else="">
+                                            <span t-esc="set_amount(l.get('credit'))"/>
+                                        </t>
+                                    </td>
+                                    <td class="text-right">
+                                        <t t-set="l_total" t-value="l_total+ l.get('total')"/>
+                                        <t t-if="l.get('l_total') and l.get('l_total') &gt;0">-
+                                        </t>
+                                        <t t-else="">
+                                            <span t-esc="set_amount(l_total)"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                        <tr style="background:#e0e0e0;">
+                            <t t-if="o.account_type == 'ar' and o.show_payment_term">
+                                <td colspan="3" style="border-top:1px solid black"/>
+                            </t>
+                            <t t-else="">
+                                <td colspan="2" style="border-top:1px solid black"/>
+                            </t>
+                            <td style="border-top:1px solid black">
+                                <strong>Sub-Total</strong>
+                            </td>
+                            <td class="text-right" style="border-top:1px solid black">
+                                <span t-esc="set_amount(l_debit)"/>
+                            </td>
+                            <td class="text-right" style="border-top:1px solid black">
+                                <span t-esc="set_amount(l_credit)"/>
+                            </td>
+                            <td class="text-right" style="border-top:1px solid black">
+                                <span t-esc="set_amount(l_total)"/>
+                            </td>
+                        </tr>
+                    </t>
+                </table>
+                <div class="row" t-if="not get_selected">
+                    <div class="col-12">
+                        <p>
+                            <strong>There is no invoices with this customer for the latest period.</strong>
+                        </p>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+                <t t-if="get_selected">
+                    <t t-set="aging" t-value="set_ageing_all(o)"/>
+                    <table class="col-12 aging_table" t-if="aging">
+                        <tr t-if="o.aging_group == 'by_month'">
+                            <td class="text-center">
+                                <b>Current Month</b>
+                            </td>
+                            <td class="text-center">
+                                <b>1 Month</b>
+                            </td>
+                            <td class="text-center">
+                                <b>2 Months</b>
+                            </td>
+                            <td class="text-center">
+                                <b>3 Months</b>
+                            </td>
+                            <td class="text-center">
+                                <b>4 Months</b>
+                            </td>
+                            <td class="text-center">
+                                <b>5 Months &amp; Above</b>
+                            </td>
+                            <td class="text-center">
+                                <b>Total</b>
+                            </td>
+                        </tr>
+                        <tr t-if="o.aging_group == 'by_days'">
+                            <td class="text-center">
+                                <b>Not Due</b>
+                            </td>
+                            <td class="text-center">
+                                <b>1-30</b>
+                            </td>
+                            <td class="text-center">
+                                <b>31-60</b>
+                            </td>
+                            <td class="text-center">
+                                <b>61-90</b>
+                            </td>
+                            <td class="text-center">
+                                <b>91-120</b>
+                            </td>
+                            <td class="text-center">
+                                <b>121 - 150</b>
+                            </td>
+                            <td class="text-center">
+                                <b>Over 150</b>
+                            </td>
+                            <td class="text-center">
+                                <b>Total</b>
+                            </td>
+                        </tr>
+                        <t t-if="o.aging_group == 'by_days'">
+                            <tr>
+                                <t t-as="a_val" t-foreach="extract_ageing_data_list(aging, 'by_days')">
+                                    <td class="text-center">
+                                        <b>
+                                            <span t-esc="set_amount(a_val)"/>
+                                        </b>
+                                    </td>
+                                </t>
+                            </tr>
+                        </t>
+                        <t t-if="o.aging_group == 'by_month'">
+                            <tr>
+                                <t t-as="a_val" t-foreach="extract_ageing_data_list(aging, 'by_months')">
+                                    <td class="text-center">
+                                        <b>
+                                            <span t-esc="set_amount(a_val)"/>
+                                        </b>
+                                    </td>
+                                </t>
+                            </tr>
+                        </t>
+                    </table>
+                </t>
+                <div class="row">
+                    <br/>
+                    <br/>
+                    <div class="col-12 text-left" style="font-size:13px;">
+                        <br/>
+                        <br/>
+                        <!--						Please note that the following payment are now Due.If your payment has been sent,kindly forward your payment details.If payment will
+                                        be delayed further, Please contact us to discuss.<br/>Kindly remit payment to <b><span t-esc="o.company_id.name"/></b>and fax us the remittance advise of bank-in slip.-->
+                        <span t-esc="soa_note"/>
+                        <br/>
+                    </div>
+                </div>
+
+
+            </t>
+
+        </xpath>
+    </template>
+</odoo>
+
+
+		
+
+        

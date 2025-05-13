@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="comput_confirm_payslip_wiz_form" model="ir.ui.view">
+        <field name="name">comput.confirm.payslip.wiz.form</field>
+        <field name="model">comput.confirm.payslip.wiz</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Confrirm Payslip">
+                <separator string="Payslip Information" colspan="4"/>
+                <field name="name" colspan="4" nolabel="1"/>
+                <footer>
+                    <button special="cancel" string="Close" colspan="2"/>
+                    <button name="confirm_selected_payslip" string="Confirm" type="object" colspan="2" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="action_confirm_compute_form"
+                key2="client_action_multi"
+                name="Confirm Payslip"
+                res_model="comput.confirm.payslip.wiz"
+                src_model="hr.payslip"
+                groups="hr.group_hr_manager"
+                view_mode="form"
+                target="new"
+                view_type="form" />
+
+</odoo>
+

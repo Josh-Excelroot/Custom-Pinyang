@@ -1,0 +1,96 @@
+<odoo>
+
+	<!-- Search Invoice with added field -->
+	<record id="view_invoice_search_2" model="ir.ui.view">
+            <field name="name">Invoice Search</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+				<search>
+					<field name="reference" string="vendor reference"/>
+				</search>
+            </field>
+    </record>
+
+	<!--Invoice Form-->
+	<record model="ir.ui.view" id="view_invoice_2">
+		<field name="name">account.invoice.form.inherit.2</field>
+		<field name="model">account.invoice</field>
+		<field name="inherit_id" ref="account.invoice_form"/>
+        <field name="type">form</field>
+		<field name="priority" eval="16"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='date_invoice']" position="before">
+				<field name="booking_date" force_save="1"/>
+			</xpath>
+			<xpath expr="//field[@name='user_id']" position="after">
+				<field name="include_signature"/>
+			</xpath>
+			<xpath expr="//field[@name='invoice_line_ids']/tree[1]/field[@name='uom_id']" position="after">
+				<field name="freight_currency"/>
+				<field name="freight_foreign_price"/>
+				<field name="freight_currency_rate"/>
+			</xpath>
+			<xpath expr="//field[@name='invoice_description']" position="after">
+				<field name="move_id" position="move"/>
+			</xpath>
+
+		</field>
+	</record>
+
+	 <!--vendor bill Form-->
+	<record model="ir.ui.view" id="view_invoice_vendor_form_2">
+		<field name="name">account.invoice.form.vendor.inherit.2</field>
+		<field name="model">account.invoice</field>
+		<field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="type">form</field>
+		<field name="priority" eval="16"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='reference']" position="replace">
+			</xpath>
+			<!--<xpath expr="//button[@name='action_assign_job_cost']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>-->
+			<xpath expr="//field[@name='partner_id']" position="after">
+				<field name="reference" string="Vendor Invoice"/>
+			</xpath>
+			<xpath expr="//field[@name='reference']" position="after">
+				<field name="move_id" position="move"/>
+			</xpath>
+			<xpath expr="//field[@name='invoice_line_ids']/tree[1]/field[@name='uom_id']" position="after">
+				<field name="freight_currency"/>
+				<field name="freight_foreign_price"/>
+				<field name="freight_currency_rate"/>
+			</xpath>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_account_voucher_vendor_form_2">
+		<field name="name">account.voucher.form.vendor.inherit.2</field>
+		<field name="model">account.voucher</field>
+		<field name="inherit_id" ref="account_voucher.view_purchase_receipt_form"/>
+		<field name="type">form</field>
+		<field name="priority" eval="16"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='reference']" position="after">
+				<field name="move_id" position="move"/>
+			</xpath>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_account_voucher_sale_form_2">
+		<field name="name">account.voucher.form.sale.inherit.2</field>
+		<field name="model">account.voucher</field>
+		<field name="inherit_id" ref="account_voucher.view_sale_receipt_form"/>
+		<field name="type">form</field>
+		<field name="priority" eval="16"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='company_id']" position="after">
+				<field name="move_id" position="move"/>
+			</xpath>
+		</field>
+	</record>
+
+
+</odoo>

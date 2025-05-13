@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Export Employee Summary Report View -->
+        <record id="view_ihrms_export_employee_data_record_xls_report_wiz" model="ir.ui.view">
+            <field name="name">export.employee.data.record.xls.form</field>
+            <field name="model">export.employee.data.record.xls</field>
+            <field name="arch" type="xml">
+                <form string="Excel Export">
+                    <field name="name" invisible="1"/>
+                    <h4>Click On Link To Download Xls File: &#160;<field name="file" colspan="4" filename="name"/></h4>
+                    <footer>
+                        <button special="cancel" string="Cancel" colspan="2"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Export Employee Summary View Action and Menu -->
+        <record model="ir.ui.view" id="view_export_employee_summary_form">
+            <field name="name">view.export.employee.summary.wiz.form</field>
+            <field name="model">export.employee.summary.wiz</field>
+            <field name="arch" type="xml">
+                <form string="Export Employees">
+	                    <notebook colspan="4">
+	                        <page string="Select Employee">
+	                            <field name="employee_ids" colspan="4" nolabel="1" options="{'no_create': True}">
+	                                <tree string="Employees">
+		                                    <field name="name"/>
+		                                    <field name="department_id"/>
+		                                    <field name="work_email"/>
+	                                </tree>
+	                            </field>
+	                        </page>
+	                        <page string="Employee Information">
+	                        	<group>
+	                        		<field name="employee_information" context="{'employee_information':True}"/>                        	
+	                        	</group>
+	                            <group col="4" colspan="2">
+		                            <field name="user_id" />
+		                            <field name="active" />
+		                            <field name="department" />
+		                            <field name="direct_manager" />
+		                            <field name="indirect_manager" />
+		                        </group>	                             
+	                        </page>
+	                        <page string="Personal Information">
+		                            <group>
+			                            <field name="personal_information" context="{'personal_information':True}"/>
+			                        </group>
+		                            <group colspan="4" col="8" >
+		                                <separator string="Social IDs" colspan="2" />
+		                                <separator string="Status" colspan="2"/>
+		                                <separator string="Contact Information" colspan="2"/>
+		                                <separator string="Other Information" colspan="2"/>
+		                                <group colspan="2" col="2">
+		                                    <field name="identification_id" />
+		                                    <field name="passport_id" />
+		                                </group>
+		                                <group colspan="2" col="2">
+		                                    <field name="gender" />
+		                                    <field name="martial" />
+		                                    <field name="nationality" />
+		                                    <field name="dob" />
+		                                    <field name="pob" />
+		                                    <field name="age" />
+		                                </group>
+		                                <group colspan="2" col="2">
+		                                    <field name="home_address" />
+		                                    <field name="country_id" />
+		                                    <field name="state_id" />
+		                                    <field name="city_id" />
+		                                    <field name="phone" />
+		                                    <field name="mobile" />
+		                                    <field name="email" />
+		                                </group>
+		                                <group colspan="2" col="2">
+		                                    <field name="dialet" />
+		                                    <field name="driving_licence" />
+		                                    <field name="own_car" />
+		                                    <field name="emp_type_id" />
+		                                </group>
+	                                </group>
+	                        </page>
+	                        <page string="Educational Information">
+	                        	<group>
+	                        		<field name="education_information" context="{'education_information':True}"/>                        	
+	                        	</group>
+	                            <group col="4" colspan="2">
+		                            <separator string="Computer Knowledge and Skills" colspan="4" />
+		                            <field name="com_prog_know" />
+		                            <field name="shorthand" />
+		                            <field name="courses" />
+		                            <field name="typing" />
+		                            <field name="other_know" />
+		                         </group>
+	                        </page>
+	                        <page string="Job">
+	                        	<group>
+	                        		<field name="job_information" context="{'job_information':True}"/>                        	
+	                        	</group>
+	                            <group col="4" colspan="2">
+		                            <field name="job_title" />
+		                            <field name="emp_status" />
+		                            <field name="join_date" />
+		                            <field name="confirm_date" />
+		                            <field name="date_changed" />
+		                            <field name="changed_by" />
+		                            <field name="date_confirm_month" />
+		                        </group>
+	                        </page>
+	                        <page string="Categories">
+	                            <group>
+	                                <field name="category_ids" />
+	                            </group>
+	                        </page>
+	                        <page string="Training">
+	                            <group>
+	                                <field name="tarining_ids" />
+	                            </group>
+	                        </page>
+	                        <page string="Leave History">
+	                            <group>
+	                                <field name="emp_leave_ids" />
+	                            </group>
+	                        </page>
+	                        <page string="Extra Information">
+	                        	<group>
+	                        		<field name="emp_extra_information" context="{'emp_extra_information':True}"/>                        	
+	                        	</group>
+	                            <group col="8" colspan="1">
+		                            <field name="health_condition" colspan="2"/><newline/>
+		                            <field name="bankrupt" colspan="2"/><newline/>
+		                            <field name="suspend_employment" colspan="2"/><newline/>
+		                            <field name="court_law" colspan="2"/><newline/>
+		                            <field name="about" colspan="2"/>
+	                            </group>
+	                        </page>
+	                        <page string="Bank Details">
+	                            <group>
+	                                <field name="bank_detail_ids" />
+	                            </group>
+	                        </page>
+	                        <page string="Notification">
+	                        	<group>
+	                        		<field name="emp_notification_info" context="{'emp_notification_info':True}"/>                        	
+	                        	</group>                        
+	                            <group col="8" colspan="1">
+		                            <field name="emp_noty_leave" colspan="2"/><newline/>
+		                            <field name="pending_levae_noty" colspan="2"/><newline/>
+		                            <field name="receive_mail_manager" invisible="1" colspan="2"/>
+	                            </group>
+	                        </page>
+	                        <page string="Notes">
+	                            <group>
+	                                <field name="notes" />
+	                            </group>
+	                        </page>
+	                        <page string="Payroll">
+	                        	<group>
+	                        		<field name="emp_payroll_info" context="{'emp_payroll_info':True}"/>                        	
+	                        	</group>
+	                            <group col="2" colspan="1">
+		                            <field name="payslip" />
+		                            <field name="contract" />
+		                        </group>
+	                        </page>
+                    </notebook>
+                    <separator string="" colspan="4" />
+	                    <footer>
+		                    <button name="export_employee_summary_xls" string="Print" type="object" colspan="2" class="oe_highlight"/>
+		                    or
+		                    <button special="cancel" string="Cancel" colspan="2"/>
+		                </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record id="hr_export_employee_summary_action" model="ir.actions.act_window">
+            <field name='name'>Export</field>
+            <field name='res_model'>export.employee.summary.wiz</field>
+            <field name='view_type'>form</field>
+            <field name='view_mode'>form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <menuitem action="hr_export_employee_summary_action" id="hr_export_employee_summary_menu" sequence="15" groups="hr.group_hr_manager" parent="hr.menu_open_view_employee_list_my"/>
+
+    </data>
+</odoo>

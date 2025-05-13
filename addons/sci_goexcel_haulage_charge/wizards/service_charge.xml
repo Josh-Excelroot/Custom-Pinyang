@@ -1,0 +1,48 @@
+<odoo>
+
+ 		<record id="service_view_form" model="ir.ui.view">
+            <field name="name">sq.service.form</field>
+            <field name="model">service.charge.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Service">
+                    <group>
+                        <field name="service" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+
+                    <group attrs="{'invisible': ['|',('service', '!=', '01'),('haulage_service_check', '=', False)]}">
+                        <field name="pick_up_from"/>
+                        <field name="place_of_delivery" domain="[('pick_up_from','=',pick_up_from)]"/>
+                        <field name="haulage_service_check" invisible="1"/>
+                        <field name="trucking_service_check" invisible="1"/>
+                        <field name="haulage_charge"/>
+                    </group>
+
+                    <group attrs="{'invisible': ['|',('service', '!=', '02'),('trucking_service_check', '=', False)]}">
+                        <field name="pick_up_from"/>
+                        <field name="place_of_delivery" domain="[('pick_up_from','=',pick_up_from)]"/>
+                        <field name="haulage_service_check" invisible="1"/>
+                        <field name="trucking_service_check" invisible="1"/>
+                        <field name="trucking_service_weight" widget="radio" options="{'horizontal': true}"/>
+                        <field name="trucking_service_charge"/>
+                    </group>
+
+                    <group attrs="{'invisible': ['|',('service', '!=', '01'),('haulage_service_check', '=', True)]}">
+                        <p>Haulage is not activated</p>
+                    </group>
+
+                    <group attrs="{'invisible': ['|',('service', '!=', '02'),('trucking_service_check', '=', True)]}">
+                        <p>Trucking is not activated</p>
+                    </group>
+
+                    <footer>
+                        <button name="action_haulage" attrs="{'invisible': ['|',('service', '!=', '01'),('haulage_service_check', '=', False)]}"
+                                string="Haulage" type="object" class="btn-primary"/>
+                        <button name="action_trucking" attrs="{'invisible': ['|',('service', '!=', '02'),('trucking_service_check', '=', False)]}"
+                                string="Trucking" type="object" class="btn-primary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+</odoo>

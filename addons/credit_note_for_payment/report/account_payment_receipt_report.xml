@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_payment_receipt_document_inherit" inherit_id="account.report_payment_receipt_document">
+        <xpath expr="//div[hasclass('page')]" position="replace">
+            <div class="page">
+                <h3><strong>Payment Receipt: <span t-field="o.name"/></strong></h3>
+                <div class="row mt64">
+                    <div class="col-6" t-if="o.payment_date">
+                        <strong>Payment Date: </strong> <span t-field="o.payment_date"/>
+                    </div>
+                </div>
+                <div class="row mb64">
+                    <div class="col-6" t-if="o.partner_type">
+                        <t t-if="o.partner_type == 'customer'">
+                            <strong>Customer: </strong><br/>
+                        </t>
+                        <t t-if="o.partner_type == 'supplier'">
+                            <strong>Vendor: </strong><br/>
+                        </t><strong><span t-field="o.partner_id"/></strong><br/>
+                         <t t-if="o.partner_id.street">
+                            <span t-field="o.partner_id.street"/>
+                            <br/>
+                        </t>
+                        <t t-if="o.partner_id.street2">
+                            <span t-field="o.partner_id.street2"/>
+                        </t>
+                        <t t-if="o.partner_id.zip">
+                            <span t-field="o.partner_id.zip"/>
+                        </t>
+                        <t t-if="o.partner_id.city">,
+                            <span t-field="o.partner_id.city"/></t>
+                        <t t-if="o.partner_id.state_id">, 
+                            <span t-field="o.partner_id.state_id.name"/></t>
+                        <t t-if="o.partner_id.country_id">, 
+                            <span t-field="o.partner_id.country_id.name"/>
+                            <br/></t>
+                        <t t-if="o.partner_id.phone">Tel: 
+                            <span t-field="o.partner_id.phone"/>
+                            <t t-if="o.partner_id.fax">
+                                , Fax: 
+                                <span t-field="o.partner_id.fax"/></t>
+                        </t>
+                    </div>
+                </div>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th><span>Invoice Date</span></th>
+                            <th><span>Invoice Number</span></th>
+                            <th><span>Reference</span></th>
+                            <th class="text-right"><span>Original Amount</span></th>
+                            <th class="text-right"><span>Amount Paid</span></th>
+                            <th class="text-right"><span>Balance</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-if="o.payment_invoice_ids">
+                            <t t-foreach="o.payment_invoice_ids.filtered(lambda x: x.reconcile_amount > 0)" t-as="inv">
+                                <tr>
+                                    <td><span t-field="inv.date_invoice"/></td>
+                                    <td><span t-field="inv.invoice_id.number"/></td>
+                                    <td><span t-field="inv.invoice_id.reference"/></td>
+                                    <td class="text-right"><span t-field="inv.invoice_id.amount_total"/></td>
+                                    <td class="text-right"><span t-esc="inv.reconcile_amount" t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"/></td>
+                                    <td class="text-right"><span t-field="inv.invoice_id.residual"/></td>
+                                </tr>
+                                <t t-if="inv.credit_amount > 0">
+                                    <tr t-foreach="inv.credit_note_ids" t-as="credit">
+                                        <td><span t-field="inv.date_invoice"/></td>
+                                        <td><span t-field="inv.invoice_id.number"/></td>
+                                        <td><span t-field="credit.credit_note_id.number"/></td>
+                                        <td class="text-right"><span t-field="inv.invoice_id.amount_total"/></td>
+                                        <td class="text-right"><span t-esc="credit.credit_amount" t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"/></td>
+                                        <td class="text-right"><span t-field="inv.invoice_id.residual"/></td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <tr t-foreach="o.reconciled_invoice_ids" t-as="inv">
+                                <td><span t-field="inv.date_invoice"/></td>
+                                <td><span t-field="inv.number"/></td>
+                                <td><span t-field="inv.reference"/></td>
+                                <td class="text-right"><span t-field="inv.amount_total"/></td>
+                                <td class="text-right"><span t-esc="o._get_invoice_payment_amount(inv)" t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"/></td>
+                                <td class="text-right"><span t-field="inv.residual"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </xpath>
+    </template>
+</odoo>

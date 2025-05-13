@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="1">
+         <record id="visit_method_appointment" model="visit.method">
+             <field name="name">Appointment</field>
+             <field name="description">Visit by prior Appointment</field>
+         </record>
+
+        <record id="visit_method_walk_in" model="visit.method">
+            <field name="name">Walk In</field>
+            <field name="description">Visit by Walk In without Appointment</field>
+        </record>
+    </data>
+   <!-- <record id="3" model="visit.method">
+        <field name="name">Call</field>
+        <field name="description">By Call</field>
+    </record>-->
+<!--
+    <record id="4" model="visit.method">
+        <field name="name">Face to Face</field>
+        <field name="description">Face to Face Appointment</field>
+    </record>-->
+
+
+</odoo>

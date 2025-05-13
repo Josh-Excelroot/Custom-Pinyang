@@ -1,0 +1,483 @@
+<odoo>
+    <record id="view_form_booking_2" model="ir.ui.view">
+        <field name="name">Booking Job</field>
+        <field name="model">freight.booking</field>
+        <field name="priority" eval="20"/>
+        <field name="inherit_id" ref="sci_goexcel_freight.view_form_booking"/>
+        <field name="arch" type="xml">
+<!--            ////////////////////////-->
+            <xpath expr="//header" position="inside">
+                <button name="action_create_twb"
+                        string="Create TWB"
+                        type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('service_type', '!=', 'land')]}"/>
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_twb"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-file-text-o"
+                        attrs="{'invisible': ['|', ('service_type', '!=', 'land'), ('twb_count', '=', 0)]}">
+                    <field name="twb_count" widget="statinfo" string="TWB"/>
+                </button>
+            </xpath>
+
+            <xpath expr="//field[@name='land_type']" position="after">
+                <field name="delivery_service_ids"
+                       widget="many2many_tags"
+                       context="{'default_company_id': company_id}"
+                       attrs="{'invisible': [('service_type', '!=', 'land')]}"
+                       options="{'no_create_edit': False, 'no_quick_create': False}"/>
+            </xpath>
+<!--            ////////////////////////-->
+
+            <xpath expr="//button[@name='action_cancel_booking']" position="after">
+                 <button name="action_create_awb"
+							type="object" class="oe_highlight"
+							string="AWB"
+                            attrs="{'invisible': [('service_type', 'not in', 'air')]}"/>
+            </xpath>
+
+
+            <xpath expr="//button[@name='operation_bol']" position="after">
+
+                   <button name="operation_awb"
+		                        type="object"
+		                        class="oe_stat_button"
+	    	                    icon="fa-copy"
+                                attrs="{'invisible':['|' , ('awb_count', '=', 0),(('service_type', 'not in', 'air'))]}">
+                            <field name="awb_count" widget="statinfo" string="AWB"/>
+	                	</button>
+
+            </xpath>
+
+<!--   Yulia 05112024 hide bol_count         -->
+             <xpath expr="//button[@name='operation_bol']" position="attributes">
+                 <attribute name="attrs">{'invisible': ['|', ('bol_count', '=', 0), ('service_type', 'not in', ['ocean'])]}</attribute>
+             </xpath>
+
+<!--            /////////////////////////-->
+
+
+            <xpath expr="//button[@name='action_send_booking_confirmation']" position="before">
+                <button name="action_send_booking_confirmation_si"
+                        type="object"
+                        string="Send Bkg Conf./SI"
+                        class="oe_highlight"
+                        attrs="{'invisible': ['|', ('direction', '!=', 'export'), ('service_type', 'not in', 'ocean')]}"/>
+            </xpath>
+            <xpath expr="//field[@name='shipment_close_date_time']" position="before">
+                <field name="place_of_delivery_eta"/>
+            </xpath>
+            <xpath expr="//field[@name='shipment_type']" position="after">
+                <field name="container_qty" attrs="{'invisible': ['|', ('service_type', 'not in', 'ocean'),
+                            ('cargo_type', '!=', 'fcl')]}"/>
+                <!--<field name="container_product_id" attrs="{'invisible': ['|', ('service_type', 'not in', 'ocean'),
+                            ('cargo_type', '!=', 'fcl')]}"/>-->
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <field name="status_transhipment" widget="statusbar" clickable="True"
+                       attrs="{'invisible': ['|', ('direction', 'not in', 'transhipment'), ('service_type', 'not in', 'ocean')]}"
+                       statusbar_visible="01,02,05,07,08"/>
+            </xpath>
+            <xpath expr="//field[@name='manifest_no']" position="replace">
+            </xpath>
+             <xpath expr="//field[@name='shipper']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_edit': True, 'no_create_edit': True,
+                    'no_quick_create': True}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='invoice_status']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='invoice_paid_status']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='booking_type']" position="after">
+                <field name="lcl_consolidation" attrs="{'invisible': [('service_type', 'not in', 'ocean')]}"/>
+            </xpath>
+            <xpath expr="//button[@name='action_create_bl']" position="attributes">
+                <attribute name="confirm">Are you sure you want to create a BL?</attribute>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="operation_pr"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-file-text"
+                        attrs="{'invisible':[('purchase_receipt_count', '=', 0)]}">
+                    <field name="purchase_receipt_count" widget="statinfo" string="Purchase Receipt"/>
+                </button>
+            </xpath>
+            <xpath expr="//page[@name='cost_profit']" position="before">
+                <page name="add_container" string="No of Containers"  attrs="{'invisible': [('service_type', '!=', 'ocean')]}">
+                    <group>
+                        <field name="container_no"/>
+                    </group>
+                    <field name="operation_line_ids_3" mode="tree,kanban">
+                        <tree editable="bottom" name="manifest_tree_ids_2">
+                            <field name="container_no" string="Qty of Container"/>
+                            <field name="categ_id" invisible="1"/>
+                            <field name="container_category_id" invisible="1"/>
+                            <field name="container_product_id" domain="[('categ_id', '=', container_category_id)]"
+                                   string="Container Size"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//page[@name='remark']" position="after">
+                <page name="invoices" string="Invoices">
+                    <group>
+                        <group>
+                            <field name="invoice_status"/>
+                            <field name="invoice_paid_status"/>
+                        </group>
+                        <group>
+                            <field name="bill_status"/>
+                            <field name="bill_paid_status"/>
+                        </group>
+                    </group>
+                    <field name="booking_invoice_lines_ids" groups="account.group_account_user">
+                        <tree string="Invoices" editable="bottom">
+                            <field name="invoice_no"/>
+                            <field name="reference"/>
+                            <field name="type"/>
+                            <field name="invoice_amount"/>
+                        </tree>
+                    </field>
+                </page>
+                <page name="inv_amt" string="Inv.Amt" groups="account.group_account_user">
+                    <group>
+                        <field name="pivot_sale_total" string="sales"/>
+                        <field name="pivot_cost_total" string="cost"/>
+                        <field name="pivot_profit_total" string="profit"/>
+                    </group>
+                    <group>
+                        <button name="action_reupdate_booking_invoice_one" string="Update" type="object"
+                                class="btn-primary"/>
+                        <field name="inv_sales"/>
+                        <field name="inv_cost"/>
+                        <field name="inv_profit"/>
+                    </group>
+                </page>
+                <page name="bc_terms" string="BC Terms">
+                    <group>
+                        <field name="template_id"/>
+                        <field name="bc_sale_term"/>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='coloader']" position="after">
+                <field name="coloader_reference_no"/>
+            </xpath>
+            <xpath expr="//field[@name='unstuff_at']" position="after">
+                <!--                <field name="operator_code" options='{"always_reload": True, "no_create": True, "no_create_edit":True}'/>-->
+                <field name="teus"/>
+            </xpath>
+            <xpath expr="//tree[@name='manifest_tree_ids2']/field[@name='dim_length']" position="after">
+                <field name="dim_length_uom"
+                       attrs="{'column_invisible': [('parent.service_type', '!=', 'air')], 'readonly':[('parent.shipment_booking_status', 'in', ['08', '09'])]}"/>
+            </xpath>
+            <xpath expr="//tree[@name='manifest_tree_ids2']/field[@name='dim_width']" position="after">
+                <field name="dim_width_uom"
+                       attrs="{'column_invisible': [('parent.service_type', '!=', 'air')], 'readonly':[('parent.shipment_booking_status', 'in', ['08', '09'])]}"/>
+            </xpath>
+            <xpath expr="//tree[@name='manifest_tree_ids2']/field[@name='dim_height']" position="after">
+                <field name="dim_height_uom"
+                       attrs="{'column_invisible': [('parent.service_type', '!=', 'air')], 'readonly':[('parent.shipment_booking_status', 'in', ['08', '09'])]}"/>
+            </xpath>
+            <xpath expr="//field[@name='gate_in_date']" position="after">
+                <field name="po_number"/>
+            </xpath>
+            <xpath expr="//field[@name='laden_back_terminal']" position="after">
+                <field name="depot_name1"/>
+            </xpath>
+            <xpath expr="//field[@name='other_charges']" position="after">
+                <field name="costing_date"/>
+                <field name="service_contract_no"/>
+            </xpath>
+            <xpath expr="//field[@name='depot_name1']" position="after">
+                <field name="pick_up_mode"/>
+                <field name="type_of_movement"/>
+            </xpath>
+            <xpath expr="//tree[@name='cost_profit_tree']/field[@name='product_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_create_edit': True, 'no_quick_create': True}
+                </attribute>
+                <attribute name="domain">['|', ('sale_ok', '=', True), ('purchase_ok', '=', True)]</attribute>
+            </xpath>
+            <xpath expr="//tree[@name='cost_profit_tree']/field[@name='product_name']" position="after">
+                <field name="uom_id"/>
+            </xpath>
+            <xpath expr="//tree[@name='cost_profit_tree']/field[@name='cost_qty']" position="attributes">
+                <attribute name="options">{
+                    "bg_color": "#babcbe: True",
+                    "fg_color": "white: True"
+                    }
+                </attribute>
+            </xpath>
+            <xpath expr="//tree[@name='cost_profit_tree']/field[@name='cost_price']" position="attributes">
+                <attribute name="options">{
+                    "bg_color": "#babcbe: True",
+                    "fg_color": "white: True"
+                    }
+                </attribute>
+            </xpath>
+            <xpath expr="//tree[@name='cost_profit_tree']/field[@name='cost_amount']" position="attributes">
+                <attribute name="options">{
+                    "bg_color": "#babcbe: True",
+                    "fg_color": "white: True"
+                    }
+                </attribute>
+            </xpath>
+            <xpath expr="//tree[@name='cost_profit_tree']/field[@name='vendor_id']" position="attributes">
+                <attribute name="options">{
+                    "bg_color": "#babcbe: True",
+                    "fg_color": "white: True",
+                    "no_create_edit": True,
+                    "no_create": True,
+                    "no_quick_create": True
+                    }
+                </attribute>
+            </xpath>
+            <xpath expr="//tree[@name='cost_profit_tree']/field[@name='vendor_bill_ids']" position="attributes">
+                <attribute name="options">{
+                    "bg_color": "#babcbe: True",
+                    "fg_color": "white: True"
+                    }
+                </attribute>
+            </xpath>
+            <xpath expr="//tree[@name='cost_profit_tree']/field[@name='cost_currency']" position="attributes">
+                <attribute name="options">{
+                    "bg_color": "#babcbe: True",
+                    "fg_color": "white: True"
+                    }
+                </attribute>
+            </xpath>
+            <xpath expr="//tree[@name='cost_profit_tree']/field[@name='cost_currency_rate']" position="attributes">
+                <attribute name="options">{
+                    "bg_color": "#babcbe: True",
+                    "fg_color": "white: True"
+                    }
+                </attribute>
+            </xpath>
+            <xpath expr="//tree[@name='cost_profit_tree']/field[@name='cost_total']" position="attributes">
+                <attribute name="options">{
+                    "bg_color": "#babcbe: True",
+                    "fg_color": "white: True"
+                    }
+                </attribute>
+            </xpath>
+            <xpath expr="//tree[@name='cost_profit_tree']/field[@name='profit_total']" position="attributes">
+                <attribute name="groups">account.group_account_user,account.group_account_manager</attribute>
+            </xpath>
+            <xpath expr="//field[@name='booking_type']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='cost_profit_ids']/tree//field[@name='sale_total']" position="after">
+                <field name="tax_id"
+                       widget="many2many_tags"
+                       options="{'no_create': True}"
+                       context="{'search_view_ref': 'account.account_tax_view_search'}"
+                       domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"/>
+
+            </xpath>
+            <xpath expr="//field[@name='sq_reference']" position="replace">
+                <field name="sq_reference"
+                       domain="[('partner_id','=',customer_name), ('validity_date','&gt;', (context_today()).strftime('%%Y-%%m-%%d') )]"/>
+                <field name="cust_ref"/>
+            </xpath>
+            <!-- Add to enable form pop up in the Manifest -->
+            <xpath expr="//tree[@name='manifest_tree_ids']" position="attributes">
+                <attribute name="editable"/>
+            </xpath>
+            <xpath expr="//tree[@name='manifest_tree_ids2']" position="attributes">
+                <attribute name="editable"/>
+            </xpath>
+            <xpath expr="//field[@name='booking_type']" position="after">
+                <button name="action_multi_quotation" type="object" string="Multi Quotation"/>
+            </xpath>
+            <xpath expr="//field[@name='sq_reference']" position="replace">
+                <field name="sq_reference"/>
+            </xpath>
+            <xpath expr="//field[@name='port_of_tranship']" position="after">
+                <field name="port_of_tranship_2"
+                       options='{"always_reload": True, "no_create": True, "no_create_edit":True}'/>
+                <field name="port_of_tranship_3"
+                       options='{"always_reload": True, "no_create": True, "no_create_edit":True}'/>
+            </xpath>
+            <xpath expr="//field[@name='port_of_tranship_eta']" position="after">
+                <field name="port_of_tranship_eta_2"/>
+                <field name="port_of_tranship_eta_3"/>
+            </xpath>
+            <xpath expr="//field[@name='other_charges']" position="before">
+                <field name="bl_status"/>
+            </xpath>
+            <xpath expr="//field[@name='place_of_delivery']" position="replace">
+                <field name="place_of_delivery"/>
+            </xpath>
+            <!-- <xpath expr="//field[@name='port_of_tranship_eta']" position="replace">
+                 <field name="port_of_tranship_eta"/>
+             </xpath>-->
+        </field>
+    </record>
+
+    <record id="view_search_booking_inherit_multimodal" model="ir.ui.view">
+        <field name="name">freight.booking.search.expand.filter</field>
+        <field name="model">freight.booking</field>
+        <field name="inherit_id" ref="sci_goexcel_freight.view_search_booking"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <group expand="0" string="Group By">
+                    <filter string="Shipment Type" name="booking_shipment_type" domain="[]"
+                            context="{'group_by':'direction'}"/>
+                    <filter string="Carrier" name="booking_carrier" domain="[]" context="{'group_by':'carrier'}"/>
+                    <filter string="Carrier Booking No" name="booking_carrier_booking" domain="[]"
+                            context="{'group_by':'carrier_booking_no'}"/>
+                    <filter string="Consignee Name" name="booking_consignee" domain="[]"
+                            context="{'group_by':'consignee'}"/>
+                    <filter string="Vessel Name" name="booking_vessel_name" domain="[]"
+                            context="{'group_by':'vessel_name'}"/>
+                </group>
+            </xpath>
+            <xpath expr="//filter[@name='loading_eta']" position="replace">
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="view_form_booking_manifest_fcl" model="ir.ui.view">
+        <field name="name">Booking Manifest FCL</field>
+        <field name="model">freight.operations.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="container_no"/>
+                        <field name="container_product_id" domain="[('categ_id', '=', container_category_id)]"
+                               options="{&quot;always_reload&quot;: True}"/>
+                        <field name="seal_no"/>
+                        <field name="container_product_name"/>
+                        <field name="packages_no"/>
+                        <field name="packages_no_uom"/>
+                        <field name="exp_net_weight"/>
+                        <field name="exp_gross_weight"/>
+                        <!--<field name="dim_length" string="Length (CM)"/>
+                        <field name="dim_width" string="Width (CM)"/>
+                        <field name="dim_height" string="Height (CM)"/>-->
+                        <field name="exp_vol"/>
+                        <field name="remark"/>
+                        <field name="container_commodity_id" invisible="1"
+                               domain="[('categ_id', '=', commodity_category_id)]"
+                               options="{&quot;always_reload&quot;: True}"/>
+                        <field name="fcl_container_qty" invisible="1"/>
+                        <field name="container_category_id" invisible="1"/>
+                        <field name="commodity_category_id" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_form_booking_manifest_lcl" model="ir.ui.view">
+        <field name="name">Booking Manifest LCL</field>
+        <field name="model">freight.operations.line2</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="container_no"/>
+                        <field name="container_product_id" domain="[('categ_id', '=', container_category_id)]"
+                               options="{&quot;always_reload&quot;: True}"/>
+                        <field name="seal_no"/>
+                        <field name="container_product_name"/>
+                        <field name="packages_no"/>
+                        <field name="packages_no_uom"/>
+                        <field name="exp_net_weight"/>
+                        <field name="exp_gross_weight"/>
+                        <field name="dim_length" string="Length (CM)" invisible="1"/>
+                        <field name="dim_width" string="Width (CM)" invisible="1"/>
+                        <field name="dim_height" string="Height (CM)" invisible="1"/>
+                        <field name="exp_vol"/>
+                        <field name="shipping_mark" string="Markeee"/>
+                        <field name="container_category_id" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_form_booking_manifest_lcl_inherit" model="ir.ui.view">
+        <field name="name">Booking Manifest LCL</field>
+        <field name="model">freight.operations.line2</field>
+        <field name="inherit_id" ref="sci_goexcel_freight.view_form_booking_manifest_lcl"/>
+        <field name="arch" type="xml">
+
+<!--    Yulia 12122024 make it visible for container_no and container_product_id        -->
+<!--              <xpath expr="//field[@name='container_no']" position="attributes">-->
+<!--                 <attribute name="invisible">1</attribute>-->
+<!--             </xpath>-->
+<!--              <xpath expr="//field[@name='container_product_id']" position="attributes">-->
+<!--                 <attribute name="invisible">1</attribute>-->
+<!--             </xpath>-->
+<!--              <xpath expr="//field[@name='seal_no']" position="attributes">-->
+<!--                 <attribute name="invisible">1</attribute>-->
+<!--             </xpath>-->
+<!--    Yulia 09102024 add chargeable_weight to pop up        -->
+            <xpath expr="//field[@name='shipping_mark']" position="after">
+                <field name="chargeable_weight" readonly="0"/>
+            </xpath>
+
+        </field>
+
+    </record>
+
+
+
+
+
+
+    <record id="view_tree_booking_2" model="ir.ui.view">
+        <field name="name">Booking Tree</field>
+        <field name="model">freight.booking</field>
+        <field name="priority" eval="1"/>
+        <field name="inherit_id" ref="sci_goexcel_freight.view_tree_ocean_booking"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sq_reference']" position="after">
+                <field name="teus" sum="Total Teus"/>
+                <field name="inv_sales" invisible="1" sum="Total Inv Sales"/>
+                <field name="inv_cost" invisible="1" sum="Total Inv Cost"/>
+                <field name="inv_profit" invisible="1" sum="Total Inv Profit"/>
+                <field name="pivot_sale_total" invisible="1" sum="Total Sales"/>
+                <field name="pivot_cost_total" invisible="1" sum="Total Cost"/>
+                <field name="pivot_profit_total" invisible="1" sum="Total Profit"/>
+            </xpath>
+        </field>
+    </record>
+
+<!--    Ahmad Zaman - 29/08/23 - Service Type Selection based on action-->
+    <record id="sci_goexcel_freight.action_ocean_booking" model="ir.actions.act_window">
+        <field name="context">{'default_service_type': 'ocean',}</field>
+    </record>
+
+    <record id="sci_goexcel_freight.action_land_booking" model="ir.actions.act_window">
+        <field name="context">{'default_service_type': 'land',}</field>
+    </record>
+
+    <record id="sci_goexcel_freight.action_air_booking" model="ir.actions.act_window">
+        <field name="context">{'default_service_type': 'air',}</field>
+    </record>
+
+    <!--Ahmad Zaman - 9/2/24 - Restrict Partner Creation from Telex Release view-->
+        <record id="users_restrict_customer_create_telex_release" model="ir.ui.view">
+            <field name="name">user.restrict.customer.create.telex.release</field>
+            <field name="model">telex.release</field>
+            <field name="inherit_id" ref="sci_goexcel_telex_release.telex_release_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='release_to']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit':True}</attribute>
+                </xpath>
+            </field>
+        </record>
+    <!--end-->
+
+</odoo>

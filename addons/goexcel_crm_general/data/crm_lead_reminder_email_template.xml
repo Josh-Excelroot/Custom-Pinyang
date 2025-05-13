@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="crm_lead_reminder_email_template_id" model="mail.template">
+            <field name="name">Reminder Of CRM Leads Status</field>
+            <field name="email_from">${ctx['email_from']}</field>
+            <field name="email_to">${ctx['email_to']}</field>
+            <field name="subject">Reminder Of CRM Leads Status</field>
+            <field name="lang">${ctx['lang']}</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <!--	  		<field name="body_html"><![CDATA[-->
+            <!--                    Dear ${ctx['partner_name']},-->
+
+            <!--                    <p>Your CRM Lead State duration has exceeded than <b>${ctx['duration']}</b> </p>-->
+
+            <!--                    <p>Please Update.</p>-->
+            <!--                    <p>This is Computer Generated. Please Do Not Reply.</p>-->
+            <!--                ]]>-->
+            <!--	  		</field>-->
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="padding: 16px; background-color: white; color: #454748; border-collapse:separate;">
+                                <tbody>
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+                                                        <div>
+                                                            Hi ${ctx['partner_name']},<br/>
+                                                            <p>Your CRM Lead State duration has exceeded than <b>${ctx['duration']}</b> Hours.</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="top" style="font-size: 13px;">
+                                                        <div>
+                                                            <p>Please Update.</p>
+                                                            <p>This is Computer Generated. Please Do Not Reply.</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <br/>
+                                            <hr style="border: 1px solid #ccc;"/>
+                                            <table>
+                                                <tr align="center">
+                                                    <td align="center" width="100%">
+                                                        <p><h4>${ctx['company_name']}</h4></p>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <table>
+                                                <tr>
+                                                    <td align="center" width="100%" style="color:#ccc;">
+                                                        <p><h6>0122143919 | care@excelroot.com | http://www.excelroot.com</h6></p>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <!-- POWERED BY -->
+                    <tr>
+                        <td align="center" style="min-width: 590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
+                                <tr>
+                                    <td style="text-align: center; font-size: 13px;">
+                                        Powered by <a target="_blank" href="https://www.odoo.com?utm_source=db&amp;utm_medium=hr" style="color: #875A7B;">Odoo</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+
+        </record>
+    </data>
+</odoo>

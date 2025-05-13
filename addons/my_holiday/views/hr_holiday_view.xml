@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    #####################################################
+                                Leave Types
+            #####################################################    -->
+
+    <!-- Form View : Leave Types -->
+    <record model="ir.ui.view" id="edit_holiday_extended_status_form">
+        <field name="name">hr.leave.type.form</field>
+        <field name="model">hr.leave.type</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <label for="name" class="oe_edit_only"/>
+            </xpath>
+            <xpath expr="//field[@name='unpaid']" position="before">
+                <field name="code"/>
+            </xpath>
+            <xpath expr="//group[@name='calendar']" position="inside">
+                <field name="company_ids" widget="many2one_tags" options="{'no_create': True}"/>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//form/sheet/group[1]" position="after">
+                <notebook>
+                    <!--<page string="Carry Forward Leaves">
+                        <group>
+                            <field name="cry_frd_leave"/>
+                            <field name="default_leave_allocation"/>
+                        </group>
+                    </page>-->
+                    <page string="Details">
+                        <group>
+                            <field name="count_days_by"/>
+                        </group>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_holidays.hr_leave_action_my" model="ir.actions.act_window">
+        <field name="name">My Leaves Requests</field>
+    </record>
+
+    <!-- Tree View : Leave Types -->
+    <record model="ir.ui.view" id="edit_holiday_extended_status_normal_tree">
+        <field name="name">hr.leave.type.tree</field>
+        <field name="model">hr.leave.type</field>
+        <field name="inherit_id" ref="hr_holidays.view_holiday_status_normal_tree"/>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='display_name']" position="before">
+                <field name="code"/>
+            </xpath>
+            <xpath expr="//field[@name='double_validation']" position="replace">
+                <field name="double_validation" string='Apply Double Approval'/>
+            </xpath>
+        </field>
+    </record>
+
+    <!--    #####################################################
+                                Leave Request
+            #####################################################    -->
+
+    <!--Calendar View: Leave Request-->
+    <record id="view_holiday_new_calendar" model="ir.ui.view">
+        <field name="name">Leave Request</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_calendar"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='display_name']" position="after">
+                <field name="employee_id"/>
+                <field name="holiday_status_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!--Form View: Leave Request-->
+    <record model="ir.ui.view" id="edit_holiday_extended">
+        <field name="name">Leave Request</field>
+        <field name="model">hr.leave</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_form"/>
+        <field name="arch" type="xml">
+            <sheet position="inside">
+                <notebook>
+                    <page string="Notes" attrs="{'invisible':[('state','!=','refuse')]}">
+                        <field name="notes" nolabel="1" colspan="4" placeholder="Add a reason..."/>
+                    </page>
+                    <page string="Documents">
+                        <field name="employee_document_ids" nolabel="1" colspan="4">
+                            <tree string="Attachment">
+                                <field name="document"/>
+                                <field name="document_attachment" invisible="1"/>
+                                <field name="file_url" widget="url" invisible="1"/>
+                                <button type="object" name="upload_document" string="Upload to Google Drive"
+                                        icon="fa-cloud-upload" context="{'rec_id':parent.id,'rec_model':'hr.leave'}"
+                                        attrs="{'invisible':[('document_attachment','=',False)]}"/>
+                                <button type="object" name="download_document" string="Download from Google Drive"
+                                        icon="fa-download" attrs="{'invisible':[('file_url','=',False)]}"/>
+                            </tree>
+                            <form string="Attachment">
+                                <field name="document_attachment" filename="document" colspan="4"/>
+                                <field name="document" colspan="4" invisible="1"/>
+                            </form>
+                        </field>
+                    </page>
+                </notebook>
+            </sheet>
+            <field name="department_id" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </field>
+            <xpath expr="//header/button[1]" position="before">
+                <field name="user_view" invisible="1"/>
+            </xpath>
+            <xpath expr="//button[@name='action_refuse']" position="attributes">
+                <attribute name="attrs">
+                    {'invisible': ['|','|', ('can_approve', '=', False), ('state', 'not in',
+                    ('confirm','validate','validate1')), ('user_view','=',True), ]}
+                </attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_approve']" position="attributes">
+                <attribute name="attrs">
+                    {'invisible':['|','|', ('can_approve', '=', False), ('state','!=','confirm'),
+                    ('user_view','=',True)]}
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Remove Allocation type, categry field in tree view of hr.holiday object -->
+    <!--     <record id="view_holiday_exten" model="ir.ui.view">
+            <field name="name">hr.leave.tree2</field>
+            <field name="model">hr.leave</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr_holidays.hr_leave_view_tree"/>
+            <field name="arch" type="xml">
+                <field name="holiday_type" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="date_from" position="attributes">
+                    <attribute name="widget">date</attribute>
+                </field>
+                <field name="date_to" position="attributes">
+                    <attribute name="widget">date</attribute>
+                </field>
+            </field>
+        </record>
+     -->
+
+    <!--    #####################################################
+                             Allocation Request
+            #####################################################    -->
+
+    <!-- Form View : Allocation Request -->
+    <record model="ir.ui.view" id="inherit_allocation_leave_new">
+        <field name="name">Allocation Request</field>
+        <field name="model">hr.leave.allocation</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='notes']" position="before">
+                <group string="Hr Year">
+                    <field name="hr_year_id" widget="selection" required="1" domain="[('state','in',('draft','open'))]"
+                           class="oe_inline" attrs="{'readonly':[('state', 'in', ('validate','refuse'))]}"/>
+                </group>
+            </xpath>
+            <xpath expr="//group[@name='alloc_right_col']" position="inside">
+                <field name="accrual_transferred" attrs="{'required':[('accrual','=',True)],'invisible':[('accrual','=',False)]}"/>
+                <field name="expiry_date" attrs="{'required':[('accrual_transferred','=',True)],'invisible':[('accrual_transferred','=',False)]}"/>
+                <field name="remaining_leaves_from_past_year" invisible="0" readonly="1" attrs="{'required':[('accrual','=',True)],'invisible':[('accrual','=',False)]}"/>
+                <field name="remaining_leaves_for_payslip" invisible="1"/>
+                <field name="expiry_done" invisible="1"/>
+                <field name="duration_readonly" invisible="1"/>
+                <field name="max_transfer_annual_leave" attrs="{'required':[('accrual','=',True)],'invisible':[('accrual','=',False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='number_of_days_display']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', '|',('type_request_unit', '=', 'hour'), ('state', 'not in', ('draft', 'confirm')),('duration_readonly','=',True)], 'invisible': [('type_request_unit', '=', 'hour')]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!--    #####################################################
+                         HR Leave General Settings Menu
+            #####################################################    -->
+
+    <record id="res_config_settings_inherit_hr_leave" model="ir.ui.view">
+        <field name="name">HR Leave Settings Inherit</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="Leave" string="Leave" data-key="my_holiday">
+                    <h2>Leave Notifications</h2>
+                    <group>
+                        <field name="request_leave_recipients" widget="many2many_tags" style="width: 50%"/>
+                        <field name="approve_leave_recipients" widget="many2many_tags" style="width: 50%"/>
+                    </group>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

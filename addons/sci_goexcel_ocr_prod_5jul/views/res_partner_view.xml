@@ -1,0 +1,14 @@
+<odoo>
+	<record model="ir.ui.view" id="res_partner_view_ocr">
+		<field name="name">Partner</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+		<field name="inherit_id" ref="base.view_partner_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='lang']" position="after">
+				<field name="ocr_partner_template"/>
+  			</xpath>
+
+		</field>
+	</record>
+</odoo>

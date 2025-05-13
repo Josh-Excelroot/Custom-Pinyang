@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="filter_contact_branch" model="ir.rule">
+            <field name="name">Contact: Branch</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <!--
+            <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman_all_leads')), (4, ref('sales_team.group_sale_salesman'))]"/>
+            -->
+            <field name="domain_force">['|', ('branch_ids', 'in', user.branch_ids.ids), '&amp;' ,('customer','=',False),('supplier','=',False)]</field>
+        </record>
+
+<!--        <record id="filter_quotation_branch" model="ir.rule">-->
+<!--            <field name="name">Quotation: Branch</field>-->
+<!--            <field name="model_id" ref="sale.model_sale_order"/>-->
+<!--            &lt;!&ndash;-->
+<!--            <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman_all_leads')), (4, ref('sales_team.group_sale_salesman'))]"/>-->
+<!--            &ndash;&gt;-->
+<!--            <field name="domain_force">[('branch', 'in', [c.id for c in user.branch_ids])]</field>-->
+<!--        </record>-->
+
+        <record id="filter_booking_branch" model="ir.rule">
+            <field name="name">Booking: Branch</field>
+            <field name="model_id" ref="sci_goexcel_freight.model_freight_booking"/>
+            <!--
+            <field name="groups" eval="[(4, ref('sci_goexcel_freight.freight_group_user')), (4, ref('sci_goexcel_freight.freight_group_own')), (4, ref('sci_goexcel_freight.freight_group_manager'))]"/>
+            -->
+            <field name="domain_force">[('branch', 'in', [c.id for c in user.branch_ids])]</field>
+        </record>
+
+        <record id="filter_account_branch" model="ir.rule">
+            <field name="name">Account: Branch</field>
+            <field name="model_id" ref="account.model_account_invoice"/>
+            <!--
+            <field name="groups" eval="[(4, ref('account.group_account_manager')), (4, ref('account.group_account_invoice'))]"/>
+            -->
+            <field name="domain_force">[('branch', 'in', [c.id for c in user.branch_ids])]</field>
+        </record>
+
+
+       
+    </data>
+</odoo>

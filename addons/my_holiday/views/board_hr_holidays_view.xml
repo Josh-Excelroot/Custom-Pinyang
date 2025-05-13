@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- News Dashboard -->
+    <record id="action_view_employee_news_board" model="ir.actions.act_window">
+        <field name="name">News/Update</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">employee.news</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_hr_employee_news_search"/>
+    </record>
+
+    <record id="board_hr_employee_news_form" model="ir.ui.view">
+        <field name="name">board.hr.employee.news.form</field>
+        <field name="model">board.board</field>
+        <field name="inherit_id" ref="board.board_my_dash_view"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="/form/board/column" position="inside">
+                <action name="%(action_view_employee_news_board)d" string="News/Update"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Employee Leave Dashboard -->
+    <record model="ir.ui.view" id="view_holiday_ext_allocation_tree">
+        <field name="name">hr.leave.allocation.tree</field>
+        <field name="model">hr.leave</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree colors="red:state == 'refuse';blue:state == 'draft';black:state in ('confirm','validate','validate1')" string="Allocation Requests">
+                <field name="employee_id"/>
+                <field name="date_from" widget="date"/>
+                <field name="date_to" widget="date"/>
+                <field name="name"/>
+                <field name="number_of_days" string="Number of Days" sum="Remaining Days"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_view_holiday_status_board" model="ir.actions.act_window">
+        <field name="name">Leaves</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.leave</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', 'in',('draft','confirm', 'validate', 'validate1'))]</field>
+        <field name="view_id" ref="view_holiday_ext_allocation_tree"/>
+    </record>
+
+    <record id="board_hr_holidays_form" model="ir.ui.view">
+        <field name="name">board.hr.leave.form</field>
+        <field name="model">board.board</field>
+        <field name="inherit_id" ref="board.board_my_dash_view"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="/form/board/column" position="inside">
+                <action name="%(action_view_holiday_status_board)d" string="Employee Leaves"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Employee Alert Dashboard -->
+    <record id="view_employee_alert_tree" model="ir.ui.view">
+        <field name="name">hr.employee.alert.tree</field>
+        <field name="model">hr.employee</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Employees">
+                <field name="name"/>
+                <field name="department_id"/>
+                <field name="birthday"/>
+                <field name="passport_exp_date"/>
+                <field name="emp_status"/>
+                <field name="rem_days"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_view_employee_status_board" model="ir.actions.act_window">
+        <field name="name">Employees</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="domain">['|', ('birthday','=',context_today().strftime('%Y-%m-%d')), '|', ('rem_days','in',[1,2,3,4,5]), '|', ('emp_status','=','probation'), '&amp;', ('passport_exp_date','&gt;=',time.strftime('%Y-%m-1')), ('passport_exp_date','&lt;=',
+            (context_today().replace(day=1) + relativedelta(months=1,days=-1)).strftime('%Y-%m-%d')) ]</field>
+        <field name="view_id" ref="view_employee_alert_tree"/>
+    </record>
+
+    <record id="board_hr_employee_form" model="ir.ui.view">
+        <field name="name">board.hr.employee.form</field>
+        <field name="model">board.board</field>
+        <field name="inherit_id" ref="board.board_my_dash_view"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="/form/board/column" position="inside">
+                <action name="%(action_view_employee_status_board)d" string="Employee Alert"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

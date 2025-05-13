@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report file="invoice_bill_approval_workflow.report_vendor_payment"
+            id="action_vendor_payment_report"
+            model="account.payment"
+            name="invoice_bill_approval_workflow.report_vendor_payment"
+            print_report_name="Payment List"
+            report_type="qweb-pdf"
+            string="Vendor Payment List"/>
+
+    <template id="report_vendor_payment">
+        <t t-call="web.html_container">
+            <!--<t t-as="o" t-foreach="docs">-->
+                <t t-call="web.external_layout">
+                    <!-- define in general settings ->document template, for logo, address -->
+                    <div class="page" style="font-size:10px;">
+                        <div class="row mt32 mb32 text-right">
+                            <div class="col-12 bm-2">
+                                <strong>
+                                    <h1 class="text-center" style="font-family:arial;font-size:30px;">Vendor Payment List</h1>
+                                </strong>
+                            </div>
+                        </div>
+                        <t t-set="total" t-value="0"/>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span>No.</span>
+                                    </th>
+                                    <th>
+                                        <span>Payment Date</span>
+                                    </th>
+                                    <th>
+                                        <span>PV No</span>
+                                    </th>
+                                    <th>
+                                        <span>Vendor</span>
+                                    </th>
+                                    <th>
+                                        <span>Reference</span>
+                                    </th>
+                                    <th class="text-right">
+                                        <span>Amount</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-as="doc" t-foreach="docs">
+                                    <t t-set="total" t-value="total + doc['amount']"/>
+                                    <tr>
+                                        <td>
+                                            <t t-if="doc['serial_no']">
+                                                <span t-esc="doc['serial_no']"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <t t-if="doc['date']">
+                                                <span t-esc="doc['date'].strftime('%d/%m/%Y')"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <t t-if="doc['pv_no']">
+                                                <span t-esc="doc['pv_no']"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <t t-if="doc['partner']">
+                                                <span t-esc="doc['partner']"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <t t-if="doc['reference']">
+                                                <span t-esc="doc['reference']"/>
+                                            </t>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="doc['amount']" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc[&quot;currency_id&quot;]}"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        <div class="row justify-content-end" id="total">
+                            <div class="col-4">
+                                <table class="table table-sm" style="font-family:arial">
+                                    <tr class="border-black o_total">
+                                        <td class="text-right" colspan="3">
+                                            <strong>Total Amount</strong>
+                                        </td>
+                                        <td class="text-right">
+                                            <strong>
+                                                <span t-esc="'{0:,.2f}'.format(float(total))" />
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <br/>
+                        <t style="font-family:arial;font-size:16px">
+                            <div class="footer">
+                                <div class="last-page" style="position:relative;font-size:12px;margin-top:0;">
+                                    <table>
+                                        <tr>
+                                            <td style="line-height: 1.6;" width="30%">................................................................
+                                                <br/>
+                                                <strong>Issued By</strong>
+                                                <br/>
+                                                <br/>
+                                                <br/></td>
+                                            <td style="text-align:left" width="25%">................................................................
+                                                <br/>
+                                                <strong>Approved By</strong>
+                                                <br/>
+                                                <br/>
+                                                <br/></td>
+                                            <td style="text-align:left" width="20%">................................................................
+                                                <br/>
+                                                <strong>Received By</strong>
+                                                <br/>
+                                                <br/>
+                                                <br/></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="text-center" style="border-top: 1px solid black;font-family:arial;font-size:8pt;">
+                                    <ul class="list-inline mb4">
+                                        <li class="list-inline-item" t-if="company_info['phone']">Phone:
+                                            <span t-esc="company_info['phone']"/></li>
+                                        <b>·</b>
+                                          
+                                        <li class="list-inline-item" t-if="company_info['fax']">Fax :
+                                            <span t-esc="company_info['fax']"/></li>
+                                        <b>·</b>
+                                          
+                                        <li class="list-inline-item" t-if="company_info['email']">Email:
+                                            <span t-esc="company_info['email']"/></li>
+                                        <b>·</b>
+                                          
+                                        <li class="list-inline-item" t-if="company_info['website']">Website:
+                                            <span t-esc="company_info['website']"/></li>
+                                    </ul>
+                                    <div class="text-muted" t-if="report_type == 'pdf'">Page:
+                                        <span class="page"/>
+                                        /
+                                        <span class="topage"/></div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+            <!--</t>-->
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,52 @@
+<odoo>
+     <record id="view_form_booking_branch" model="ir.ui.view">
+         <field name="name">Branch</field>
+         <field name="model">freight.booking</field>
+         <field name="inherit_id" ref="sci_goexcel_freight.view_form_booking"/>
+         <field name="priority" eval="10"/>
+         <field name="arch" type="xml">
+             <xpath expr="//field[@name='cargo_type']" position="after">
+                 <field name="branch"/>
+             </xpath>
+         </field>
+     </record>
+
+    <record id='view_tree_ocean_booking_branch' model='ir.ui.view'>
+        <field name="name">Booking Job Tree</field>
+        <field name="model">freight.booking</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="1"/>
+        <field name="inherit_id" ref="sci_goexcel_freight.view_tree_ocean_booking"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='carrier_booking_no']" position="after">
+                <field name="branch"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_form_master_booking_branch" model="ir.ui.view">
+        <field name="name">Branch</field>
+        <field name="model">freight.master.booking.transport</field>
+        <field name="inherit_id" ref="sci_goexcel_master_booking.view_form_freight_master_booking_transport"/>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='remark']" position="after">
+                <field name="branch"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id='view_tree_freight_master_booking_transport_branch' model='ir.ui.view'>
+        <field name="name">Master Booking Job Tree</field>
+        <field name="model">freight.master.booking.transport</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="10"/>
+        <field name="inherit_id" ref="sci_goexcel_master_booking.view_tree_freight_master_booking_transport"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='direction']" position="after">
+                <field name="branch"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

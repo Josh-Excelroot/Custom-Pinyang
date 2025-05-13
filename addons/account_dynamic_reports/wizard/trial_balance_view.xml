@@ -1,0 +1,66 @@
+<odoo>
+    <data>
+        <record id="ins_trial_balance_wizard" model="ir.ui.view">
+            <field name="name">ins.trial.balance.view</field>
+            <field name="model">ins.trial.balance</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group col="4">
+                        <field name="date_range"/>
+                        <field name="company_id"/>
+                        <field name="target_moves" widget="radio"/>
+                        <field name="display_accounts" widget="radio"/>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                        <field name="debit_credit"/>
+                        <field name="only_include_ending_balance"/>
+                        <field invisible="1" name="show_hierarchy"/>
+                        <field invisible="1" name="financial_year"/>
+                    </group>
+                    <group col="2">
+                        <field domain="[('company_id','=',company_id)]" name="account_ids" options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}" widget="many2many_tags"/>
+                        <field domain="[('company_id','=',company_id)]" name="journal_ids" options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}" widget="many2many_tags"/>
+                        <field domain="[('company_id','=',company_id)]" name="analytic_ids" options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}" widget="many2many_tags"/>
+                        <field domain="['|',('company_id','=',company_id),('company_id','=',False)]" name="analytic_tag_ids" options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}" widget="many2many_tags"/>
+                        <field help="If checked the accounts will act strict to the date range                                     else it will consider initial balance to account" name="strict_range"/>
+                    </group>
+                    <footer>
+                        <button class="oe_highlight" name="action_pdf" string="PDF" type="object" context="{'landscape': True}"/>
+                        <button class="oe_highlight" name="action_pdf" string="PDF (Portrait)" type="object" context="{'landscape': False}"/>
+                        <button class="oe_highlight" name="action_xlsx" string="XLSX" type="object"/>
+                        <button class="oe_highlight" name="action_view" string="VIEW" type="object"/>
+                        <button class="btn-default" special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_ins_trial_balance_wizard" model="ir.actions.act_window">
+            <field name="name">Trial Balance</field>
+            <field name="res_model">ins.trial.balance</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="ins_trial_balance_wizard"/>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="account_dynamic_reports.model_ins_trial_balance"/>
+            <field name="binding_type">report</field>
+        </record>
+        <!--        <report-->
+        <!--            id="action_ins_trial_balance_xlsx"-->
+        <!--            model="ins.trial.balance"-->
+        <!--            string="Trial Balance"-->
+        <!--            report_type="xlsx"-->
+        <!--            name="account_dynamic_reports.ins_trial_balance_xlsx"-->
+        <!--            file="account_dynamic_reports.ins_trial_balance_xlsx"-->
+        <!--            attachment_use="False"-->
+        <!--            print_report_name="'TrialBalance - %s/%s' % (object.date_from,object.date_to)"-->
+        <!--        />-->
+        <record id="action_dynamic_allinone_tb_report" model="ir.actions.client">
+            <field name="name">Trial Balance Report</field>
+            <field name="tag">dynamic.tb</field>
+        </record>
+        <menuitem action="action_ins_trial_balance_wizard" groups="account.group_account_user" id="account_report_tb"
+                  name="Trial Balance" parent="account_dynamic_reports.account_audit_report_parent_menu" sequence="30"/>
+        <!--        <menuitem id="account_report_tb_wiz" sequence="30" action="action_dynamic_allinone_tb_report"-->
+        <!--                  name="Trial Balance" parent="account_reports_ins_wiz" groups="account.group_account_user"/>-->
+    </data>
+</odoo>

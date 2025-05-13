@@ -1,0 +1,35 @@
+<odoo>
+
+
+	<record model="ir.ui.view" id="account_letter_template_form_branch">
+		<field name="name">sale.letter.template.form.branch</field>
+		<field name="model">sale.letter.template</field>
+		<field name="inherit_id" ref="sale_term.account_letter_template_form"/>
+		<field name="type">form</field>
+		<field name="priority" eval="100"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='doc_type']" position="after">
+				<field name="branch"/>
+			</xpath>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="sale_letter_template_tree_branch">
+		<field name="name">sale.letter.template.tree.branch</field>
+		<field name="model">sale.letter.template</field>
+		<field name="inherit_id" ref="sale_term.sale_letter_template_tree"/>
+		<field name="type">tree</field>
+		<field name="priority" eval="100"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='doc_type']" position="after">
+				<field name="branch"/>
+			</xpath>
+		</field>
+	</record>
+
+
+
+
+
+</odoo>

@@ -1,0 +1,9 @@
+<odoo>
+    <record id="account_voucher.action_purchase_receipt" model="ir.actions.act_window">
+        <field name="domain">[('voucher_type','=','purchase')]</field>
+        <field name="context">{'default_voucher_type': 'purchase', 'voucher_type': 'purchase'}</field>
+    </record>
+    <record id="account_voucher.action_sale_receipt" model="ir.actions.act_window">
+        <field name="domain">[('voucher_type','=','sale')]</field>
+    </record>
+</odoo>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<record id="view_deferred_expense_category_form" model="ir.ui.view">
+		<field name="name">account.asset.category.deferred.expense.form</field>
+		<field name="model">account.asset.category</field>
+		<field name="inherit_id" ref="account_asset.view_account_asset_category_form" />
+		<field name="arch" type="xml">
+			<label for="account_asset_id" position="after">
+				<label for="account_asset_id" string="Pre-payment DR Account" attrs="{'invisible': [('type','!=','expense')]}"
+					   help="DR Pre-payment Account in the Vendor Bill"/>
+			</label>
+			<label for="account_depreciation_id" position="after">
+				<label for="account_depreciation_id" string="Recognition CR Pre-Payment Account"
+					   help="CR Pre-payment Account, eg Monthly apportionment" attrs="{'invisible': [('type','!=','expense')]}"/>
+			</label>
+			<label for="account_depreciation_expense_id" position="after">
+				<label for="account_depreciation_expense_id" string="Recognition DR Expense Account" help="DR Expense Account, eg Insurance Expense (Apportionment)"
+					   attrs="{'invisible': [('type','!=','expense')]}"/>
+			</label>
+			<div class="oe_title" position="replace">
+			 	 <div class="oe_title">
+                        <label for="name" string="Asset Type" class="oe_edit_only" attrs="{'invisible': [('type','!=','purchase')]}"/>
+                        <label for="name" string="Deferred Revenue Type" class="oe_edit_only" attrs="{'invisible': [('type','!=','sale')]}"/>
+                        <label for="name" string="Deferred Expense Type" class="oe_edit_only" attrs="{'invisible': [('type','!=','expense')]}"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Computers"/>
+                        </h1>
+                    </div>
+			 </div>
+		</field>
+	</record>
+
+</odoo>

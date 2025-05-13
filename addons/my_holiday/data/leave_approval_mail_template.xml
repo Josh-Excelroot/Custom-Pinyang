@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template and notification section leave approval -->
+    <data noupdate="0">
+        <record id="email_template_leave_approval" model="mail.template">
+            <field name="name">Leave Request: Send by email</field>
+            <field name="model_id" ref="my_holiday.model_hr_leave"/>
+            <field name="email_from"></field>
+            <field name="email_to">${object.get_email_ids_of_leave_approval()|safe}</field>
+            <field name="subject">Leave Approved (${object.employee_id.name or ''})</field>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0"
+                       style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="left" style="min-width: 590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800px"
+                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+
+                                <tr>
+                                    <td valign="top" style="font-size: 13px;">
+                                        <p style="margin: 16px 0px 16px 0px;">
+
+                                            <!--                                                 <a href="${object.env['ir.config_parameter'].sudo().get_param('web.base.url')}${object.get_full_url()}">view click here</a>-->
+                                            <a  role="button" class="btn-link" target="_blank" href="${object.get_full_url()}"
+                                               style="background-color:#875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px;">
+                                                Visit Request
+                                            </a>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <hr class="mt8 mb8"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td valign="top" style="font-size: 13px;">
+                                        <div style="margin: 0px; padding: 0px;">
+                                            <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                                                <b>
+                                                    % if object.employee_id:
+                                                    ${object.employee_id.name}
+                                                    % endif
+                                                </b>
+                                                <br/>
+                                                <br/>
+                                                Leave has been approved
+                                                for the period of
+                                                <strong>${object.number_of_days_display}</strong>
+
+                                            </p>
+
+                                        </div>
+
+                                        <div>
+                                              <hr class="mt8 mb8"/>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                            <td>
+<!--                              <hr class="mt8 mb8"/>-->
+                        </td>
+<!--                                    <td>-->
+<!--                                        Sent by-->
+<!--                                           <a target="_blank" href="${object.mode_company_id.website}" style="color: #875A7B;">-->
+<!--                                ${object.mode_company_id.name}-->
+<!--                            </a>-->
+<!--                                    </td>-->
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="False"/>
+        </record>
+    </data>
+    <!-- Template and notification section leave request -->
+
+    <data noupdate="0">
+        <record id="email_template_leave_request" model="mail.template">
+            <field name="name">Leave Request: Send by email</field>
+            <field name="model_id" ref="my_holiday.model_hr_leave"/>
+            <field name="email_from"></field>
+            <field name="email_to">${object.get_email_ids_of_leave_request()|safe}</field>
+            <field name="subject">Leave Request (${object.employee_id.name or ''})</field>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0"
+                       style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="left" style="min-width: 590px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="800px"
+                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                <tr>
+                                    <td valign="top" style="font-size: 13px;">
+                                        <p style="margin: 16px 0px 16px 0px;">
+                                            <a role="button" class="btn-link" target="_blank" href="${object.get_full_url()}"
+                                               style="background-color:#875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px;">
+                                                Visit Request
+                                            </a>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <hr class="mt8 mb8"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" valign="left" style="font-size: 13px;">
+                                        <div style="margin: 0px; padding: 0px;">
+                                            <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                                                <b>
+                                                    % if object.employee_id:
+                                                    ${object.employee_id.name}
+                                                    % endif
+                                                </b>
+                                                <br/>
+                                                <br/>
+                                                Requested leave
+                                                for the period of <strong>${object.number_of_days_display}</strong> days
+
+
+                                            </p>
+
+                                        </div>
+                                                  <div>
+                                              <hr class="mt8 mb8"/>
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+<!--                              <hr class="mt8 mb8"/>-->
+                        </td>
+<!--                        <td>-->
+<!--                            Sent by-->
+<!--                            <a target="_blank" href="${object.mode_company_id.website}" style="color: #875A7B;">-->
+<!--                                ${object.mode_company_id.name}-->
+<!--                            </a>-->
+<!--                        </td>-->
+                    </tr>
+                </table>
+
+
+            </field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="False"/>
+        </record>
+    </data>
+</odoo>

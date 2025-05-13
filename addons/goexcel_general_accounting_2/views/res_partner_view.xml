@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_company_form_inherit" model="ir.ui.view">
+        <field name="name">res.company.form.view.account.entries</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.view_partner_property_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//group[@name='accounting_entries']"
+                   position="attributes" >
+                <attribute name="groups">account.group_account_user,account.group_account_manager</attribute>
+            </xpath>
+            <xpath expr="//notebook/page[1]/field[@name='child_ids']" position="attributes">
+                 <attribute name="context">{'default_parent_id': active_id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_supplier': supplier, 'default_customer': False, 'default_lang': lang, 'default_user_id': user_id}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

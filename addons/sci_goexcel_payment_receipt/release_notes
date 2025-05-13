@@ -1,0 +1,22 @@
+Version 12.3.0.0.1 - 29 April 2022 Kinjal
+===================================
+CREATE
+    -  Combine both module with journal recon. and without recon
+    
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.3.0.0.2 - 26 May 2022 Kinjal
+===================================
+IMP
+    -  Add Unreconcile Amount field in payment only for OR
+    
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.3.0.0.3- 1 June 2022 - Kinjal
+===================================
+Improve
+    - Update Internal Payment transfer Report

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form_soa" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.soa.inherit</field>
+            <field name="model">res.config.settings</field>
+            <field eval="40" name="priority"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]/div[hasclass('app_settings_block')]/div[@name='customer_soa_setting_container']" position="inside">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <label for="payment_followup_report_id"/>
+                            <div class="text-muted">Invoice Template For Payment Follow-up
+                                    </div>
+                            <div class="content-group">
+                                <div class="row mt16 ml4">
+                                    <field name="payment_followup_report_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True, 'no_open': True}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <label for="go_live_date"/>
+                            <div class="text-muted">Go Live Date
+                                    </div>
+                            <div class="content-group">
+                                <div class="row mt16 ml4">
+                                    <field name="go_live_date" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <label for="statement_duration"/>
+                            <div class="text-muted">Statement Of Account Duration
+                                    </div>
+                            <div class="content-group">
+                                <div class="row mt16 ml4">
+                                    <field name="statement_duration" />
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <label for="invoice_include_type"/>
+                            <div class="text-muted">Include Invoice (open/overdue)
+                                    </div>
+                            <div class="content-group">
+                                <div class="row mt16 ml4">
+                                    <field name="invoice_include_type" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

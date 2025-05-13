@@ -1,0 +1,5 @@
+excute qry while manual testing
+
+update account_move_line set followup_line_id=NULL, followup_date=NULL;
+
+update res_partner set last_sent_date=NULL, last_sent_by=NULL, last_followup_level_id=NULL,last_action_type=NULL, last_send_type=NULL;

@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id='view_tree_container_volume_charges' model='ir.ui.view'>
+        <field name="name">Charges per Container List</field>
+        <field name="model">container.volume.charges</field>
+        <field name="arch" type="xml">
+			<tree string='Container Volume Charges'>
+				<field name="name"/>
+				<field name="uom"/>
+			</tree>
+		</field>
+	</record>
+
+    <record id="view_form_container_volume_charges" model="ir.ui.view">
+        <field name="name">Charges per Container Form</field>
+        <field name="model">container.volume.charges</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="uom" required="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Line Item">
+                            <field name="line_ids" mode="tree">
+                                <tree editable="bottom">
+                                    <field name="product_id" domain="[('uom_id', '=', parent.uom)]"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_search_container_volume_charges" model="ir.ui.view">
+        <field name="name">Charges per Container Filter</field>
+        <field name="model">container.volume.charges</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="uom"/>
+            </search>
+        </field>
+    </record>
+
+    <act_window id="action_container_volume_charges"
+        name="Charges per Container"
+        res_model="container.volume.charges"
+        view_mode="tree,form"
+    />
+
+	<menuitem id="menu_container_volume_charges"
+              name="Charges per Container"
+              parent="sci_goexcel_freight.menu_freight_configure"
+              action="action_container_volume_charges"/>
+
+
+</odoo>

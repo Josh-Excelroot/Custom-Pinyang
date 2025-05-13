@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+
+    <!-- create a scheduler to send email to HR manager today employee on Leave at 8:45am. -->
+    <record id="ir_cron_employee_on_leave" model="ir.cron">
+        <field name="name">Leave : Employees Who are on leave Notification Email</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">weeks</field>
+        <field name="nextcall" eval="(DateTime.today() + timedelta(days=7-DateTime.today().weekday())).strftime('%Y-%m-%d 09:00:00')"/>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field name="model_id" ref="model_hr_leave"/>
+        <field name="state">code</field>
+        <field name="code">model.notification_leave_information()</field>
+    </record>
+
+    <!-- create a scheduler to send email to manager reminder every monday at 14:00am. -->
+    <record id="ir_cron_leave_approval" model="ir.cron">
+        <field name="name">Leave : Pending Leaves Notification Email</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="nextcall" eval="time.strftime('%Y-%m-%d 14:00:00')"/>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field name="model_id" ref="model_hr_leave"/>
+        <field name="state">code</field>
+        <field name="code">model.notification_leave_approval()</field>
+    </record>
+
+    <record id="ir_cron_assign_def_carry_forward_leave" model="ir.cron">
+        <field name="name">Leave : Assign Annual Carry Forward Leave</field>
+        <field name="interval_number">12</field>
+        <field name="interval_type">months</field>
+        <field name="nextcall" eval="time.strftime('%Y-1-01 01:01:01')"/>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field name="model_id" ref="model_hr_leave"/>
+        <field name="state">code</field>
+        <field name="code">model.assign_carry_forward_leave()</field>
+    </record>
+
+    <record id="ir_cron_assign_default_leave" model="ir.cron">
+        <field name="name">Leave : Assign Default Allocation.</field>
+        <field name="interval_number">12</field>
+        <field name="interval_type">months</field>
+        <field name="nextcall" eval="time.strftime('%Y-12-01 00:01:01')"/>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field name="model_id" ref="model_hr_leave"/>
+        <field name="state">code</field>
+        <field name="code">model.assign_default_leave()</field>
+    </record>
+ <!-- Create Scheduler for sick leave - shweta -->
+    <record id="ir_cron_assign_default_sick_leave" model="ir.cron">
+        <field name="name">Leave : Assign Default Sick Leave.</field>
+        <field name="interval_number">12</field>
+        <field name="interval_type">months</field>
+        <field name="nextcall" eval="time.strftime('%Y-12-01 00:01:01')"/>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field name="model_id" ref="model_hr_leave"/>
+        <field name="state">code</field>
+        <field name="code">model.assign_default_sick_leave()</field>
+    </record>
+
+    <!-- Create Scheduler for hospital leave - shweta -->
+    <record id="ir_cron_assign_default_hospital_leave" model="ir.cron">
+        <field name="name">Leave : Assign Default hospital Leave..</field>
+        <field name="interval_number">12</field>
+        <field name="interval_type">months</field>
+        <field name="nextcall" eval="time.strftime('%Y-12-01 00:01:01')"/>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field name="model_id" ref="model_hr_leave"/>
+        <field name="state">code</field>
+        <field name="code">model.assign_default_hospital_leave()</field>
+    </record>
+
+    <!-- Create Scheduler for maternity leave - shweta -->
+    <record id="ir_cron_assign_default_maternity_leave" model="ir.cron">
+        <field name="name">Leave : Assign Default Maternity Leave.</field>
+        <field name="interval_number">12</field>
+        <field name="interval_type">months</field>
+        <field name="nextcall" eval="time.strftime('%Y-12-01 00:01:01')"/>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field name="model_id" ref="model_hr_leave"/>
+        <field name="state">code</field>
+        <field name="code">model.assign_default_maternity_leave()</field>
+    </record>
+
+    <!-- Create Scheduler for paternity leave - shweta -->
+    <record id="ir_cron_assign_default_paternity_leave" model="ir.cron">
+        <field name="name">Leave : Assign Default Paternity Leave.</field>
+        <field name="interval_number">12</field>
+        <field name="interval_type">months</field>
+        <field name="nextcall" eval="time.strftime('%Y-12-01 00:01:01')"/>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field name="model_id" ref="model_hr_leave"/>
+        <field name="state">code</field>
+        <field name="code">model.assign_default_paternity_leave()</field>
+    </record>
+
+    <!-- Create Scheduler for unpaid leave - shweta -->
+    <record id="ir_cron_assign_default_unpaid_leave" model="ir.cron">
+        <field name="name">Leave : Assign Default Unpaid Leave.</field>
+        <field name="interval_number">12</field>
+        <field name="interval_type">months</field>
+        <field name="nextcall" eval="time.strftime('%Y-12-01 00:01:01')"/>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field name="model_id" ref="model_hr_leave"/>
+        <field name="state">code</field>
+        <field name="code">model.assign_default_unpaid_leave()</field>
+    </record>
+
+    <!-- Create Scheduler for marriage leave - shweta -->
+    <record id="ir_cron_assign_default_marriage_leave" model="ir.cron">
+        <field name="name">Leave : Assign Default Marriage Leave.</field>
+        <field name="interval_number">12</field>
+        <field name="interval_type">months</field>
+        <field name="nextcall" eval="time.strftime('%Y-12-01 00:01:01')"/>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field name="model_id" ref="model_hr_leave"/>
+        <field name="state">code</field>
+        <field name="code">model.assign_default_marriage_leave()</field>
+    </record>
+
+    <!-- Create Scheduler for check employee is still under probation -->
+    <record id="ir_cron_employee" model="ir.cron">
+        <field name="name">Employee : Upcoming performance review date of employee. Notification for Terminate within 3 days</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="nextcall" eval="time.strftime('%Y-%m-%d 08:45:00')"/>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="state">code</field>
+        <field name="code">model._check_employee_status()</field>
+    </record>
+
+    <record id="ir_cron_employee_exp" model="ir.cron">
+        <field name="name">Employee : Check Documents If They Have Been Expired</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">months</field>
+        <field name="nextcall" eval="time.strftime('%Y-%m-%d 08:45:00')"/>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="state">code</field>
+        <field name="code">model._check_employee_doc_expiry()</field>
+    </record>
+
+    <!-- create a scheduler for Expiry Documents-->
+    <record id="ir_cron_expiry_documents" model="ir.cron">
+        <field name="name">Immigration : Expiry Document Details With Report</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="nextcall" eval="time.strftime('%Y-01-07 00:01:01')"/>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field name="model_id" ref="model_employee_immigration"/>
+        <field name="state">code</field>
+        <field name="code">model.get_expiry_documents()</field>
+    </record>
+
+    <record forcecreate="True" id="mail.ir_cron_mail_scheduler_action" model="ir.cron">
+        <field name="name">Email Queue Manager</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">5</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+    </record>
+
+</odoo>

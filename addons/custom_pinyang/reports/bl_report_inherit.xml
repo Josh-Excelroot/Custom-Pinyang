@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="bl_report_main_inherit_custom" inherit_id="sci_goexcel_freight_2.bl_report_main_inherit">
+        <xpath expr="//t[@t-call='web.html_container']" position="replace">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div name="main">
+                        <t t-set="cargo_line" t-value="0"/>
+                        <t t-foreach="o.cargo_line_ids" t-as="line">
+                            <t t-set=" " t-value="cargo_line+1"/>
+                        </t>
+                        <t t-set="page_count" t-value="1"/>
+                        <t t-if="o.lines_description &gt; 1">
+                            <t t-set="page_count" t-value="2"/>
+                        </t>
+                        <t t-if="cargo_line &gt; 10">
+                            <t t-set="page_count" t-value="2"/>
+                        </t>
+
+                        <t t-set="curr_page" t-value="1"/>
+
+                        <t t-foreach="range(page_count)" t-as="l">
+                            <t t-set="cargo_line_deduct" t-value="10"/>
+                            <t t-if="curr_page &gt; 1">
+                                <t t-set="cargo_line_deduct" t-value="20"/>
+                            </t>
+                            <t t-if="curr_page == 1">
+                                <t t-call="sci_goexcel_freight.report_bl"/>
+                            </t>
+                            <t t-if="curr_page == 2">
+                                <t t-call="sci_goexcel_freight_2.report_bl_page2"/>
+                            </t>
+                            <t t-set="curr_page" t-value="curr_page+1"/>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </xpath>
+    </template>
+
+
+    <template id="report_bl_inherit_custom" inherit_id="sci_goexcel_freight_2.report_bl_inherit">
+
+        <xpath expr="//div[@name='main']" position="replace">
+            <div name="main">
+                <div class="header">
+                    <style>
+                        @header { margin-top: 0; margin-bottom: 0; margin-left: 0; margin-right: 0; }
+                        .header { margin: 0; padding: 0; }
+                    </style>
+                </div>
+                <div class="page">
+                    <!-- Header row: Logo, Title, Doc No -->
+                    <table style="width:100%; border-collapse:collapse; margin-bottom:10px; font-family:Arial, sans-serif; padding-top:0px">
+                        <colgroup>
+                            <col style="width:10%;"/>
+                            <col style="width:55%;"/>
+                            <col style="width:35%;"/>
+                        </colgroup>
+                        <tr>
+                            <td style="border:none; vertical-align:bottom;">
+                                <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" style="max-height:60px; max-width:100%;" alt="Logo"/>
+                            </td>
+                            <td style="border:none; text-align:left; vertical-align:middle; font-size:30px; font-weight:bold;">
+                                <t t-esc="res_company.name"/>
+                            </td>
+                            <td style="border:none; text-align:left; vertical-align:middle; font-size:13px; font-weight:bold;">
+                                <t t-esc="o.date_of_issue or ''"/> (<t t-esc="res_company.partner_id.vat or ''"/>)
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- Main container table -->
+                    <table style="
+                            width:100%;
+                            table-layout:fixed;
+                            border-collapse:collapse;
+                            font-family:Arial, sans-serif;
+                            font-size:12px;
+                            border:1px solid #000;
+                        "
+                        cellpadding="4"
+                        cellspacing="0">
+                        <!-- 11 uniform columns at ~9.09% each -->
+                        <colgroup>
+                            <col style="width:9.09%;"/>
+                            <col style="width:9.09%;"/>
+                            <col style="width:9.09%;"/>
+                            <col style="width:9.09%;"/>
+                            <col style="width:9.09%;"/>
+                            <col style="width:9.09%;"/>
+                            <col style="width:9.09%;"/>
+                            <col style="width:9.09%;"/>
+                            <col style="width:9.09%;"/>
+                            <col style="width:9.09%;"/>
+                            <col style="width:9.09%;"/>
+                        </colgroup>
+
+                        <!-- Row 1: Shipper (1-6 rows 1-2) & Title (7-11 row 1) -->
+                        <tr>
+                            <td colspan="6" rowspan="2" style="vertical-align:top; border:1px solid #000;"><strong>SHIPPER</strong><br/><t t-esc="o.shipper_id.name"/><br/><t t-esc="o.shipper"/></td>
+                            <td colspan="5" style="text-align:center; font-weight:bold; font-size:18px; vertical-align:middle; border:1px solid #000;">BILL OF LADING</td>
+                        </tr>
+                        <!-- Row 2: B/L Number (7-11) -->
+                        <tr>
+                            <td colspan="5" style="vertical-align:top; border:1px solid #000;"><strong>B/L NUMBER :</strong><br/><t t-esc="o.bol_no"/></td>
+                        </tr>
+                        <!-- Row 3: Consignee (1-6 rows 3-4) & Export References (7-11 row3) -->
+                        <tr>
+                            <td colspan="6" rowspan="2" style="vertical-align:top; border:1px solid #000;"><strong>CONSIGNEE</strong><br/><t t-esc="o.consignee_id.name"/><br/><t t-esc="o.consignee"/></td>
+                            <td colspan="5" style="vertical-align:top; border:1px solid #000;"><strong>EXPORT REFERENCES</strong><br/><t t-esc="o.export_reference"/> </td>
+                        </tr>
+                        <!-- Row 4: Delivery Agent (7-11 rows4-6) -->
+                        <tr>
+                            <td colspan="5" rowspan="3" style="vertical-align:top; border:1px solid #000;"><strong>DELIVERY AGENT DETAILS</strong><br/>
+                                <t t-if="o.oversea_agent">
+                                    <t t-esc="o.oversea_agent.name"/><br/>
+                                    <t t-esc="o.oversea_agent.street"/><br/>
+                                    <t t-if="o.oversea_agent.street2">
+                                        <t t-esc="o.oversea_agent.street2"/><br/>
+                                    </t>
+                                    <t t-if="o.oversea_agent.city">
+                                        <t t-esc="o.oversea_agent.city"/>,
+                                    </t>
+                                    <t t-esc="o.oversea_agent.state_id.name"/>
+                                    <t t-if="o.oversea_agent.state_id.name">
+                                        <t t-esc="o.oversea_agent.zip"/>,
+                                    </t>
+                                    <t t-esc="o.oversea_agent.country_id.name"/><br/>
+                                    TEL: <t t-esc="o.oversea_agent.phone"/> <t t-if="o.oversea_agent.email">/ <t t-esc="o.oversea_agent.email"/></t><br/>
+                                </t>
+                            </td>
+                        </tr>
+                        <!-- Row 5: Notify Party (1-6) -->
+                        <tr>
+                            <td colspan="6" style="vertical-align:top; border:1px solid #000;"><strong>NOTIFY PARTY</strong><br/><t t-esc="o.notify_party or 'SAME AS CONSIGNEE'"/></td>
+                        </tr>
+                        <!-- Row 6: Pre-Carriage (1-3) & Place of Receipt (4-6) -->
+                        <tr>
+                            <td colspan="3" style="vertical-align:top; border:1px solid #000;"><strong>PRE-CARRIAGE BY</strong><br/><t t-esc="o.pre_carriage_by"/></td>
+                            <td colspan="3" style="vertical-align:top; border:1px solid #000;"><strong>PLACE OF RECEIPT</strong><br/><t t-esc="o.place_of_receipt"/></td>
+                        </tr>
+                        <!-- Row 7: Ocean Vessel / Voy (1-3), Port of Loading (4-6), Movement (7-11 rows7-8) -->
+                        <tr>
+                            <td colspan="3" style="vertical-align:top; border:1px solid #000;"><strong>OCEAN VESSEL / VOY. NO.</strong><br/><t t-esc="o.vessel"/> / <t t-esc="o.voyage_no"/></td>
+                            <td colspan="3" style="vertical-align:top; border:1px solid #000;"><strong>PORT OF LOADING</strong><br/><t t-esc="o.port_of_loading_input"/></td>
+                            <td colspan="5" style="text-align:center; font-weight:bold; font-size:18px; vertical-align:middle; border:1px solid #000;"><t t-esc="(dict(o.fields_get(['bol_status'])['bol_status']['selection'])[o.bol_status]).upper()"/></td>
+                        </tr>
+                        <!-- Row 8: Port of Discharge (1-3) & Port of Delivery (4-6) -->
+                        <tr>
+                            <td colspan="3" style="vertical-align:top; border:1px solid #000;"><strong>PORT OF DISCHARGE</strong><br/><t t-esc="o.port_of_discharge_input"/></td>
+                            <td colspan="3" style="vertical-align:top; border:1px solid #000;"><strong>PORT OF DELIVERY</strong><br/><t t-esc="o.place_of_delivery"/></td>
+                            <td colspan="5" rowspan="1" style="vertical-align:top; border:1px solid #000;"><strong>MOVEMENT</strong><br/><t t-esc="(dict(o.fields_get(['type_of_movement'])['type_of_movement']['selection'])[o.type_of_movement]).upper()"/></td>
+                        </tr>
+                        <!-- Container Section Headers -->
+                        <tr>
+                            <td colspan="2" style="text-align:center; font-weight:bold; border:1px solid #000;">MARKS &amp; NUMBERS<br/>CONTAINER &amp; SEAL NO.</td>
+                            <td colspan="2" style="text-align:center; font-weight:bold; border:1px solid #000;">NO. OF CONTAINER<br/>OR TOTAL PACKAGES</td>
+                            <td colspan="5" style="text-align:center; font-weight:bold; border:1px solid #000;">DESCRIPTION OF GOODS</td>
+                            <td colspan="1" style="text-align:center; font-weight:bold; border:1px solid #000;">GROSS WEIGHT</td>
+                            <td colspan="1" style="text-align:center; font-weight:bold; border:1px solid #000;">M3</td>
+                        </tr>
+                        <!-- Container Section Lines -->
+                        <t t-set="row_h" t-value="80"/>       <!-- each real row = 80px tall -->
+                        <t t-set="max_h" t-value="480"/>      <!-- want total 640px -->
+                        <t t-set="num_rows" t-value="len(o.cargo_line_ids)"/>
+                        <t t-set="used_h" t-value="row_h * num_rows"/>
+                        <t t-set="rem_h" t-value="max_h - used_h if max_h > used_h else 0"/>
+
+                        <t t-foreach="o.cargo_line_ids" t-as="line">
+                            <tr t-att-style="'height:%spx;' % row_h">
+                                <td colspan="2" style="vertical-align:top; border-right:1px solid #000"><t t-esc="line.marks or ''"/></td>
+                                <td colspan="2" style="vertical-align:top; border-right:1px solid #000"><t t-esc="line.packages_no_value or ''"/> <t t-esc="line.packages_no_uom.name" /></td>
+                                <td colspan="5" style="vertical-align:top; white-space: pre-wrap; word-wrap: break-word; border-right:1px solid #000"><t t-raw="line.container_product_name or ''"/></td>
+                                <td colspan="1" style="vertical-align:top; text-align: center; border-right:1px solid #000">KGS <br/><t t-esc="line.exp_gross_weight or 0"/></td>
+                                <td colspan="1" style="vertical-align:top; text-align: center; border-right:1px solid #000">CBM <br/><t t-esc="line.exp_vol or 0"/></td>
+                            </tr>
+                        </t>
+
+                        <t t-if="rem_h &gt; 0">
+                            <tr t-att-style="'height:%spx;' % rem_h">
+                                <td colspan="2" style="border-right:1px solid #000"/>
+                                <td colspan="2" style="border-right:1px solid #000"/>
+                                <td colspan="5" style="border-right:1px solid #000"/>
+                                <td colspan="1" style="border-right:1px solid #000"/>
+                                <td colspan="1" style="border-right:1px solid #000"/>
+                            </tr>
+                        </t>
+
+                        <!-- Declaration Section -->
+                        <tr>
+                            <td colspan="2" style="border:1px solid #000; text-align:center; font-weight:bold;">FREIGHT AND CHARGES</td>
+                            <td colspan="1" style="border:1px solid #000; text-align:center; font-weight:bold;">PREPAID</td>
+                            <td colspan="1" style="border:1px solid #000; text-align:center; font-weight:bold;">COLLECT</td>
+                            <td colspan="7" rowspan="3" style="border:1px solid #000; vertical-align:top; font-size:9px;">
+                                EXCESS VALUE DECLARATION <br/>
+                                RECEIVED by the carrier the goods as specified above in apparent good order and condition unless otherwise <br/>
+                                stated to be transported to such place as agreed, authorized or permitted herein and subject to all the terms <br/>
+                                and conditions appearing on the front and reserve of this Bll of Lading to which the Merchant agrees by <br/>
+                                accepting this Bill of Lading, and local privileges and customers notwithstanding. <br/>
+                                The particulars given above as stated by shipper and the weight, measure, quantity, condition, content and <br/>
+                                value of the Goods are unknown to the carrier. <br/>
+                                IN WITNESS whereof the number of original Bill of Lading stated below have been sugned, one of which being <br/>
+                                accomplished, the order (s) to be void. <br/>
+                            </td>
+                        </tr>
+                        <!-- Body rows: rowspan cells for 3 rows -->
+                        <tr>
+                            <td colspan="2" rowspan="3" style="border:1px solid #000; vertical-align:middle; text-align:center;">
+                            </td>
+                            <td colspan="1" rowspan="3" style="border:1px solid #000; vertical-align:middle; text-align:center;">
+                                <t t-if="o.freight_type=='prepaid'">
+                                  <strong>“FREIGHT PREPAID”</strong>
+                                </t>
+                            </td>
+                            <td colspan="1" rowspan="3" style="border:1px solid #000; vertical-align:middle; text-align:center;">
+                                <t t-if="o.freight_type=='collect'">
+                                    <strong>“FREIGHT COLLECT”</strong>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr/>
+                        <tr>
+                            <td colspan="7" rowspan="3" style="border:1px solid #000; vertical-align:top; font-size:9px;">
+                                <strong>PIN YANG GLOBAL FREIGHT PLT</strong> as agent for the carrier
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <strong>BY</strong> _________________________________
+                            </td>
+                        </tr>
+                        <!-- Footer row: Place & Date of Issue and Number of Originals -->
+                        <tr>
+                            <td colspan="4" style="border:1px solid #000;">
+                                <strong>PLACE AND DATE OF ISSUE</strong><br/>
+                                <span style="text-align:center">
+                                    <t t-if="o.place_of_issue and o.date_of_issue">
+                                        <t t-esc="o.place_of_issue"/>, <t t-esc="o.date_of_issue.strftime('%d/%m/%Y')"/>
+                                    </t>
+                                    <t t-elif="o.place_of_issue and not o.date_of_issue">
+                                        <t t-esc="o.place_of_issue"/>
+                                    </t>
+                                    <t t-elif="not o.place_of_issue and o.date_of_issue">
+                                        <t t-esc="o.date_of_issue.strftime('%d/%m/%Y')"/>
+                                    </t>
+                                </span>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="border:1px solid #000;">
+                                <strong>NUMBER OF ORIGINAL B/L</strong><br/>
+                                <span style="text-align:center">
+                                    <t t-if="o.no_of_original_bl">
+                                        <t t-if="o.no_of_original_bl == '0'">
+                                            ZERO (0)
+                                        </t>
+                                        <t t-elif="o.no_of_original_bl == '1'">
+                                            ONE (1)
+                                        </t>
+                                        <t t-else="">
+                                            THREE (3)
+                                        </t>
+                                    </t>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="text-align:center; font-family:Arial"><span>LAW AND JURISDICTION MALAYSIA</span></div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

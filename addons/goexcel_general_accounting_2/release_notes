@@ -1,0 +1,23 @@
+12.0.1.2 - 08/jan/2024 by Rajeel
+ + auto creation of XML created sequences for all companies
+  - added models/ir_sequence.py
+
+12.0.1.3 - 27 Jun 2024 - Kenny
+    - move origin field in invoice
+
+12.0.1.4 - 30 October 2024 - Yulia
++ add accounting authorization
++ revise contact logic
+
+12.0.1.5 - 28 November 2024
++ add tax code at product template
+07/01/25
++ added invoice + cn view from JWM
+
+12.0.1.6 - 11 March 2025 Yulia
+fixed js accounting
+
+12.0.1.7 - 14 March 2025 Yulia
+fixed accounting validation error
+
+

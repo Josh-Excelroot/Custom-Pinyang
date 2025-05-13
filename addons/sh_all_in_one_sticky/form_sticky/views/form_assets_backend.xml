@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <template active="False" id="form_assets_backend" name="Form View Assets" inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <link rel="stylesheet"
+                  href="/sh_all_in_one_sticky/form_sticky/static/src/scss/form_custom.scss"
+                  />
+        </xpath>
+    </template>
+    <template active="False" id="form_enterprise_assets_backend" name="Form View Assets" inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <link rel="stylesheet"
+                  href="/sh_all_in_one_sticky/form_sticky/static/src/scss/form_custom_enterprise.scss"/>
+        </xpath>
+    </template>
+</odoo>

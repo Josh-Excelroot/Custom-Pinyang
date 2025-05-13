@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--    Ahmad Zaman - 05/01/24 - Removing Admin Mode Requirement To Access The Technical Settings Menu-->
+        <record id="base.menu_custom" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- wizard view -->
+    <!--    Ahmad Zaman - 5 Oct 2023 - Mass Reassignment Fixes and Enhancements-->
+    <record id="salesperson_reassign_wiz_view" model="ir.ui.view">
+        <field name="name">Mass Reassign Opportunities or Customer To Salesperson Wizard</field>
+        <field name="model">salesperson.reassign.cust.wiz</field>
+        <field name="arch" type="xml">
+            <form name="Salesperson Reassign To Customer">
+                <group>
+                    <group col="2">
+                        <field name="type" widget="radio"/>
+                    </group>
+                    <group col="2">
+                        <field name="based_on" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+                </group>
+                <group>
+                    <group col="2">
+                        <field name="city_name" attrs="{'invisible':[('based_on', '=', 'sales_person')]}"/>
+                        <field name="reassign_user_id"
+                               options="{'no_create': True, 'no_open': True, 'no_edit': True, 'no_create_edit': True}"
+                               attrs="{'invisible':[('based_on', '=', 'city')]}"/>
+                    </group>
+                    <group col="2">
+                        <field name="opportunity_stage"
+                               attrs="{'invisible':['|',('type', '=', 'customer'), ('type', '=', 'prospect')]}"
+                               options="{'no_create': True, 'no_open': True, 'no_edit': True, 'no_create_edit': True}"/>
+                        <field name="replace_user_id"
+                               options="{'no_create': True, 'no_open': True, 'no_edit': True, 'no_create_edit': True}"/>
+                    </group>
+                </group>
+                <field name="partner_list_ids">
+                    <tree delete="0" editable="1">
+                        <field name="partner_select"/>
+                        <field name="partner_id"/>
+                        <field name="user_id"/>
+                        <field name="city" readonly="1"/>
+                        <field name="address" readonly="1"/>
+<!--                        Old Field Options-->
+<!--                        <field name="partner_id" options="{'no_create': True, 'no_open': True, 'no_edit': True, 'no_create_edit': True}" readonly="1"/>-->
+<!--                        <field name="user_id" options="{'no_create': True, 'no_open': True, 'no_edit': True, 'no_create_edit': True}" readonly="1"/>-->
+
+                    </tree>
+                </field>
+                <field name="opportunity_list_ids">
+                    <tree delete="0" editable="1">
+                        <field name="opportunity_select"/>
+                        <field name="opportunity_id"/>
+                        <field name="customer_id"/>
+                        <field name="user_id"/>
+                        <field name="city" readonly="1"/>
+                        <field name="stage_id" readonly="1"/>
+<!--                        Old Field Options-->
+<!--                        <field name="opportunity_id" options="{'no_create': True, 'no_open': True, 'no_edit': True, 'no_create_edit': True}" readonly="1"/>-->
+<!--                        <field name="customer_id" options="{'no_create': True, 'no_open': True, 'no_edit': True, 'no_create_edit': True}" readonly="1"/>-->
+<!--                        <field name="user_id" options="{'no_create': True, 'no_open': True, 'no_edit': True, 'no_create_edit': True}" readonly="1"/>-->
+<!--                        <field name="stage_id" options="{'no_create': True, 'no_open': True, 'no_edit': True, 'no_create_edit': True}" readonly="1"/>-->
+                        <!-- <field name="customer_id" options="{'no_create': True, 'no_open': True, 'no_edit': True, 'no_create_edit': True}"/>
+                         <field name="city"/>
+                         <field name="address"/>-->
+                    </tree>
+                </field>
+                <footer>
+                    <button name="action_reassign" string="Mass Reassign" type="object" default_focus="1"
+                            class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_salesperson_reassign_wiz" model="ir.actions.act_window">
+        <field name="name">Mass Reassign Opportunities or Customer To Salesperson Wizard</field>
+        <field name="res_model">salesperson.reassign.cust.wiz</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="goexcel_crm.salesperson_reassign_wiz_view"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form_inherit_sq" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.sq</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="40"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//div[@data-key='sale_management']" position="inside">
+                    <!-- <h2>Cash Sale Payment method</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <label for="cash_order_payment_method_id"/>
+                                <div class="text-muted">
+                                    Set a payment method for cash sale
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="cash_order_payment_method_id" options="{'no_create_edit':True,'no_open':True,'no_edit':True,'no_create':True}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <h2>Sales Quotation Approval</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="use_sq_remider_days"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="use_sq_remider_days"/>
+                                <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/>
+                                <div class="text-muted">
+                                    Set a Reminder days After sale quotation sent
+                                </div>
+                                <div class="content-group"  attrs="{'invisible': [('use_sq_remider_days','=',False)]}">
+                                    <div class="mt16">
+                                        <span class="col-lg-3">Default Limit: <field name="sq_remider_days" attrs="{'required': [('use_sq_remider_days', '=', True)]}"/> days</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                                      
+                       
+                    </div>
+                    <h2>Customer/Vendor Code</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="enble_cust_code"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="enble_cust_code"/>
+                                <span title="Values set here are company-specific." aria-label="Values set here are company-specific."/>
+                                <div class="text-muted">
+                                    Set a Customer Code
+                                </div>
+                                <div class="content-group"  attrs="{'invisible': [('enble_cust_code','=',False)]}">
+                                    <div class="mt16">
+                                        <span class="col-lg-3">Customer Code: <field name="customer_code" attrs="{'required': [('enble_cust_code', '=', True)]}"/></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="enble_ven_code"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="enble_ven_code"/>
+                                <span  title="Values set here are company-specific." aria-label="Values set here are company-specific."/>
+                                <div class="text-muted">
+                                    Set a Vendor Code
+                                </div>
+                                <div class="content-group"  attrs="{'invisible': [('enble_ven_code','=',False)]}">
+                                    <div class="mt16">
+                                        <span class="col-lg-3">Vendor Code: <field name="vendor_code" attrs="{'required': [('enble_ven_code', '=', True)]}"/></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                                      
+                       
+                    </div>
+                    <h2>Credit Limit Approver for Partner</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Credit Limit Approver</span>
+                                <div class="text-muted">Credit Limit Approver for Partner</div>
+                                <field name="cr_limit_app_user_ids" options="{'no_create_edit':True,'no_open':True,'no_edit':True,'no_create':True}" widget="many2many_tags"/>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Credit Limit/ SQ credit / Max Discount / Payment Term,Pricelist Approver</h2>
+                    <div class="row mt16 o_settings_container">
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">SQ Credit Approver</span>
+                                <div class="text-muted">SQ Credit Approver</div>
+                                <field name="sq_credit_limit_approver_ids" options="{'no_create_edit':True,'no_open':True,'no_edit':True,'no_create':True}" widget="many2many_tags"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Max Discount Approver</span>
+                                <div class="text-muted">Max Discount Approvers</div>
+                                <field name="max_discount_approver_ids" options="{'no_create_edit':True,'no_open':True,'no_edit':True,'no_create':True}" widget="many2many_tags"/>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Payment Term/Pricelist Approver</span>
+                                <div class="text-muted">Payment Term and pricelist change Approver</div>
+                                <field name="payment_term_approver_ids" options="{'no_create_edit':True,'no_open':True,'no_edit':True,'no_create':True}" widget="many2many_tags"/>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

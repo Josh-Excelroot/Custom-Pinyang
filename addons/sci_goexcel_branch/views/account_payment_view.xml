@@ -1,0 +1,82 @@
+<odoo>
+
+	<record id="view_account_payment_branch" model="ir.ui.view">
+		<field name="name">Account Payment</field>
+		<field name="model">account.payment</field>
+		<field name="sequence" eval="20"/>
+		<field name="inherit_id" ref="account.view_account_payment_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='reference']" position="after">
+				<field name="branch"/>
+			</xpath>
+		</field>
+	</record>
+
+
+	<record id='view_account_payment_tree_branch' model='ir.ui.view'>
+		<field name="name">Customer Paymeent Tree Branch</field>
+		<field name="model">account.payment</field>
+		<field name="type">tree</field>
+		<field name="priority" eval="10"/>
+		<field name="inherit_id" ref="account.view_account_payment_tree"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='state']" position="after">
+				<field name="branch"/>
+			</xpath>
+		</field>
+	</record>
+
+
+	<record id='view_account_supplier_payment_tree_branch' model='ir.ui.view'>
+		<field name="name">Vendor Payment Tree Branch</field>
+		<field name="model">account.payment</field>
+		<field name="type">tree</field>
+		<field name="priority" eval="10"/>
+		<field name="inherit_id" ref="account.view_account_supplier_payment_tree"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='state']" position="after">
+				<field name="branch"/>
+			</xpath>
+		</field>
+	</record>
+
+
+	<record id="view_account_voucher_pv_branch" model="ir.ui.view">
+		<field name="name">Account Voucher</field>
+		<field name="model">account.voucher</field>
+		<field name="sequence" eval="20"/>
+		<field name="inherit_id" ref="account_voucher.view_purchase_receipt_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='reference']" position="after">
+				<field name="branch"/>
+			</xpath>
+		</field>
+	</record>
+
+
+	<record id='view_voucher_tree_branch' model='ir.ui.view'>
+		<field name="name">Customer Receipt Tree Branch</field>
+		<field name="model">account.voucher</field>
+		<field name="type">tree</field>
+		<field name="priority" eval="10"/>
+		<field name="inherit_id" ref="account_voucher.view_voucher_tree"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='state']" position="after">
+				<field name="branch"/>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="view_account_voucher_pr_branch" model="ir.ui.view">
+		<field name="name">Account Voucher</field>
+		<field name="model">account.voucher</field>
+		<field name="inherit_id" ref="account_voucher.view_sale_receipt_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='company_id']" position="after">
+				<field name="branch"/>
+			</xpath>
+		</field>
+	</record>
+
+
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_customer_statement_form" model="ir.ui.view">
+        <field name="name">view.customer.statement.form</field>
+        <field name="model">customer.statement</field>
+        <field name="inherit_id" ref="goexcel_customer_statement.view_customer_statement_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[last()]" position="after">
+                <group>
+                    <group>
+                        <field name="invoice_include_type" widget="radio" options="{'horizontal': true}"/>
+                        <field name="send_invoice"  invisible="1"/>
+                        <field name="send_open_invoice" invisible="1"/>
+                        <field name="inv_over_due_date" attrs="{'invisible': [('send_invoice', '=', False)], 'required': [('send_invoice', '=', True)]}"/>
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//footer" position="replace">
+                <footer>
+                    <button string="Print Statement" name="print_statement" type="object" class="oe_highlight"/>
+                     or
+                    <button string="Send Email" name="send_statement" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Print Overdue Invoices" name="print_overdue_invoices" type="object" class="oe_highlight" attrs="{'invisible': [('send_invoice', '=', False)]}"/>
+                    <button string="Print Open Invoices" name="print_open_invoices" type="object" class="oe_highlight" attrs="{'invisible': [('send_open_invoice', '=', False)]}"/>
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </xpath>
+        </field>
+    </record>
+</odoo>

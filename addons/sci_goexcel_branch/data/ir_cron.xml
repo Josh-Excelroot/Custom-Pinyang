@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!--#kashif 6june23: update interval type to 1 week-->
+
+        <record id="ir_cron_update_branch_in_je" model="ir.cron">
+            <field name="name">Update Branch in JE</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">weeks</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model_id" ref="model_account_move_line"/>
+            <field name="code">model.update_branch_on_JE(2023)</field>
+            <field name="state">code</field>
+            <field name="active" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

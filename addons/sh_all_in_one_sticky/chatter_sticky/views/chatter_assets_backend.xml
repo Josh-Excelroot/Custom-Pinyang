@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <template active="False" id="chatter_assets_backend" name="Chatter View Assets" 
+    inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <link rel="stylesheet"
+                  href="/sh_all_in_one_sticky/chatter_sticky/static/src/scss/chatter_custom.scss"
+                  />
+        </xpath>
+    </template>
+    <template active="False" id="form_chatter_assets_backend" name="Form Chatter View Assets" 
+    inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <link rel="stylesheet"
+                  href="/sh_all_in_one_sticky/chatter_sticky/static/src/scss/form_chatter_custom.scss"
+                  />
+        </xpath>
+    </template>
+    <template active="False" id="form_chatter_enterprise_assets_backend" name="Form Chatter View Assets" 
+    inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <link rel="stylesheet"
+                  href="/sh_all_in_one_sticky/chatter_sticky/static/src/scss/form_chatter_custom_enterprise.scss"/>
+        </xpath>
+    </template> 
+</odoo>

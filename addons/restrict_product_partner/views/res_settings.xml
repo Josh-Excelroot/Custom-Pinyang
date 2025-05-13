@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_contact" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.sale</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="10"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="Contacts" string="Contacts" data-key="contacts">
+                    <h2>Contact Duplication Check</h2>
+                    <div class="row mt16 o_settings_container" name="contact_setting_container">
+                        <div class="col-12 col-lg-6 o_setting_box" title="Contact Warning General Settings">
+                            <div class="o_setting_left_pane">
+                                <field name="warning"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Show Warning</span>
+                                <div class="text-muted">
+                                    Display a warning when a duplicate contact is created.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" title="Contact Error General Settings">
+                            <div class="o_setting_left_pane">
+                                <field name="show_error"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Show Error</span>
+                                <div class="text-muted">
+                                    Raise an error when a duplicate contact is created.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_contact_settings_config" model="ir.actions.act_window">
+        <field name="name">Contact Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_id" ref="base.res_config_settings_view_form"/>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'contacts'}</field>
+    </record>
+
+    <menuitem id="menu_contact_configuration"
+              name="Settings"
+              action="action_contact_settings_config"
+              parent="contacts.res_partner_menu_config"
+              sequence="0"/>
+</odoo>

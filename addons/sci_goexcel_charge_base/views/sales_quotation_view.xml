@@ -1,0 +1,18 @@
+<odoo>
+	 <!-- SQ Form -->
+	<record model="ir.ui.view" id="view_sales_quotation_view_charge_base">
+		<field name="name">Freight Booking</field>
+		<field name="model">sale.order</field>
+        <field name="type">form</field>
+		<field name="priority" eval="1"/>
+		<field name="inherit_id" ref="sci_goexcel_sq.view_sales_quotation_view_booking"/>
+		<field name="arch" type="xml">
+			<xpath expr="//button[@name='action_unlock']" position="after">
+				<button name="action_service" type="object" string="Charge"/>
+			</xpath>
+			<xpath expr="//field[@name='carrier_booking_no']" position="before">
+				<field name="carrier"/>
+			</xpath>
+		</field>
+	</record>
+</odoo>

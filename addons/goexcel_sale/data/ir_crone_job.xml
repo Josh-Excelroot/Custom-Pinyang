@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_cron_reverse_entry" model="ir.cron">
+        <field name="name">Sale; SQ Reminder</field>
+        <field name="interval_number">7</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model_id" ref="model_sale_order"/>
+        <field name="code">model._run_sq_reminder()</field>
+        <field name="state">code</field>
+    </record>
+
+    <record id="ir_cron_res_partner_check_last_invoice" model="ir.cron">
+        <field name="name">Update Customer Inactive Status</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="nextcall">2023-02-21 07:00</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="code">model.check_last_invoice_and_set_status()</field>
+        <field name="state">code</field>
+    </record>
+
+    <record id="ir_cron_res_partner_update_last_invoice_date" model="ir.cron">
+        <field name="name">Update Last Invoice Date</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="active" eval="False"/>
+        <field name="nextcall">2023-02-21 07:00</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="code">model.update_last_invoice_date()</field>
+        <field name="state">code</field>
+    </record>
+</odoo>

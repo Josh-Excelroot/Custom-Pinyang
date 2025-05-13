@@ -1,0 +1,16 @@
+<odoo>
+    <record id="view_account_move_line_tree" model="ir.ui.view">
+        <field name="name">Account Journal Items for Contra</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_move_line_tree"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <xpath expr="//field[@name='debit']" position="move"/>
+                <xpath expr="//field[@name='credit']" position="move"/>
+                <xpath expr="//field[@name='amount_currency']" position="move"/>
+                <xpath expr="//field[@name='currency_id']" position="move"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

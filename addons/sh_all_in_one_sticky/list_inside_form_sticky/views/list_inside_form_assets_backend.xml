@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <template active="False" id="list_inside_form_assets_backend" name="List inside Form View Assets" inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <link rel="stylesheet"
+                  href="/sh_all_in_one_sticky/list_inside_form_sticky/static/src/scss/list_inside_form_custom.scss"
+                  />
+        </xpath>
+    </template>
+</odoo>

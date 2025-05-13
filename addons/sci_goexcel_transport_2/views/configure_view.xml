@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- Job Type -->
+    <record id='view_tree_job_type' model='ir.ui.view'>
+        <field name="name">Job Type</field>
+        <field name="model">transport.job.type</field>
+        <field name="arch" type="xml">
+            <tree string='Job Type'>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_form_job_type" model="ir.ui.view">
+        <field name="name">Job Type Form</field>
+        <field name="model">transport.job.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" required="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--    <record id="view_search_job_type" model="ir.ui.view">-->
+    <!--        <field name="name">Job Type Filter</field>-->
+    <!--        <field name="model">transport.job.type</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <search>-->
+    <!--                <field name="name"/>-->
+    <!--                  <filter name="filter_inactive"-->
+    <!--                          string="Inactive"/>-->
+    <!--                  <filter name="filter_active"-->
+    <!--                          string="Active"-->
+    <!--                          domain="[('active','=',False)]"/>-->
+    <!--            </search>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+
+    <!-- temperature.type -->
+    <record id='view_tree_temperature_type' model='ir.ui.view'>
+        <field name="name">Temperature Type</field>
+        <field name="model">temperature.type</field>
+        <field name="arch" type="xml">
+            <tree string='Temperature Type'>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_form_temperature_type" model="ir.ui.view">
+        <field name="name">Temperature Type</field>
+        <field name="model">temperature.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" required="1"/>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--    <record id="view_search_vehicle_location" model="ir.ui.view">-->
+    <!--        <field name="name">Vehicle Location Filter</field>-->
+    <!--        <field name="model">temperature.type</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <search>-->
+    <!--                <field name="name"/>-->
+    <!--                  <filter name="filter_inactive"-->
+    <!--                          string="Inactive"-->
+    <!--                          domain="[('active','=',True)]"/>-->
+    <!--                  <filter name="filter_active"-->
+    <!--                          string="Active"-->
+    <!--                          domain="[('active','=',False)]"/>-->
+    <!--            </search>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+
+    <record id="action_configure_job_type" model="ir.actions.act_window">
+        <field name="name">Job Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">transport.job.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    </record>
+
+
+     <record id="action_configure_temperature_type" model="ir.actions.act_window">
+        <field name="name">Temperature Type</field>
+        <field name="Temperature Type">ir.actions.act_window</field>
+        <field name="res_model">temperature.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    </record>
+
+
+
+    <menuitem id="menu_transport_configure_job_type" name="Job Type"
+              parent="sci_goexcel_transport.menu_transport_configure" action="action_configure_job_type"/>
+    <menuitem id="menu_transport_configure_temperature_type" name="Temperature Type"
+              parent="sci_goexcel_transport.menu_transport_configure" action="action_configure_temperature_type"/>
+
+
+</odoo>

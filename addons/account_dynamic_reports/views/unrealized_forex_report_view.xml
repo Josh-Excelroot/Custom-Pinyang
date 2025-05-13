@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="account_dynamic_reports.unrealized_forex_report">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <style>.pims_report_content{
+                            font-size: 14px;
+                            font-family&quot; 'Arial';
+                        }
+
+                        .pims_report_line_table {
+                            width:100%;
+                        }
+
+                        .pims_report_line_currency {
+                            font-weight:bold;
+                            font-size: 15px;
+                            font-family&quot; 'Arial';
+                            border-bottom:1px solid grey;
+                            background-color: grey;
+                            color:white;
+                        }
+                        .pims_report_line_account {
+                            font-weight:bold;
+                            font-size: 14px;
+                            font-family&quot; 'Arial';
+                            border-bottom:1px solid grey;
+                            background-color: lightgrey;
+                        }
+                        .pims_report_line_line {
+                            font-size: 13px;
+                            font-family&quot; 'Arial';
+                            border-bottom:1px solid grey;
+                        }
+
+                    </style>
+                    <h3>
+                        <span t-esc="res_company.name"/>: Unrealized Forex Report</h3>
+                    <div>
+                        <div class="row mt32 pims_report_content">
+                            <div class="col-3">
+                                <strong>Target Move</strong>
+                                <p t-esc="Filters['target_move']"/>
+                            </div>
+                            <div class="col-3">
+                                <strong>End Date:</strong>
+                                <p t-esc="Filters['date_to']" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                            </div>
+                            <div class="col-3">
+                                <strong>Currencies</strong>
+                                <p t-esc="Filters['currencies']"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <table class="pims_report_line_table pims_report_content">
+                            <thead>
+                                <tr class="text-center">
+                                    <th style="text-align:left;" class="p-2">Accounts to adjust</th>
+                                    <th style="text-align:right;">Accounting date</th>
+                                    <th style="text-align:right;">Balance in foreign currency</th>
+                                    <th style="text-align:right;">Balance at operation rate</th>
+                                    <th style="text-align:right;">Balance at current rate</th>
+                                    <th style="text-align:right;">Adjustment</th>
+                                </tr>
+                            </thead>
+                            <t t-set="total_adjustment" t-value="0"/>
+                            <t t-as="c" t-foreach="Data">
+                                <t t-set="currency" t-value="Data[c]"/>
+                                <tr class="pims_report_line_currency">
+                                    <td><span t-esc="currency.get('currency_display')"/></td>
+                                    <td><span t-esc="currency.get('date')"/></td>
+                                    <td class="text-right">
+                                        <span t-esc="currency['report_amount_currency']"
+                                              t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id.browse(currency['currency_id'])}"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="currency['report_balance']"
+                                              t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id.browse(currency['company_currency_id'])}"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="currency['report_amount_currency_current']"
+                                              t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id.browse(currency['company_currency_id'])}"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="currency['report_adjustment']"
+                                              t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id.browse(currency['company_currency_id'])}"/>
+                                    </td>
+                                </tr>
+                                <t t-as="a" t-foreach="currency['lines']">
+                                    <t t-set="account" t-value="currency['lines'][a]"/>
+                                    <tr class="pims_report_line_account">
+                                        <td><span class="ml-3" t-esc="account.get('account_name')"/></td>
+                                        <td><span t-esc="account.get('date')"/></td>
+                                        <td class="text-right">
+                                            <span t-esc="account['report_amount_currency']"
+                                                  t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id.browse(account['currency_id'])}"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="account['report_balance']"
+                                                  t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id.browse(account['company_currency_id'])}"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="account['report_amount_currency_current']"
+                                                  t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id.browse(account['company_currency_id'])}"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="account['report_adjustment']"
+                                                  t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id.browse(account['company_currency_id'])}"/>
+                                        </td>
+                                    </tr>
+                                    <t t-as="line" t-foreach="account['lines']">
+<!--                                        <t t-set="line" t-value="account['lines'][l]"/>-->
+                                        <tr t-attf-class="#{'d-none' if Filters['display_lines'] else ''} pims_report_line_line">
+                                            <td><span class="ml-5" t-esc="line.get('move_name')"/></td>
+                                            <td class="text-center"><span t-esc="line.get('date')"/></td>
+                                            <td class="text-right">
+                                                <span t-esc="line['report_amount_currency']"
+                                                      t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id.browse(line['currency_id'])}"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="line['report_balance']"
+                                                      t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id.browse(line['company_currency_id'])}"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="line['report_amount_currency_current']"
+                                                      t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id.browse(line['company_currency_id'])}"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="line['report_adjustment']"
+                                                      t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id.browse(line['company_currency_id'])}"/>
+                                            </td>
+                                            <t t-set="total_adjustment" t-value="total_adjustment + line['report_adjustment']"/>
+                                        </tr>
+                                    </t>
+                                </t>
+                            </t>
+                            <tr class="pims_report_line_currency">
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td/>
+                                    <td class="text-right">Total Adjustment:</td>
+                                    <td class="text-right">
+                                        <span t-esc="total_adjustment"
+                                              t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                    </td>
+                                </tr>
+                        </table>
+                    </div>
+                    <br/>
+                    <p style="text-align:center">*** END OF DOCUMENT ***</p>
+                </div>
+            </t>
+        </t>
+    </template>
+    <report file="account_dynamic_reports.unrealized_forex_report" id="action_print_unrealized_forex_report" menu="False"
+            model="unrealized.forex.report" name="account_dynamic_reports.unrealized_forex_report" report_type="qweb-pdf"
+            string="Unrealized Forex Report" paperformat="account_dynamic_reports.paperformat_compact_dynamic_reports"/>
+</odoo>

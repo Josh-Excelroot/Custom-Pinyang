@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="view_leave_entitlement_form" model="ir.ui.view">
+            <field name="name">leave.entitlement.form</field>
+            <field name="model">leave.entitlement</field>
+            <field name="arch" type="xml">
+                <form string="Leave Entitlement">
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="smart_button_employee"
+                                icon="fa-user">
+                            <field string="Employee" name="employee_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="leave_type_id"/>
+                        <field name="job_position"/>
+                        <field name="department"/>
+                        <field name="minimum_annual_leave_entitlement" string="Min. Leave Entitlement"/>
+                        <field name="additional_leave_entitlement_per_year" string="Additional Leave For Each Service Year"/>
+                        <field name="max_transfer_annual_leave"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_leave_entitlement_tree" model="ir.ui.view">
+            <field name="name">leave.entitlement.tree</field>
+            <field name="model">leave.entitlement</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="leave_type_id"/>
+                    <field name="job_position"/>
+                    <field name="minimum_annual_leave_entitlement"/>
+                    <field name="additional_leave_entitlement_per_year"/>
+                    <field name="max_transfer_annual_leave"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_leave_entitlement" model="ir.actions.act_window">
+            <field name="name">Leave Entitlement</field>
+            <field name="res_model">leave.entitlement</field>
+            <field name='view_type'>form</field>
+            <field name='view_mode'>tree,form</field>
+        </record>
+
+        <menuitem id="leave_entitlement_configuration"
+                  action="my_holiday.action_leave_entitlement"
+                  parent="hr_holiday_leave_configuration"
+                  groups="hr.group_hr_manager,hr.group_hr_user,base.group_user" sequence="47"/>
+
+    </data>
+</odoo>

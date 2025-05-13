@@ -1,0 +1,112 @@
+<odoo>
+
+	<record id="view_invoice_search_accounting_2" model="ir.ui.view">
+            <field name="name">Invoice Search</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+				<search>
+					<field name="reference" string="vendor reference"/>
+				</search>
+            </field>
+    </record>
+
+	<!--Invoice Form-->
+	<record model="ir.ui.view" id="view_invoice_accounting_accounting_2">
+		<field name="name">account.invoice.form.inherit.2</field>
+		<field name="model">account.invoice</field>
+		<field name="inherit_id" ref="account.invoice_form"/>
+        <field name="type">form</field>
+		<field name="priority" eval="16"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='payment_term_id']" position="after">
+				<field name="move_id" position="move"/>
+			</xpath>
+<!--			12.0.1.3 - move origin field-->
+			<xpath expr="//page[@name='other_info']/group/group/field[@name='origin']" position="attributes">
+				<!-- Override the attrs attribute to remove or disable it -->
+				<attribute name="attrs">{}</attribute>
+				<attribute name="invisible">0</attribute>
+			</xpath>
+			<xpath expr="//div[@groups='base.group_multi_currency']" position="after">
+				<field name="origin" attrs="{}" invisible="0" groups='base.group_multi_currency' string="Reference Details"/>
+			</xpath>
+<!--			12.0.1.3 END - move origin field-->
+<!--			<xpath expr="//button[@name='action_invoice_open']" position="attributes">-->
+<!--                <attribute name="id">preview_report_view_invoice</attribute>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//button[@name='action_invoice_open']" position="after">-->
+<!--                <button id="preview_report_view_invoice" name="view_pdf_right" string="Preview" type="object" class="oe_highlight"/>-->
+<!--            </xpath>-->
+
+		</field>
+	</record>
+
+	 <!--vendor bill Form-->
+	<record model="ir.ui.view" id="view_invoice_vendor_form_accounting_2">
+		<field name="name">account.invoice.form.vendor.inherit.2</field>
+		<field name="model">account.invoice</field>
+		<field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="type">form</field>
+		<field name="priority" eval="16"/>
+		<field name="arch" type="xml">
+			<xpath expr="//header/button[@name='action_invoice_open_ip']" position="after">
+					<button name="show_attachment_preview" type="object" string="Attachment Preview"
+							attrs="{'invisible': [('show_attachment','=', True)]}" class="oe_highlight"/>
+					<button name="hide_attachment_preview" type="object" string="Hide Preview"
+							attrs="{'invisible': [('show_attachment','=', False)]}" />
+			</xpath>
+			<xpath expr="//field[@name='reference']" position="replace">
+			</xpath>
+			<xpath expr="//field[@name='partner_id']" position="after">
+				<field name="reference" string="Vendor Invoice"/>
+			</xpath>
+			<xpath expr="//field[@name='reference']" position="after">
+				<field name="move_id" position="move"/>
+				<field name="show_attachment" invisible="1"/>
+			</xpath>
+			<xpath expr="//sheet/group/group[2]/field[@name='date_invoice']" position="after">
+				<xpath expr="//sheet/notebook/page[@name='other_info']/group/group[1]/field[@name='date']" position="move"/>
+			</xpath>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_account_voucher_vendor_form_accounting_2">
+		<field name="name">account.voucher.form.vendor.inherit.2</field>
+		<field name="model">account.voucher</field>
+		<field name="inherit_id" ref="account_voucher.view_purchase_receipt_form"/>
+		<field name="type">form</field>
+		<field name="priority" eval="16"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='reference']" position="after">
+				<field name="move_id" position="move"/>
+			</xpath>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_account_voucher_sale_form_accounting_2">
+		<field name="name">account.voucher.form.sale.inherit.2</field>
+		<field name="model">account.voucher</field>
+		<field name="inherit_id" ref="account_voucher.view_sale_receipt_form"/>
+		<field name="type">form</field>
+		<field name="priority" eval="16"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='company_id']" position="after">
+				<field name="move_id" position="move"/>
+			</xpath>
+		</field>
+	</record>
+
+<!--	 <record id="invoice_form_inherit_attachment_button" model="ir.ui.view">-->
+<!--            <field name="name">account.invoice.form.inherit.ip</field>-->
+<!--            <field name="model">account.invoice</field>-->
+<!--            <field name="inherit_id" ref="account.invoice_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//header/button[@name='action_invoice_open_ip']" position="replace">-->
+<!--					<button name="action_invoice_open_ip" id="preview_report_invoice_view" type="object" states="draft" string="Validate" class="oe_highlight"/>-->
+<!--                </xpath>-->
+<!--			</field>-->
+<!--	 </record>-->
+
+</odoo>

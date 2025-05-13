@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_expense_inherit_bhl" inherit_id="hr_expense.report_expense_sheet">
+        <xpath expr="//div[@class='row mt32 mb32']" position="replace">
+            <div class="row mt32 mb32">
+                <div class="col-3">
+                    <strong>Employee:</strong>
+                    <p t-field="o.employee_id.name" />
+                </div>
+                <div class="col-2">
+                    <strong>Date:</strong>
+                    <p t-field="o.accounting_date" />
+                </div>
+                <div class="col-4">
+                    <strong>Description:</strong>
+                    <p t-field="o.name" />
+                </div>
+                <div class="col-3">
+                    <strong>Validated By:</strong>
+                    <p t-field="o.user_id" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <strong>Journal Entry:</strong>
+                    <p t-field="o.account_move_id.name" />
+                </div>
+                <div class="col-9">
+                    <strong>Payment By:</strong>
+                    <p t-field="o.payment_mode" />
+                </div>
+            </div>
+            <br/>
+        </xpath>
+    </template>
+
+
+</odoo>

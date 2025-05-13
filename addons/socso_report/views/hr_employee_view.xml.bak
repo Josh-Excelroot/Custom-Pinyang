@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_employee_form_inherit6" model="ir.ui.view">
+            <field name="name">view.employee.form.inherit6</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form" />
+            <field name="arch" type="xml">
+                <field name="identification_id" position="after">
+                    <field name="no_perkeso" />
+                </field>
+            </field>
+        </record>
+
+        <record id="view_employee_form_parent2_inherit" model="ir.ui.view">
+            <field name="name">view.employee.form.parent2.inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="my_holiday.view_employee_form_parent2" />
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='statutory_requirements']/group/group[2]/field[@name='pcb_borner_by_emp']" position="after">
+                    <field name="socso_category" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="hr_contract_view_form_inherit" model="ir.ui.view">
+            <field name="name">hr.contract.view.form.inherit</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id"
+                ref="l10n_my_payroll.view_hr_contract_commission_form_inherited1" />
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='pcb_contract']" position="after">
+                    <group name="sosco_contract" string="SOCSO">
+                        <field name="ded_employee_socso_id" required="1" />
+                    </group>
+                    <group name="eis_contract" string="EIS">
+                        <field name="ded_employee_eis_id" required="1" />
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="hr_contract_view_kanban_inherit" model="ir.ui.view">
+             <field name="name">hr.contract.view.kanban.inherit</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id"
+                ref="hr_contract.hr_contract_view_kanban" />
+            <field name="arch" type="xml">
+                <xpath expr="//div//field[@name='job_id']" position="before">
+                    <field name="department_id"/>
+                    <br/>
+                </xpath>
+                <xpath expr="//div[2]" position="after">
+                    <div>
+                    <t t-if="record.date_start">
+                        <t t-esc="record.date_start.value"/>
+                    </t>
+                    <t t-if="record.date_end.value">
+                        - <t t-esc="record.date_end.value"/>
+                    </t>
+                    </div>
+                </xpath>
+                 <xpath expr="//div//field[@name='name']" position="replace">
+                    <field name="employee_id"/>
+                    <field name="date_start" invisible="1"/>
+                    <field name="date_end" invisible="1"/>
+                    <br/>
+                </xpath>
+            </field>
+
+        </record>
+
+        <record id="employee_socso_tree_view" model="ir.ui.view">
+            <field name="name">employee.socso.tree.view</field>
+            <field name="model">employee.socso</field>
+            <field name="arch" type="xml">
+                <tree string="SOCSO">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="employee_socso_form_view" model="ir.ui.view">
+            <field name="name">employee.socso.form.view</field>
+            <field name="model">employee.socso</field>
+            <field name="arch" type="xml">
+                <form string="Contract Category SOCSO">
+                    <sheet>
+                        <group>
+                            <field name="name" required="True" />
+                        </group>
+                        <group string="SOCSO Lines">
+                            <field name="socso_line_ids" nolabel="1">
+                                <tree editable="bottom" limit="100">
+                                    <field name="range_from" />
+                                    <field name="range_to" />
+                                    <field name="employer_contribution" />
+                                    <field name="employee_contribution" />
+                                    <field name="employer_only_contribution" />
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="employee_socso_action_view" model="ir.actions.act_window">
+            <field name="name">SOCSO Category</field>
+            <field name="res_model">employee.socso</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="employee_eis_tree_view" model="ir.ui.view">
+            <field name="name">employee.eis.tree.view</field>
+            <field name="model">employee.eis</field>
+            <field name="arch" type="xml">
+                <tree string="EIS">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="employee_eis_form_view" model="ir.ui.view">
+            <field name="name">employee.eis.form.view</field>
+            <field name="model">employee.eis</field>
+            <field name="arch" type="xml">
+                <form string="Contract Category EIS">
+                    <sheet>
+                        <group>
+                            <field name="name" required="True" />
+                        </group>
+                        <group string="EIS Lines">
+                            <field name="eis_line_ids" nolabel="1">
+                                <tree editable="bottom" limit="100">
+                                    <field name="range_from" />
+                                    <field name="range_to" />
+                                    <field name="employer_contribution" />
+                                    <field name="employee_contribution" />
+                                    <!--<field name="employer_only_contribution" />-->
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="employee_eis_action_view" model="ir.actions.act_window">
+            <field name="name">EIS Category</field>
+            <field name="res_model">employee.eis</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="employee_socso_action_view" id="menu_contract_category_socso"
+            parent="hr_payroll.menu_hr_payroll_configuration" name="SOCSO Category" />
+
+        <menuitem action="employee_eis_action_view" id="menu_contract_category_eis"
+            parent="hr_payroll.menu_hr_payroll_configuration" name="EIS Category" />
+    </data>
+</odoo>

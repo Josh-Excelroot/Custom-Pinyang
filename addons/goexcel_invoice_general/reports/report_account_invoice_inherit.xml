@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_invoice_inherit" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@id='qrcode']" position="after">
+            <t t-if="o.print_term">
+                <div style="margin-top: 10%">
+                    <div class="last-page">
+                        <div style="width:70%">
+                            <span style="padding-left:5px; margin: 0; padding: 0; line-height: 0.5;" t-field="o.sale_term"/>
+                        </div>
+                        <div style="margin-top:5%">
+                            <span style="font-size: 12pt; display: block; margin: 0 auto; text-align: center;">
+                                ********** THIS IS A COMPUTER GENERATED DOCUMENT, NO SIGNATURE IS REQUIRED *********
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>

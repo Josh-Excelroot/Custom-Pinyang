@@ -1,0 +1,20 @@
+<odoo>
+	 <!-- SQ Form -->
+	<record model="ir.ui.view" id="view_account_invoice_view_charge_base">
+		<field name="name">Freight Booking</field>
+		<field name="model">account.invoice</field>
+        <field name="type">form</field>
+		<field name="priority" eval="1"/>
+		<field name="inherit_id" ref="account.invoice_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//button[@name='action_invoice_draft']" position="after">
+				<button name="action_service" type="object" string="Charge"/>
+			</xpath>
+			<xpath expr="//field[@name='date_invoice']" position="after">
+				<field name="carrier" invisible="1"/>
+				<field name="port_of_loading" invisible="1"/>
+				<field name="port_of_discharge" invisible="1"/>
+			</xpath>
+		</field>
+	</record>
+</odoo>

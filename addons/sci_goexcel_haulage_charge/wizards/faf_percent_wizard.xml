@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<odoo>
+        <record id="faf_percent_view_form" model="ir.ui.view">
+            <field name="name">faf.percent.form</field>
+            <field name="model">freight.faf.percent</field>
+            <field name="arch" type="xml">
+                <form string="FAF Percent">
+                    <group class="oe_title">
+                        <field name="faf_percent"/>
+                    </group>
+                    <footer>
+                        <button name="action_update_all" string="Confirm" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="faf_percent_action" model="ir.actions.act_window">
+            <field name="name">FAF Percent</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">freight.faf.percent</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="faf_percent_view_form"/>
+            <field name="target">new</field>
+        </record>
+</odoo>

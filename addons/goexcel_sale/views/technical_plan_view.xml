@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="technical_customer_plan_form_view_so" model="ir.ui.view">
+            <field name="name">technical.customer.plan.form</field>
+            <field name="model">technical.customer.plan</field>
+            <field name="inherit_id" ref="goexcel_crm.technical_customer_plan_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='owner_id']" position="after">
+                    <field name="sale_order_id" readonly="1" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="technical_customer_plan_tree_view_so" model="ir.ui.view">
+            <field name="name">technical.customer.plan.tree</field>
+            <field name="model">technical.customer.plan</field>
+            <field name="inherit_id" ref="goexcel_crm.technical_customer_plan_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='owner_id']" position="after">
+                    <field name="sale_order_id"  readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

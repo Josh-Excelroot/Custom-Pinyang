@@ -1,0 +1,19 @@
+<odoo>
+	<!-- Inherited the res partner view and added smart button to view IoT device -->
+	<record model="ir.ui.view" id="res_partner_freight_2_view">
+		<field name="name">freight 2</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+		<field name="priority" eval="10"/>
+		<field name="inherit_id" ref="base.view_partner_form"/>
+		<!--<field name="arch" type="xml">
+			<xpath expr="//field[@name='parent_id']" position="attributes">
+    			<attribute name="attrs">{}</attribute>
+  			</xpath>-->
+<!--
+			<xpath expr="//sheet/notebook/page/field/form[@string='Contact / Address']" position="replace"/>
+-->
+			<!--<xpath expr="//sheet/notebook/page/field/form[1]" position="replace"/>
+		</field>-->
+	</record>
+</odoo>

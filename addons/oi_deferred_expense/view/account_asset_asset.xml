@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<record id="view_deferred_expense_form" model="ir.ui.view">
+		<field name="name">account.asset.asset.deferred.expense.form</field>
+		<field name="model">account.asset.asset</field>
+		<field name="priority" eval="20"/>
+		<field name="arch" type="xml">
+			<form string="Expense Recognition">
+				<header>
+					<button name="validate" states="draft" string="Confirm"
+						type="object" class="oe_highlight" />
+					<button type="object" name="compute_depreciation_board"
+						string="Compute Recognition" states="draft" />
+					<button name="set_to_close" states="open" string="Close"
+						type="object" class="oe_highlight" />
+					<button name="set_to_draft" string="Set to Draft" type="object"
+						attrs="{'invisible': [('state', '!=', 'open')]}" />
+					<field name="state" widget="statusbar" statusbar_visible="draft,open" />
+				<!--	<button name="639" states="open" string="Modify Recognition"
+						type="action" />-->
+				</header>
+				<sheet>
+					<div class="oe_button_box" name="button_box">
+						<button class="oe_stat_button" name="open_entries" type="object"
+							icon="fa-pencil">
+							<field string="Items" name="entry_count" widget="statinfo" />
+						</button>
+					</div>
+					<div class="oe_title">
+						<label for="name" string="Deferred Expense name" class="oe_edit_only" />
+						<h1>
+							<field name="name" class="oe_inline" />
+						</h1>
+					</div>
+					<group>
+						<group string="Asset Value">
+							<field name="category_id" domain="[('type', '=', 'expense')]"
+								context="{'default_type': 'expense'}" help="Category of asset" />
+							<field name="code" />
+							<field name="date" help="Date of asset" />
+							<field name="type" invisible="1" />
+							<field name="value" widget="monetary"
+								options="{'currency_field': 'currency_id'}" help="Gross value of asset" />
+							<field name="value_residual" widget="monetary"
+								options="{'currency_field': 'currency_id'}" />
+						</group>
+						<group string="Accounting">
+							<field name="currency_id" groups="base.group_multi_currency" />
+							<field name="company_id" options="{'no_create': True}"
+								groups="base.group_multi_company" invisible="1"/>
+							<field name="account_asset_id" string="Pre-payment DR Account"  attrs="{'readonly': [('state', '==', 'open')]}"
+								   help="DR Pre-payment Account in the Vendor Bill"/>
+                            <field name="account_depreciation_id" string="Recognition CR Pre-Payment Account"  attrs="{'readonly': [('state', '==', 'open')]}"
+								   help="CR Pre-payment Account, eg Monthly apportionment"/>
+                            <field name="account_depreciation_expense_id" string="Recognition DR Expense Account" attrs="{'readonly': [('state', '==', 'open')]}"
+								   help="DR Expense Account, eg Insurance Expense (Apportionment)"/>
+                            <field name="account_analytic_id" />
+                            <label for="partner_id" string="Vendor" />
+							<field name="partner_id" string="Partner" nolabel="1" />
+							<field name="invoice_id" string="Invoice" />                            
+						</group>
+					</group>
+					<notebook colspan="4">
+						<page string="Recognition Board">
+							<field name="depreciation_line_ids" mode="tree"
+								options="{'reload_whole_on_button': true}" string="Recognition Lines">
+								<tree string="Recognition Lines" decoration-info="(move_check == False)"
+									create="false">
+									<field name="depreciation_date" string="Recognition Date" />
+									<field name="depreciated_value" string="Cumulative Recognition"
+										readonly="1" />
+									<field name="amount" widget="monetary" string="Recognition" />
+									<field name="remaining_value" readonly="1" widget="monetary"
+										string="Residual" />									
+									<field name="move_check" widget="deprec_lines_toggler"
+										attrs="{'invisible': [('parent_state', '!=', 'open')]}" />
+									<field name="move_posted_check" invisible="1" />
+									<field name="parent_state" invisible="1" />									
+								</tree>
+								<form string="Recognition Lines">
+									<group>
+										<group>
+											<field name="parent_state" invisible="1" />
+											<field name="name" string="Recognition Name" />
+											<field name="sequence" />
+											<field name="move_id" string="Recognition Entry" />
+											<field name="move_check" />
+											<field name="parent_state" invisible="1" />
+										</group>
+										<group>
+											<field name="amount" widget="monetary" string="Current Recognition" />
+											<field name="depreciation_date" string="Recognition Date" />
+											<field name="depreciated_value" string="Cumulative Recognition" />
+											<field name="remaining_value" string="Next Period Recognition" />
+										</group>
+									</group>
+								</form>
+							</field>
+						</page>
+						<page string="Recognition Information">
+							<group>
+								<label for="method_time" />
+								<div>
+									<field name="method_time" />
+								</div>
+								<field name="prorata" attrs="{'invisible': [('method_time','=','end')]}" />
+							</group>
+							<group>
+								<field name="method_number" string="Number of Recognitions"
+									attrs="{'invisible':[('method_time','=','end')], 'required':[('method_time','=','number')]}" />
+								<field name="method_period" />
+								<field name="method_end"
+									attrs="{'required': [('method_time','=','end')], 'invisible':[('method_time','=','number')]}" />
+							</group>
+						</page>
+					</notebook>
+				</sheet>
+				<div class="oe_chatter">
+					<field name="message_follower_ids" widget="mail_followers" />
+					<field name="message_ids" widget="mail_thread" />
+				</div>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_account_asset_asset_deferred_expense_tree">
+		<field name="name">account.asset.asset.deferred_expense.tree</field>
+		<field name="model">account.asset.asset</field>
+		<field name="arch" type="xml">
+			<tree string="Deferred Expense" decoration-info="(state == 'draft')"
+				decoration-muted="(state == 'close')">
+				<field name="name" string="Recognition Name" />
+				<field name="category_id" />
+				<field name="date" />
+				<field name="partner_id" string="Vendor" />
+				<field name="value" />
+				<field name="value_residual" widget="monetary" />
+				<field name="currency_id" groups="base.group_multi_currency" />
+				<field name="company_id" groups="base.group_multi_company" />
+				<field name="state" />
+			</tree>
+		</field>
+	</record>
+
+</odoo>

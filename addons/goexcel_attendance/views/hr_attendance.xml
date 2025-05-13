@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_attendance_view_form" model="ir.ui.view">
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance_geolocation.hr_attendance_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='locations']" position="after">
+                <group col="2">
+                    <label for="location_distance_checkin" string="Checkin "/>
+                    <span class="oe_inline">
+                        <div attrs="{'invisible':['|', ('location_distance_checkout', '=', False), ('attendance_location_checkout', '=', False)]}">
+                            <field name="location_distance_checkin" nolabel="1" readonly="1"/> meter(s) from <field name="attendance_location_checkin" nolabel="1" readonly="1"/>
+                        </div>
+                    </span>
+                    <label for="location_distance_checkout" string="Checkout "/>
+                    <span class="oe_inline">
+                        <div attrs="{'invisible':['|', ('location_distance_checkout', '=', False), ('attendance_location_checkout', '=', False)]}">
+                            <field name="location_distance_checkout" nolabel="1" readonly="1"/> meter(s) from <field name="attendance_location_checkout" nolabel="1" readonly="1"/>
+                        </div>
+                    </span>
+                </group>
+            </xpath>
+            <xpath expr="//group[@name='locations']" position="after">
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="hr_attendance.menu_hr_attendance_manage_attendances" name="Manage Attendances" parent="hr_attendance.menu_hr_attendance_root" sequence="20" groups="hr_attendance.group_hr_attendance"/>
+    <menuitem id="hr_attendance.menu_hr_attendance_view_attendances" name="Attendances" parent="hr_attendance.menu_hr_attendance_manage_attendances" sequence="10" groups="hr_attendance.group_hr_attendance" action="hr_attendance.hr_attendance_action"/>
+
+</odoo>

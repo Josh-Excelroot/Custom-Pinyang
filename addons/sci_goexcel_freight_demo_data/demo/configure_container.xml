@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data >
+<!--        <record id="product_temp_container_1" model="product.template">-->
+<!--            <field name="active">True</field>-->
+<!--            <field name="sale_ok">True</field>-->
+<!--            <field name="purchase_ok">True</field>-->
+<!--            <field name="name">Tester</field>-->
+<!--            <field name="type">service</field>-->
+<!--            <field name="categ_id" ref="product_category_container"/>-->
+<!--            <field name="default_code">2210</field>-->
+<!--            <field name="uom_id" ref="product_uom_uom_20"/>-->
+<!--            <field name="uom_po_id" ref="product_uom_uom_20" />-->
+<!--        </record>-->
+
+<!--        <record id="product_temp_container_1" model="product.product">-->
+<!--            <field name="active">True</field>-->
+<!--            <field name="sale_ok">True</field>-->
+<!--            <field name="purchase_ok">True</field>-->
+<!--            <field name="name">Tester</field>-->
+<!--            <field name="type">service</field>-->
+<!--            <field name="categ_id" ref="product_category_container"/>-->
+<!--            <field name="default_code">2210</field>-->
+<!--            <field name="uom_id" ref="product_uom_uom_20"/>-->
+<!--            <field name="uom_po_id" ref="product_uom_uom_20" />-->
+<!--            <field name="product_tmpl_id" ref="product_temp_container_1"/>-->
+<!--            <field name="tracking">none</field>-->
+<!--            <field name="purchase_line_warn">no-message</field>-->
+<!--            <field name="sale_line_warn">no-message</field>-->
+<!--            <field name="responsible_id" ref="base.user_admin"/>-->
+<!--        </record>-->
+
+        <record id="product_temp_container_1" model="product.template">
+            <field name="name">20 GP</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product_category_container"/>
+            <field name="default_code">2210</field>
+            <field name="uom_id" ref="product_uom_uom_20"/>
+            <field name="uom_po_id" ref="product_uom_uom_20"/>
+        </record>
+
+        <record id="product_temp_container_2" model="product.template">
+            <field name="name">20'FR</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product_category_container"/>
+            <field name="default_code">2260</field>
+            <field name="uom_id" ref="product_uom_uom_20"/>
+            <field name="uom_po_id" ref="product_uom_uom_20"/>
+        </record>
+
+        <record id="product_temp_container_3" model="product.template">
+            <field name="name">20'GP</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product_category_container"/>
+            <field name="default_code">22G1</field>
+            <field name="uom_id" ref="product_uom_uom_ctn_reference"/>
+            <field name="uom_po_id" ref="product_uom_uom_ctn_reference"/>
+        </record>
+
+        <record id="product_temp_container_4" model="product.template">
+            <field name="name">20'OT</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product_category_container"/>
+            <field name="default_code">2250</field>
+            <field name="uom_id" ref="product_uom_uom_20"/>
+            <field name="uom_po_id" ref="product_uom_uom_20"/>
+        </record>
+
+        <record id="product_temp_container_5" model="product.template">
+            <field name="name">20'RF</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product_category_container"/>
+            <field name="default_code">2532</field>
+            <field name="uom_id" ref="product_uom_uom_20"/>
+            <field name="uom_po_id" ref="product_uom_uom_20"/>
+        </record>
+
+        <record id="product_temp_container_6" model="product.template">
+            <field name="name">20'RH</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product_category_container"/>
+            <field name="default_code">25R1</field>
+            <field name="uom_id" ref="product_uom_uom_ctn_reference"/>
+            <field name="uom_po_id" ref="product_uom_uom_ctn_reference"/>
+        </record>
+
+        <record id="product_temp_container_7" model="product.template">
+            <field name="name">20'TK</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product_category_container"/>
+            <field name="default_code">2270</field>
+            <field name="uom_id" ref="product_uom_uom_20"/>
+            <field name="uom_po_id" ref="product_uom_uom_20"/>
+        </record>
+
+        <record id="product_temp_container_8" model="product.template">
+            <field name="name">40'FR</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product_category_container"/>
+            <field name="default_code">4260</field>
+            <field name="uom_id" ref="product_uom_uom_units"/>
+            <field name="uom_po_id" ref="product_uom_uom_units"/>
+        </record>
+
+        <record id="product_temp_container_9" model="product.template">
+            <field name="name">40'GP</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product_category_container"/>
+            <field name="default_code">4210</field>
+            <field name="uom_id" ref="product_uom_uom_20"/>
+            <field name="uom_po_id" ref="product_uom_uom_20"/>
+        </record>
+
+        <record id="product_temp_container_10" model="product.template">
+            <field name="name">40'GP</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product_category_container"/>
+            <field name="default_code">4210</field>
+            <field name="uom_id" ref="product_uom_uom_units"/>
+            <field name="uom_po_id" ref="product_uom_uom_units"/>
+        </record>
+
+        <record id="product_temp_container_11" model="product.template">
+            <field name="name">40'HC</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product_category_container"/>
+            <field name="default_code">45G1</field>
+            <field name="uom_id" ref="product_uom_uom_ctn_reference"/>
+            <field name="uom_po_id" ref="product_uom_uom_ctn_reference"/>
+        </record>
+
+        <record id="product_temp_container_12" model="product.template">
+            <field name="name">40'HC</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product_category_container"/>
+            <field name="default_code">4510</field>
+            <field name="uom_id" ref="product_uom_uom_20"/>
+            <field name="uom_po_id" ref="product_uom_uom_20"/>
+        </record>
+
+        <record id="product_temp_container_13" model="product.template">
+            <field name="name">40'OT</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product_category_container"/>
+            <field name="default_code">4250</field>
+            <field name="uom_id" ref="product_uom_uom_20"/>
+            <field name="uom_po_id" ref="product_uom_uom_20"/>
+        </record>
+
+        <record id="product_temp_container_14" model="product.template">
+            <field name="name">40'RF</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product_category_container"/>
+            <field name="default_code">45R1</field>
+            <field name="uom_id" ref="product_uom_uom_ctn_reference"/>
+            <field name="uom_po_id" ref="product_uom_uom_ctn_reference"/>
+        </record>
+
+        <record id="product_temp_container_15" model="product.template">
+            <field name="name">40'RH</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product_category_container"/>
+            <field name="default_code">4532</field>
+            <field name="uom_id" ref="product_uom_uom_20"/>
+            <field name="uom_po_id" ref="product_uom_uom_20"/>
+        </record>
+
+    </data>
+</odoo>

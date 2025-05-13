@@ -1,0 +1,37 @@
+no_types for product_id needs to be created
+no_types for currency_type needs to be created
+
+12.3.0.1 | 8 Dec 23 | Kenny
+- bug fix hr_expense, expense from email not generated
+
+12.3.0.2 | 15 Dec 23 | Kenny
+- exchange rate validation fix
+
+12.3.1.2 | 15 Dec 23 | Lo Gee Yen
+Added new feature
+- added manual upload feature
+- system can now recognize the currency symbol and also the currency name. For example, the system can recognize both [MYR] and [RM] and know that its Malaysian Ringgit.
+- new field under the expense configuration tab which allows the user to modify the expense's Hugging Face AI API key
+- set the Default Hugging Face API Key to be my own account's Hugging Face API key (This is done because it is more user friendly to the users as the module will just work when freshly installed)
+- added new message monitor errors for when the user enters a wrong API Key
+- when create expense menu pops up, the employee is auto selected to be the employee chosen in the expense form
+
+Bug Fixes
+- double attachment issue solved
+- users are now not able to add more expense lines in the submit state. OCR from email will also now only look for sheets in the Draft state
+- make it so that when the OCR_total_amount equals to 0, the exchange rate will still be 1.00 instead of 0.00
+- fixed a bug where if Currency selected was not a foreign currency, the user can change the exchange rate to 0. Now the exchange rate will always be defaulted to 1
+
+Others
+- remove the extra menu when adding expense line
+
+12.3.2.2 | 29 Dec 23 | Lo Gee Yen
+Added new feature
+- Email will not use OCR if no API is inputted in the setting (name will be defaulted to "email title + attachment name". If manual upload then name will be defaulted to attachment name)
+- Update message monitor entry name to include name of expense line as well as sheet name
+- Upgrade AI from V0.1 to V0.2 (more consistence and better results)
+- Minor AI Fine Tuning
+
+Changes
+- Default Hugging Face API Key will be set to empty
+- Now the system will only read the first page of the PDF if the pdf have multiple pages (The reasoning behind this is that passing all pdf pages data to the ai will cause it to overload or output worst results. But this should not be a problem as 90% of the time, all required data is on the first page.)

@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_freight_booking_pivot_report,access_freight_booking_pivot_report,model_freight_booking_pivot_report,,1,1,1,1
+access_booking_invoice_line,Freight Manager,model_booking_invoice_line,,1,1,1,1
+access_freight_invoice_booking_report_manager,Freight Manager Invoice Report Access,model_invoice_booking_report,sci_goexcel_freight.freight_group_manager,1,1,1,1
+access_freight_invoice_booking_report_user,Freight User Invoice Report Access,model_invoice_booking_report,sci_goexcel_freight.freight_group_user,1,1,1,1
+access_freight_invoice_booking_report_own,Freight Own Invoice Report Access,model_invoice_booking_report,sci_goexcel_freight.freight_group_own,1,1,1,1
+access_delivery_service_user,delivery.service.user,model_delivery_service,base.group_user,1,1,1,1
+access_delivery_service_manager,delivery.service.manager,model_delivery_service,base.group_system,1,1,1,1
+

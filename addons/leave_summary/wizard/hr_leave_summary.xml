@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- form view -->
+	<record id="leave_summary_wiz" model="ir.ui.view">
+        <field name="name">Leave Summary</field>
+        <field name="model">leave.summary.wiz</field>
+        <field name="arch" type="xml">
+            <form string="Leave Summary">
+                <group>
+                    <group>
+                        <field name="select_year" required="1" widgets="radio"/>
+                        <field name="employee_id" />
+                        <field name="department_id" />
+                        
+                    </group>
+                    <group>
+                        <field name="hr_year_id" attrs="{'invisible': [('select_year', '=', 'all_hr_year')], 'required': [('select_year', '=', 'custom')]}"/>
+                        <field name="leave_type_id" />
+                        <field name="company_id" />
+                    </group>
+                </group>
+                <footer>
+                    <button name="view_leave" string="view" type="object" colspan="2" class="oe_highlight"/>
+                    or
+                    <button special="cancel" string="Cancel" colspan="2"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+        
+    <record id="action_leave_summary_wiz" model="ir.actions.act_window">
+        <field name="name">Leave Summary</field>
+        <field name="res_model">leave.summary.wiz</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+   </record>
+
+<!-- tree view -->
+   <record id="leave_summary_line_tree_view" model="ir.ui.view">
+        <field name="name">leave.summary.line</field>
+        <field name="model">leave.summary.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="employee_id"/>
+                <field name="department_id"/>
+                <field name="hr_year_id"/>
+                <field name="company_id"/>
+                <field name="leave_type_id"/>
+                <field name="number_of_days_display"/>
+                <field name="taken_leave"/>
+                <field name="remaining_leave"/>
+                <field name="virtual_leave"/>
+            </tree>
+        </field>
+    </record>
+    <record id="leave_summary_line_search_view" model="ir.ui.view">
+        <field name="name">leave.summary.line.view</field>
+        <field name="model">leave.summary.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="hr_year_id" string="HR Year"/>
+                <field name="employee_id"  string="Employee"/>
+                <field name="leave_type_id"  string="Leave type"/>
+                <field name="company_id"  string="Company"/>
+                <group expand="0" string="Group By">
+                    <filter name="hr_year_id" string="Hr Year" context="{'group_by': 'hr_year_id'}"/>
+                    <filter name="leave_type_id" string="Leave Type" context="{'group_by': 'leave_type_id'}"/>
+                    <filter name="employee_id" string="Employee" context="{'group_by': 'employee_id'}"/>
+                    <filter name="company_id" string="Company" context="{'group_by': 'company_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="report_action_leave_summary" model="ir.actions.act_window">
+        <field name="name">Leave summary</field>
+        <field name="res_model">leave.summary.line</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="leave_summary_line_tree_view"/>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem action="action_leave_summary_wiz" id="menu_leave_summery" parent="hr_holidays.menu_hr_holidays_report" sequence="1"/>
+</odoo>

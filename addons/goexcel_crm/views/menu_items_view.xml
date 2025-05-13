@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="res_partner_menu_contacts_master" name="Master Configuration" parent="contacts.menu_contacts" sequence="2"/>
+        <menuitem action="action_type_of_customer" id="menu_type_of_customer" name="Type Of Customer" parent="res_partner_menu_contacts_master" sequence="10"/>
+        <menuitem action="action_type_of_purchase" id="menu_type_of_purchase" name="Type Of Purchase" parent="res_partner_menu_contacts_master" sequence="11"/>
+        <menuitem action="action_customer_brand" id="menu_customer_brand" name="Brand" parent="res_partner_menu_contacts_master" sequence="12"/>
+        <menuitem action="action_payment_mode" id="menu_payment_mode" name="Payment Mode" parent="res_partner_menu_contacts_master" sequence="12"/>
+        <menuitem action="action_technical_plan" id="menu_technical_plan" name="Technical Plan" parent="res_partner_menu_contacts_master" sequence="13"/>
+        <menuitem action="action_religious_fetsival" id="menu_religious_fetsival" name="Religious Festival" parent="res_partner_menu_contacts_master" sequence="14"/>
+        <menuitem action="action_type_of_sector" id="menu_customer_sector" name="Type Of Sector" parent="res_partner_menu_contacts_master" sequence="15"/>
+        <menuitem action="action_communication_method" id="menu_communication_method" name="Communication Method" parent="res_partner_menu_contacts_master" sequence="16"/>
+        <menuitem action="action_order_style" id="menu_order_style" name="Order Style" parent="res_partner_menu_contacts_master" sequence="17"/>
+        <menuitem action="action_customer_priority" id="menu_customer_priority" name="Customer Priority" parent="res_partner_menu_contacts_master" sequence="18"/>
+        <menuitem action="action_invoice_method" id="menu_invoice_method" name="Invoice Method" parent="res_partner_menu_contacts_master" sequence="19"/>
+        <menuitem action="action_personality_contact" id="menu_personality_contact_id" name="Personality Contact" parent="res_partner_menu_contacts_master" sequence="22"/>
+
+        <menuitem id="menu_analysis_id" name="Analysis" parent="res_partner_menu_contacts_master" sequence="23"/>
+            <menuitem action="action_pain_analysis" id="menu_pain_analysis_id" name="Pain Analysis" parent="menu_analysis_id" sequence="1"/>
+            <menuitem action="action_needs_analysis" id="menu_need_analysis_id" name="Need Analysis" parent="menu_analysis_id" sequence="2"/>
+            <menuitem action="action_challenges_analysis" id="menu_challange_analysis_id" name="Challenge Analysis" parent="menu_analysis_id" sequence="3"/>
+        <menuitem action="action_product_group" id="menu_product_group_id" name="Product Group" parent="res_partner_menu_contacts_master" sequence="26"/>
+        <menuitem action="action_product_grade" id="menu_product_grade_id" name="Product Grade" parent="res_partner_menu_contacts_master" sequence="27"/>
+        <menuitem action="action_product_brand" id="menu_product_brand_id" name="Product Brand" parent="res_partner_menu_contacts_master" sequence="30"/>
+        <menuitem action="action_type_of_product" id="menu_type_of_product_id" name="Type Of Product" parent="res_partner_menu_contacts_master" sequence="31"/>
+        <menuitem action="action_machine" id="menu_machine_id" name="Machine" parent="res_partner_menu_contacts_master" sequence="25"/>
+        <menuitem action="action_gift_occasion" id="menu_gift_occasion_id" name="Occasion" parent="res_partner_menu_contacts_master" sequence="27"/>
+        <menuitem action="action_department" id="menu_department_id" name="Department" parent="res_partner_menu_contacts_master" sequence="28"/>
+        <menuitem action="action_buyer_relation" id="menu_buyer_relation_id" name="Buyer Relationship" parent="res_partner_menu_contacts_master" sequence="29"/>
+
+        <!-- for Operation Menu -->
+        <menuitem id="res_partner_menu_technical_master" name="Operation" parent="contacts.menu_contacts" sequence="3"/>
+        <menuitem action="action_technical_customer_plan" id="menu_testing" name="Customer Technical Plan" parent="res_partner_menu_technical_master" sequence="1"/>
+        <menuitem action="action_salesperson_reassign_wiz" id="menu_reassign_to_customer_id" name="Customer Reassign to Salesperson" parent="res_partner_menu_technical_master" sequence="2"/>
+       <!--  <menuitem action="action_visiting_hours" id="menu_cust_visiting_id" name="Visiting Hours" parent="res_partner_menu_technical_master" sequence="23"/> -->
+        <!-- <menuitem id="menu_customer_history" name="Customer History" parent="res_partner_menu_technical_master" sequence="10" action='action_product_product_data'/> -->
+        <menuitem id="menu_find_customer" name="Find Customer" parent="res_partner_menu_technical_master" sequence="20" action='action_find_customer_wiz'/>
+        <!-- Gift Celebration menu -->
+        <menuitem id="menu_gift_celebration" name="Gift" parent="res_partner_menu_technical_master" sequence="1" action="action_gift_celebration"/>
+        <!-- Discovery -->
+        <menuitem id="menu_discovery_sheet" name="Discovery Sheet" parent="res_partner_menu_technical_master" sequence="1" action="action_discovery_sheet"/>
+
+        <!-- CRM -->
+        <menuitem action="action_buying_journary" id="menu_buying_journary_id" name="Buyer journey" parent="crm.crm_menu_config" sequence="10"/>
+        <menuitem action="action_sale_journary" id="menu_sale_journary_id" name="Sale journey" parent="crm.crm_menu_config" sequence="11"/>
+
+        <menuitem id="contacts.res_partner_industry_menu" name="Type of Industry"
+        action="base.res_partner_industry_action" parent="contacts.res_partner_menu_config"
+        sequence="4"/>
+
+        <menuitem id="menu_utm_medium_crm"
+        action="utm.utm_medium_action"
+        parent="crm.crm_menu_config"
+        sequence="5"
+        />
+    <menuitem id="menu_utm_source_crm"
+        action="utm.utm_source_action"
+        parent="crm.crm_menu_config"
+        sequence="10"
+        />
+    </data>
+</odoo>

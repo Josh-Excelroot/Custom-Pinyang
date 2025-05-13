@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--    Financial report common form view    -->
+        <record id="ins_financial_report_wiz_modified" model="ir.ui.view">
+            <field name="name">ins.financial.report.extended.wiz</field>
+            <field name="model">ins.financial.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group string="Date">
+                            <field name="date_range"/>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field invisible="1" name="financial_year"/>
+                        </group>
+                        <group>
+                            <field name="target_move" widget="radio"/>
+                            <field invisible="1" name="view_format" widget="radio"/>
+                            <field invisible="1" name="enable_filter"/>
+                            <field name="debit_credit"/>
+                            <field invisible="1" name="company_id"/>
+                            <field force_save="1" name="account_report_id" options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}" invisible="1" required="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="enable_filter"/>
+                            <field attrs="{'required':[('enable_filter','=',True)], 'invisible':[('enable_filter','=',False)]}" name="label_filter"/>
+                            <field invisible="1" name="filter_cmp"/>
+                            <field attrs="{'invisible':[('enable_filter','=',False)]}" name="date_from_cmp"/>
+                            <field attrs="{'invisible':[('enable_filter','=',False)]}" name="date_to_cmp"/>
+                            <field name="group_by" widget="radio" options="{'horizontal': true}"/>
+                            <field name="group_by_yearly_type" attrs="{'invisible':[('group_by','!=','yearly')]}" widget="radio" options="{'horizontal': true}"/>
+                        </group>
+                        <group>
+                            <field name="show_percent_margin"/>
+                            <field name="show_percent_performance" attrs="{'invisible':[('enable_filter','=',False),('group_by','=','no_grouping')]}"/>
+                            <field name="hide_empty_line" attrs="{'invisible':[('enable_filter','=',True)]}"/>
+                            <field name="include_period_13"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field domain="['|',('company_id','=',company_id),('company_id','=',False)]" name="journal_ids" options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}" widget="many2many_tags"/>
+                        <field domain="[('company_id','=',company_id)]" name="analytic_ids" options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}" widget="many2many_tags"/>
+                        <field domain="['|',('company_id','=',company_id),('company_id','=',False)]" name="analytic_tag_ids" options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}" widget="many2many_tags"/>
+                    </group>
+                    <footer>
+                        <button class="btn-primary" name="action_pdf" string="PDF" type="object" context="{'landscape': True}"/>
+                        <button class="btn-primary" name="action_pdf" string="PDF (Portrait)" type="object" context="{'landscape': False}"/>
+                        <button class="btn-primary" name="action_xlsx" string="XLSX" type="object"/>
+                        <button class="btn-primary" name="action_view" string="VIEW" type="object"/>
+                        <button class="btn-secondary" special="cancel" string="Discard"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <!--    Action for profit and loss    -->
+        <record id="action_ins_profit_and_loss_report" model="ir.actions.act_window">
+            <field name="name">Profit and Loss</field>
+            <field name="res_model">ins.financial.report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="ins_financial_report_wiz_modified"/>
+            <field name="target">new</field>
+            <field eval="{'financial_report_view': 'profit_loss'}" name="context"/>
+        </record>
+        <menuitem action="action_ins_profit_and_loss_report" groups="account.group_account_user" id="account_report_pandl" name="Profit and Loss" parent="account_dynamic_reports.account_statement_report_parent_menu" sequence="50"/>
+        <!--    Action for balance sheet    -->
+        <record id="action_ins_balance_sheet_report" model="ir.actions.act_window">
+            <field name="name">Balance Sheet</field>
+            <field name="res_model">ins.financial.report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="ins_financial_report_wiz_modified"/>
+            <field name="target">new</field>
+            <field eval="{'financial_report_view': 'balance_sheet'}" name="context"/>
+        </record>
+        <!--        <report-->
+        <!--            id="action_ins_financial_report_xlsx"-->
+        <!--            model="ins.financial.report"-->
+        <!--            string="Financial Report"-->
+        <!--            report_type="xlsx"-->
+        <!--            name="account_dynamic_reports.ins_financial_report_xlsx"-->
+        <!--            file="account_dynamic_reports.ins_financial_report_xlsx"-->
+        <!--            attachment_use="False"-->
+        <!--            print_report_name="'FinancialReport - %s/%s' % (object.date_from,object.date_to)"-->
+        <!--        />-->
+        <menuitem action="action_ins_balance_sheet_report" groups="account.group_account_user" id="account_report_bl" name="Balance Sheet" parent="account_dynamic_reports.account_statement_report_parent_menu" sequence="60"/>
+        <!--    Action for Cash Flow    -->
+        <record id="action_ins_cash_flow_report" model="ir.actions.act_window">
+            <field name="name">Cash Flow Report</field>
+            <field name="res_model">ins.financial.report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="ins_financial_report_wiz_modified"/>
+            <field name="target">new</field>
+            <field eval="{'financial_report_view': 'cash_flow'}" name="context"/>
+        </record>
+        <menuitem action="action_ins_cash_flow_report" groups="account.group_account_user" id="account_report_cashflow" name="Cash Flow Report" parent="account_dynamic_reports.account_statement_report_parent_menu" sequence="70"/>
+        <record id="action_dynamic_allinone_pl_report" model="ir.actions.client">
+            <field name="name">Profit and Loss</field>
+            <field name="tag">dynamic.fr</field>
+            <field eval="{'account_report_id':ref('account_dynamic_reports.ins_account_financial_report_profitandloss0')}" name="context"/>
+        </record>
+        <record id="action_dynamic_allinone_bs_report" model="ir.actions.client">
+            <field name="name">Balance Sheet</field>
+            <field name="tag">dynamic.fr</field>
+            <field eval="{'account_report_id':ref('account_dynamic_reports.ins_account_financial_report_balancesheet0')}" name="context"/>
+        </record>
+        <record id="action_dynamic_allinone_cf_report" model="ir.actions.client">
+            <field name="name">Cash Flow</field>
+            <field name="tag">dynamic.fr</field>
+            <field eval="{'account_report_id':ref('account_dynamic_reports.ins_account_financial_report_cash_flow0')}" name="context"/>
+        </record>
+        <!--        <menuitem id="account_report_pl_wiz" sequence="60" action="action_dynamic_allinone_pl_report"-->
+        <!--                  name="Profit and Loss" parent="account_reports_ins_wiz" groups="account.group_account_user"/>-->
+        <!--        <menuitem id="account_report_bs_wiz" sequence="70" action="action_dynamic_allinone_bs_report"-->
+        <!--                  name="Balance Sheet" parent="account_reports_ins_wiz" groups="account.group_account_user"/>-->
+        <!--        <menuitem id="account_report_cf_wiz" sequence="80" action="action_dynamic_allinone_cf_report"-->
+        <!--                  name="Cash Flow" parent="account_reports_ins_wiz" groups="account.group_account_user"/>-->
+    </data>
+</odoo>

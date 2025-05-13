@@ -1,0 +1,21 @@
+<odoo>
+    <data noupdate="0">
+        <record id="001" model="crm.won.reason">
+            <field name="name">Speed of response</field>
+            <field name="active">True</field>
+        </record>
+        <record id="002" model="crm.won.reason">
+            <field name="name">Ease of interaction</field>
+            <field name="active">True</field>
+        </record>
+        <record id="003" model="crm.won.reason">
+            <field name="name">Competitive Price / Value for money</field>
+            <field name="active">True</field>
+        </record>
+        <record id="004" model="crm.won.reason">
+            <field name="name">Others</field>
+            <field name="active">True</field>
+        </record>
+
+    </data>
+</odoo>

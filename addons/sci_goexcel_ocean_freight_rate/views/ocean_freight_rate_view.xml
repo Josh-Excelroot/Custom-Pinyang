@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- CR5 -->
+    <record id='view_tree_ocean_freight_rate' model='ir.ui.view'>
+        <field name="name">Ocean Freight Rate List</field>
+        <field name="model">freight.ocean.freight.rate</field>
+        <field name="arch" type="xml">
+			<tree string='Ocean Freight Rate' default_order='create_date desc'>
+				<field name="name"/>
+                <field name="carrier"/>
+                <field name="container_product_id"/>
+                <field name="currency"/>
+                <field name="state"/>
+                <field name="create_date"/>
+			</tree>
+		</field>
+	</record>
+
+    <record id="view_form_ocean_freight_rate" model="ir.ui.view">
+        <field name="name">Ocean Freight Rate Form</field>
+        <field name="model">freight.ocean.freight.rate</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_approve" type="object" string="Approve" class="oe_highlight"
+                            attrs="{'invisible': ['|', ('approve_reject_ocean_freight_rate','=', False), ('state','!=','approve')]}"/>
+                    <button name="action_reject" type="object" string="Reject" class="oe_highlight"
+                            attrs="{'invisible': ['|', ('approve_reject_ocean_freight_rate','=', False), ('state','!=','approve')]}"/>
+                    <button name="action_approval" type="object" string="Send to Approval" class="oe_highlight"
+                            attrs="{'invisible': [('state','!=','draft')]}"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group string="General Information">
+                        <field name="name"/>
+                        <field name="approve_reject_ocean_freight_rate" invisible="1"/>
+                        <field name="carrier"/>
+                        <field name="container_category_id" invisible="1"/>
+                        <field name="container_product_id" domain="[('categ_id', '=', container_category_id)]" options='{"always_reload": True}'/>
+                        <field name="port_pair" widget="many2many_tags"/>
+                        <field name="currency"/>
+                        <field name="approve_by" readonly="1" force_save="1"/>
+                        <field name="approve_date_time" readonly="1" force_save="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Line Item">
+                            <field name="ocean_freight_rate_line_ids" mode="tree">
+                                <tree editable="bottom">
+                                    <field name="cost_rate"/>
+                                    <field name="margin"/>
+                                    <field name="rate"/>
+
+                                    <field name="customer" widget="many2many_tags" domain="[('customer','=',True), ('type','not in',['invoice','delivery'])]"/>
+                                    <!-- CR5 - Canon -->
+                                    <field name="vessel_name"/>
+                                    <field name="carrier_booking_no"/>
+                                    <field name="valid_from"/>
+                                    <field name="valid_to"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_search_ocean_freight_rate" model="ir.ui.view">
+        <field name="name">Ocean Freight Rate Filter</field>
+        <field name="model">freight.ocean.freight.rate</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id='view_tree_port_pair' model='ir.ui.view'>
+        <field name="name">Port Pair List</field>
+        <field name="model">freight.port.pair</field>
+        <field name="arch" type="xml">
+			<tree string='Port Pair'>
+				<field name="name"/>
+                <field name="port_of_loading"/>
+                <field name="port_of_discharge"/>
+			</tree>
+		</field>
+	</record>
+
+    <record id="view_form_port_pair" model="ir.ui.view">
+        <field name="name">Port Pair Form</field>
+        <field name="model">freight.port.pair</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="port_of_loading"/>
+                        <field name="port_of_discharge"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_search_port_pair" model="ir.ui.view">
+        <field name="name">Port Pair Filter</field>
+        <field name="model">freight.port.pair</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <act_window id="action_configure_ocean_freight_rate"
+        name="Ocean Freight Rate"
+        res_model="freight.ocean.freight.rate"
+        view_mode="tree,form"
+    />
+
+    <act_window id="action_configure_port_pair"
+        name="Port Pair"
+        res_model="freight.port.pair"
+        view_mode="tree,form"
+    />
+
+    <menuitem id="menu_freight_configure_ocean_freight_rate"
+              name="Ocean Freight Rate"
+              parent="sci_goexcel_freight.menu_freight_configure"
+              action="action_configure_ocean_freight_rate" />
+    <menuitem id="menu_freight_configure_port_pair"
+              name="Port Pair"
+              parent="sci_goexcel_freight.menu_freight_configure"
+              action="action_configure_port_pair" />
+</odoo>

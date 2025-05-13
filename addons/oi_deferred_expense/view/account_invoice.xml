@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<record id="deferred_expense_invoice_form" model="ir.ui.view">
+		<field name="name">account.invoice.form.deferred.expense.inherit</field>
+		<field name="model">account.invoice</field>
+		<field name="inherit_id" ref="account.invoice_form" />
+		<field name="arch" type="xml">
+			<field name="analytic_tag_ids" position="after">
+				<field string="Deferred Expense Type" name="asset_category_id" domain="[('type','=','expense')]" context="{'default_type':'expense'}"/>
+			</field>
+		</field>
+	</record>
+
+	<!-- Vendor Bill -->
+	<record id="deferred_expense_invoice_supplier_form" model="ir.ui.view">
+		<field name="name">account.invoice.supplier.form.deferred.expense.inherit</field>
+		<field name="model">account.invoice</field>
+		<field name="inherit_id" ref="account.invoice_supplier_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//sheet//div" position="before">
+				<div class="oe_button_box" name="button_box">
+                    <button class="oe_stat_button" name="action_view_assets"
+                            string="Expenses" type="object"
+                            attrs="{'invisible':[('asset_ids','=',[])]}" icon="fa-bars"/>
+                    <field name="asset_ids" invisible="1"/>
+	        		<field name="is_asset_category" invisible='1'/>
+                </div>
+			</xpath>
+		</field>
+	</record>
+
+    <!-- Add "Asset Date" to supplier invoices -->
+    <record model="ir.ui.view" id="view_invoice_asset_date">
+        <field name="name">account.invoice.supplier.form</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account_asset.view_invoice_asset_category"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='asset_category_id']" position="after">
+                <field name="asset_date" attrs="{'column_invisible':[('parent.is_asset_category', '=', False)], 'required': [('asset_category_id', '!=', False)], 'invisible': [('asset_category_id', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

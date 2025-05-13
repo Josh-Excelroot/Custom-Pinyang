@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle 
+ -->
+<odoo>
+    <report file="sci_goexcel_payment_receipt.report_pr_details" id="report_payment_receipt_action" menu="False" model="payment.receipt" name="sci_goexcel_payment_receipt.report_pr_details" report_type="qweb-pdf" string="Payment Receipt"/>
+    <report file="sci_goexcel_payment_receipt.report_or_details" id="report_official_receipt_action" menu="False" model="payment.receipt" name="sci_goexcel_payment_receipt.report_or_details" report_type="qweb-pdf" string="Official Receipt"/>
+</odoo>

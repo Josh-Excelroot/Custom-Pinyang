@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_service_form_view" model="ir.ui.view">
+            <field name="name">crm.service.form</field>
+            <field name="model">crm.service</field>
+            <field name="arch" type="xml">
+                <form string="CRM Service">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+                                <field name="full_name"/>
+                            </group>
+                            <group>
+                                <field groups="base.group_multi_company" name="company_id"
+                                       options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                                <field name="active" widget="toggle_button"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="crm_service_tree_view" model="ir.ui.view">
+            <field name="name">crm.service.tree</field>
+            <field name="model">crm.service</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="full_name"/>
+                    <field groups="base.group_multi_company" name="company_id"/>
+                    <field name="active" widget="toggle_button"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_crm_service" model="ir.actions.act_window">
+            <field name="name">CRM Service</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.service</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+        </record>
+
+        <menuitem id="menu_crm_service"
+                  name="Service"
+                  parent="crm.crm_menu_config"
+                  action="action_crm_service"/>
+
+
+    </data>
+</odoo>

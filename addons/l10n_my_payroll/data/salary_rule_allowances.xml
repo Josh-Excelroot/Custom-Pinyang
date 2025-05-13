@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+    <record id="hr_allowance_rental" model="hr.salary.rule">
+        <field name="code">Rental(ALW)</field>
+        <field eval="2" name="sequence"/>
+        <field eval="1" name="appears_on_payslip"/>
+        <field name="condition_range">contract.wage</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field eval="1" name="active"/>
+        <field name="name">Rental Allowance</field>
+        <field name="condition_python">
+            # Available variables:
+            #----------------------
+            # payslip: object containing the payslips
+            # employee: hr.employee object
+            # contract: hr.contract object
+            # rules: object containing the rules code (previously computed)
+            # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+            # worked_days: object containing the computed worked days
+            # inputs: object containing the computed inputs
+
+            # Note: returned value have to be set in the variable 'result'
+
+            result = rules.NET &gt; categories.NET * 0.10</field>
+        <field name="amount_python_compute">result = contract.contract_allowance_id.filtered(lambda x:x.name=="Rental Allowance").allowance_amount</field>
+        <!--<field name="amount_python_compute">result = (contract.wage / worked_days.TOTALWAGEDAYS.number_of_days) * worked_days.TTLCURRWKDAYINMTH.number_of_days</field>-->
+        <field name="category_id" ref="hr_payroll.ALW"/>
+        <field name="quantity">1.0</field>
+    </record>
+    <record id="hr_allowance_insurance" model="hr.salary.rule">
+        <field name="code">Insurance(ALW)</field>
+        <field eval="2" name="sequence"/>
+        <field eval="1" name="appears_on_payslip"/>
+        <field name="condition_range">contract.wage</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field eval="1" name="active"/>
+        <field name="name">Insurance Allowance</field>
+        <field name="condition_python">
+            # Available variables:
+            #----------------------
+            # payslip: object containing the payslips
+            # employee: hr.employee object
+            # contract: hr.contract object
+            # rules: object containing the rules code (previously computed)
+            # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+            # worked_days: object containing the computed worked days
+            # inputs: object containing the computed inputs
+
+            # Note: returned value have to be set in the variable 'result'
+
+            result = rules.NET &gt; categories.NET * 0.10</field>
+        <field name="amount_python_compute">result = contract.contract_allowance_id.filtered(lambda x:x.name=="Insurance Allowance").allowance_amount</field>
+        <!--<field name="amount_python_compute">result = (contract.wage / worked_days.TOTALWAGEDAYS.number_of_days) * worked_days.TTLCURRWKDAYINMTH.number_of_days</field>-->
+        <field name="category_id" ref="hr_payroll.ALW"/>
+        <field name="quantity">1.0</field>
+    </record>
+    <record id="hr_allowance_fuel" model="hr.salary.rule">
+        <field name="code">Fuel(ALW)</field>
+        <field eval="2" name="sequence"/>
+        <field eval="1" name="appears_on_payslip"/>
+        <field name="condition_range">contract.wage</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field eval="1" name="active"/>
+        <field name="name">Fuel Allowance</field>
+        <field name="condition_python">
+            # Available variables:
+            #----------------------
+            # payslip: object containing the payslips
+            # employee: hr.employee object
+            # contract: hr.contract object
+            # rules: object containing the rules code (previously computed)
+            # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+            # worked_days: object containing the computed worked days
+            # inputs: object containing the computed inputs
+
+            # Note: returned value have to be set in the variable 'result'
+
+            result = rules.NET &gt; categories.NET * 0.10</field>
+        <field name="amount_python_compute">result = contract.contract_allowance_id.filtered(lambda x:x.name=="Fuel Allowance").allowance_amount</field>
+        <!--<field name="amount_python_compute">result = (contract.wage / worked_days.TOTALWAGEDAYS.number_of_days) * worked_days.TTLCURRWKDAYINMTH.number_of_days</field>-->
+        <field name="category_id" ref="hr_payroll.ALW"/>
+        <field name="quantity">1.0</field>
+    </record>
+    <record id="hr_allowance_car" model="hr.salary.rule">
+        <field name="code">CAR(ALW)</field>
+        <field eval="2" name="sequence"/>
+        <field eval="1" name="appears_on_payslip"/>
+        <field name="condition_range">contract.wage</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field eval="1" name="active"/>
+        <field name="name">Car Allowance</field>
+        <field name="condition_python">
+            # Available variables:
+            #----------------------
+            # payslip: object containing the payslips
+            # employee: hr.employee object
+            # contract: hr.contract object
+            # rules: object containing the rules code (previously computed)
+            # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+            # worked_days: object containing the computed worked days
+            # inputs: object containing the computed inputs
+
+            # Note: returned value have to be set in the variable 'result'
+
+            result = rules.NET &gt; categories.NET * 0.10</field>
+        <field name="amount_python_compute">result = contract.contract_allowance_id.filtered(lambda x:x.name=="Car Allowance").allowance_amount</field>
+        <!--<field name="amount_python_compute">result = (contract.wage / worked_days.TOTALWAGEDAYS.number_of_days) * worked_days.TTLCURRWKDAYINMTH.number_of_days</field>-->
+        <field name="category_id" ref="hr_payroll.ALW"/>
+        <field name="quantity">1.0</field>
+    </record>
+</odoo>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="form_create_paylsips" model="ir.ui.view">
+        <field name="name">payslip.wizard.form</field>
+        <field name="model">payslip.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import Devis (code, quantity, price) .XLS(x)">
+
+                <group>
+                    <group>
+                        <field name="employee" widget="many2many_tags"/>
+                    </group>
+
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+                    </group>
+
+                <footer>
+                    <button string="Create" name="create_payslips" type="object"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+
+        <record id='action_create_payslip' model='ir.actions.act_window'>
+        <field name="name">Create Payslips</field>
+        <field name="res_model">payslip.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_employee': [(6, 0, [1])]}</field>
+    </record>
+
+        <menuitem action="hr_payroll.action_view_hr_payslip_form" id="menu_department_tree_vi" parent="hr_payroll.menu_department_tree" groups="hr_payroll.group_hr_payroll_user" sequence="4"/>
+
+        <menuitem action="action_create_payslip" id="menu_department_tree_views" parent="hr_payroll.menu_department_tree" groups="hr_payroll.group_hr_payroll_user" sequence="5"/>
+
+
+    </data>
+
+</odoo>

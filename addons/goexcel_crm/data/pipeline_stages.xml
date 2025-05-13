@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record model="crm.stage" id="crm.stage_lead1">
+        <field name="name">Prospect</field>
+        <field name="probability">10</field>
+        <field name="on_change">1</field>
+        <field name="sequence">1</field>
+    </record>
+    <record model="crm.stage" id="crm.stage_lead2">
+        <field name="name">Info Gathering</field>
+        <field name="probability">30</field>
+        <field name="on_change">1</field>
+        <field name="sequence">2</field>
+    </record>
+    <record model="crm.stage" id="crm.stage_lead3">
+        <field name="name">Proposition</field>
+        <field name="probability">70</field>
+        <field name="on_change">1</field>
+        <field name="sequence">3</field>
+    </record>
+    <record model="crm.stage" id="crm.stage_lead4">
+        <field name="name">Quotation</field>
+        <field name="fold" eval="False"/>
+        <field name="probability">100</field>
+        <field name="on_change">1</field>
+        <field name="sequence">70</field>
+    </record>
+    <record model="crm.stage" id="stage_lead5">
+        <field name="name">Nego</field>
+        <field name="fold" eval="False"/>
+        <field name="probability">100</field>
+        <field name="on_change">1</field>
+        <field name="sequence">80</field>
+    </record>
+    <record model="crm.stage" id="stage_lead6">
+        <field name="name">Special Attention</field>
+        <field name="fold" eval="False"/>
+        <field name="probability">100</field>
+        <field name="on_change">1</field>
+        <field name="sequence">90</field>
+    </record>
+
+    <record model="crm.stage" id="stage_lead7">
+        <field name="name">Lost</field>
+        <field name="fold" eval="False"/>
+        <field name="probability">100</field>
+        <field name="on_change">1</field>
+        <field name="sequence">90</field>
+    </record>
+
+    <record model="crm.stage" id="stage_lead7">
+        <field name="name">Won</field>
+        <field name="fold" eval="False"/>
+        <field name="probability">100</field>
+        <field name="on_change">1</field>
+        <field name="sequence">90</field>
+    </record>
+
+    <record model="crm.stage" id="stage_lead8">
+        <field name="name">SV service</field>
+        <field name="fold" eval="False"/>
+        <field name="probability">100</field>
+        <field name="on_change">1</field>
+        <field name="sequence">90</field>
+    </record>
+
+    <record model="crm.stage" id="stage_lead9">
+        <field name="name">UP update</field>
+        <field name="fold" eval="False"/>
+        <field name="probability">100</field>
+        <field name="on_change">1</field>
+        <field name="sequence">90</field>
+    </record>
+
+    <record model="crm.stage" id="stage_lead10">
+        <field name="name">PM promote</field>
+        <field name="fold" eval="False"/>
+        <field name="probability">100</field>
+        <field name="on_change">1</field>
+        <field name="sequence">90</field>
+    </record>
+</odoo>

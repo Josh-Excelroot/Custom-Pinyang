@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template and notification section -->
+    <data noupdate="1">
+        <record id="confirm_email_template_quotation" model="mail.template">
+            <field name="name">Sales quotation: Send by email</field>
+            <field name="model_id" ref="sci_goexcel_sq.model_sale_order"/>
+            <field name="email_from"></field>
+            <field name="email_to">${object.get_email_ids(object.user_id, object.team_id)|safe}</field>
+            <field name="subject">Sales Quotation (${object.name or ''})</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear Sir/Madam,
+                        <br />
+                        <br />
+        Kindly view the confirmed quotation by clicking the button below.
+                        <br/>
+                        <div style="margin-top: 16px;">
+                            <a href="${object['action_url']}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px">Open Quotation</a>
+                        </div>
+                    </p>
+                </div>
+            </field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,18 @@
+<odoo>
+
+    <record model="ir.ui.view" id="view_transport_invoice">
+        <field name="name">transport_rft.account_invoice.form</field>
+        <field name="model">transport.rft</field>
+        <field name="type">form</field>
+        <field name="priority" eval="1"/>
+        <field name="inherit_id" ref="sci_goexcel_transport.view_form_transport_rft"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//page[@name='cost_profit']/field[@name='cost_profit_ids_rft']/tree/field[@name='sales_total']" position="after">
+                <field name="invoice_id"/>
+                <field name="invoice_line_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,5 @@
+"id","company_id/id","register_glcode_ids/id","note","name"
+"__export__.hr_contribution_register_1","base.main_company","","","EPF"
+"__export__.hr_contribution_register_2","base.main_company","","","SCS"
+"__export__.hr_contribution_register_3","base.main_company","","","PCB"
+"__export__.hr_contribution_register_4","base.main_company","","","EPF-E"

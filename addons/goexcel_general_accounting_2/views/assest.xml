@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="assets_backend" name="attachment_preview_invoice assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/goexcel_general_accounting_2/static/src/js/attachment_preview.js"></script>
+            <script type="text/javascript" src="/goexcel_general_accounting_2/static/src/js/inherit_data_export.js"></script>
+
+
+
+<!--            <script type="text/javascript" src="/attachment_preview/static/src/js/abstract_message_extend.js"></script>-->
+<!--            <script type="text/javascript" src="/attachment_preview/static/src/js/pdf_widgets_many2one.js"></script>-->
+            <link rel="stylesheet" type="text/scss" href="/goexcel_general_accounting_2/static/src/scss/attachment_preview.scss"/>
+        </xpath>
+    </template>
+</odoo>

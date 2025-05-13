@@ -1,0 +1,281 @@
+<odoo>
+
+    <!-- Tree View Master booking Transport -->
+    <record id='view_tree_freight_master_booking_transport' model='ir.ui.view'>
+        <field name="name">Multimodal Freight Transport Tree</field>
+        <field name="model">freight.master.booking.transport</field>
+        <field name="arch" type="xml">
+            <tree string='Multimodal Freight Transport' decoration-muted="job_status=='06'">
+                <field name="job_status"/>
+                <!--<field name="job_no"/>-->
+                <field name="master_booking_no"/>
+                <!-- <field name="obl_no"/>-->
+                <field name="vessel_name"/>
+                <field name="voyage_no"/>
+                <field name="vessel_id"/>
+                <field name="scn_code"/>
+                <field name="type_code"/>
+                <field name="booking_date"/>
+                <field name="direction"/>
+                <!--<field name="container_qty" sum="container_total"/>
+                <field name="teus" sum="Total Teus"/>
+                <field name="container_product_id"/>-->
+                <field name="carrier"/>
+                <field name="create_uid"/>
+                <field name="write_date"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- Form View Master booking -->
+    <record id="view_form_freight_master_booking_transport" model="ir.ui.view">
+        <field name="name">Multimodal Freight Transport Form</field>
+        <field name="model">freight.master.booking.transport</field>
+        <field name="arch" type="xml">
+            <form string="Multimodal Freight Transport">
+                <header>
+                    <button name="action_cancel_master_booking_transport" type="object" string="Cancel" class="oe_button" confirm="Are you sure you want to Cancel Multimodal Job?" attrs="{'invisible': [('job_status', 'in', ['03','04','05','06'])]}"/>
+                    <field name="job_status" widget="statusbar" clickable="True" statusbar_visible="07,01,08,02,05" options='{"always_reload": True}'/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <group>
+                        <group>
+                            <field name="master_booking_no"/>
+                            <field name="carrier" domain="[('carrier', '=', True)]" options='{"always_reload": True, "no_create": True, "no_create_edit":True}' />
+                            <field name="booking_date"/>
+                            <field name="vessel_name"/>
+                            <field name="voyage_no"/>
+                            <field name="vessel_id"/>
+                            <field name="scn_code"/>
+                            <field name="type_code"/>
+                            <!-- <field name="container_qty"/>
+                            <field name="teus"/>
+                            <field name="container_product_id"/>-->
+                            <!-- <field name="ihi_job_no"/>
+                            <field name="ihi_etd"/>-->
+                            <field name="remark"/>
+                        </group>
+                        <group>
+                            <!-- <field name="mlo"/>-->
+                            <!--<field name="obl_no"/>-->
+                            <field name="direction" widget="radio" options="{'horizontal': true}"/>
+                            <!--                            <field name="thailand_route" widget="radio" options="{'horizontal': true}" attrs="{'invisible': [('direction', '!=', 'thailand')]}"/>-->
+                            <field name="port_of_loading" options='{"always_reload": True, "no_create": True, "no_create_edit":True}'/>
+                            <field name="transhipment1"/>
+                            <field name="transhipment1_eta"/>
+                            <!-- <field name="transhipment2"/>
+                             <field name="transhipment2_eta"/>-->
+                            <field name="port_of_discharge" options='{"always_reload": True, "no_create": True, "no_create_edit":True}'/>
+                            <field name="port_of_discharge_eta"/>
+                            <!--   <field name="ktm_cn_no"/>-->
+                            <!--<field name="yard"/>-->
+                            <!-- <field name="priority" widget="priority"/>-->
+                            <field name="owner"/>
+                            <field name="create_date"/>
+                            <field name="create_uid"/>
+                            <field name="write_date"/>
+                            <field name="write_uid"/>
+                            <field name="company_id" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Split Booking">
+                            <field name="booking_ids" mode="tree,kanban" context="{'form_view_ref': 'sci_goexcel_freight.view_form_booking'}">
+                                <tree string="Split Booking Details" name="split_booking_ids" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="booking_no"/>
+                                    <field name="carrier_booking_no"/>
+                                    <!--<field name="obl_no"/>-->
+                                    <field name="service_type"/>
+                                    <!--<field name="container_qty" sum="Total Container Quantity"/>-->
+                                    <field name="booking_date_time" />
+                                    <!-- <field name="direction" />-->
+                                    <field name="vessel_name" />
+                                    <field name="port_of_discharge" />
+                                    <!-- <field name="vgm_done" />-->
+                                    <field name="port_of_loading" invisible="1"/>
+                                    <!-- <field name="port_of_discharge" invisible="1"/>-->
+                                    <field name="port_of_tranship" invisible="1"/>
+                                    <field name="port_of_tranship_eta" invisible="1"/>
+                                    <field name="port_of_tranship_2" invisible="1"/>
+                                    <field name="port_of_tranship_eta_2" invisible="1"/>
+                                    <field name="port_of_discharge_eta" invisible="1"/>
+                                    <field name="voyage_no" invisible="1"/>
+                                    <field name="vessel_id" invisible="1"/>
+                                    <!-- <field name="type_code" invisible="1"/>-->
+                                    <field name="scn_code" invisible="1"/>
+                                    <!-- TS CR5-6 -->
+                                    <field name="carrier" invisible="1"/>
+                                    <field name="direction" invisible="1"/>
+                                    <field name="customer_name" options='{"always_reload": True, "no_create": True, "no_create_edit":True}' domain="[('customer','=',True)]"/>
+                                    <!-- <field name="billing_address" options='{"always_reload": True}'/>-->
+                                    <field name="shipment_booking_status"/>
+                                    <field name="bl_status"/>
+                                    <button name="action_edit_booking_job" string="Edit Booking Job" type="object" icon="fa-list" options='{"warn": true}'/>
+                                    <field name="note"/>
+                                </tree>
+                                <kanban class="o_kanban_mobile">
+                                    <field name="booking_no"/>
+                                    <field name="carrier_booking_no"/>
+                                    <!-- <field name="obl_no"/>-->
+                                    <field name="service_type"/>
+                                    <field name="container_qty" sum="Total Container Quantity"/>
+                                    <field name="booking_date_time" />
+                                    <field name="vessel_name" />
+                                    <!-- <field name="vgm_done" />-->
+                                    <field name="port_of_discharge" />
+                                    <field name="customer_name" options='{"always_reload": True}' />
+                                    <field name="billing_address" options='{"always_reload": True}'/>
+                                    <field name="shipment_booking_status"/>
+                                    <field name="bl_status"/>
+                                    <field name="note"/>
+
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div t-attf-class="oe_kanban_global_click">
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <strong>
+                                                            <span>
+                                                                <t t-esc="record.customer_name.value"/>
+                                                            </span>
+                                                        </strong>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <strong>
+                                                            <span class="float-right text-right">
+                                                                <t t-esc="record.container_qty.value"/>
+                                                                <t t-esc="record.booking_date_time.value"/>
+                                                            </span>
+                                                        </strong>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12 text-muted">
+                                                        <span>
+                                                            Booking No:
+                                                            <t t-esc="record.carrier_booking_no.value"/>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12 text-muted">
+                                                        <span>
+                                                            BL No:
+                                                                                                                        <!--<t t-esc="record.obl_no.value"/>-->
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+
+    <!-- Search Master booking -->
+    <record id="view_search_master_booking" model="ir.ui.view">
+        <field name="name">freight.master.booking.transport.search</field>
+        <field name="model">freight.master.booking.transport</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="master_booking_no"/>
+                <!-- <field name="job_no"/>-->
+                <field name="carrier"/>
+                <!-- <field name="obl_no"/>-->
+                <field name="vessel_name"/>
+                <field name="container_qty"/>
+                <!-- <field name="ihi_job_no"/>-->
+                <filter string="ETA/ETD Date" name="filter_booking_date" date="booking_date"/>
+                <filter string="This Year" name="this_year" domain="[('booking_date','&lt;=', time.strftime('%%Y-12-31')),('booking_date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                <filter string="Import" name="import" domain="[('direction', '=', 'import')]"/>
+                <filter string="Export" name="export" domain="[('direction', '=', 'export')]"/>
+                <!-- <filter string="Thailand" name="thailand" domain="[('direction', '=', 'thailand')]"/>-->
+                <filter string="Draft" name="job status" domain="[('job_status', '=', '01')]"/>
+                <filter string="Confirmed" name="job status" domain="[('job_status', '=', '02')]"/>
+                <filter string="Reserved" name="job status" domain="[('job_status', '=', '07')]"/>
+                <filter string="Done" name="job status" domain="[('job_status', '=', '05')]"/>
+                <field name="booking_ids" string="Carrier Booking No" filter_domain="[('booking_ids.container_no','ilike',self)]"/>
+                <!-- <field name="booking_ids" string="OBL No" filter_domain="[('booking_ids.obl_no','ilike',self)]"/>-->
+                <field name="booking_ids" string="Customer" filter_domain="[('booking_ids.customer_name','ilike',self)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="ETA/ETD Date" name="booking_month" domain="[]" context="{'group_by':'booking_date'}"/>
+                    <filter string="Container Qty" name="container_qty" domain="[]" context="{'group_by':'container_qty'}"/>
+                    <filter string="Owner" name="owner" domain="[]" context="{'group_by':'owner'}"/>
+                    <filter string="Carrier" name="carrier" domain="[]" context="{'group_by':'carrier'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <!--  <record id="view_calendar_master_booking" model="ir.ui.view">
+         <field name="name">freight.master.booking.transport.calendar</field>
+         <field name="model">freight.master.booking.transport</field>
+        <field name="arch" type="xml">
+            <calendar color="master_booking_no" date_start="booking_date" string="Master Booking" mode="week" quick_add="0" all_day="booking_date">
+                     <field name="carrier" />
+                     <field name="job_status" />
+                     <field name="vessel_name" />
+                     <field name="container_qty"/>
+            </calendar>
+        </field>
+    </record>-->
+
+
+    <record id="view_master_booking_pivot" model="ir.ui.view">
+        <field name="name">freight.master.booking.transport.pivot</field>
+        <field name="model">freight.master.booking.transport</field>
+        <field name="arch" type="xml">
+            <pivot string="Master Booking Analysis">
+                <field name="carrier" type="row"/>
+                <field name="container_qty"/>
+                <field name="booking_date" interval="month" type="row"/>
+                <!--<field name="port_of_loading_eta" interval="month" type="row"/>-->
+            </pivot>
+        </field>
+    </record>
+
+
+    <!--  <record id="view_master_booking_graph" model="ir.ui.view">
+         <field name="name">freight.master.booking.transport.graph</field>
+         <field name="model">freight.master.booking.transport</field>
+         <field name="arch" type="xml">
+             <graph string="Master Booking Graph" type="line">
+                 <field name="carrier" type="col"/>
+                 <field name="container_qty" type="measure"/>
+             </graph>
+         </field>
+    </record>-->
+
+
+    <record id="action_master_booking" model="ir.actions.act_window">
+        <field name="name">Master Booking</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">freight.master.booking.transport</field>
+        <field name="view_mode">tree,form,pivot</field>
+        <!--<field name="view_mode">tree,form,calendar,pivot,graph</field>-->
+        <field name="context">{'search_default_this_year': 1}</field>
+    </record>
+
+
+    <menuitem id="menu_freight_master_booking_transport" name="Master Booking" parent="sci_goexcel_freight.menu_freight_booking" action="action_master_booking" sequence="0"/>
+
+
+
+</odoo>

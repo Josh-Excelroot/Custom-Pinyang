@@ -1,0 +1,24 @@
+<odoo>
+    <data noupdate="0">
+        <record id="001" model="">
+            <field name="name">Orange</field>
+            <field name="active">True</field>
+            <field name="full_name">Orange</field>
+        </record>
+        <record id="002" model="">
+            <field name="name">Biscuit</field>
+            <field name="active">True</field>
+            <field name="full_name">Biscuit</field>
+        </record>
+        <record id="003" model="">
+            <field name="name">Liquor</field>
+            <field name="active">True</field>
+            <field name="full_name">Liquor</field>
+        </record>
+        <record id="004" model="">
+            <field name="name">Hamper</field>
+            <field name="active">True</field>
+            <field name="full_name">Hamper</field>
+        </record>
+    </data>
+</odoo>

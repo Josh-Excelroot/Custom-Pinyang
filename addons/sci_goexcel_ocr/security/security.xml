@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="module_ocr"
+            model="ir.module.category">
+        <field name="name">OCR</field>
+    </record>
+
+    <record id="ocr_group" model="res.groups">
+        <field name="name">OCR User</field>
+        <field name="category_id" ref="module_ocr"/>
+    </record>
+
+    <record id="ocr_rule" model="ir.rule">
+        <field name="name">OCR Table Mapping Records</field>
+        <field ref="model_ocr_table_mapping" name="model_id"/>
+        <field name="groups" eval="[(4, ref('ocr_group'))]"/>
+    </record>
+
+</odoo>

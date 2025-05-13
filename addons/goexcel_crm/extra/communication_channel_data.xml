@@ -1,0 +1,24 @@
+<odoo>
+    <data noupdate="0">
+        <record id="001" model="">
+            <field name="name">M</field>
+            <field name="active">True</field>
+            <field name="full_name">M - mobile phone/whatsapp</field>
+        </record>
+        <record id="002" model="">
+            <field name="name">E</field>
+            <field name="active">True</field>
+            <field name="full_name">E - email</field>
+        </record>
+        <record id="003" model="">
+            <field name="name">V</field>
+            <field name="active">True</field>
+            <field name="full_name">V - video call</field>
+        </record>
+        <record id="004" model="">
+            <field name="name">F</field>
+            <field name="active">True</field>
+            <field name="full_name">F - face to face</field>
+        </record>
+    </data>
+</odoo>

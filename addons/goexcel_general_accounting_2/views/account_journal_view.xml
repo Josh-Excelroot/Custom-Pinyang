@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_journal_form_inherit" model="ir.ui.view">
+        <field name="name">remove group on Allow Cancelling Entries</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account_cancel.view_account_journal_form_inherit"/>
+        <field name="arch" type="xml">
+            <field name="update_posted" position="attributes">
+                <attribute name="groups" eval=""/>
+            </field>
+        </field>
+    </record>
+
+    <record id="account_journal_dashboard_kanban_view_general_accounting_2" model="ir.ui.view">
+        <field name="name">account.journal.dashboard.kanban.inherit</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.account_journal_dashboard_kanban_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//t[@id='account.JournalBodySalePurchase']/div[@class='col-7 o_kanban_primary_right']"
+                   position="inside">
+                <div class="row">
+                    <div class="col-7">
+                        <a type="object" t-if="journal_type == 'sale'" name="open_action"
+                           context="{'search_default_overdue':1}">
+                            <t t-esc="dashboard.number_overdue"/>
+                            Late Invoices
+                        </a>
+                        <a type="object" t-if="journal_type == 'purchase'" name="open_action"
+                           context="{'search_default_overdue':1}">
+                            <t t-esc="dashboard.number_overdue"/>
+                            Late Bills
+                        </a>
+                    </div>
+                    <div class="col-5 text-right">
+                        <span>
+                            <t t-esc="dashboard.sum_overdue"/>
+                        </span>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_employee_medical_claim,Access to Medical Claims,goexcel_employee_medical.model_hr_employee_medical_claim,base.group_user,1,1,1,1

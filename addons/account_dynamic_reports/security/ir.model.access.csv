@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ins_account_financial_report,ins.account.financial.report,model_ins_account_financial_report,account.group_account_user,1,1,1,1
+access_unrealized_forex_report,unrealized.forex.report,model_unrealized_forex_report,account.group_account_user,1,1,1,1
+access_unrealized_forex_revaluation,unrealized.forex.revaluation,model_unrealized_forex_revaluation,account.group_account_user,1,1,1,1
+access_unrealized_forex_revaluation_line,unrealized.forex.revaluation.line,model_unrealized_forex_revaluation_line,account.group_account_user,1,1,1,1
+access_forex_rate,forex.rate,model_forex_rate,account.group_account_user,1,1,1,1
+access_account_asset_report,account.asset.report,model_account_asset_report,account.group_account_user,1,1,1,1

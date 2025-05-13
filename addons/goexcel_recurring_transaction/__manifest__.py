@@ -1,0 +1,21 @@
+{
+    'name': 'Goexcel Recurring Transaction',
+    'category': 'Accounting',
+    'website': 'www.laxicon.in',
+    'support': 'info@laxicon.in',
+    'sequence': 101,
+    'description': "",
+    'version': '12.0.1',
+    'license': 'LGPL-3',
+    'author': 'Laxicon Solutions',
+    'depends': ['base', 'mail', 'account'],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/sequence_date.xml',
+        'data/ir_cron.xml',
+        'views/transaction_view.xml',
+    ],
+    'demo': [],
+    'installable': True,
+    'application': True,
+}

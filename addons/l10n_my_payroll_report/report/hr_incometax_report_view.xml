@@ -1,0 +1,558 @@
+<odoo>
+    <template id="l10n_my_payroll_report.hr_payslip_report">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <t t-set="data_report_header_spacing" t-value="0"/>
+                <t t-foreach="docs" t-as="o">
+                    <style>
+                        .border {
+                            border: 1px solid black;
+                            border-collapse: collapse;
+                        }
+
+                        .padding {
+                            padding: 3px;
+                        }
+                    </style>
+                    <div class="page">
+                        <table width="100%">
+                            <tr>
+                                <td width="50%" align="left" style="font-size:10px;padding-left:5px">Borang ini boleh difotokopi</td>
+                                <td width="50%" align="right" style="font-size:10px;padding-right:5px">CP39 Pin. 2011</td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="33%" style="border-right:1px solid black;border-top:1px solid black;border-bottom:1px solid black;border-left:1px solid black">
+                                    <table width="100%" style='border-right:1px solid black'>
+                                        <tr>
+                                            <td width="100%" style="font-size:11px;padding-bottom:90px">
+                                                <b>KETUA PENGARAH HASIL DALAM NEGERI LEMBAGA HASIL DALAM NEGERI</b>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="33%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="20%">
+                                                <img src="/l10n_my_payroll_report/static/src/img/hr_tax_logo.png" height="50" width="60"/>
+                                            </td>
+                                            <td width="80%" style="font-size:13px;text-align:center;padding-top:10px">
+                                                <b>CUKAI PENDAPATAN MALAYSIA</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" colspan="2" style="font-size:11px;text-align:center">PENYATA POTONGAN CUKAI OLEH MAJIKAN</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" colspan="2" style="font-size:11px;text-align:center">SEKSYEN 107 AKTA CUKAI PENDAPATAN, 1967</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" colspan="2" style="font-size:11px;text-align:center">KAEDAH CUKAI PENDAPATAN(POTONGAN DARIPADA</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" width="100%" style="font-size:11px;text-align:center">SARAAN),1994]</td>
+                                        </tr>
+                                        <tr>
+
+                                            <td colspan="2" width="100%" style="font-size:11px;text-align:center">
+                                                <b>
+                                                    POTONGAN BAGI BULAN&#160;&#160;
+                                                    <span style="border-left:1px solid black;border-right:1px solid black;border-top:1px solid black;border-bottom:1px solid black;" t-esc="get_monthname"/>
+                                                    &#160;&#160;TAHUN&#160;&#160;
+                                                    <span style="border-left:1px solid black;border-right:1px solid black;border-top:1px solid black;border-bottom:1px solid black;" t-esc="get_year"/>
+                                                </b>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="33%" style="border-right:1px solid black;border-top:1px solid black;border-bottom:1px solid black;border-left:1px solid black">
+                                    <table width="100%" style="border-spacing:0;padding-bottom:70px">
+                                        <tr>
+                                            <td colspan="4" width="100%" style="font-size:13px;text-align:center">
+                                                <b>UNTUK KEGUNAAN PEJABAT</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="40%" style="font-size:13px;padding-left:4px">No. Kelompok</td>
+                                            <td width="3%">&#160;</td>
+                                            <td width="55%">
+                                                <table width="100%" style="border-spacing:0;border-top:1px solid black;border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;">
+                                                    <tr>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%">&#160;</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td width="2%">&#160;</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="40%" style="font-size:13px;padding-left:3px">No. Resit</td>
+                                            <td width="3%">&#160;</td>
+                                            <td width="55%">
+                                                <table width="100%" style="border-spacing:0;border-top:1px solid black;border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;">
+                                                    <tr>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%" style="border-right:1px solid black">&#160;</td>
+                                                        <td width="8%">&#160;</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td width="2%">&#160;</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table width="100%" class='mt8' style="border-spacing:0;">
+                            <tr>
+                                <td width="33%" style="background:#cccccc;font-size:11px;border-left:1px solid black;border-top:1px solid black;border-bottom:1px solid black;padding-left:15px;">
+                                    <b>BUTIR-BUTIR MAJIKAN</b>
+                                </td>
+                                <td width="33%" style="background:#cccccc;font-size:11px;border-bottom:1px solid black;border-left:1px solid black;border-top:1px solid black;padding-left:15px;">
+                                    <b>BUTIR-BUTIR PEMBAYARAN</b>
+                                </td>
+                                <td width="33%" style="background:#cccccc;font-size:11px;border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black;border-top:1px solid black;padding-left:15px;">
+                                    <b>PEGAWAI YANG MENYEDIAKAN MAKLUMAT</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="33%" style="border-left:1px solid black;border-bottom:1px solid black;">
+                                    <table width="100%" style="border-spacing:0;">
+                                        <tr>
+                                            <td width="33%" style="font-size:11px;padding-left:5px">
+                                                <b>
+                                                    No. Rujukan
+                                                    <br/>
+                                                    Majikan E
+                                                </b>
+                                            </td>
+                                            <td width="65%" colspan="2" style="padding-left:3px">
+                                                <table width="100%" style="border-spacing:0;border:1px solid black;">
+                                                    <tr t-foreach="get_companyname" t-as="company">
+                                                        <t t-foreach="company.get('company_ref_no')" t-as="ref">
+                                                            <td width="7%" style="border-right:1px solid black;text-align:center;font-size:11px;">
+                                                                <span t-esc="ref"/>
+                                                            </td>
+                                                        </t>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td width="1%">&#160;</td>
+                                        </tr>
+                                        <tr t-foreach="get_companyname" t-as="name">
+                                            <td width="33%" style="font-size:11px;padding-left:5px">No.Pendaftaran Perniagaan</td>
+                                            <td width="65%" colspan="2" style="padding-left:3px;border-left:1px solid black;border-right:1px solid black;border-top:1px solid black;border-bottom:1px solid black;font-size:11px;padding-left:10px">
+                                                <span t-esc="name['company_regstration_no']"/>
+                                            </td>
+                                            <td width="1%">&#160;</td>
+                                        </tr>
+                                        <tr t-foreach="get_companyname" t-as="name">
+                                            <td width="33%" style="font-size:11px;padding-left:5px">Nama Syarikat/</td>
+                                            <td width="65%" colspan="2" style="font-size:11px;padding-left:10px;border-bottom:1px dotted black">
+                                                <span t-esc="name['company_name']"/>
+                                            </td>
+                                            <td width="1%">&#160;</td>
+                                        </tr>
+                                        <tr t-foreach="get_companyname" t-as="name">
+                                            <td width="33%" style="font-size:11px;padding-left:5px">Perniagaan</td>
+                                            <td width="65%" colspan="2" style="font-size:11px;padding-left:10px;border-bottom:1px dotted black">
+                                                <span t-esc="name['company_street']"/>
+                                            </td>
+                                            <td width="1%">&#160;</td>
+                                        </tr>
+                                        <tr t-foreach="get_companyname" t-as="name">
+                                            <td width="33%" style="font-size:11px;padding-left:5px">Alamat</td>
+                                            <td width="65%" colspan="2" style="font-size:11px;padding-left:10px;border-bottom:1px dotted black">
+                                                <span t-esc="name['company_zip']"/>
+                                                <span t-esc="name['company_city']"/>
+                                            </td>
+                                            <td width="1%">&#160;</td>
+                                        </tr>
+                                        <tr t-foreach="get_companyname" t-as="name">
+                                            <td width="33%" style="font-size:11px;padding-left:5px">Syarikat/Perniagaa</td>
+                                            <td width="65%" colspan="2" style="font-size:11px;padding-left:10px;border-bottom:1px dotted black">
+                                                <span t-esc="name['business_no']"/>
+                                            </td>
+                                            <td width="1%">&#160;</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="33%" style="border-left:1px solid black;border-bottom:1px solid black;">
+                                    <table width="100%" style="border-spacing:0;">
+                                        <tr>
+                                            <td width="33%" style="font-size:11px;border-right:1px solid black">&#160;</td>
+                                            <td width="33%" style="font-size:11px;border-right:1px solid black;border-bottom:1px solid black;text-align:center">PCB
+                                            </td>
+                                            <td width="33%" style="font-size:11px;border-bottom:1px solid black;text-align:center">CP38
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="33%" style="font-size:11px;border-right:1px solid black;border-bottom:1px solid black;padding-left:5px">Jumlah Potongan</td>
+                                            <td width="33%" style="border-right:1px solid black;border-bottom:1px solid black;font-size:11px;text-align:right;padding-right:10px;">
+                                                <span t-esc="get_totalpcb1"/>
+                                            </td>
+                                            <td width="33%" style="border-bottom:1px solid black;font-size:11px;text-align:right;padding-right:10px;">
+                                                <span t-esc="get_totalcp381"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="33%" style="font-size:11px;border-right:1px solid black;border-bottom:1px solid black;padding-left:5px">Bilangan Pekerja
+                                            </td>
+                                            <td width="33%" style="border-right:1px solid black;border-bottom:1px solid black;font-size:11px;text-align:center">
+                                                <span t-esc="get_totalrecord.get('pcb_totalrecord')"/>
+                                            </td>
+                                            <td width="33%" style="border-bottom:1px solid black;font-size:11px;text-align:center">
+                                                <span t-esc="get_totalrecord.get('cp38_total_record')"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="33%" style="font-size:11px;border-right:1px solid black;padding-left:5px">Butir-butir / Cek / Bank / Deraf / Kiriman Wang / Wang Pos</td>
+                                            <td width="33%" style="font-size:11px;border-bottom:1px solid black;border-right:1px solid black;padding-left:5px">
+                                                <b>Amaun</b>
+                                            </td>
+                                            <td width="33%" style="font-size:11px;border-bottom:1px solid black;font-size:12px;text-align:right;padding-right:10px;">
+                                                <span t-esc="get_totalpcb_cp381"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="33%" style="font-size:11px;border-right:1px solid black">&#160;</td>
+                                            <td width="33%" style="font-size:11px;border-right:1px solid black;border-bottom:1px solid black;padding-left:5px">Nombor
+                                            </td>
+                                            <td width="33%" style="font-size:11px;border-bottom:1px solid black">&#160;</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="33%" style="font-size:11px;border-right:1px solid black">&#160;</td>
+                                            <td width="33%" style="font-size:11px;border-right:1px solid black;border-bottom:1px solid black;padding-left:5px">Cawangan
+                                            </td>
+                                            <td width="33%" style="font-size:11px;border-bottom:1px solid black">&#160;</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="33%" style="font-size:11px;border-right:1px solid black">&#160;</td>
+                                            <td width="33%" style="font-size:11px;border-right:1px solid black;padding-left:5px">Tarikh
+                                            </td>
+                                            <td width="33%" style="font-size:11px;">&#160;</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="33%" style="border-left:1px solid black;border-bottom:1px solid black;border-right:1px solid black;">
+                                    <table width="100%" style="border-spacing:0;">
+                                        <tr>
+                                            <td width="33%" style="font-size:11px;padding-left:5px">Tandatangan</td>
+                                            <td width="65%" colspan="2" style="border-bottom:1px dotted black">&#160;</td>
+                                            <td width="1%">&#160;</td>
+                                        </tr>
+                                        <tr t-foreach="get_companyname" t-as="name">
+                                            <td width="33%" style="font-size:11px;padding-left:5px">Nama Penuh</td>
+                                            <td width="65%" colspan="2" style="border-bottom:1px dotted black;font-size:11px">
+                                                <span t-esc="name.get('emp_name')"/>
+                                            </td>
+                                            <td width="1%">&#160;</td>
+                                        </tr>
+                                        <tr t-foreach="get_companyname" t-as="name">
+                                            <td width="33%" style="font-size:11px;padding-left:5px">No. K/P</td>
+                                            <td width="65%" colspan="2" style="border-bottom:1px dotted black;font-size:11px">
+                                                <span t-esc="name.get('emp_identification_id')"/>
+                                            </td>
+                                            <td width="1%">&#160;</td>
+                                        </tr>
+                                        <tr t-foreach="get_companyname" t-as="name">
+                                            <td width="33%" style="font-size:11px;padding-left:5px">Jawatan</td>
+                                            <td width="65%" colspan="2" style="border-bottom:1px dotted black;font-size:11px">
+                                                <span t-esc="name.get('emp_designation')"/>
+                                            </td>
+                                            <td width="1%">&#160;</td>
+                                        </tr>
+                                        <tr t-foreach="get_companyname" t-as="name">
+                                            <td width="33%" style="font-size:11px;padding-left:5px">No. Telefon</td>
+                                            <td width="65%" colspan="2" style="border-bottom:1px dotted black;font-size:11px">
+                                                <span t-esc="name.get('emp_telephone')"/>
+                                            </td>
+                                            <td width="1%">&#160;</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="33%">&#160;</td>
+                                            <td width="65%" colspan="2">&#160;</td>
+                                            <td width="1%">&#160;</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="33%">&#160;</td>
+                                            <td width="65%" colspan="2">&#160;</td>
+                                            <td width="1%">&#160;</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="border-spacing:0;">
+                            <tr>
+                                <td width="50%">
+                                    <table width="100%" style="border-spacing:0;padding-bottom:50px">
+                                        <tr>
+                                            <td width="50%">
+                                                <table width="100%" style="background:#cccccc;border-spacing:0;">
+                                                    <tr>
+                                                        <td width="10%" style="border-right:1px solid black;border-left:1px solid black;border-top:1px solid black;border-bottom:1px solid black;text-align:center;font-size:13px">A</td>
+                                                        <td width="90%" style="border-right:1px solid black;border-top:1px solid black;border-bottom:1px solid black;text-align:center;font-size:13px">BORANG CP 39</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td width="50%">&#160;</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" width="100%" style="font-size:9px">1. Borang ini mesti diisi dengan lengkap dan betul.</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" width="100%" style="font-size:9px">2. Cawangan Majikan digalakkan menghantar maklumat potongan dalam bentuk disket/cakera padat/pemacu flash mengikut format dan spesifikasi yang ditentukan oleh LHDN bagi menggantikan Borang CP39.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" colspan="2" style="font-size:9px">
+                                                3. No. Rujukan Cukai Pendapatan:
+                                                <br/>
+                                                3.1 Isikan nombor rujukan cukai pendapatan dalam ruangan yang telah disediakan.
+                                                <br/>
+                                                Contoh: SG 2506203-00(0) boleh diisi sebagai SG 02506203000
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" colspan="2" style="font-size:9px">
+                                                3.2 Bagi pekerja yang layak dikenakan PCB tetapi tiada nombor rujukan fail cukai pendapatan, pendaftaran boleh dibuat melalui :
+                                                <br/>
+                                                i. majikan atau pekerja boleh mendaftar secara atas talian melalui e-Daftar di www.hasil.gov.my, atau
+                                                <br/>
+                                                ii. Borang CP22 atau borang in lieu of CP39 dikemukakan ke cawangan LHDNM Yang berdekatan.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" colspan="2" style="font-size:9px">
+                                                4. Nama pekerja :
+                                                <br/>
+                                                Isikan nama penuh pekerja seperti di kad pengenalan/pasport
+                                                <br/>
+                                                <b>(Jangansenaraikan pekerja yang tidak layak dikenakan potongan bagi bulan berkenaan).
+                                                </b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" colspan="2" style="font-size:9px">
+                                                5. Nombor Kad Pengenalan : Isikan kedua-dua nombor kad pengenalan baru dan lama (sekiranya ada).
+                                                <b>Contoh: 720403065235 atau A2172122</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" colspan="2" style="font-size:9px">
+                                                6. Jumlah Potongan Cukai:
+                                                <br/>
+                                                PCB - Isikan amaun cukai mengikut Potongan Cukai Bulanan.
+                                                <br/>
+                                                CP38 - Isikan amaun potongan cukai mengikut arahan Borang CP38 (jika ada)
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="50%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="50%">
+                                                <table width="100%" style="background:#cccccc;border-spacing:0;">
+                                                    <tr>
+                                                        <td width="10%" style="border-right:1px solid black;border-left:1px solid black;border-top:1px solid black;border-bottom:1px solid black;text-align:center;font-size:13px">B</td>
+                                                        <td width="90%" style="border-right:1px solid black;border-top:1px solid black;border-bottom:1px solid black;text-align:center;font-size:13px">PEMBAYARAN</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td width="50%">&#160;</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" colspan="2" style="font-size:9px">
+                                                1. Bayaran dan Borang CP39 yang telah lengkap diisi mestilah sampai ke Pungutan LHDN selewat-lewatnya pada hari kesepuluh bulan berikutnya.Contoh:
+                                                <b>PCB/CP38 bagi bulan April 2010, tarikh akhirnya ialah pada 10 Mei 2010.
+                                                </b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" colspan="2" style="font-size:9px">
+                                                2. Sediakan borang CP39 beserta cek/bank draf/kiriman wang/wang pos (instrumen bayaran) yang berasingan untuk bulan atau tahun berlainan.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" colspan="2" style="font-size:9px">3 Pastikan jumlah potongan PCB/CP38 adalah betul dan sama dengan nilai instrumen bayaran
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" colspan="2" style="font-size:9px">4. Instrumen bayaran hendaklah dibayar kepada Ketua Pengarah Hasil Dalam Negeri.Catatkan no rujukan majikan E,Nama Syarikat/Perniagaan dan alamat majikan di belakang instrumen bayaran.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" colspan="2" style="font-size:9px">5. Bayaran untuk Cukai Syarikat, Skim Ansurans (CP500), Penyelesaian Cukai (Pemberhentian Kerja) dan Cukai Keuntungan Harta Tanah tidak boleh dibayar bersama dengan bayaran yang menggunakan borang ini.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" width="100%" style="font-size:9px">6. Untuk bayaran bagi Negeri Sabah, sila alamatkan ke</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" width="100%" style="font-size:9px">
+                                                7. Untuk bayaran bagi Negeri Sarawak, sila alamatkan ke
+                                                <br/>
+                                                Cawangan Pungutan Kota Kinabalu
+                                                <br/>
+                                                Wisma Hasil Jalan Tunku Abdul Rahman
+                                                <br/>
+                                                88600 Kota Kinabalu, Sabah
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" colspan="2" style="font-size:9px">8. Sila hubungi talian 1-300-88-3010untuk sebarang pertanyaan lanjut.</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">
+                                                <table width="100%" style="background:#cccccc;border-spacing:0;">
+                                                    <tr>
+                                                        <td width="10%" style="border-right:1px solid black;border-left:1px solid black;border-top:1px solid black;border-bottom:1px solid black;text-align:center;font-size:13px">C</td>
+                                                        <td width="90%" style="border-right:1px solid black;border-top:1px solid black;border-bottom:1px solid black;text-align:center;font-size:13px">PERINGATAN</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td width="50%">&#160;</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" colspan="2" style="font-size:9px">1. Jika jumlah instrumen bayaran tidak sama dengan jumlah potongan, bayaran akan ditolak.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" colspan="2" style="font-size:9px">2. Sekiranya maklumat tidak lengkap dan tidak betul, majikan akan dikenakan kompaun.
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <p style="page-break-before:always;"/>
+                        <br/>
+                        <table width="100%" style="border-spacing:0;">
+                            <tr>
+                                <td width="18" style="font-size:13px">
+                                    <b>No. Rujukan Majikan E</b>
+                                </td>
+                                <td width="32%">
+                                    <table width="100%" style="border-spacing:0;border:1px solid black;">
+                                        <tr t-foreach="get_companyname" t-as="name">
+                                            <t t-foreach="name.get('company_ref_no')" t-as="ref">
+                                                <td width="7%" style="border-right:1px solid black;font-size:12px;text-align:center">
+                                                    <b>
+                                                        <span t-esc="ref"/>
+                                                    </b>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="42%" align="right" style="font-size:14px">
+                                    <b>Muka Surat</b>
+                                </td>
+                                <td width="8%" style="padding-left:9px">
+                                    <table width="100%" style="border-spacing:0;border:1px solid black;">
+                                        <tr>
+                                            <td width="8%" style="border-right:1px solid black;font-size:11px;text-align:center">
+                                                <b>0</b>
+                                            </td>
+                                            <td width="8%" style="font-size:12px;text-align:center">
+                                                <b>2</b>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table width="100%" style="border-spacing:0;">
+                            <tr>
+                                <td rowspan="2" wdith="5%" style="background:#cccccc;border-left:1px solid black;border-top:1px solid black;border-bottom:1px solid black;text-align:center;font-size:11px;">BIL.</td>
+                                <td rowspan="2" width="10%" style="background:#cccccc;border-left:1px solid black;border-top:1px solid black;border-bottom:1px solid black;text-align:center;font-size:11px;">NO. RUJUKAN CUKAI PENDAPATAN</td>
+                                <td rowspan="2" width="15%" style="background:#cccccc;border-left:1px solid black;border-top:1px solid black;border-bottom:1px solid black;text-align:center;font-size:11px;">NAMA PENUH PEKERJA (SEPERTI DI KAD PENGENALAN ATAU PASPORT)</td>
+                                <td rowspan="2" width="10%" style="background:#cccccc;border-left:1px solid black;border-top:1px solid black;border-bottom:1px solid black;font-size:11px;text-align:center">NO.K/P LAMA</td>
+                                <td rowspan="2" width="10%" style="background:#cccccc;border-left:1px solid black;border-top:1px solid black;border-bottom:1px solid black;font-size:11px;text-align:center">NO.K/PBARU</td>
+                                <td rowspan="2" width="10%" style="background:#cccccc;border-left:1px solid black;border-top:1px solid black;border-bottom:1px solid black;font-size:11px;text-align:center">NO.PEKERJA</td>
+                                <td width="20%" colspan="2" style="background:#cccccc;border-left:1px solid black;border-top:1px solid black;border-bottom:1px solid black;font-size:11px;text-align:center">BAGI PEKERJA ASING</td>
+                                <td width="20%" colspan="2" style="background:#cccccc;border-right:1px solid black;border-left:1px solid black;border-top:1px solid black;border-bottom:1px solid black;font-size:11px;text-align:center">JUMLAH POTONGAN CUKAI</td>
+                            </tr>
+                            <tr>
+                                <td width="10%" style="background:#cccccc;border-bottom:1px solid black;border-left:1px solid black;font-size:11px;text-align:center">NO PASPORT</td>
+                                <td width="10%" style="background:#cccccc;border-bottom:1px solid black;border-left:1px solid black;font-size:11px;text-align:center">KOD NEGARA</td>
+                                <td width="10%" style="background:#cccccc;border-bottom:1px solid black;border-left:1px solid black;font-size:11px;text-align:center">PCB (RM)</td>
+                                <td width="10%" style="background:#cccccc;border-bottom:1px solid black;border-right:1px solid black;border-left:1px solid black;font-size:11px;text-align:center">CP38(RM)</td>
+                            </tr>
+                            <tr t-foreach="get_name" t-as="name" style="font-size:12px;page-break-inside: avoid;">
+                                <td wdith="5%" style="border-bottom:0.5px solid black;border-top:1px solid black;border-left:1px solid black;font-size:11px;text-align:center">
+                                    <span t-esc="name.get('seq')"/>
+                                </td>
+                                <td width="10%" style="border-bottom:0.5px solid black;border-top:1px solid black;border-left:1px solid black;font-size:11px;text-align:center">
+                                    <span t-esc="name.get('incometax_no')"/>
+                                </td>
+                                <td width="15%" style="border-bottom:0.5px solid black;border-top:1px solid black;border-left:1px solid black;font-size:11px;text-align:center">
+                                    <span t-esc="name.get('name')"/>
+                                </td>
+                                <td width="10%" style="border-bottom:0.5px solid black;border-top:1px solid black;border-left:1px solid black;font-size:11px;text-align:center">
+                                    <span t-esc="name.get('identification_no')"/>
+                                </td>
+                                <td width="10%" style="border-bottom:0.5px solid black;border-top:1px solid black;border-left:1px solid black;font-size:11px;text-align:center">&#160;</td>
+                                <td width="10%" style="border-bottom:0.5px solid black;border-top:1px solid black;border-left:1px solid black;font-size:11px">&#160;</td>
+                                <td width="10%" style="border-bottom:0.5px solid black;border-top:1px solid black;border-left:1px solid black;font-size:11px;text-align:center">
+                                    <span t-esc="name.get('passportno')"/>
+                                </td>
+                                <td width="10%" style="border-bottom:0.5px solid black;border-top:1px solid black;border-left:1px solid black;font-size:11px;text-align:center">
+                                    <span t-esc="name.get('statecode')"/>
+                                </td>
+                                <td width="10%" style="border-bottom:0.5px solid black;border-top:1px solid black;border-left:1px solid black;font-size:11px;text-align:center">
+                                    <span t-esc="name.get('pcb')"/>
+                                </td>
+                                <td width="10%" style="border-top:1px solid black;border-left:1px solid black;font-size:11px;text-align:center;border-right:1px solid black;border-bottom:0.5px solid black">
+                                    <span t-esc="name.get('cp38')"/>
+                                </td>
+                            </tr>
+                            <tr style="font-size:12px;page-break-inside: avoid;">
+                                <td colspan="7">&#160;</td>
+                                <td width="10%" style="border-top:1px solid black;border-bottom:1px solid black;border-left:1px solid black;font-size:11px">JUMLAH</td>
+                                <td width="10%" style="border-top:1px solid black;border-bottom:1px solid black;border-left:1px solid black;font-size:11px;text-align:center">
+                                    <span t-esc="get_totalpcb1"/>
+                                </td>
+                                <td width="10%" style="border-top:1px solid black;border-right:1px solid black;border-bottom:1px solid black;border-left:1px solid black;font-size:11px;text-align:center">
+                                    <span t-esc="get_totalcp381"/>
+                                </td>
+                            </tr>
+                            <tr style="font-size:12px;page-break-inside: avoid;">
+                                <td colspan="7">&#160;</td>
+                                <td width="20%" colspan="2" style="border-top:1px solid black;border-bottom:1px solid black;border-left:1px solid black;font-size:11px">JUMLAH BESAR</td>
+                                <td width="10%" style="border-top:1px solid black;border-bottom:1px solid black;border-right:1px solid black;border-left:1px solid black;font-size:11px;text-align:center">
+                                    <span t-esc="get_totalpcb_cp381"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

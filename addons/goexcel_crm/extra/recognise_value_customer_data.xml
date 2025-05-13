@@ -1,0 +1,45 @@
+<odoo>
+    <data noupdate="0">
+        <record id="001" model="">
+            <field name="name">Reliable - Always</field>
+            <field name="active">True</field>
+            <field name="full_name">Reliable - Always</field>
+        </record>
+        <record id="002" model="">
+            <field name="name">Trust - Believe value</field>
+            <field name="active">True</field>
+            <field name="full_name">Trust - Believe value</field>
+        </record>
+        <record id="003" model="">
+            <field name="name">Like - Recognized</field>
+            <field name="active">True</field>
+            <field name="full_name">Like - Recognized</field>
+        </record>
+        <record id="004" model="">
+            <field name="name">Average - Feel like value</field>
+            <field name="active">True</field>
+            <field name="full_name">Average - Feel like value</field>
+        </record>
+        <record id="005" model="">
+            <field name="name">Stranger - Study value</field>
+            <field name="active">True</field>
+            <field name="full_name">Stranger - Study value</field>
+        </record>
+        <record id="006" model="">
+            <field name="name">Dislike -  Feel No value</field>
+            <field name="active">True</field>
+            <field name="full_name">Dislike -  Feel No value</field>
+        </record>
+        <record id="007" model="">
+            <field name="name">Disgust - No value</field>
+            <field name="active">True</field>
+            <field name="full_name">Disgust - No value</field>
+        </record>
+        <record id="008" model="">
+            <field name="name">Hate - DSR &amp; com No value
+</field>
+            <field name="active">True</field>
+            <field name="full_name">Hate - DSR &amp; com No value</field>
+        </record>
+    </data>
+</odoo>

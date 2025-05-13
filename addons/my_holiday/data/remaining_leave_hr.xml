@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="0">
+    <record id="ir_cron_remaining_on_leaves" model="ir.cron">
+        <field name="name">Schedular: Forward Remaining days</field>
+        <field name="model_id" ref="model_hr_leave_allocation"/>
+        <field name="state">code</field>
+        <field name="code">model.reset_remaining_days_in_hr_leave()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="True"/>
+    </record>
+    <record id="ir_cron_remaining_reset_leaves" model="ir.cron">
+        <field name="name">Schedular: Reset Remaining days </field>
+        <field name="model_id" ref="model_hr_leave_allocation"/>
+        <field name="state">code</field>
+        <field name="code">model.expiry_date_reset()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="True"/>
+    </record>
+</odoo>

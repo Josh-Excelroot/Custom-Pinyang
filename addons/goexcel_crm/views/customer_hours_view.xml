@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="visiting_hours_form_view" model="ir.ui.view">
+        <field name="name">visiting.hours.form</field>
+        <field name="model">visiting.hours</field>
+        <field name="arch" type="xml">
+            <form string="Visiting Hours">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id" required="1"/>
+                            <field name="from_day"/>
+                            <field name="to_day"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field domain="[('parent_id','=', partner_id)]" name="contact_person_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                            <field name="open_time"/>
+                            <field name="close_time"/>
+                            <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="visiting_hours_tree_view" model="ir.ui.view">
+        <field name="name">visiting.hours.tree</field>
+        <field name="model">visiting.hours</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="partner_id"/>
+                <field name="from_day"/>
+                <field name="to_day"/>
+                <field domain="[('parent_id','=', partner_id)]" name="contact_person_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                <field name="open_time"/>
+                <field name="close_time"/>
+                <field name="active"/>
+                <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_visiting_hours" model="ir.actions.act_window">
+        <field name="name">Visiting Hours</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">visiting.hours</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    </record>
+<!-- operating.hours -->
+    <record id="operating_hours_form_view" model="ir.ui.view">
+        <field name="name">operating.hours.form</field>
+        <field name="model">operating.hours</field>
+        <field name="arch" type="xml">
+            <form string="operating Hours">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id" required="1"/>
+                            <field name="from_day"/>
+                            <field name="to_day"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="open_time"/>
+                            <field name="close_time"/>
+                            <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="operating_hours_tree_view" model="ir.ui.view">
+        <field name="name">operating.hours.tree</field>
+        <field name="model">operating.hours</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="partner_id"/>
+                <field name="from_day"/>
+                <field name="to_day"/>
+                <field name="open_time"/>
+                <field name="close_time"/>
+                <field name="active"/>
+                <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_operating_hours" model="ir.actions.act_window">
+        <field name="name">operating Hours</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">operating.hours</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    </record>
+    
+</odoo>

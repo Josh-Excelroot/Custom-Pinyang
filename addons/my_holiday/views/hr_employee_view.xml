@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Form View : Document Type -->
+    <record model="ir.ui.view" id="view_document_type_form">
+        <field name="name">Document Type</field>
+        <field name="model">document.type</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Document Type">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_document_type">
+        <field name="name">Document Type</field>
+        <field name="res_model">document.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Form View : Country -->
+    <record model="ir.ui.view" id="view_ihrms_res_countries_form">
+        <field name="name">res.country.form</field>
+        <field name="model">res.country</field>
+        <field name="arch" type="xml">
+            <form string="Country">
+                <group>
+                    <field name="name"/>
+                    <field name="code"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Form View : City -->
+    <record model="ir.ui.view" id="view_ihrms_employee_city_form">
+        <field name="name">employee.city.form</field>
+        <field name="model">employee.city</field>
+        <field name="arch" type="xml">
+            <form string="City">
+                <group>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="state_id" invisible="1"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Form View : State -->
+    <record model="ir.ui.view" id="view_ihrms_res_country_state_form">
+        <field name="name">res.country.state.form</field>
+        <field name="model">res.country.state</field>
+        <field name="arch" type="xml">
+            <form string="State">
+                <group>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="country_id" invisible="1"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View : Hr Bank Details -->
+    <record model="ir.ui.view" id="edit_bank_detail_form">
+        <field name="name">Bank Details</field>
+        <field name="model">hr.bank.details</field>
+        <field name="arch" type="xml">
+            <tree string="Bank Details">
+                <field name="bank_name"/>
+                <field name="bank_code"/>
+                <field name="bank_ac_no"/>
+                <field name="beneficiary_name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View : Hr Bank Details -->
+    <record model="ir.ui.view" id="edit_bank_detail_tree">
+        <field name="name">Bank Details</field>
+        <field name="model">hr.bank.details</field>
+        <field name="arch" type="xml">
+            <form string="Bank Details">
+                <group col="4" colspan="2">
+                    <field name="bank_name"/>
+                    <field name="bank_code"/>
+                    <field name="branch_code"/>
+                    <field name="bank_ac_no"/>
+                    <field name="beneficiary_name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Form View : Employee News -->
+    <record model="ir.ui.view" id="edit_employee_news_form">
+        <field name="name">employee.news.form</field>
+        <field name="model">employee.news</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="News">
+                <header>
+                    <button string="Send Mail" type="object" class="oe_highlight" name="news_update" colspan="2"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="subject"/>
+                        <field name="date"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Description">
+                            <group>
+                                <field name="description" nolabel="1" colspan="4"/>
+                            </group>
+                        </page>
+                        <page string="Departments">
+                            <group>
+                                <field name="department_ids" nolabel="1" colspan="4"/>
+                            </group>
+                        </page>
+                        <page string="Users">
+                            <group>
+                                <field name="user_ids" nolabel="1" colspan="4"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View : Employee News -->
+    <record model="ir.ui.view" id="view_employee_news_tree">
+        <field name="name">employee.news.tree</field>
+        <field name="model">employee.news</field>
+        <field name="arch" type="xml">
+            <tree string="News">
+                <field name="subject"/>
+                <field name="date"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View : Employee News -->
+    <record id="view_hr_employee_news_search" model="ir.ui.view">
+        <field name="name">employee.news.search</field>
+        <field name="model">employee.news</field>
+        <field name="arch" type="xml">
+            <search string="News">
+                <field name="subject"/>
+                <field name="date"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_employee_news" model="ir.actions.act_window">
+        <field name="name">News</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">employee.news</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Tree View : Employee Id Type -->
+    <record id="hr_employee_id_type_tree" model="ir.ui.view">
+        <field name='name'>employee.id.type.tree</field>
+        <field name='model'>employee.id.type</field>
+        <field name='arch' type='xml'>
+            <tree string="Type Of ID">
+                <field name="name"/>
+                <field name="s_pass"/>
+                <field name="wp"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View : Employee Id Type -->
+    <record id="hr_employee_id_type_form" model="ir.ui.view">
+        <field name='name'>employee.id.type.form</field>
+        <field name='model'>employee.id.type</field>
+        <field name='arch' type='xml'>
+            <form string="Type Of ID">
+                <group>
+                    <field name="name"/>
+                    <field name="s_pass"/>
+                    <field name="wp"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_employee_form_parent2" model="ir.ui.view">
+        <field name="name">hr.employee.form.parent2</field>
+        <field name="model">hr.employee</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <field name="notes" position="replace"/>
+            <field name="job_id" position="replace"/>
+            <field name="country_id" position="replace">
+                <field name="emp_country"/>
+            </field>
+            <field name="work_phone" position="after">
+                <field name="work_country_id"/>
+                <field name="work_state_id" domain="[('country_id', '=', work_country_id)]"/>
+            </field>
+            <field name="user_id" position="after">
+                <field name="address_home_id" string="Partner"/>
+            </field>
+            <xpath expr="//field[@name='is_address_home_a_company']" position="before">
+                <field name="country_id" required="True" context="{'form_view_ref': 'view_ihrms_res_countries_form'}"/>
+                <field name="emp_state_id" required="True" context="{'form_view_ref': 'view_ihrms_res_country_state_form', 'default_country_id': country_id}" domain="[('country_id','=',country_id)]"/>
+                <field name="emp_city_id" context="{'form_view_ref': 'view_ihrms_employee_city_form', 'default_state_id': emp_state_id}"/>
+                <field name="citizen" invisible="1"/>
+                <field name="residence_status" required="1"/>
+                <field name="permanent_resident" attrs="{'invisible':['|',('residence_status','!=','resident'),('citizen','=',True)]}"/>
+                <field name="type_of_resident" attrs="{'invisible':[('residence_status','!=','resident')], 'required':[('residence_status','=','resident')]}"/>
+            </xpath>
+            <field name="active" position="replace">
+                <field name="active"/>
+            </field>
+            <!--<field name="user_id" position="replace">
+                <field name="user_id" attrs="{'invisible':[('user_id','=',1)],'required':[('user_id','!=',1)]}"/>
+            </field>-->
+
+            <xpath expr="//field[@name='emergency_contact']" position="attributes">
+                <attribute name="string">Emergency Contact Name</attribute>
+            </xpath>
+            <xpath expr="//form//notebook//page[@name='public']/group[1]" position="after">
+                <group col="2" colspan="2">
+                    <separator string="Other Information" colspan="2"/>
+                    <field name="dialect" placeholder="Name of a specific region or social group"/>
+                    <field name="driving_licence" placeholder="Driving Licence:Class"/>
+                    <field name="car"/>
+                    <field name="resume" groups="hr.group_hr_manager"/>
+                    <field name="employee_type_id"/>
+                </group>
+                <newline/>
+            </xpath>
+            <xpath expr="//button[@name='toggle_active']" position="attributes">
+                <attribute name="groups">hr.group_hr_manager</attribute>
+            </xpath>
+            <xpath expr="//field[@name='identification_id']" position="before">
+                <field name="emp_old_ic"/>
+            </xpath>
+            <field name="passport_id" position="after">
+                <field name="passport_exp_date" placeholder="Expiry Date Of Passport"/>
+            </field>
+            <xpath expr="//field[@name='birthday']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <field name="birthday" position="after">
+                <field name="age"/>
+            </field>
+            <field name="parent_id" position="replace">
+                <field name="hr_manager"/>
+                <field name="parent_id"/>
+                <field name="parent_id2"/>
+            </field>
+            <xpath expr="//notebook//page[@name='personal_information']" position="after">
+                <page name="statutory_requirements" string="Statutory Requirements">
+                    <group colspan="4" col="2">
+                        <group>
+                            <field name="contributing_epf" widget="radio"/>
+                            <field name="emp_reg_no" attrs="{'invisible':[('contributing_epf','=','no')], 'required':[('contributing_epf','=','yes')]}"/>
+                            <field name="emp_epf_rate_less_60" widget="radio" attrs="{'invisible':['|',('contributing_epf','=','no'),('age','&gt;',59)]}"/>
+                            <field name="emp_epf_rate_more_60" string="Employee EPF rate > 60 yo" widget="radio" attrs="{'invisible':['|',('contributing_epf','=','no'),('age','&lt;',60)]}"/>
+                            <field name="emp_add_rate" attrs="{'invisible':[('contributing_epf','=','no')]}"/>
+                            <field name="empr_epf_condition" invisible="1"/>
+                            <field name="empr_epf_rate_cond_a" widget="radio" attrs="{'invisible':[('empr_epf_condition','!=','a')]}"/>
+                            <field name="empr_epf_rate_cond_b" string="Employer EPF rate" widget="radio" attrs="{'invisible':[('empr_epf_condition','!=','b')]}"/>
+                            <field name="empr_epf_rate_cond_c" string="Employer EPF rate" widget="radio" attrs="{'invisible':[('empr_epf_condition','!=','c')]}"/>
+                            <field name="empr_epf_rate_cond_d" string="Employer EPF rate > 60 yo" widget="radio" attrs="{'invisible':[('empr_epf_condition','!=','d')]}"/>
+                            <field name="empr_epf_rate_cond_e" string="Employer EPF rate" widget="radio" attrs="{'invisible':[('empr_epf_condition','!=','e')]}"/>
+                            <field name="empr_add_rate" attrs="{'invisible':[('contributing_epf','=','no')]}"/>
+                        </group>
+                        <group>
+                            <field name="hrdf_boolean" force_save="1"/>
+                            <field name="pcb_number"/>
+                            <field name="pcb_borner_by_emp"/>
+                        </group>
+                    </group>
+                </page>
+                <page name="education" string="Educational Information">
+                    <group name="computer" string="Computer Knowledge and Skills" colspan="4">
+                        <separator colspan="4"/>
+                        <group col="4" colspan="2">
+                            <field name="comp_prog_knw"/>
+                            <field name="typing"/>
+                            <field name="other_know"/>
+                            <field name="shorthand"/>
+                            <field name="course"/>
+                        </group>
+                    </group>
+                </page>
+                <page string="Job" name="Job">
+                    <group>
+                        <group colspan="2" col="4">
+                            <field name="job_id" string="Job" domain="[('state','=','open')]"/>
+                            <field name="emp_status"/>
+                            <field name="join_date" string="Date Joined" placeholder="Joining Date"/>
+                            <field name="confirm_date"/>
+                            <field name="evaluation_date"/>
+                            <field
+                                    name="cessation_date"
+                                    attrs="{'invisible':[('emp_status', '!=', 'in_notice'),('emp_status', '!=', 'terminated')],
+                                                               'required':['|',('emp_status', '=', 'in_notice'),('emp_status', '=', 'terminated')]}"/>
+                            <field name="last_date" attrs="{'invisible':[('emp_status', '!=', 'in_notice')]}"/>
+                            <field name="rem_days" attrs="{'invisible':[('emp_status', '!=', 'in_notice')]}"/>
+                        </group>
+                        <field name="history_ids" nolabel="1" colspan="4" readonly="1">
+                            <tree string="History of Employee">
+                                <field name="job_id"/>
+                                <field name="emp_status"/>
+                                <field name="join_date"/>
+                                <field name="confirm_date" string="Date Confirmation"/>
+                                <field name="date_changed"/>
+                                <field name="cessation_date"/>
+                                <field name="user_id"/>
+                            </tree>
+                            <form string="History of Employee">
+                                <group col="4" colspan="2">
+                                    <field name="job_id"/>
+                                    <field name="emp_status"/>
+                                    <field name="join_date"/>
+                                    <field name="confirm_date" string="Date Confirmation"/>
+                                    <field name="date_changed"/>
+                                    <field name="cessation_date"/>
+                                    <field name="user_id"/>
+                                </group>
+                            </form>
+                        </field>
+                    </group>
+                </page>
+                <page string="Immigration" attrs="{'invisible':[('hr_manager','=',False)]}">
+                    <field name="immigration_ids" nolabel="1" colspan="4">
+                        <tree string="Immigration">
+                            <field name="number"/>
+                            <field name="documents"/>
+                            <field name="doc_type_id"/>
+                            <field name="issue_date"/>
+                            <field name="exp_date"/>
+                            <field name="eligible_status"/>
+                            <field name="eligible_review_date"/>
+                            <field name="issue_by"/>
+                            <field name="attach_document"/>
+                        </tree>
+                        <form string="Immigration">
+                            <group col="4" colspan="2">
+                                <field name="documents" required="1"/>
+                                <field name="doc_type_id" widget="selection"/>
+                                <field name="number"/>
+                                <field name="eligible_status"/>
+                                <field name="issue_date" required="1"/>
+                                <field name="exp_date" required="1"/>
+                                <field name="eligible_review_date"/>
+                                <field name="issue_by"/>
+                                <field name="attach_document" required="1"/>
+                                <separator string="Comments" colspan="4"/>
+                                <field name="comments" nolabel="1" colspan="4"/>
+                            </group>
+                        </form>
+                    </field>
+                </page>
+                <page string="Training Workshop">
+                    <field name="training_ids" nolabel="1" colspan="4">
+                        <tree string="Training Workshop">
+                            <field name="tr_title"/>
+                            <field name="tr_institution"/>
+                            <field name="tr_date"/>
+                        </tree>
+                        <form string="Training Workshop">
+                            <group col="4" colspan="2">
+                                <field name="tr_title" colspan="4" placeholder="Training Title"/>
+                                <field name="tr_institution"/>
+                                <field name="tr_date"/>
+                                <field name="training_attachment"/>
+                            </group>
+                            <separator string="Comments" colspan="4"/>
+                            <group>
+                                <field name="comments" nolabel="1" colspan="4"/>
+                            </group>
+                        </form>
+                    </field>
+                </page>
+                <page string="Leaves" name="leave_history">
+                    <group>
+                        <group>
+                            <field name="cry_frd_leave"/>
+                            <field name="default_leave_allocation"/>
+                            <field name="default_sick_leave"/>
+                            <field name="default_hospital_leave"/>
+                        </group>
+                        <group>
+                            <field name="default_unpaid_leave"/>
+                            <field name="default_maternity_leave"/>
+                            <field name="default_paternity_leave"/>
+                            <field name="default_mrg_leave"/>
+                        </group>
+                    </group>
+                    <field name="employee_leave_ids" nolabel="1" colspan="4" readonly="1">
+                        attrs="{'invisible':[('hr_manager','=',False),('user_id','!=',uid),('parent_user_id','!=',uid),('parent_user_id2','!=',uid)]}" context="{'holiday_donot_compute_domain': True}"
+                        <tree string="Leave History">
+                            <field name="date_from" widget="date"/>
+                            <field name="date_to" widget="date"/>
+                            <field name="holiday_status_id"/>
+                            <field name="number_of_days"/>
+                            <field name="state"/>
+                            <field name="hr_year_id"/>
+                        </tree>
+                        <form string="Leave Request">
+                            <header>
+                                <field name="state" widget="statusbar" statusbar_visible="draft,confirm,validate" statusbar_colors='{"confirm":"blue","validate1":"blue","refuse":"red"}' colspan="2"/>
+                            </header>
+                            <sheet>
+                                <group col="8" colspan="4">
+                                    <field name="name" attrs="{'readonly':[('state','!=','draft'),('state','!=','confirm')]}"/>
+                                    <field name="holiday_type" attrs="{'readonly':[('state','!=','draft')]}" width="130" string="Mode" groups="hr.group_hr_manager"/>
+                                    <group attrs="{'invisible':[('holiday_type','=','employee')]}">
+                                        <field name="category_id" attrs="{'required':[('holiday_type','=','category')], 'readonly':[('state','!=','draft')]}"/>
+                                    </group>
+                                    <group attrs="{'invisible':[('holiday_type','=','category')]}">
+                                        <field name="employee_id" attrs="{'required':[('holiday_type','=','employee')]}"/>
+                                    </group>
+                                </group>
+                                <notebook colspan="4">
+                                    <page string="General">
+                                        <field name="holiday_status_id" context="{'employee_id':employee_id}"/>
+                                        <field name="department_id" attrs="{'readonly':[('holiday_type','=','category')]}"/>
+                                        <field name="date_from" widget="date" required="1"/>
+                                        <field name="date_to" widget="date" required="1"/>
+                                        <field name="number_of_days"/>
+                                        <newline/>
+                                        <field name="first_approver_id"/>
+                                        <field name="second_approver_id" attrs="{'invisible':[('holiday_status_id.double_validation', '!=', True)]}"/>
+                                        <separator string="Reasons" colspan="4"/>
+                                        <field name="notes" nolabel="1" colspan="4"/>
+                                        <newline/>
+                                    </page>
+                                </notebook>
+                            </sheet>
+                        </form>
+                    </field>
+                </page>
+                <page string="Extra Information">
+                    <group colspan="4" string="Health Condition">
+                        <div>
+                            Are you suffering from any physical disability or illness that requires you to be medication for a prolonged period?
+                        </div>
+                        <newline/>
+                        <group name="Physical Stability" colspan='4'>
+                            <field name="physical_stability" string="Yes" colspan="1"/>
+                            <field name="physical_stability_no"/>
+                        </group>
+                        <newline/>
+                        <div attrs="{'invisible': [('physical_stability','=',False)]}" colspan="3">
+                            If YES Please Specify
+                        </div>
+                        <newline/>
+                        <field name="physical" attrs="{'invisible': [('physical_stability','=',False)]}" colspan="4" nolabel="1"/>
+                    </group>
+                    <group colspan="4" string="Important Information">
+                        <div>
+                            Have you ever been convicted in a court of law in any country?
+                        </div>
+                        <newline/>
+                        <group name="Court of Law" colspan="2">
+                            <field name="court_b" string="Yes"/>
+                            <field name="court_no" colspan="1"/>
+                        </group>
+                        <newline/>
+                        <div colspan="3" attrs="{'invisible': [('court_b','=',False)]}">
+                            If YES Please Specify
+                        </div>
+                        <newline/>
+                        <field name="court" attrs="{'invisible': [('court_b','=',False)]}" colspan="4" nolabel="1"/>
+                        <newline/>
+                        <div>Have you ever been dismissed or suspended from employement?</div>
+                        <newline/>
+                        <group name="Dismissed or Suspended" colspan='4'>
+                            <field name="dismissed_b" string="Yes"/>
+                            <field name="dismissed_no" colspan="1"/>
+                        </group>
+                        <newline/>
+                        <div colspan="3" attrs="{'invisible': [('dismissed_b','!=',True)]}">
+                            If YES Please Specify
+                        </div>
+                        <newline/>
+                        <field name="dismiss" attrs="{'invisible': [('dismissed_b','!=',True)]}" colspan="4" nolabel="1"/>
+                        <div>Have you ever been declared a bankrupt?</div>
+                        <newline/>
+                        <group name="Bankrupt" colspan='4'>
+                            <field name="bankrupt_b" string="Yes"/>
+                            <field name="bankrupt_no" colspan="1"/>
+                        </group>
+                        <newline/>
+                        <div colspan="3" attrs="{'invisible': [('bankrupt_b','!=',True)]}">
+                            If YES Please Specify
+                        </div>
+                        <newline/>
+                        <field name="bankrupt" attrs="{'invisible': [('bankrupt_b','!=',True)]}" colspan="4" nolabel="1"/>
+                    </group>
+                    <separator colspan="4" string="About Yourself"/>
+                    <field name="about" colspan="4" nolabel="1"/>
+                </page>
+                <!--<page string="Bank Details">
+                    <field name="bank_detail_ids" nolabel="1"/>
+                </page>-->
+                <page string="Notification">
+                    <group colspan="1" col="8">
+                        <field name="is_daily_notificaiton_email_send" colspan="3"/><newline/>
+                        <field name="is_pending_leave_notificaiton" colspan="3"/><newline/>
+                    </group>
+                </page>
+                <page string="Notes">
+                    <group>
+                        <field colspan="4" nolabel="1" name="notes"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

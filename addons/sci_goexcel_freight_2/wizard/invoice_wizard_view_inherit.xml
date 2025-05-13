@@ -1,0 +1,21 @@
+<odoo>
+
+	<record model="ir.ui.view" id="view_form_invoice_wizard_inherit">
+		<field name="name">Invoice Wizard Inherit</field>
+		<field name="model">invoice.wizard</field>
+		<field name="inherit_id" ref="sci_goexcel_freight.invoice_view_form"/>
+        <field name="type">form</field>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='customer_name']" position="attributes">
+				<attribute name="readonly">0</attribute>
+				<attribute name="required">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='customer_name']" position="after">
+				<field name="pricelist_currency"/>
+			</xpath>
+		</field>
+	</record>
+
+
+
+</odoo>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ##############  Details  ##############-->
+    <record id="payslip_summary_wiz" model="ir.ui.view">
+        <field name="name">payslip.summary.wiz</field>
+        <field name="model">payslip.summary.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <center><separator string="Borang 8A Pdf Report"/></center>
+                <separator string="Employees" colspan="4"/>
+                <field name="employee_ids" required="1" colspan="4" nolabel="1" options="{'no_create': True}">
+                    <tree string="Employees">
+                        <field name="name"/>
+                        <field name="department_id"/>
+                        <field name="work_email"/>
+                    </tree>
+                </field>
+                <group col="4" colspan="2">
+                    <field name="date_from" required="1"/>
+                    <field name="date_to" required="1"/>
+                </group>
+                <footer>
+                    <button name="print_socso_report" string="Print PDF" type="object" colspan="2" class="oe_highlight"/>
+                    or
+                    <button special="cancel" string="Cancel" colspan="2"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+     <record id="action_print_socso_report" model="ir.actions.act_window">
+         <field name="name">Details</field>
+         <field name="res_model">payslip.summary.wizard</field>
+         <field name="view_type">form</field>
+         <field name="view_mode">form</field>
+         <field name="target">new</field>
+    </record>
+
+     <!-- SOCSO TEXT FILE WIZARD VIEW -->
+     <record id="hr_socso_txt_file_wiz" model="ir.ui.view">
+         <field name="name">hr.socso.txt.file.wiz</field>
+         <field name="model">socso.txt.file.wizard</field>
+         <field name="arch" type="xml">
+             <form string="View Socso txt File">
+                 <center><separator string="Borang 8A Text File"/></center>
+                 <separator string="Employees" colspan="4" />
+                 <field name="employee_ids" required="1" colspan="4" nolabel="1" options="{'no_create': True}">
+                     <tree string="Employees">
+                         <field name="name"/>
+                         <field name="department_id"/>
+                         <field name="work_email"/>
+                     </tree>
+                 </field>
+                 <group col="4" colspan="2">
+                     <field name="date_start" required="1"/>
+                     <field name="date_stop" required="1"/>
+                 </group>
+                 <footer>
+                     <button name="download_socso_txt_file" string="Generate Text File" type="object" colspan="2" class="oe_highlight"/>
+                     or
+                     <button special="cancel" string="Cancel" colspan="2"/>
+                 </footer>
+             </form>
+         </field>
+     </record>
+
+     <record id="action_socso_txt_file_print" model="ir.actions.act_window">
+         <field name="name">Generate Text File</field>
+         <field name="res_model">socso.txt.file.wizard</field>
+         <field name="view_type">form</field>
+         <field name="view_mode">form</field>
+         <field name="target">new</field>
+    </record>
+
+     <record id="binary_txt__wizard_file" model="ir.ui.view">
+         <field name="name">binary.text.wizard.file</field>
+         <field name="model">binary.text.wizard</field>
+         <field name="arch" type="xml">
+             <form string="View Socso txt File">
+                 <group cospan="2" col="2">
+                     <field name="name" invisible="1"/>
+                     <h4>Click On Link To Download Xls File: &#160;<field name="rst_file" filename="name" nolabel="1"/></h4>
+                 </group>
+                 <footer>
+                     <separator string="" colspan="4"/>
+                     <button special="cancel" string="Cancel" colspan="2"/>
+                 </footer>
+             </form>
+         </field>
+     </record>
+
+     <!--<menuitem id="menu_report_payroll_socso" name= "Socso (Borang 8A)" parent="l10n_my_payroll.menu_report_payroll" sequence="3"/>
+     <menuitem action="action_print_socso_report" id="menu_print_socso_rep" parent="menu_report_payroll_socso" sequence="1" groups="hr.group_hr_manager"/>
+     <menuitem action="action_socso_txt_file_print" id="menu_print_socso_txt_file" parent="menu_report_payroll_socso" sequence="2" groups="hr.group_hr_manager"/>-->
+
+</odoo>

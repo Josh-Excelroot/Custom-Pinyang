@@ -1,0 +1,179 @@
+<odoo>
+    <data noupdate="0">
+        <record id="001" model="">
+            <field name="name">ALOR GAJAH</field>
+            <field name="active">True</field>
+            <field name="full_name">ALOR GAJAH</field>
+        </record>
+        <record id="002" model="">
+            <field name="name">AYER HITAM</field>
+            <field name="active">True</field>
+            <field name="full_name">AYER HITAM</field>
+        </record>
+        <record id="003" model="">
+            <field name="name">BAKRI</field>
+            <field name="active">True</field>
+            <field name="full_name">BAKRI</field>
+        </record>
+        <record id="004" model="">
+            <field name="name">BATU PAHAT</field>
+            <field name="active">True</field>
+            <field name="full_name">BATU PAHAT</field>
+        </record>
+        <record id="005" model="">
+            <field name="name">BUKIT KATIL</field>
+            <field name="active">True</field>
+            <field name="full_name">BUKIT KATIL</field>
+        </record>
+        <record id="006" model="">
+            <field name="name">GELANG PATAH</field>
+            <field name="active">True</field>
+            <field name="full_name">GELANG PATAH</field>
+        </record>
+        <record id="007" model="">
+            <field name="name">JASIN</field>
+            <field name="active">True</field>
+            <field name="full_name">JASIN</field>
+        </record>
+        <record id="008" model="">
+            <field name="name">JOHOR BAHRU</field>
+            <field name="active">True</field>
+            <field name="full_name">JOHOR BAHRU</field>
+        </record>
+        <record id="009" model="">
+            <field name="name">KLUANG</field>
+            <field name="active">True</field>
+            <field name="full_name">KLUANG</field>
+        </record>
+        <record id="010" model="">
+            <field name="name">KOTA MELAKA</field>
+            <field name="active">True</field>
+            <field name="full_name">KOTA MELAKA</field>
+        </record>
+        <record id="011" model="">
+            <field name="name">KOTA TINGGI</field>
+            <field name="active">True</field>
+            <field name="full_name">KOTA TINGGI</field>
+        </record>
+        <record id="012" model="">
+            <field name="name">Kuala Lumpur</field>
+            <field name="active">True</field>
+            <field name="full_name">Kuala Lumpur</field>
+        </record>
+        <record id="013" model="">
+            <field name="name">KULAI</field>
+            <field name="active">True</field>
+            <field name="full_name">KULAI</field>
+        </record>
+        <record id="014" model="">
+            <field name="name">LABIS</field>
+            <field name="active">True</field>
+            <field name="full_name">LABIS</field>
+        </record>
+        <record id="015" model="">
+            <field name="name">LEDANG</field>
+            <field name="active">True</field>
+            <field name="full_name">LEDANG</field>
+        </record>
+        <record id="016" model="">
+            <field name="name">MASJID TANAH</field>
+            <field name="active">True</field>
+            <field name="full_name">MASJID TANAH</field>
+        </record>
+        <record id="017" model="">
+            <field name="name">MERSING</field>
+            <field name="active">True</field>
+            <field name="full_name">MERSING</field>
+        </record>
+        <record id="018" model="">
+            <field name="name">MUAR</field>
+            <field name="active">True</field>
+            <field name="full_name">MUAR</field>
+        </record>
+        <record id="019" model="">
+            <field name="name">Others</field>
+            <field name="active">True</field>
+            <field name="full_name">Others</field>
+        </record>
+        <record id="020" model="">
+            <field name="name">PAGOH</field>
+            <field name="active">True</field>
+            <field name="full_name">PAGOH</field>
+        </record>
+        <record id="021" model="">
+            <field name="name">PARIT SULONG</field>
+            <field name="active">True</field>
+            <field name="full_name">PARIT SULONG</field>
+        </record>
+        <record id="022" model="">
+            <field name="name">PASIR GUDANG</field>
+            <field name="active">True</field>
+            <field name="full_name">PASIR GUDANG</field>
+        </record>
+        <record id="023" model="">
+            <field name="name">PENGERANG</field>
+            <field name="active">True</field>
+            <field name="full_name">PENGERANG</field>
+        </record>
+        <record id="024" model="">
+            <field name="name">PETALING JAYA SOUTH</field>
+            <field name="active">True</field>
+            <field name="full_name">PETALING JAYA SOUTH</field>
+        </record>
+        <record id="025" model="">
+            <field name="name">PONTIAN</field>
+            <field name="active">True</field>
+            <field name="full_name">PONTIAN</field>
+        </record>
+        <record id="026" model="">
+            <field name="name">PULAI</field>
+            <field name="active">True</field>
+            <field name="full_name">PULAI</field>
+        </record>
+        <record id="027" model="">
+            <field name="name">SEGAMAT</field>
+            <field name="active">True</field>
+            <field name="full_name">SEGAMAT</field>
+        </record>
+        <record id="028" model="">
+            <field name="name">SEKIJANG</field>
+            <field name="active">True</field>
+            <field name="full_name">SEKIJANG</field>
+        </record>
+        <record id="029" model="">
+            <field name="name">SEMBRONG</field>
+            <field name="active">True</field>
+            <field name="full_name">SEMBRONG</field>
+        </record>
+        <record id="030" model="">
+            <field name="name">SIMPANG RENGGAM</field>
+            <field name="active">True</field>
+            <field name="full_name">SIMPANG RENGGAM</field>
+        </record>
+        <record id="031" model="">
+            <field nam="name">SRI GADING</field>
+            <field name="active">True</field>
+            <field name="full_name">SRI GADING</field>
+        </record>
+        <record id="032" model="">
+            <field name="name">TANGGA BATU</field>
+            <field name="active">True</field>
+            <field name="full_name">TANGGA BATU</field>
+        </record>
+        <record id="033" model="">
+            <field name="name">TANJONG PIAI</field>
+            <field name="active">True</field>
+            <field name="full_name">TANJONG PIAI</field>
+        </record>
+        <record id="034" model="">
+            <field name="name">TEBRAU</field>
+            <field name="active">True</field>
+            <field name="full_name">TEBRAU</field>
+        </record>
+        <record id="035" model="">
+            <field name="name">TENGGARA</field>
+            <field name="active">True</field>
+            <field name="full_name">TENGGARA</field>
+        </record>
+    </data>
+</odoo>

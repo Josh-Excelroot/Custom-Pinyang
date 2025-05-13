@@ -1,0 +1,35 @@
+<odoo>
+    <data noupdate="0">
+        <record id="technical_plan_001" model="technical.plan">
+            <field name="name">Lube coach</field>
+            <field name="active">True</field>
+            <field name="full_name">Lube coach</field>
+        </record>
+        <record id="technical_plan_002" model="technical.plan">
+            <field name="name">Plant audit</field>
+            <field name="active">True</field>
+            <field name="full_name">Plant audit</field>
+        </record>
+        <record id="technical_plan_003" model="technical.plan">
+            <field name="name">Lube survey</field>
+            <field name="active">True</field>
+            <field name="full_name">Lube survey</field>
+        </record>
+        <record id="technical_plan_004" model="technical.plan">
+            <field name="name">Lube test</field>
+            <field name="active">True</field>
+            <field name="full_name">Lube test</field>
+        </record>
+        <record id="technical_plan_005" model="technical.plan">
+            <field name="name">DVR</field>
+            <field name="active">True</field>
+            <field name="full_name">DVR</field>
+        </record>
+        <record id="technical_plan_006" model="technical.plan">
+            <field name="name">Video check</field>
+            <field name="active">True</field>
+            <field name="full_name">Video check</field>
+        </record>
+
+    </data>
+</odoo>

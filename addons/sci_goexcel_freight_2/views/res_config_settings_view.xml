@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_2" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.air</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="4"/>
+        <field name="inherit_id" ref="sci_goexcel_charge_base.res_config_settings_view_form_inherit_base_charge"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='charge_management_setting_container']" position="inside">
+                <div class="col-12 col-lg-6 o_setting_box" >
+                    <div class="o_setting_right_pane">
+                        <div class="text-muted">
+                            Consolidation Ocean Rate Product
+                        </div>
+
+                        <div>
+                            <label for="consolidation_freight_rate_product" class="o_light_label"/><br/>
+                            <field name="consolidation_freight_rate_product" class="oe_inline"/>
+                        </div>
+
+                        <div class="text-muted">
+                            Air Freight UoM
+                        </div>
+                        <div>
+                            <label for="cbm_uom" class="o_light_label"/><br/>
+                            <field name="cbm_uom" class="oe_inline"/>
+                        </div>
+                        <div>
+                            <label for="inc_uom" class="o_light_label"/><br/>
+                            <field name="inc_uom" class="oe_inline"/>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box" >
+                    <div class="o_setting_right_pane">
+                        <div class="text-muted">
+                            Air Freight Rate Product
+                        </div>
+                        <div>
+                            <label for="air_freight_rate_product" class="o_light_label"/><br/>
+                            <field name="air_freight_rate_product" class="oe_inline"/>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="res_config_settings_view_form_freight_2" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.freight.2</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="4"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="Freight" string="Freight" data-key="sci_goexcel_freight_2">
+                    <h2>Freight</h2>
+                    <div class="row mt16 o_settings_container" name="transport_setting_container">
+                        <div class="col-12 col-lg-6 o_setting_box" title="Freight General Setting">
+                            <div class="o_setting_left_pane">
+                                <field name="send_si"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Send Booking Conf. with SI Excel?</span>
+                                <div class="text-muted">
+                                    Ticked it if want to send Booking Conf. with SI (Excel)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                     <div class="row mt16 o_settings_container" name="transport_setting_container">
+                    <div class="col-12 col-lg-6 o_setting_box" >
+                    <div class="o_setting_right_pane">
+                        <div class="text-muted">
+                            Air Freight Product
+                        </div>
+                        <div>
+                            <label for="air_freight" class="o_light_label"/><br/>
+                            <field name="air_freight" class="oe_inline"/>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+
+                </div>
+
+
+
+            </xpath>
+        </field>
+    </record>
+
+
+
+    <record id="freight_config_settings_action" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_id" ref="res_config_settings_view_form_freight_2"/>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'sci_goexcel_freight_2'}</field>
+    </record>
+
+    <menuitem id="menu_freight_setting_config"    name="Freight" parent="base.menu_administration"
+              sequence="1" action="freight_config_settings_action"/>
+
+
+</odoo>

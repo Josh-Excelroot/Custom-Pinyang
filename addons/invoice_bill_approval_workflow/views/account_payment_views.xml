@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_payment_form_approval" model="ir.ui.view">
+        <field name="name">account.payment.form.approval</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='post']" position="replace">
+                <button name="post_vendor_payment" type="object" states="draft" string="Confirm" class="oe_highlight"/>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="action_vendor_payment_approve" type="object" states="approve" string="Approve" class="oe_highlight" groups="account.group_account_manager"/>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="action_vendor_payment_reject" type="object" states="approve" string="Reject" class="oe_highlight" groups="account.group_account_manager"/>
+            </xpath>
+            <xpath expr="//header/field[@name='state']" position="replace">
+                <field name="state" widget="statusbar" statusbar_visible="draft,approve,posted,reconciled,cancelled"/>
+            </xpath>
+            <xpath expr="//field[@name='destination_journal_id']" position="after">
+                <field name="approve_by" readonly="1" force_save="1" attrs="{'invisible': [('approve_by','=',False)]}"/>
+                <field name="approve_date_time" readonly="1" force_save="1" attrs="{'invisible': [('approve_date_time','=',False)]}"/>
+<!--                    <field name="reject_reason" attrs="{'invisible': [('reject_reason','=',False)]}"/>-->
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="action_vendor_payment_approve">
+        <field name="name">Approve</field>
+        <field name="model_id" ref="account.model_account_payment"/>
+        <field name="binding_model_id" ref="account.model_account_payment" />
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+            action = records.action_vendor_payment_approve()
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="action_vendor_payment_reject">
+        <field name="name">Reject</field>
+        <field name="model_id" ref="account.model_account_payment"/>
+        <field name="binding_model_id" ref="account.model_account_payment" />
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+            action = records.action_vendor_payment_reject()
+        </field>
+    </record>
+
+</odoo>

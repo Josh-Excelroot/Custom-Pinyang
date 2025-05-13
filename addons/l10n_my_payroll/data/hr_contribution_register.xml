@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="hr_contribution_register_epf" model="hr.contribution.register">
+        <field name="name">EPF</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_contribution_register_scs" model="hr.contribution.register">
+        <field name="name">SCS</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_contribution_register_pcb" model="hr.contribution.register">
+        <field name="name">PCB</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_contribution_register_epfe" model="hr.contribution.register">
+        <field name="name">EPF-E</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+     <record id="hr_contribution_register_eis" model="hr.contribution.register">
+        <field name="name">EIS</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_contribution_register_hrdf" model="hr.contribution.register">
+        <field name="name">HRDF</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+</odoo>

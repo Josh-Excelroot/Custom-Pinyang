@@ -1,0 +1,18 @@
+<odoo>
+
+	<record id="invoice_supplier_form_ocr" model="ir.ui.view">
+		<field name="name">account.invoice.supplier.form.ocr</field>
+		<field name="model">account.invoice</field>
+		<field name="inherit_id" ref="account.invoice_supplier_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//header/button[last()]" position="after">
+				<button name="action_get_attachment" string="Get Attachment" type="object"/>
+            </xpath>
+            <xpath expr="//field[@name='vendor_bill_id']" position="after">
+				<field name="ocr_ready_to_execute"/>
+				<field name="ocr_completed"/>
+            </xpath>
+		</field>
+	</record>
+
+</odoo>

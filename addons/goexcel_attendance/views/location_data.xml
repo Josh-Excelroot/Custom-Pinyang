@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_location_data_tree" model="ir.ui.view">
+        <field name="name">location.data.tree</field>
+        <field name="model">location.data</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="latitude"/>
+                <field name="longitude"/>
+                <field name="radius"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_location_data_form" model="ir.ui.view">
+        <field name="name">location.data.form</field>
+        <field name="model">location.data</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="latitude" digit="8"/>
+                        <field name="longitude" digit="8"/>
+                        <field name="radius"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_location_data_list" model="ir.actions.act_window">
+        <field name="name">Location Data List</field>
+        <field name="res_model">location.data</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_location_data_tree"/>
+    </record>
+
+    <menuitem id="menu_location_data_list" name="Attendance Location" action="action_location_data_list" parent="hr_attendance.menu_hr_attendance_settings"/>
+</odoo>

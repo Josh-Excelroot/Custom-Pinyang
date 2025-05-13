@@ -1,0 +1,30 @@
+<odoo>
+    <data noupdate="0">
+        <record id="customer_priority_001" model="customer.priority">
+            <field name="name">Cheque</field>
+            <field name="active">True</field>
+            <field name="full_name">Cheque</field>
+        </record>
+        <record id="customer_priority_002" model="customer.priority">
+            <field name="name">E-Fund</field>
+            <field name="active">True</field>
+            <field name="full_name">Electronict Fund Transfer</field>
+        </record>
+        <record id="customer_priority_003" model="customer.priority">
+            <field name="name">NEFT</field>
+            <field name="active">True</field>
+            <field name="full_name">NEFT</field>
+        </record>
+        <record id="customer_priority_004" model="customer.priority">
+            <field name="name">RTGS</field>
+            <field name="active">True</field>
+            <field name="full_name">RTGS</field>
+        </record>
+        <record id="customer_priority_005" model="customer.priority">
+            <field name="name">Cash</field>
+            <field name="active">True</field>
+            <field name="full_name">Cash</field>
+        </record>
+
+    </data>
+</odoo>

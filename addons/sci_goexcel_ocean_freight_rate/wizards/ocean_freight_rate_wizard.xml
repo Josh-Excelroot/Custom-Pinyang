@@ -1,0 +1,40 @@
+<odoo>
+
+ 		<record id="ocean_freight_rate_wizard_view_form" model="ir.ui.view">
+            <field name="name">Ocean Freight Rate Wizard View Form</field>
+            <field name="model">charge.wizard</field>
+            <field name="type">form</field>
+            <field name="priority" eval="1"/>
+            <field name="inherit_id" ref="sci_goexcel_charge_base.charge_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='main']" position="after">
+                    <group attrs="{'invisible': ['|',('service', '!=', 'ocean_freight_rate'),('ocean_freight_rate_check', '=', False)]}">
+                        <field name="ocean_freight_rate_check" invisible="1"/>
+                        <field name="container_category_id" invisible="1"/>
+                        <field name="customer"/>
+                        <field name="carrier" attrs="{'required': [('service','=', 'ocean_freight_rate')]}"/>
+                        <field name="container_product_id" attrs="{'required': [('service','=', 'ocean_freight_rate')]}" domain="[('categ_id', '=', container_category_id)]" options='{"always_reload": True}'/>
+                        <field name="port_of_loading" attrs="{'required': [('service','=', 'ocean_freight_rate')]}"/>
+                        <field name="port_of_discharge" attrs="{'required': [('service','=', 'ocean_freight_rate')]}"/>
+                        <field name="vessel_name"/>
+                        <field name="carrier_booking_no"/>
+                        <field name="currency"/>
+                        <field name="booking_date" invisible="1"/>
+                    </group>
+
+                    <group attrs="{'invisible': ['|',('service', '!=', 'ocean_freight_rate'),('ocean_freight_rate_check', '=', False)]}">
+                        <field name="ocean_freight_rate"/>
+                        <field name="ocean_freight_cost"/>
+                    </group>
+
+                    <group attrs="{'invisible': ['|',('service', '!=', 'ocean_freight_rate'),('ocean_freight_rate_check', '=', True)]}">
+                        <p>Ocean Freight Rate is not activated</p>
+                    </group>
+                </xpath>
+                <xpath expr="//footer[@name='action']" position="after">
+                    <button name="action_ocean_freight_rate" string="Add" type="object" class="btn-primary"
+                            attrs="{'invisible': ['|',('service', '!=', 'ocean_freight_rate'),('ocean_freight_rate_check', '=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+</odoo>

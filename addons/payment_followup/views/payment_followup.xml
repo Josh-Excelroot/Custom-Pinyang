@@ -1,0 +1,176 @@
+<odoo>
+    <data>
+        <menuitem id="payment_followup_main_menu"
+                  parent="account.menu_finance_configuration"
+                  name="Follow-up"/>
+
+         <record id="view_payment_followup_line_tree" model="ir.ui.view">
+            <field name="name">payment.followup.line.tree</field>
+            <field name="model">payment.followup.line</field>
+            <field name="arch" type="xml">
+                <tree string="Follow-up Steps">
+                    <field name="name"/>
+                    <field name="delay" string="After Due Days"/>
+                    <field name="action_type"/>
+                    <field name="send_type"/>
+                    <field name="email_template_id"/>
+                    <!-- <field name="send_email"/> -->
+                    <!-- <field name="send_letter"/> -->
+                    <!-- <field name="manual_action"/> -->
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_payment_followup_line_form" model="ir.ui.view">
+            <field name="name">payment.followup.line.form</field>
+            <field name="model">payment.followup.line</field>
+            <field name="arch" type="xml">
+                <form string="Follow-up Steps">
+                    <label for="name" class="oe_edit_only"/>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <div class="oe_inline">
+                        After
+                        <field name="delay" class="oe_inline"/> 
+                        days overdue, do the following actions:
+                    </div>
+                    <group>
+                        <field name="action_type" widget="radio" />
+                        <field name="send_type" attrs="{'invisible': [('action_type', '=', 'manual')]}" widget="radio" class="oe_inline"/>
+                        <!-- <field name="manual_action"/> -->
+                        <!-- <field name="send_email" attrs="{'invisible': [('action_type', '!=', 'manual')]}"/> -->
+                        <!-- <field name="send_letter" attrs="{'invisible': [('action_type', '!=', 'manual')]}"/> -->
+                    </group>
+
+
+                    
+
+                   <!--  <group string="Manual Action" attrs="{'invisible': [('manual_action', '=', False)]}">
+                        <field name="manual_action_responsible_id"/>
+                        <field name="manual_action_note" attrs="{'required': [('manual_action', '&lt;&gt;', False)]}" placeholder="e.g. Call the customer, check if it's paid, ..."/>
+                    </group>
+ -->
+                    <group string="Email Template">
+                        <field name="email_template_id" placeholder="Select Mail Template"/>
+                    </group>
+
+                   <!--  <group string="Send a Letter or Email" attrs="{'invisible': [('send_email', '=', False), ('send_letter', '=', False)]}">
+                        <p colspan="2" class="oe_grey">
+                            Write here the introduction in the letter,
+                            according to the level of the follow-up. You can
+                            use the following keywords in the text. Don't
+                            forget to translate in all languages you installed
+                            using to top right icon.
+                            <table>
+                                <tr>
+                                    <td t-translation="off">%%(partner_name)s
+                                    </td>
+                                    <td>: Partner Name</td>
+                                </tr>
+                                <tr>
+                                    <td t-translation="off">%%(date)s</td>
+                                    <td>: Current Date</td>
+                                </tr>
+                                <tr>
+                                    <td t-translation="off">
+                                        %%(user_signature)s
+                                    </td>
+                                    <td>: User Name</td>
+                                </tr>
+                                <tr>
+                                    <td t-translation="off">%%(company_name)s
+                                    </td>
+                                    <td>: User's Company Name</td>
+                                </tr>
+                            </table>
+                        </p>
+                        <field name="description" nolabel="1" colspan="2"/>
+                    </group> -->
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_payment_followup_form" model="ir.ui.view">
+            <field name="name">payment.followup.form</field>
+            <field name="model">payment.followup</field>
+            <field name="arch" type="xml">
+                <form string="Follow-up">
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="time" widget="float_time"/>
+                        </group>
+                      <!--   <group>
+                            <field name="report_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True, 'no_open': True}"/>
+                        </group> -->
+                    </group>
+                    <!-- <label for="company_id" groups="base.group_multi_company"/>
+                    <field name="company_id" widget="selection" class="oe_inline" groups="base.group_multi_company" readonly="1"/> -->
+                    <p class="oe_grey">
+                        To remind customers of paying their invoices, you can
+                        define Email to be sent, depending on how severely
+                        overdue the customer is. These actions are bundled
+                        into follow-up levels that are triggered when the due
+                        date of an invoice has passed a certain
+                        number of days, based on the earliest due date.
+                    </p>
+                    <field name="followup_line"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_payment_followup_tree" model="ir.ui.view">
+            <field name="name">payment.followup.tree</field>
+            <field name="model">payment.followup</field>
+            <field name="arch" type="xml">
+                <tree string="Follow-up">
+                    <field name="name"/>
+                    <field name="time"  widget="float_time"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_payment_followup_filter" model="ir.ui.view">
+            <field name="name">account.followup.filter</field>
+            <field name="model">payment.followup</field>
+            <field name="arch" type="xml">
+                <search string="Search Follow-up">
+                    <field name="name"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_payment_followup_definition_form"  model="ir.actions.act_window">
+            <field name="name">Payment Follow-ups</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">payment.followup</field>
+            <field name="search_view_id" ref="view_payment_followup_filter"/>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to define follow-up levels and their related actions.
+                </p>
+                <p>
+                    For each step, specify the actions to be taken and delay in
+                    days. It is
+                    possible to use print and e-mail templates to send specific
+                    messages to
+                    the customer.
+                </p>
+            </field>
+        </record>
+        <menuitem action="action_payment_followup_definition_form"
+                  id="payment_followup_menu"
+                  parent="payment_followup_main_menu" 
+                  name="Follow-up Levels"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,2762 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+        <record id="hr_payroll.hr_rule_basic" model="hr.salary.rule">
+            <field name="code">BASIC</field>
+            <field eval="1" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Basic</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = contract.wage</field>
+            <!--<field name="amount_python_compute">result = (contract.wage / worked_days.TOTALWAGEDAYS.number_of_days) * worked_days.TTLCURRWKDAYINMTH.number_of_days</field>-->
+            <field name="category_id" ref="hr_payroll.BASIC"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_payroll.hr_rule_taxable" model="hr.salary.rule">
+            <field name="code">GROSS</field>
+            <field eval="300" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Gross</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = categories.BASIC and categories.BASIC + categories.DED + categories.ADDT + categories.CATBONUS + categories.CD + categories.ALW + categories.EXP</field>
+            <field name="category_id" ref="hr_payroll.GROSS"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_payroll.hr_rule_net" model="hr.salary.rule">
+            <field name="code">NET</field>
+            <field eval="600" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Net</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">if categories.CAT_NETBEFOREMTD &gt;0:
+ result = categories.CAT_NETBEFOREMTD - categories.CATLHDN - categories.DEDT + categories.ALWNT
+elif categories.CAT_NETBEFOREMTD &lt;=0:
+ result = categories.GROSS - categories.SCS_E - categories.EPF_E - categories.DEDT + categories.ALWNT</field>
+            <field name="category_id" ref="hr_payroll.NET"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_overtime0" model="hr.salary.rule">
+            <field name="code">ADDOT</field>
+            <field eval="100" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Manual OT(Payroll)</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = contract.wage and inputs.INPUTOT and round((contract.wage / 26 / 8 *1.5),2) *  inputs.INPUTOT.amount</field>
+            <field name="category_id" ref="l10n_my_payroll.hr_salary_rule_category_additions"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_commission0" model="hr.salary.rule">
+            <field name="code">COMM</field>
+            <field eval="104" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Commission</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = inputs.ICOMM and inputs.ICOMM.amount + payslip.ppm_commission_amount or 0</field>
+            <field name="category_id" ref="l10n_my_payroll.hr_salary_rule_category_additions"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_allowance0" model="hr.salary.rule">
+            <field name="code">ALW</field>
+            <field eval="102" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Allowance</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = inputs.IALLOWANCE and inputs.IALLOWANCE.amount or 0</field>
+            <field name="category_id" ref="l10n_my_payroll.hr_salary_rule_category_additions"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_backpay0" model="hr.salary.rule">
+            <field name="code">BACKPAY</field>
+            <field eval="103" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Back Pay</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = inputs.INPUTBACKPAY and inputs.INPUTBACKPAY.amount or 0</field>
+            <field name="category_id" ref="l10n_my_payroll.hr_salary_rule_category_additions"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_overtimepublicholiday0" model="hr.salary.rule">
+            <field name="code">OTPH</field>
+            <field eval="101" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Overtime - Public Holiday</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">
+result = contract.wage and inputs.INPUTOTPH and (contract.wage / worked_days. TTLCURRDAYINMTH.number_of_days) * inputs.INPUTOTPH.amount </field>
+            <field name="category_id" ref="l10n_my_payroll.hr_salary_rule_category_additions"/>
+            <field name="quantity">1.0</field>
+        </record>
+        
+        <record id="hr_salary_rule_otheradditions0" model="hr.salary.rule">
+            <field name="code">OTHERADD</field>
+            <field eval="110" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Other Additions</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = inputs.IOTHERADD and inputs.IOTHERADD.amount or 0</field>
+            <field name="category_id" ref="l10n_my_payroll.hr_salary_rule_category_additions"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_otherdeductions0" model="hr.salary.rule">
+            <field name="code">OTHDED</field>
+            <field eval="200" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Other Deductions</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = inputs.INPUTOTHDED and inputs.INPUTOTHDED.amount or 0</field>
+            <field name="category_id" ref="hr_salary_rule_category_deductions"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_unpaidleave0" model="hr.salary.rule">
+            <field name="code">UNPAIDLEAVE</field>
+            <field eval="420" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Unpaid Leave</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">if inputs.IUPL and inputs.IUPL.amount > 0:
+    result = categories and worked_days.TTLCURRDAYINMTH and inputs.IUPL and (categories.BASIC / worked_days.TTLCURRDAYINMTH.number_of_days) * inputs.IUPL.amount or 0
+else:
+    result = categories and worked_days.TOTALWAGEDAYS and categories.BASIC - (categories.BASIC / worked_days.TOTALWAGEDAYS.number_of_days) * worked_days.TTLCURRWKDAYINMTH.number_of_days</field>
+            <field name="category_id" ref="hr_salary_rule_category_deductions"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+<!-- ##############################################################
+                        Salary Rules For EPF
+     ############################################################## -->
+
+        <!--<record id="hr_salary_rule_epfy0" model="hr.salary.rule">
+            <field name="code">EPFY</field>
+            <field eval="403" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="hr_contribution_register_epf"/>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">EPF (Employer)</field>
+            <field name="condition_python">
+# Available variables:
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = 0.0
+if categories.EPF_Y_NORMAL:
+    result += categories.EPF_Y_NORMAL
+if categories.EPF_Y_ADD:
+    result += categories.EPF_Y_ADD</field>
+            <field name="category_id" ref="hr_salary_rule_category_contributions_epf_employer"/>
+            <field name="quantity">1.0</field>
+        </record>-->
+
+        <record id="hr_salary_rule_expense" model="hr.salary.rule">
+            <field name="code">EXP</field>
+            <field eval="108" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name"> Expense Reimbursement</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = payslip.expense_amount or 0.0</field>
+            <field name="category_id" ref="hr_salary_rule_category_expense"/>
+            <field name="quantity">1.0</field>
+        </record>
+        <record id="hr_salary_rule_epfy_normal" model="hr.salary.rule">
+            <field name="code">EPF_Y_NORMAL</field>
+            <field eval="404" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="hr_contribution_register_epf"/>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">EPF (Employer)</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">overtime =  ADDOT + OT + OTPH
+if employee.contributing_epf and employee.contributing_epf == 'yes':
+    emp_total_gross = categories.GROSS - overtime - categories.EXP - categories.CATBONUS
+    emp_epf_gross = categories.GROSS - overtime -  categories.EXP
+    emp_gross =  (math.floor(emp_epf_gross * 100)/100)
+    if emp_total_gross &lt; 5000:
+        if employee.empr_epf_condition == 'a':
+            gross = float(math.ceil(emp_gross/20.0))*20
+            result = ((13+float(employee.empr_add_rate))*gross)/100
+        elif employee.empr_epf_condition == 'b':
+            if employee.empr_epf_rate_cond_b == 'a':
+                gross = float(math.ceil(emp_gross/20.0))*20
+                result = ((13+float(employee.empr_add_rate))*gross)/100
+            elif employee.empr_epf_rate_cond_b == 'b':
+                if employee.empr_add_rate != False:
+                    gross = float(math.ceil(emp_gross/20.0))*20
+                    result = ((float(employee.empr_add_rate))*gross)/100
+                else:
+                    result = 5
+            else :
+                result = 0.0
+        elif employee.empr_epf_condition == 'c':
+            if employee.empr_add_rate != False:
+                gross = float(math.ceil(emp_gross/20.0))*20
+                result = ((float(employee.empr_add_rate))*gross)/100
+            else:
+                result = 5
+        elif employee.empr_epf_condition == 'd':
+            if categories.CATBONUS &lt; 5000:
+                gross = float(math.ceil(emp_gross/20.0))*20
+                result = ((6.5+float(employee.empr_add_rate))*gross)/100
+            if categories.CATBONUS &gt;= 5000:
+                gross = float(math.ceil(emp_gross/20.0))*20
+                bonus = float(math.ceil(categories.CATBONUS/20.0))*20
+                result = (((6.5+float(employee.empr_add_rate))*(gross+bonus)))/100
+        elif employee.empr_epf_condition == 'e':
+             if employee.empr_epf_rate_cond_e == 'a':
+                if categories.CATBONUS &lt; 5000:
+                    gross = float(math.ceil(emp_gross/20.0))*20
+                    result = ((6+float(employee.empr_add_rate))*gross)/100
+                if categories.CATBONUS &gt;= 5000:
+                    gross = float(math.ceil(emp_gross/20.0))*20
+                    result = ((6.5+float(employee.empr_add_rate))*gross)/100
+             if employee.empr_epf_rate_cond_e == 'b':
+                if employee.empr_add_rate != False:
+                    gross = float(math.ceil(emp_gross/20.0))*20
+                    result = (float(employee.empr_add_rate)*gross)/100
+                else:
+                    result = 5
+        else: 
+            result = 0.0
+    if emp_total_gross &gt;= 5000 and emp_total_gross &lt;= 20000:
+        if employee.empr_epf_condition == 'a':
+            gross = float(math.ceil(emp_gross/100.0))*100
+            result = ((12+float(employee.empr_add_rate))*gross)/100
+        elif employee.empr_epf_condition == 'b':
+            if employee.empr_epf_rate_cond_b == 'a':
+                gross = float(math.ceil(emp_gross/100.0))*100
+                result = ((12+float(employee.empr_add_rate))*gross)/100
+            elif employee.empr_epf_rate_cond_b == 'b':
+                if employee.empr_add_rate != False:
+                    gross = float(math.ceil(emp_gross/100.0))*100
+                    result = ((float(employee.empr_add_rate))*gross)/100
+                else:
+                    result = 5
+            else:
+                result = 0.0
+        elif employee.empr_epf_condition == 'c':
+            if employee.empr_add_rate != False:
+                gross = float(math.ceil(emp_gross/100.0))*100
+                result = ((float(employee.empr_add_rate))*gross)/100
+            else:
+                result = 5
+        elif employee.empr_epf_condition == 'd':
+            gross = float(math.ceil(emp_gross/100.0))*100
+            result = ((6+float(employee.empr_add_rate))*gross)/100
+        elif employee.empr_epf_condition == 'e':
+            if employee.empr_epf_rate_cond_e == 'a':
+                gross = float(math.ceil(emp_gross/100.0))*100
+                result = ((6+float(employee.empr_add_rate))*gross)/100
+            if employee.empr_epf_rate_cond_e == 'b':
+                if employee.empr_add_rate != False:
+                    gross = float(math.ceil(emp_gross/100.0))*100
+                    result = (float(employee.empr_add_rate)*gross)/100
+                else:
+                    result = 5
+
+    if emp_total_gross &gt;= 20001:
+        if employee.empr_epf_condition == 'a':
+            result = ((12+float(employee.empr_add_rate))*emp_gross)/100
+        elif employee.empr_epf_condition == 'b':
+            if employee.empr_epf_rate_cond_b == 'a':
+                result = ((12+float(employee.empr_add_rate))*emp_gross)/100
+            elif employee.empr_epf_rate_cond_b == 'b':
+                if employee.empr_add_rate != False:
+                    result = ((float(employee.empr_add_rate))*emp_gross)/100
+                else:
+                    result = 5
+            else:
+                result = 0.0
+        elif employee.empr_epf_condition == 'c':
+            if employee.empr_add_rate != False:
+                result = ((float(employee.empr_add_rate))*emp_gross)/100
+            else:
+                result = 5
+        elif employee.empr_epf_condition == 'd':
+            result = ((6+float(employee.empr_add_rate))*emp_gross)/100
+        elif employee.empr_epf_condition == 'e':
+            if employee.empr_epf_rate_cond_e == 'a':
+                result = ((6+float(employee.empr_add_rate))*emp_gross)/100
+            if employee.empr_epf_rate_cond_e == 'b':
+                if employee.empr_add_rate != False:
+                    result = (float(employee.empr_add_rate)*emp_gross)/100
+                else:
+                    result = 5
+if result &gt; 0:
+    result = float(math.ceil(result))</field>
+            <field name="category_id" ref="hr_salary_rule_category_epf_y_normal"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+
+        <!--<record id="hr_salary_rule_epfy_addition" model="hr.salary.rule">
+            <field name="code">EPF_Y_ADD</field>
+            <field eval="402" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="hr_contribution_register_epf"/>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">EPF-Addition (Employer)</field>
+            <field name="condition_python">
+# Available variables:
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = 0.0
+if employee.contributing_epf and employee.contributing_epf == 'yes':
+    emp_epf_gross = categories.GROSS
+    if categories.ADDT:
+        emp_epf_gross = categories.GROSS - categories.ADDT
+    emp_gross =  (math.floor(emp_epf_gross * 100)/100)
+    emp_tax_add =  (math.floor(categories.ADDT * 100)/100)
+    if emp_gross &lt; 5000:
+        if employee.empr_epf_condition == 'a':
+            gross = float(math.ceil(emp_tax_add/20.0))*20
+            result = ((13+float(employee.empr_add_rate))*gross)/100
+        elif employee.empr_epf_condition == 'b':
+            if employee.empr_epf_rate_cond_b == 'a':
+                gross = float(math.ceil(emp_tax_add/20.0))*20
+                result = ((13+float(employee.empr_add_rate))*gross)/100
+            elif employee.empr_epf_rate_cond_b == 'b':
+                if employee.empr_add_rate != False:
+                    gross = float(math.ceil(emp_tax_add/20.0))*20
+                    result = ((float(employee.empr_add_rate))*gross)/100
+                else:
+                    result = 5
+            else :
+                result = 0.0
+        elif employee.empr_epf_condition == 'c':
+            if employee.empr_add_rate != False:
+                gross = float(math.ceil(emp_tax_add/20.0))*20
+                result = ((float(employee.empr_add_rate))*gross)/100
+            else:
+                result = 5
+        elif employee.empr_epf_condition == 'd':
+            if categories.CATBONUS &lt; 5000:
+                gross = float(math.ceil(emp_tax_add/20.0))*20
+                result = ((6.5+float(employee.empr_add_rate))*gross)/100
+            if categories.CATBONUS &gt;= 5000:
+                gross = float(math.ceil(emp_gross/20.0))*20
+                bonus = float(math.ceil(categories.CATBONUS/20.0))*20
+                result = (((6.5+float(employee.empr_add_rate))*(gross+bonus)))/100
+        elif employee.empr_epf_condition == 'e':
+             if employee.empr_epf_rate_cond_e == 'a':
+                if categories.CATBONUS &lt; 5000:
+                    gross = float(math.ceil(emp_tax_add/20.0))*20
+                    result = ((6+float(employee.empr_add_rate))*gross)/100
+                if categories.CATBONUS &gt;= 5000:
+                    gross = float(math.ceil(emp_tax_add/20.0))*20
+                    result = ((6.5+float(employee.empr_add_rate))*gross)/100
+             if employee.empr_epf_rate_cond_e == 'b':
+                if employee.empr_add_rate != False:
+                    gross = float(math.ceil(emp_tax_add/20.0))*20
+                    result = (float(employee.empr_add_rate)*gross)/100
+                else:
+                    result = 5
+        else: 
+            result = 0.0
+    if emp_gross &gt;= 5000 and emp_gross &lt;= 20000:
+        if employee.empr_epf_condition == 'a':
+            gross = float(math.ceil(emp_tax_add/100.0))*100
+            result = ((12+float(employee.empr_add_rate))*gross)/100
+        elif employee.empr_epf_condition == 'b':
+            if employee.empr_epf_rate_cond_b == 'a':
+                gross = float(math.ceil(emp_tax_add/100.0))*100
+                result = ((12+float(employee.empr_add_rate))*gross)/100
+            elif employee.empr_epf_rate_cond_b == 'b':
+                if employee.empr_add_rate != False:
+                    gross = float(math.ceil(emp_tax_add/100.0))*100
+                    result = ((float(employee.empr_add_rate))*gross)/100
+                else:
+                    result = 5
+            else:
+                result = 0.0
+        elif employee.empr_epf_condition == 'c':
+            if employee.empr_add_rate != False:
+                gross = float(math.ceil(emp_tax_add/100.0))*100
+                result = ((float(employee.empr_add_rate))*gross)/100
+            else:
+                result = 5
+        elif employee.empr_epf_condition == 'd':
+            gross = float(math.ceil(emp_tax_add/100.0))*100
+            result = ((6+float(employee.empr_add_rate))*gross)/100
+        elif employee.empr_epf_condition == 'e':
+            if employee.empr_epf_rate_cond_e == 'a':
+                gross = float(math.ceil(emp_tax_add/100.0))*100
+                result = ((6+float(employee.empr_add_rate))*gross)/100
+            if employee.empr_epf_rate_cond_e == 'b':
+                if employee.empr_add_rate != False:
+                    gross = float(math.ceil(emp_tax_add/100.0))*100
+                    result = (float(employee.empr_add_rate)*gross)/100
+                else:
+                    result = 5
+
+    if emp_gross &gt;= 20001:
+        if employee.empr_epf_condition == 'a':
+            result = ((12+float(employee.empr_add_rate))*emp_tax_add)/100
+        elif employee.empr_epf_condition == 'b':
+            if employee.empr_epf_rate_cond_b == 'a':
+                result = ((12+float(employee.empr_add_rate))*emp_tax_add)/100
+            elif employee.empr_epf_rate_cond_b == 'b':
+                if employee.empr_add_rate != False:
+                    result = ((float(employee.empr_add_rate))*emp_tax_add)/100
+                else:
+                    result = 5
+            else:
+                result = 0.0
+        elif employee.empr_epf_condition == 'c':
+            if employee.empr_add_rate != False:
+                result = ((float(employee.empr_add_rate))*emp_tax_add)/100
+            else:
+                result = 5
+        elif employee.empr_epf_condition == 'd':
+            result = ((6+float(employee.empr_add_rate))*emp_tax_add)/100
+        elif employee.empr_epf_condition == 'e':
+            if employee.empr_epf_rate_cond_e == 'a':
+                result = ((6+float(employee.empr_add_rate))*emp_tax_add)/100
+            if employee.empr_epf_rate_cond_e == 'b':
+                if employee.empr_add_rate != False:
+                    result = (float(employee.empr_add_rate)*emp_tax_add)/100
+                else:
+                    result = 5
+
+    if result &gt; 0:
+        result = math.ceil(result)</field>
+            <field name="category_id" ref="hr_salary_rule_category_epf_y_add"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+
+
+        <record id="hr_salary_rule_epfe0" model="hr.salary.rule">
+            <field name="code">EPFE</field>
+            <field eval="406" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="hr_contribution_register_epf"/>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">EPF (Employee)</field>
+            <field name="condition_python">
+# Available variables:
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = 0.0
+if categories.DEPFE:
+    result += categories.DEPFE
+if categories.EPF_E_ADD:
+    result += categories.EPF_E_ADD</field>
+            <field name="category_id" ref="hr_salary_rule_category_contributions_epf_employee"/>
+            <field name="quantity">1.0</field>
+        </record>-->
+
+
+
+
+        <record id="hr_salary_rule_epfe_without_add" model="hr.salary.rule">
+            <field name="code">DEPFE</field>
+            <field eval="401" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="hr_contribution_register_epf"/>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">EPF (Employee)</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = 0.0
+if employee.contributing_epf and employee.contributing_epf == 'yes':
+    emp_epf_gross = categories.GROSS - categories.EXP + inputs.IALLOWANCE.amount + inputs.ICOMM.amount + inputs.ARREARS_OTHERS.amount - OT
+    if categories.ADDT:
+        emp_epf_gross = categories.GROSS - categories.EXP  - categories.ADDT + inputs.IALLOWANCE.amount + inputs.ICOMM.amount + inputs.ARREARS_OTHERS.amount - OT
+    emp_gross =  (math.floor(emp_epf_gross * 100)/100)
+
+    if emp_gross &lt; 5000:
+        if employee.age &lt;= 60:
+            if employee.emp_epf_rate_less_60 == 'a':
+                gross = float(math.ceil(emp_gross/20.0))*20
+                result = (((8.0+float(employee.emp_add_rate)))*gross)/100
+            elif employee.emp_epf_rate_less_60 == 'b':
+                gross = float(math.ceil(emp_gross/20.0))*20
+                result = (((11.0+float(employee.emp_add_rate)))*gross)/100
+            else:
+                result = 0.0
+        elif employee.age &gt;= 60:
+            if employee.emp_epf_rate_more_60 == 'a':
+                gross = float(math.ceil(emp_gross/20.0))*20
+                result = (((4.0+float(employee.emp_add_rate)))*gross)/100
+            elif employee.emp_epf_rate_more_60 == 'b':
+                gross = float(math.ceil(emp_gross/20.0))*20
+                result = (((5.5+float(employee.emp_add_rate)))*gross)/100
+            else:
+                result = 0.0
+    
+    if emp_gross &gt;= 5000 and emp_gross &lt;= 20000:
+        if employee.age &lt;= 60:
+            if employee.emp_epf_rate_less_60 == 'a':
+                gross = float(math.ceil(emp_gross/100.0))*100
+                result = (((8.0+float(employee.emp_add_rate)))*gross)/100
+            elif employee.emp_epf_rate_less_60 == 'b':
+                gross = float(math.ceil(emp_gross/100.0))*100
+                result = (((11.0+float(employee.emp_add_rate)))*gross)/100
+            else:
+                result = 0.0
+        elif employee.age &gt;=60:
+            if employee.emp_epf_rate_more_60 == 'a':
+                gross = float(math.ceil(emp_gross/100.0))*100
+                result = (((4.0+float(employee.emp_add_rate)))*gross)/100
+            elif employee.emp_epf_rate_more_60 == 'b':
+                gross = float(math.ceil(emp_gross/100.0))*100
+                result = (((5.5+float(employee.emp_add_rate)))*gross)/100
+            else:
+                result = 0.0
+
+    if emp_gross &gt;= 20001:
+        if employee.age &lt;= 60:
+            if employee.emp_epf_rate_less_60 == 'a':
+                result = (((8.0+float(employee.emp_add_rate)))*emp_gross)/100
+            elif employee.emp_epf_rate_less_60 == 'b':
+                result = (((11.0+float(employee.emp_add_rate)))*emp_gross)/100
+            else:
+                result = 0.0
+        elif employee.age &gt;=60:
+            if employee.emp_epf_rate_more_60 == 'a':
+                result = (((4.0+float(employee.emp_add_rate)))*emp_gross)/100
+            elif employee.emp_epf_rate_more_60 == 'b':
+                result = (((5.5+float(employee.emp_add_rate)))*emp_gross)/100
+            else:
+                result = 0.0
+result = float(math.ceil(result))</field>
+            <field name="category_id" ref="hr_salary_rule_category_epf_wout_add"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+
+        <!--<record id="hr_salary_rule_epfe_empl_add" model="hr.salary.rule">
+            <field name="code">EPFEADD</field>
+            <field eval="405" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="hr_contribution_register_epf"/>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">EPF-Addition (Employee)</field>
+            <field name="condition_python">
+# Available variables:
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = 0.0
+if employee.contributing_epf and employee.contributing_epf == 'yes':
+    emp_epf_gross = categories.GROSS
+    if categories.ADDT:
+        emp_epf_gross = categories.GROSS - categories.ADDT
+    emp_gross =  (math.floor(emp_epf_gross * 100)/100)
+    emp_tax_add =  (math.floor(categories.ADDT * 100)/100)
+
+    if emp_gross &lt; 5000:
+        if employee.age &lt;= 60:
+            if employee.emp_epf_rate_less_60 == 'a':
+                gross = float(math.ceil(emp_tax_add/20.0))*20
+                result = (((8.0+float(employee.emp_add_rate)))*gross)/100
+            elif employee.emp_epf_rate_less_60 == 'b':
+                gross = float(math.ceil(emp_tax_add/20.0))*20
+                result = (((11.0+float(employee.emp_add_rate)))*gross)/100
+            else:
+                result = 0.0
+        elif employee.age &gt;= 60:
+            if employee.emp_epf_rate_more_60 == 'a':
+                gross = float(math.ceil(emp_tax_add/20.0))*20
+                result = (((4.0+float(employee.emp_add_rate)))*gross)/100
+            elif employee.emp_epf_rate_more_60 == 'b':
+                gross = float(math.ceil(emp_tax_add/20.0))*20
+                result = (((5.5+float(employee.emp_add_rate)))*gross)/100
+            else:
+                result = 0.0
+    
+    if emp_gross &gt;= 5000 and emp_gross &lt;= 20000:
+        if employee.age &lt;= 60:
+            if employee.emp_epf_rate_less_60 == 'a':
+                gross = float(math.ceil(emp_tax_add/100.0))*100
+                result = (((8.0+float(employee.emp_add_rate)))*gross)/100
+            elif employee.emp_epf_rate_less_60 == 'b':
+                gross = float(math.ceil(emp_tax_add/100.0))*100
+                result = (((11.0+float(employee.emp_add_rate)))*gross)/100
+            else:
+                result = 0.0
+        elif employee.age &gt;=60:
+            if employee.emp_epf_rate_more_60 == 'a':
+                gross = float(math.ceil(emp_tax_add/100.0))*100
+                result = (((4.0+float(employee.emp_add_rate)))*gross)/100
+            elif employee.emp_epf_rate_more_60 == 'b':
+                gross = float(math.ceil(emp_tax_add/100.0))*100
+                result = (((5.5+float(employee.emp_add_rate)))*gross)/100
+            else:
+                result = 0.0
+
+    if emp_gross &gt;= 20001:
+        if employee.age &lt;= 60:
+            if employee.emp_epf_rate_less_60 == 'a':
+                result = (((8.0+float(employee.emp_add_rate)))*emp_tax_add)/100
+            elif employee.emp_epf_rate_less_60 == 'b':
+                result = (((11.0+float(employee.emp_add_rate)))*emp_tax_add)/100
+            else:
+                result = 0.0
+        elif employee.age &gt;=60:
+            if employee.emp_epf_rate_more_60 == 'a':
+                result = (((4.0+float(employee.emp_add_rate)))*emp_tax_add)/100
+            elif employee.emp_epf_rate_more_60 == 'b':
+                result = (((5.5+float(employee.emp_add_rate)))*emp_tax_add)/100
+            else:
+                result = 0.0
+
+    if result &gt; 0:
+        result = math.ceil(result)</field>
+            <field name="category_id" ref="hr_salary_rule_category_epf_add"/>
+            <field name="quantity">1.0</field>
+        </record>-->
+        
+        <record id="hr_salary_rule_adjustmentsaddition0" model="hr.salary.rule">
+            <field name="code">ADJADD</field>
+            <field eval="2" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Adjustments (Addition)</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = inputs.IADJADD and inputs.IADJADD.amount or 0</field>
+            <field name="category_id" ref="hr_payroll.BASIC"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_bonus0" model="hr.salary.rule">
+            <field name="code">BONUS</field>
+            <field eval="106" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Contractual Bonus</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = inputs.IBONUS and inputs.IBONUS.amount or 0</field>
+            <field name="category_id" ref="l10n_my_payroll.hr_salary_rule_category_CATBONUS"/>
+            <field name="quantity">1.0</field>
+        </record>
+        
+        <record id="hr_salary_rule_bonus1" model="hr.salary.rule">
+            <field name="code">PBONUS</field>
+            <field eval="106" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Performance Bonus</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = inputs.PBONUS and inputs.PBONUS.amount or 0</field>
+            <field name="category_id" ref="l10n_my_payroll.hr_salary_rule_category_CATBONUS"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_otherdeductionsbasic0" model="hr.salary.rule">
+            <field name="code">OTHDEDBASIC</field>
+            <field eval="99" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Other Deductions (Basic)</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = inputs.IOTHDEDBASIC and -inputs.IOTHDEDBASIC.amount</field>
+            <field name="category_id" ref="hr_payroll.BASIC"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_netbeforemtd0" model="hr.salary.rule">
+            <field name="code">NET-BEFOREMTD</field>
+            <field eval="500" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="hr_contribution_register_pcb"/>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Net (Before MTD)</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = categories.GROSS + categories.FEES - categories.DEPFE - categories.SCS_E  - categories.EIS_E - categories.ZAKAT - categories.DED</field>
+            <field name="category_id" ref="hr_salary_rule_category_CAT_NETBEFOREMTD"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+<!-- ##############################################################
+                        Inactive Salary Rules
+     ############################################################## -->
+        
+        <record id="hr_salary_rule_deletemepcbcatb0" model="hr.salary.rule">
+            <field name="code">PCBCAT1B</field>
+            <field eval="599" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="hr_contribution_register_pcb"/>
+            <field name="amount_select">code</field>
+            <field eval="0" name="active"/>
+            <field name="name">DELETEME PCB (CAT1-B) 2012</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">if categories.CAT_NETBEFOREMTD - BONUS &lt;= 2450:
+ result = 0 
+elif categories.CAT_NETBEFOREMTD &gt;=2451 and categories.CAT_NETBEFOREMTD &lt;= 2500:
+ result = 10 
+elif categories.CAT_NETBEFOREMTD &gt;=2501 and categories.CAT_NETBEFOREMTD &lt;= 2550:
+ result = 14 
+elif categories.CAT_NETBEFOREMTD &gt;=2551 and categories.CAT_NETBEFOREMTD &lt;= 2600:
+ result = 17 
+elif categories.CAT_NETBEFOREMTD &gt;=2601 and categories.CAT_NETBEFOREMTD &lt;= 2650:
+ result = 21 
+elif categories.CAT_NETBEFOREMTD &gt;=2651 and categories.CAT_NETBEFOREMTD &lt;= 2700:
+ result = 24 
+elif categories.CAT_NETBEFOREMTD &gt;=2701 and categories.CAT_NETBEFOREMTD &lt;= 2750:
+ result = 28 
+elif categories.CAT_NETBEFOREMTD &gt;=2751 and categories.CAT_NETBEFOREMTD &lt;= 2800:
+ result = 31 
+elif categories.CAT_NETBEFOREMTD &gt;=2801 and categories.CAT_NETBEFOREMTD &lt;= 2850:
+ result = 35 
+elif categories.CAT_NETBEFOREMTD &gt;=2851 and categories.CAT_NETBEFOREMTD &lt;= 2900:
+ result = 38 
+elif categories.CAT_NETBEFOREMTD &gt;=2901 and categories.CAT_NETBEFOREMTD &lt;= 2950:
+ result = 42 
+elif categories.CAT_NETBEFOREMTD &gt;=2951 and categories.CAT_NETBEFOREMTD &lt;= 3000:
+ result = 45 
+elif categories.CAT_NETBEFOREMTD &gt;=3001 and categories.CAT_NETBEFOREMTD &lt;= 3050:
+ result = 49 
+elif categories.CAT_NETBEFOREMTD &gt;=3051 and categories.CAT_NETBEFOREMTD &lt;= 3100:
+ result = 52 
+elif categories.CAT_NETBEFOREMTD &gt;=3101 and categories.CAT_NETBEFOREMTD &lt;= 3150:
+ result = 56 
+elif categories.CAT_NETBEFOREMTD &gt;=3151 and categories.CAT_NETBEFOREMTD &lt;= 3200:
+ result = 59 
+elif categories.CAT_NETBEFOREMTD &gt;=3201 and categories.CAT_NETBEFOREMTD &lt;= 3250:
+ result = 63 
+elif categories.CAT_NETBEFOREMTD &gt;=3251 and categories.CAT_NETBEFOREMTD &lt;= 3300:
+ result = 66 
+elif categories.CAT_NETBEFOREMTD &gt;=3301 and categories.CAT_NETBEFOREMTD &lt;= 3350:
+ result = 70 
+elif categories.CAT_NETBEFOREMTD &gt;=3351 and categories.CAT_NETBEFOREMTD &lt;= 3400:
+ result = 73 
+elif categories.CAT_NETBEFOREMTD &gt;=3401 and categories.CAT_NETBEFOREMTD &lt;= 3450:
+ result = 77 
+elif categories.CAT_NETBEFOREMTD &gt;=3451 and categories.CAT_NETBEFOREMTD &lt;= 3500:
+ result = 80 
+elif categories.CAT_NETBEFOREMTD &gt;=3501 and categories.CAT_NETBEFOREMTD &lt;= 3550:
+ result = 84 
+elif categories.CAT_NETBEFOREMTD &gt;=3551 and categories.CAT_NETBEFOREMTD &lt;= 3600:
+ result = 87 
+elif categories.CAT_NETBEFOREMTD &gt;=3601 and categories.CAT_NETBEFOREMTD &lt;= 3650:
+ result = 91 
+elif categories.CAT_NETBEFOREMTD &gt;=3651 and categories.CAT_NETBEFOREMTD &lt;= 3700:
+ result = 128 
+elif categories.CAT_NETBEFOREMTD &gt;=3701 and categories.CAT_NETBEFOREMTD &lt;= 3750:
+ result = 134 
+elif categories.CAT_NETBEFOREMTD &gt;=3751 and categories.CAT_NETBEFOREMTD &lt;= 3800:
+ result = 140 
+elif categories.CAT_NETBEFOREMTD &gt;=3801 and categories.CAT_NETBEFOREMTD &lt;= 3850:
+ result = 146 
+elif categories.CAT_NETBEFOREMTD &gt;=3851 and categories.CAT_NETBEFOREMTD &lt;= 3900:
+ result = 152 
+elif categories.CAT_NETBEFOREMTD &gt;=3901 and categories.CAT_NETBEFOREMTD &lt;= 3950:
+ result = 158 
+elif categories.CAT_NETBEFOREMTD &gt;=3951 and categories.CAT_NETBEFOREMTD &lt;= 4000:
+ result = 164 
+elif categories.CAT_NETBEFOREMTD &gt;=4001 and categories.CAT_NETBEFOREMTD &lt;= 4050:
+ result = 170 
+elif categories.CAT_NETBEFOREMTD &gt;=4051 and categories.CAT_NETBEFOREMTD &lt;= 4100:
+ result = 176 
+elif categories.CAT_NETBEFOREMTD &gt;=4101 and categories.CAT_NETBEFOREMTD &lt;= 4150:
+ result = 182 
+elif categories.CAT_NETBEFOREMTD &gt;=4151 and categories.CAT_NETBEFOREMTD &lt;= 4200:
+ result = 188 
+elif categories.CAT_NETBEFOREMTD &gt;=4201 and categories.CAT_NETBEFOREMTD &lt;= 4250:
+ result = 194 
+elif categories.CAT_NETBEFOREMTD &gt;=4251 and categories.CAT_NETBEFOREMTD &lt;= 4300:
+ result = 200 
+elif categories.CAT_NETBEFOREMTD &gt;=4301 and categories.CAT_NETBEFOREMTD &lt;= 4350:
+ result = 206 
+elif categories.CAT_NETBEFOREMTD &gt;=4351 and categories.CAT_NETBEFOREMTD &lt;= 4400:
+ result = 212 
+elif categories.CAT_NETBEFOREMTD &gt;=4401 and categories.CAT_NETBEFOREMTD &lt;= 4450:
+ result = 218 
+elif categories.CAT_NETBEFOREMTD &gt;=4451 and categories.CAT_NETBEFOREMTD &lt;= 4500:
+ result = 224 
+elif categories.CAT_NETBEFOREMTD &gt;=4501 and categories.CAT_NETBEFOREMTD &lt;= 4550:
+ result = 230 
+elif categories.CAT_NETBEFOREMTD &gt;=4551 and categories.CAT_NETBEFOREMTD &lt;= 4600:
+ result = 236 
+elif categories.CAT_NETBEFOREMTD &gt;=4601 and categories.CAT_NETBEFOREMTD &lt;= 4650:
+ result = 242 
+elif categories.CAT_NETBEFOREMTD &gt;=4651 and categories.CAT_NETBEFOREMTD &lt;= 4700:
+ result = 248 
+elif categories.CAT_NETBEFOREMTD &gt;=4701 and categories.CAT_NETBEFOREMTD &lt;= 4750:
+ result = 254 
+elif categories.CAT_NETBEFOREMTD &gt;=4751 and categories.CAT_NETBEFOREMTD &lt;= 4800:
+ result = 260 
+elif categories.CAT_NETBEFOREMTD &gt;=4801 and categories.CAT_NETBEFOREMTD &lt;= 4850:
+ result = 266 
+elif categories.CAT_NETBEFOREMTD &gt;=4851 and categories.CAT_NETBEFOREMTD &lt;= 4900:
+ result = 272 
+elif categories.CAT_NETBEFOREMTD &gt;=4901 and categories.CAT_NETBEFOREMTD &lt;= 4950:
+ result = 279 
+elif categories.CAT_NETBEFOREMTD &gt;=4951 and categories.CAT_NETBEFOREMTD &lt;= 5000:
+ result = 288 
+elif categories.CAT_NETBEFOREMTD &gt;=5001 and categories.CAT_NETBEFOREMTD &lt;= 5050:
+ result = 298 
+elif categories.CAT_NETBEFOREMTD &gt;=5051 and categories.CAT_NETBEFOREMTD &lt;= 5100:
+ result = 307 
+elif categories.CAT_NETBEFOREMTD &gt;=5101 and categories.CAT_NETBEFOREMTD &lt;= 5150:
+ result = 317 
+elif categories.CAT_NETBEFOREMTD &gt;=5151 and categories.CAT_NETBEFOREMTD &lt;= 5200:
+ result = 326 
+elif categories.CAT_NETBEFOREMTD &gt;=5201 and categories.CAT_NETBEFOREMTD &lt;= 5250:
+ result = 336 
+elif categories.CAT_NETBEFOREMTD &gt;=5251 and categories.CAT_NETBEFOREMTD &lt;= 5300:
+ result = 345 
+elif categories.CAT_NETBEFOREMTD &gt;=5301 and categories.CAT_NETBEFOREMTD &lt;= 5350:
+ result = 355 
+elif categories.CAT_NETBEFOREMTD &gt;=5351 and categories.CAT_NETBEFOREMTD &lt;= 5400:
+ result = 364 
+elif categories.CAT_NETBEFOREMTD &gt;=5401 and categories.CAT_NETBEFOREMTD &lt;= 5450:
+ result = 374 
+elif categories.CAT_NETBEFOREMTD &gt;=5451 and categories.CAT_NETBEFOREMTD &lt;= 5500:
+ result = 383 
+elif categories.CAT_NETBEFOREMTD &gt;=5501 and categories.CAT_NETBEFOREMTD &lt;= 5550:
+ result = 393 
+elif categories.CAT_NETBEFOREMTD &gt;=5551 and categories.CAT_NETBEFOREMTD &lt;= 5600:
+ result = 402 
+elif categories.CAT_NETBEFOREMTD &gt;=5601 and categories.CAT_NETBEFOREMTD &lt;= 5650:
+ result = 412 
+elif categories.CAT_NETBEFOREMTD &gt;=5651 and categories.CAT_NETBEFOREMTD &lt;= 5700:
+ result = 421 
+elif categories.CAT_NETBEFOREMTD &gt;=5701 and categories.CAT_NETBEFOREMTD &lt;= 5750:
+ result = 431 
+elif categories.CAT_NETBEFOREMTD &gt;=5751 and categories.CAT_NETBEFOREMTD &lt;= 5800:
+ result = 440 
+elif categories.CAT_NETBEFOREMTD &gt;=5801 and categories.CAT_NETBEFOREMTD &lt;= 5850:
+ result = 450 
+elif categories.CAT_NETBEFOREMTD &gt;=5851 and categories.CAT_NETBEFOREMTD &lt;= 5900:
+ result = 459 
+elif categories.CAT_NETBEFOREMTD &gt;=5901 and categories.CAT_NETBEFOREMTD &lt;= 5950:
+ result = 469 
+elif categories.CAT_NETBEFOREMTD &gt;=5951 and categories.CAT_NETBEFOREMTD &lt;= 6000:
+ result = 478 
+elif categories.CAT_NETBEFOREMTD &gt;=6001 and categories.CAT_NETBEFOREMTD &lt;= 6050:
+ result = 488 
+elif categories.CAT_NETBEFOREMTD &gt;=6051 and categories.CAT_NETBEFOREMTD &lt;= 6100:
+ result = 497 
+elif categories.CAT_NETBEFOREMTD &gt;=6101 and categories.CAT_NETBEFOREMTD &lt;= 6150:
+ result = 507 
+elif categories.CAT_NETBEFOREMTD &gt;=6151 and categories.CAT_NETBEFOREMTD &lt;= 6200:
+ result = 516 
+elif categories.CAT_NETBEFOREMTD &gt;=6201 and categories.CAT_NETBEFOREMTD &lt;= 6250:
+ result = 526 
+elif categories.CAT_NETBEFOREMTD &gt;=6251 and categories.CAT_NETBEFOREMTD &lt;= 6300:
+ result = 535 
+elif categories.CAT_NETBEFOREMTD &gt;=6301 and categories.CAT_NETBEFOREMTD &lt;= 6350:
+ result = 545 
+elif categories.CAT_NETBEFOREMTD &gt;=6351 and categories.CAT_NETBEFOREMTD &lt;= 6400:
+ result = 554 
+elif categories.CAT_NETBEFOREMTD &gt;=6401 and categories.CAT_NETBEFOREMTD &lt;= 6450:
+ result = 564 
+elif categories.CAT_NETBEFOREMTD &gt;=6451 and categories.CAT_NETBEFOREMTD &lt;= 6500:
+ result = 573 
+elif categories.CAT_NETBEFOREMTD &gt;=6501 and categories.CAT_NETBEFOREMTD &lt;= 6550:
+ result = 583 
+elif categories.CAT_NETBEFOREMTD &gt;=6551 and categories.CAT_NETBEFOREMTD &lt;= 6600:
+ result = 592 
+elif categories.CAT_NETBEFOREMTD &gt;=6601 and categories.CAT_NETBEFOREMTD &lt;= 6650:
+ result = 604 
+elif categories.CAT_NETBEFOREMTD &gt;=6651 and categories.CAT_NETBEFOREMTD &lt;= 6700:
+ result = 616 
+elif categories.CAT_NETBEFOREMTD &gt;=6701 and categories.CAT_NETBEFOREMTD &lt;= 6750:
+ result = 628 
+elif categories.CAT_NETBEFOREMTD &gt;=6751 and categories.CAT_NETBEFOREMTD &lt;= 6800:
+ result = 640 
+elif categories.CAT_NETBEFOREMTD &gt;=6801 and categories.CAT_NETBEFOREMTD &lt;= 6850:
+ result = 652 
+elif categories.CAT_NETBEFOREMTD &gt;=6851 and categories.CAT_NETBEFOREMTD &lt;= 6900:
+ result = 664 
+elif categories.CAT_NETBEFOREMTD &gt;=6901 and categories.CAT_NETBEFOREMTD &lt;= 6950:
+ result = 676 
+elif categories.CAT_NETBEFOREMTD &gt;=6951 and categories.CAT_NETBEFOREMTD &lt;= 7000:
+ result = 688 
+elif categories.CAT_NETBEFOREMTD &gt;=7001 and categories.CAT_NETBEFOREMTD &lt;= 7050:
+ result = 700 
+elif categories.CAT_NETBEFOREMTD &gt;=7051 and categories.CAT_NETBEFOREMTD &lt;= 7100:
+ result = 712 
+elif categories.CAT_NETBEFOREMTD &gt;=7101 and categories.CAT_NETBEFOREMTD &lt;= 7150:
+ result = 724 
+elif categories.CAT_NETBEFOREMTD &gt;=7151 and categories.CAT_NETBEFOREMTD &lt;= 7200:
+ result = 736 
+elif categories.CAT_NETBEFOREMTD &gt;=7201 and categories.CAT_NETBEFOREMTD &lt;= 7250:
+ result = 748 
+elif categories.CAT_NETBEFOREMTD &gt;=7251 and categories.CAT_NETBEFOREMTD &lt;= 7300:
+ result = 760 
+elif categories.CAT_NETBEFOREMTD &gt;=7301 and categories.CAT_NETBEFOREMTD &lt;= 7350:
+ result = 772 
+elif categories.CAT_NETBEFOREMTD &gt;=7351 and categories.CAT_NETBEFOREMTD &lt;= 7400:
+ result = 784 
+elif categories.CAT_NETBEFOREMTD &gt;=7401 and categories.CAT_NETBEFOREMTD &lt;= 7450:
+ result = 796 
+elif categories.CAT_NETBEFOREMTD &gt;=7451 and categories.CAT_NETBEFOREMTD &lt;= 7500:
+ result = 808 
+elif categories.CAT_NETBEFOREMTD &gt;=7501 and categories.CAT_NETBEFOREMTD &lt;= 7550:
+ result = 820 
+elif categories.CAT_NETBEFOREMTD &gt;=7551 and categories.CAT_NETBEFOREMTD &lt;= 7600:
+ result = 832 
+elif categories.CAT_NETBEFOREMTD &gt;=7601 and categories.CAT_NETBEFOREMTD &lt;= 7650:
+ result = 844 
+elif categories.CAT_NETBEFOREMTD &gt;=7651 and categories.CAT_NETBEFOREMTD &lt;= 7700:
+ result = 856 
+elif categories.CAT_NETBEFOREMTD &gt;=7701 and categories.CAT_NETBEFOREMTD &lt;= 7750:
+ result = 868 
+elif categories.CAT_NETBEFOREMTD &gt;=7751 and categories.CAT_NETBEFOREMTD &lt;= 7800:
+ result = 880 
+elif categories.CAT_NETBEFOREMTD &gt;=7801 and categories.CAT_NETBEFOREMTD &lt;= 7850:
+ result = 892 
+elif categories.CAT_NETBEFOREMTD &gt;=7851 and categories.CAT_NETBEFOREMTD &lt;= 7900:
+ result = 904 
+elif categories.CAT_NETBEFOREMTD &gt;=7901 and categories.CAT_NETBEFOREMTD &lt;= 7950:
+ result = 916 
+elif categories.CAT_NETBEFOREMTD &gt;=7951 and categories.CAT_NETBEFOREMTD &lt;= 8000:
+ result = 928 
+elif categories.CAT_NETBEFOREMTD &gt;=8001 and categories.CAT_NETBEFOREMTD &lt;= 8050:
+ result = 940 
+elif categories.CAT_NETBEFOREMTD &gt;=8051 and categories.CAT_NETBEFOREMTD &lt;= 8100:
+ result = 952 
+elif categories.CAT_NETBEFOREMTD &gt;=8101 and categories.CAT_NETBEFOREMTD &lt;= 8150:
+ result = 964 
+elif categories.CAT_NETBEFOREMTD &gt;=8151 and categories.CAT_NETBEFOREMTD &lt;= 8200:
+ result = 976 
+elif categories.CAT_NETBEFOREMTD &gt;=8201 and categories.CAT_NETBEFOREMTD &lt;= 8250:
+ result = 988 
+elif categories.CAT_NETBEFOREMTD &gt;=8251 and categories.CAT_NETBEFOREMTD &lt;= 8300:
+ result = 1000 
+elif categories.CAT_NETBEFOREMTD &gt;=8301 and categories.CAT_NETBEFOREMTD &lt;= 8350:
+ result = 1012 
+elif categories.CAT_NETBEFOREMTD &gt;=8351 and categories.CAT_NETBEFOREMTD &lt;= 8400:
+ result = 1024 
+elif categories.CAT_NETBEFOREMTD &gt;=8401 and categories.CAT_NETBEFOREMTD &lt;= 8450:
+ result = 1036 
+elif categories.CAT_NETBEFOREMTD &gt;=8451 and categories.CAT_NETBEFOREMTD &lt;= 8500:
+ result = 1048 
+elif categories.CAT_NETBEFOREMTD &gt;=8501 and categories.CAT_NETBEFOREMTD &lt;= 8550:
+ result = 1060 
+elif categories.CAT_NETBEFOREMTD &gt;=8551 and categories.CAT_NETBEFOREMTD &lt;= 8600:
+ result = 1072 
+elif categories.CAT_NETBEFOREMTD &gt;=8601 and categories.CAT_NETBEFOREMTD &lt;= 8650:
+ result = 1084 
+elif categories.CAT_NETBEFOREMTD &gt;=8651 and categories.CAT_NETBEFOREMTD &lt;= 8700:
+ result = 1096 
+elif categories.CAT_NETBEFOREMTD &gt;=8701 and categories.CAT_NETBEFOREMTD &lt;= 8750:
+ result = 1108 
+elif categories.CAT_NETBEFOREMTD &gt;=8751 and categories.CAT_NETBEFOREMTD &lt;= 8800:
+ result = 1120 
+elif categories.CAT_NETBEFOREMTD &gt;=8801 and categories.CAT_NETBEFOREMTD &lt;= 8850:
+ result = 1132 
+elif categories.CAT_NETBEFOREMTD &gt;=8851 and categories.CAT_NETBEFOREMTD &lt;= 8900:
+ result = 1144 
+elif categories.CAT_NETBEFOREMTD &gt;=8901 and categories.CAT_NETBEFOREMTD &lt;= 8950:
+ result = 1156 
+elif categories.CAT_NETBEFOREMTD &gt;=8951 and categories.CAT_NETBEFOREMTD &lt;= 9000:
+ result = 1168 
+elif categories.CAT_NETBEFOREMTD &gt;=9001 and categories.CAT_NETBEFOREMTD &lt;= 9050:
+ result = 1180 
+elif categories.CAT_NETBEFOREMTD &gt;=9051 and categories.CAT_NETBEFOREMTD &lt;= 9100:
+ result = 1192 
+elif categories.CAT_NETBEFOREMTD &gt;=9101 and categories.CAT_NETBEFOREMTD &lt;= 9150:
+ result = 1205 
+elif categories.CAT_NETBEFOREMTD &gt;=9151 and categories.CAT_NETBEFOREMTD &lt;= 9200:
+ result = 1218 
+elif categories.CAT_NETBEFOREMTD &gt;=9201 and categories.CAT_NETBEFOREMTD &lt;= 9250:
+ result = 1231 
+elif categories.CAT_NETBEFOREMTD &gt;=9251 and categories.CAT_NETBEFOREMTD &lt;= 9300:
+ result = 1244 
+elif categories.CAT_NETBEFOREMTD &gt;=9301 and categories.CAT_NETBEFOREMTD &lt;= 9350:
+ result = 1257 
+elif categories.CAT_NETBEFOREMTD &gt;=9351 and categories.CAT_NETBEFOREMTD &lt;= 9400:
+ result = 1270 
+elif categories.CAT_NETBEFOREMTD &gt;=9401 and categories.CAT_NETBEFOREMTD &lt;= 9450:
+ result = 1283 
+elif categories.CAT_NETBEFOREMTD &gt;=9451 and categories.CAT_NETBEFOREMTD &lt;= 9500:
+ result = 1296 
+elif categories.CAT_NETBEFOREMTD &gt;=9501 and categories.CAT_NETBEFOREMTD &lt;= 9550:
+ result = 1309 
+elif categories.CAT_NETBEFOREMTD &gt;=9551 and categories.CAT_NETBEFOREMTD &lt;= 9600:
+ result = 1322 
+elif categories.CAT_NETBEFOREMTD &gt;=9601 and categories.CAT_NETBEFOREMTD &lt;= 9650:
+ result = 1335 
+elif categories.CAT_NETBEFOREMTD &gt;=9651 and categories.CAT_NETBEFOREMTD &lt;= 9700:
+ result = 1348 
+elif categories.CAT_NETBEFOREMTD &gt;=9701 and categories.CAT_NETBEFOREMTD &lt;= 9750:
+ result = 1361 
+elif categories.CAT_NETBEFOREMTD &gt;=9751 and categories.CAT_NETBEFOREMTD &lt;= 9800:
+ result = 1374 
+elif categories.CAT_NETBEFOREMTD &gt;=9801 and categories.CAT_NETBEFOREMTD &lt;= 9850:
+ result = 1387 
+elif categories.CAT_NETBEFOREMTD &gt;=9851 and categories.CAT_NETBEFOREMTD &lt;= 9900:
+ result = 1400 
+elif categories.CAT_NETBEFOREMTD &gt;=9901 and categories.CAT_NETBEFOREMTD &lt;= 9950:
+ result = 1413 
+elif categories.CAT_NETBEFOREMTD &gt;=9951 and categories.CAT_NETBEFOREMTD &lt;= 10000:
+ result = 1426 
+elif categories.CAT_NETBEFOREMTD &gt;=10001 and categories.CAT_NETBEFOREMTD &lt;= 10050:
+ result = 1439 
+elif categories.CAT_NETBEFOREMTD &gt;=10051 and categories.CAT_NETBEFOREMTD &lt;= 10100:
+ result = 1452 
+elif categories.CAT_NETBEFOREMTD &gt;=10101 and categories.CAT_NETBEFOREMTD &lt;= 10150:
+ result = 1465 
+elif categories.CAT_NETBEFOREMTD &gt;=10151 and categories.CAT_NETBEFOREMTD &lt;= 10200:
+ result = 1478 
+elif categories.CAT_NETBEFOREMTD &gt;=10201 and categories.CAT_NETBEFOREMTD &lt;= 10250:
+ result = 1491 
+elif categories.CAT_NETBEFOREMTD &gt;=10251 and categories.CAT_NETBEFOREMTD &lt;= 10300:
+ result = 1504 
+elif categories.CAT_NETBEFOREMTD &gt;=10301 and categories.CAT_NETBEFOREMTD &lt;= 10350:
+ result = 1517 
+elif categories.CAT_NETBEFOREMTD &gt;=10351 and categories.CAT_NETBEFOREMTD &lt;= 10400:
+ result = 1530 
+elif categories.CAT_NETBEFOREMTD &gt;=10401 and categories.CAT_NETBEFOREMTD &lt;= 10450:
+ result = 1543 
+elif categories.CAT_NETBEFOREMTD &gt;=10451 and categories.CAT_NETBEFOREMTD &lt;= 10500:
+ result = 1556 
+elif categories.CAT_NETBEFOREMTD &gt;=10501 and categories.CAT_NETBEFOREMTD &lt;= 10550:
+ result = 1569 
+elif categories.CAT_NETBEFOREMTD &gt;=10551 and categories.CAT_NETBEFOREMTD &lt;= 10600:
+ result = 1582 
+elif categories.CAT_NETBEFOREMTD &gt;=10601 and categories.CAT_NETBEFOREMTD &lt;= 10650:
+ result = 1595 
+elif categories.CAT_NETBEFOREMTD &gt;=10651 and categories.CAT_NETBEFOREMTD &lt;= 10700:
+ result = 1608 
+elif categories.CAT_NETBEFOREMTD &gt;=10701 and categories.CAT_NETBEFOREMTD &lt;= 10750:
+ result = 1621 
+elif categories.CAT_NETBEFOREMTD &gt;=10751 and categories.CAT_NETBEFOREMTD &lt;= 10800:
+ result = 1634 
+elif categories.CAT_NETBEFOREMTD &gt;=10801 and categories.CAT_NETBEFOREMTD &lt;= 10850:
+ result = 1647 
+elif categories.CAT_NETBEFOREMTD &gt;=10851 and categories.CAT_NETBEFOREMTD &lt;= 10900:
+ result = 1660 
+elif categories.CAT_NETBEFOREMTD &gt;=10901 and categories.CAT_NETBEFOREMTD &lt;= 10950:
+ result = 1673 
+elif categories.CAT_NETBEFOREMTD &gt;=10951 and categories.CAT_NETBEFOREMTD &lt;= 11000:
+ result = 1686 
+elif categories.CAT_NETBEFOREMTD &gt;=11001 and categories.CAT_NETBEFOREMTD &lt;= 11050:
+ result = 1699 
+elif categories.CAT_NETBEFOREMTD &gt;=11051 and categories.CAT_NETBEFOREMTD &lt;= 11100:
+ result = 1712 
+elif categories.CAT_NETBEFOREMTD &gt;=11101 and categories.CAT_NETBEFOREMTD &lt;= 11150:
+ result = 1725 
+elif categories.CAT_NETBEFOREMTD &gt;=11151 and categories.CAT_NETBEFOREMTD &lt;= 11200:
+ result = 1738 
+elif categories.CAT_NETBEFOREMTD &gt;=11201 and categories.CAT_NETBEFOREMTD &lt;= 11250:
+ result = 1751 
+elif categories.CAT_NETBEFOREMTD &gt;=11251 and categories.CAT_NETBEFOREMTD &lt;= 11300:
+ result = 1764 
+elif categories.CAT_NETBEFOREMTD &gt;=11301 and categories.CAT_NETBEFOREMTD &lt;= 11350:
+ result = 1777 
+elif categories.CAT_NETBEFOREMTD &gt;=11351 and categories.CAT_NETBEFOREMTD &lt;= 11400:
+ result = 1790 
+elif categories.CAT_NETBEFOREMTD &gt;=11401 and categories.CAT_NETBEFOREMTD &lt;= 11450:
+ result = 1803 
+elif categories.CAT_NETBEFOREMTD &gt;=11451 and categories.CAT_NETBEFOREMTD &lt;= 11500:
+ result = 1816 
+elif categories.CAT_NETBEFOREMTD &gt;=11501 and categories.CAT_NETBEFOREMTD &lt;= 11550:
+ result = 1829 
+elif categories.CAT_NETBEFOREMTD &gt;=11551 and categories.CAT_NETBEFOREMTD &lt;= 11600:
+ result = 1842 
+elif categories.CAT_NETBEFOREMTD &gt;=11601 and categories.CAT_NETBEFOREMTD &lt;= 11650:
+ result = 1855 
+elif categories.CAT_NETBEFOREMTD &gt;=11651 and categories.CAT_NETBEFOREMTD &lt;= 11700:
+ result = 1868 
+elif categories.CAT_NETBEFOREMTD &gt;=11701 and categories.CAT_NETBEFOREMTD &lt;= 11750:
+ result = 1881 
+elif categories.CAT_NETBEFOREMTD &gt;=11751 and categories.CAT_NETBEFOREMTD &lt;= 11800:
+ result = 1894 
+elif categories.CAT_NETBEFOREMTD &gt;=11801 and categories.CAT_NETBEFOREMTD &lt;= 11850:
+ result = 1907 
+elif categories.CAT_NETBEFOREMTD &gt;=11851 and categories.CAT_NETBEFOREMTD &lt;= 11900:
+ result = 1920 
+elif categories.CAT_NETBEFOREMTD &gt;=11901 and categories.CAT_NETBEFOREMTD &lt;= 11950:
+ result = 1933 
+elif categories.CAT_NETBEFOREMTD &gt;=11951 and categories.CAT_NETBEFOREMTD &lt;= 12000:
+ result = 1946 
+elif categories.CAT_NETBEFOREMTD &gt;=12001 and categories.CAT_NETBEFOREMTD &lt;= 12050:
+ result = 1959 
+elif categories.CAT_NETBEFOREMTD &gt;=12051 and categories.CAT_NETBEFOREMTD &lt;= 12100:
+ result = 1972 
+elif categories.CAT_NETBEFOREMTD &gt;=12101 and categories.CAT_NETBEFOREMTD &lt;= 12150:
+ result = 1985 
+elif categories.CAT_NETBEFOREMTD &gt;=12151 and categories.CAT_NETBEFOREMTD &lt;= 12200:
+ result = 1998 
+elif categories.CAT_NETBEFOREMTD &gt;=12201 and categories.CAT_NETBEFOREMTD &lt;= 12250:
+ result = 2011 
+elif categories.CAT_NETBEFOREMTD &gt;=12251 and categories.CAT_NETBEFOREMTD &lt;= 12300:
+ result = 2024 
+elif categories.CAT_NETBEFOREMTD &gt;=12301 and categories.CAT_NETBEFOREMTD &lt;= 12350:
+ result = 2037 
+elif categories.CAT_NETBEFOREMTD &gt;=12351 and categories.CAT_NETBEFOREMTD &lt;= 12400:
+ result = 2050 
+elif categories.CAT_NETBEFOREMTD &gt;=12401 and categories.CAT_NETBEFOREMTD &lt;= 12450:
+ result = 2063 
+elif categories.CAT_NETBEFOREMTD &gt;=12451 and categories.CAT_NETBEFOREMTD &lt;= 12500:
+ result = 2076 
+elif categories.CAT_NETBEFOREMTD &gt;=12501 and categories.CAT_NETBEFOREMTD &lt;= 12550:
+ result = 2089 
+elif categories.CAT_NETBEFOREMTD &gt;=12551 and categories.CAT_NETBEFOREMTD &lt;= 12600:
+ result = 2102 
+elif categories.CAT_NETBEFOREMTD &gt;=12601 and categories.CAT_NETBEFOREMTD &lt;= 12650:
+ result = 2115 
+elif categories.CAT_NETBEFOREMTD &gt;=12651 and categories.CAT_NETBEFOREMTD &lt;= 12700:
+ result = 2128 
+elif categories.CAT_NETBEFOREMTD &gt;=12701 and categories.CAT_NETBEFOREMTD &lt;= 12750:
+ result = 2141 
+elif categories.CAT_NETBEFOREMTD &gt;=12751 and categories.CAT_NETBEFOREMTD &lt;= 12800:
+ result = 2154 
+elif categories.CAT_NETBEFOREMTD &gt;=12801 and categories.CAT_NETBEFOREMTD &lt;= 12850:
+ result = 2167 
+elif categories.CAT_NETBEFOREMTD &gt;=12851 and categories.CAT_NETBEFOREMTD &lt;= 12900:
+ result = 2180 
+elif categories.CAT_NETBEFOREMTD &gt;=12901 and categories.CAT_NETBEFOREMTD &lt;= 12950:
+ result = 2193 
+elif categories.CAT_NETBEFOREMTD &gt;=12951 and categories.CAT_NETBEFOREMTD &lt;= 13000:
+ result = 2206 
+elif categories.CAT_NETBEFOREMTD &gt;=13001 and categories.CAT_NETBEFOREMTD &lt;= 13050:
+ result = 2219 
+elif categories.CAT_NETBEFOREMTD &gt;=13051 and categories.CAT_NETBEFOREMTD &lt;= 13100:
+ result = 2232 
+elif categories.CAT_NETBEFOREMTD &gt;=13101 and categories.CAT_NETBEFOREMTD &lt;= 13150:
+ result = 2245 
+elif categories.CAT_NETBEFOREMTD &gt;=13151 and categories.CAT_NETBEFOREMTD &lt;= 13200:
+ result = 2258 
+elif categories.CAT_NETBEFOREMTD &gt;=13201 and categories.CAT_NETBEFOREMTD &lt;= 13250:
+ result = 2271 
+elif categories.CAT_NETBEFOREMTD &gt;=13251 and categories.CAT_NETBEFOREMTD &lt;= 13300:
+ result = 2284 
+elif categories.CAT_NETBEFOREMTD &gt;=13301 and categories.CAT_NETBEFOREMTD &lt;= 13350:
+ result = 2297 
+elif categories.CAT_NETBEFOREMTD &gt;=13351 and categories.CAT_NETBEFOREMTD &lt;= 13400:
+ result = 2310 
+elif categories.CAT_NETBEFOREMTD &gt;=13401 and categories.CAT_NETBEFOREMTD &lt;= 13450:
+ result = 2323 
+elif categories.CAT_NETBEFOREMTD &gt;=13451 and categories.CAT_NETBEFOREMTD &lt;= 13500:
+ result = 2336 
+elif categories.CAT_NETBEFOREMTD &gt;=13501 and categories.CAT_NETBEFOREMTD &lt;= 13550:
+ result = 2349 
+elif categories.CAT_NETBEFOREMTD &gt;=13551 and categories.CAT_NETBEFOREMTD &lt;= 13600:
+ result = 2362 
+elif categories.CAT_NETBEFOREMTD &gt;=13601 and categories.CAT_NETBEFOREMTD &lt;= 13650:
+ result = 2375 
+elif categories.CAT_NETBEFOREMTD &gt;=13651 and categories.CAT_NETBEFOREMTD &lt;= 13700:
+ result = 2388 
+elif categories.CAT_NETBEFOREMTD &gt;=13701 and categories.CAT_NETBEFOREMTD &lt;= 13750:
+ result = 2401 
+elif categories.CAT_NETBEFOREMTD &gt;=13751 and categories.CAT_NETBEFOREMTD &lt;= 13800:
+ result = 2414 
+elif categories.CAT_NETBEFOREMTD &gt;=13801 and categories.CAT_NETBEFOREMTD &lt;= 13850:
+ result = 2427 
+elif categories.CAT_NETBEFOREMTD &gt;=13851 and categories.CAT_NETBEFOREMTD &lt;= 13900:
+ result = 2440 
+elif categories.CAT_NETBEFOREMTD &gt;=13901 and categories.CAT_NETBEFOREMTD &lt;= 13950:
+ result = 2453 
+elif categories.CAT_NETBEFOREMTD &gt;=13951 and categories.CAT_NETBEFOREMTD &lt;= 14000:
+ result = 2466 
+elif categories.CAT_NETBEFOREMTD &gt;=14001 and categories.CAT_NETBEFOREMTD &lt;= 14050:
+ result = 2479 
+elif categories.CAT_NETBEFOREMTD &gt;=14051 and categories.CAT_NETBEFOREMTD &lt;= 14100:
+ result = 2492 
+elif categories.CAT_NETBEFOREMTD &gt;=14101 and categories.CAT_NETBEFOREMTD &lt;= 14150:
+ result = 2505 
+elif categories.CAT_NETBEFOREMTD &gt;=14151 and categories.CAT_NETBEFOREMTD &lt;= 14200:
+ result = 2518 
+elif categories.CAT_NETBEFOREMTD &gt;=14201 and categories.CAT_NETBEFOREMTD &lt;= 14250:
+ result = 2531 
+elif categories.CAT_NETBEFOREMTD &gt;=14251 and categories.CAT_NETBEFOREMTD &lt;= 14300:
+ result = 2544 
+elif categories.CAT_NETBEFOREMTD &gt;=14301 and categories.CAT_NETBEFOREMTD &lt;= 14350:
+ result = 2557 
+elif categories.CAT_NETBEFOREMTD &gt;=14351 and categories.CAT_NETBEFOREMTD &lt;= 14400:
+ result = 2570 
+elif categories.CAT_NETBEFOREMTD &gt;=14401 and categories.CAT_NETBEFOREMTD &lt;= 14450:
+ result = 2583 
+elif categories.CAT_NETBEFOREMTD &gt;=14451 and categories.CAT_NETBEFOREMTD &lt;= 14500:
+ result = 2596 
+elif categories.CAT_NETBEFOREMTD &gt;=14501 and categories.CAT_NETBEFOREMTD &lt;= 14550:
+ result = 2609 
+elif categories.CAT_NETBEFOREMTD &gt;=14551 and categories.CAT_NETBEFOREMTD &lt;= 14600:
+ result = 2622 
+elif categories.CAT_NETBEFOREMTD &gt;=14601 and categories.CAT_NETBEFOREMTD &lt;= 14650:
+ result = 2635 
+elif categories.CAT_NETBEFOREMTD &gt;=14651 and categories.CAT_NETBEFOREMTD &lt;= 14700:
+ result = 2648 
+elif categories.CAT_NETBEFOREMTD &gt;=14701 and categories.CAT_NETBEFOREMTD &lt;= 14750:
+ result = 2661 
+elif categories.CAT_NETBEFOREMTD &gt;=14751 and categories.CAT_NETBEFOREMTD &lt;= 14800:
+ result = 2674 
+elif categories.CAT_NETBEFOREMTD &gt;=14801 and categories.CAT_NETBEFOREMTD &lt;= 14850:
+ result = 2687 
+elif categories.CAT_NETBEFOREMTD &gt;=14851 and categories.CAT_NETBEFOREMTD &lt;= 14900:
+ result = 2700 
+elif categories.CAT_NETBEFOREMTD &gt;=14901 and categories.CAT_NETBEFOREMTD &lt;= 14950:
+ result = 2713 
+elif categories.CAT_NETBEFOREMTD &gt;=14951 and categories.CAT_NETBEFOREMTD &lt;= 15000:
+ result = 2726 
+elif categories.CAT_NETBEFOREMTD &gt;=15001 and categories.CAT_NETBEFOREMTD &lt;= 15050:
+ result = 2739 
+elif categories.CAT_NETBEFOREMTD &gt;=15051 and categories.CAT_NETBEFOREMTD &lt;= 15100:
+ result = 2752 
+elif categories.CAT_NETBEFOREMTD &gt;=15101 and categories.CAT_NETBEFOREMTD &lt;= 15150:
+ result = 2765 
+elif categories.CAT_NETBEFOREMTD &gt;=15151 and categories.CAT_NETBEFOREMTD &lt;= 15200:
+ result = 2778 
+elif categories.CAT_NETBEFOREMTD &gt;=15201 and categories.CAT_NETBEFOREMTD &lt;= 15250:
+ result = 2791 
+elif categories.CAT_NETBEFOREMTD &gt;=15251 and categories.CAT_NETBEFOREMTD &lt;= 15300:
+ result = 2804 
+elif categories.CAT_NETBEFOREMTD &gt;=15301 and categories.CAT_NETBEFOREMTD &lt;= 15350:
+ result = 2817 
+elif categories.CAT_NETBEFOREMTD &gt;=15351 and categories.CAT_NETBEFOREMTD &lt;= 15400:
+ result = 2830 
+elif categories.CAT_NETBEFOREMTD &gt;=15401 and categories.CAT_NETBEFOREMTD &lt;= 15450:
+ result = 2843 
+elif categories.CAT_NETBEFOREMTD &gt;=15451 and categories.CAT_NETBEFOREMTD &lt;= 15500:
+ result = 2856 
+elif categories.CAT_NETBEFOREMTD &gt;=15501 and categories.CAT_NETBEFOREMTD &lt;= 15550:
+ result = 2869 
+elif categories.CAT_NETBEFOREMTD &gt;=15551 and categories.CAT_NETBEFOREMTD &lt;= 15600:
+ result = 2882 
+elif categories.CAT_NETBEFOREMTD &gt;=15601 and categories.CAT_NETBEFOREMTD &lt;= 15650:
+ result = 2895 
+elif categories.CAT_NETBEFOREMTD &gt;=15651 and categories.CAT_NETBEFOREMTD &lt;= 15700:
+ result = 2908 
+elif categories.CAT_NETBEFOREMTD &gt;=15701 and categories.CAT_NETBEFOREMTD &lt;= 15750:
+ result = 2921 
+elif categories.CAT_NETBEFOREMTD &gt;=15751 and categories.CAT_NETBEFOREMTD &lt;= 15800:
+ result = 2934 
+elif categories.CAT_NETBEFOREMTD &gt;=15801 and categories.CAT_NETBEFOREMTD &lt;= 15850:
+ result = 2947 
+elif categories.CAT_NETBEFOREMTD &gt;=15851 and categories.CAT_NETBEFOREMTD &lt;= 15900:
+ result = 2960 
+elif categories.CAT_NETBEFOREMTD &gt;=15901 and categories.CAT_NETBEFOREMTD &lt;= 15950:
+ result = 2973 
+elif categories.CAT_NETBEFOREMTD &gt;=15951 and categories.CAT_NETBEFOREMTD &lt;= 16000:
+ result = 2986 
+elif categories.CAT_NETBEFOREMTD &gt;=16001 and categories.CAT_NETBEFOREMTD &lt;= 16050:
+ result = 2999 
+elif categories.CAT_NETBEFOREMTD &gt;=16051 and categories.CAT_NETBEFOREMTD &lt;= 16100:
+ result = 3012 
+elif categories.CAT_NETBEFOREMTD &gt;=16101 and categories.CAT_NETBEFOREMTD &lt;= 16150:
+ result = 3025 
+elif categories.CAT_NETBEFOREMTD &gt;=16151 and categories.CAT_NETBEFOREMTD &lt;= 16200:
+ result = 3038 
+elif categories.CAT_NETBEFOREMTD &gt;=16201 and categories.CAT_NETBEFOREMTD &lt;= 16250:
+ result = 3051 
+elif categories.CAT_NETBEFOREMTD &gt;=16251 and categories.CAT_NETBEFOREMTD &lt;= 16300:
+ result = 3064 
+elif categories.CAT_NETBEFOREMTD &gt;=16301 and categories.CAT_NETBEFOREMTD &lt;= 16350:
+ result = 3077 
+elif categories.CAT_NETBEFOREMTD &gt;=16351 and categories.CAT_NETBEFOREMTD &lt;= 16400:
+ result = 3090 
+elif categories.CAT_NETBEFOREMTD &gt;=16401 and categories.CAT_NETBEFOREMTD &lt;= 16450:
+ result = 3103 
+elif categories.CAT_NETBEFOREMTD &gt;=16451 and categories.CAT_NETBEFOREMTD &lt;= 16500:
+ result = 3116 
+elif categories.CAT_NETBEFOREMTD &gt;=16501 and categories.CAT_NETBEFOREMTD &lt;= 16550:
+ result = 3129 
+elif categories.CAT_NETBEFOREMTD &gt;=16551 and categories.CAT_NETBEFOREMTD &lt;= 16600:
+ result = 3142 
+elif categories.CAT_NETBEFOREMTD &gt;=16601 and categories.CAT_NETBEFOREMTD &lt;= 16650:
+ result = 3155 
+elif categories.CAT_NETBEFOREMTD &gt;=16651 and categories.CAT_NETBEFOREMTD &lt;= 16700:
+ result = 3168 
+elif categories.CAT_NETBEFOREMTD &gt;=16701 and categories.CAT_NETBEFOREMTD &lt;= 16750:
+ result = 3181 
+elif categories.CAT_NETBEFOREMTD &gt;=16751 and categories.CAT_NETBEFOREMTD &lt;= 16800:
+ result = 3194 
+elif categories.CAT_NETBEFOREMTD &gt;=16801 and categories.CAT_NETBEFOREMTD &lt;= 16850:
+ result = 3207 
+elif categories.CAT_NETBEFOREMTD &gt;=16851 and categories.CAT_NETBEFOREMTD &lt;= 16900:
+ result = 3220 
+elif categories.CAT_NETBEFOREMTD &gt;=16901 and categories.CAT_NETBEFOREMTD &lt;= 16950:
+ result = 3233 
+elif categories.CAT_NETBEFOREMTD &gt;=16951 and categories.CAT_NETBEFOREMTD &lt;= 17000:
+ result = 3246 
+elif categories.CAT_NETBEFOREMTD &gt;=17001 and categories.CAT_NETBEFOREMTD &lt;= 17050:
+ result = 3259 
+elif categories.CAT_NETBEFOREMTD &gt;=17051 and categories.CAT_NETBEFOREMTD &lt;= 17100:
+ result = 3272 
+elif categories.CAT_NETBEFOREMTD &gt;=17101 and categories.CAT_NETBEFOREMTD &lt;= 17150:
+ result = 3285 
+elif categories.CAT_NETBEFOREMTD &gt;=17151 and categories.CAT_NETBEFOREMTD &lt;= 17200:
+ result = 3298 
+elif categories.CAT_NETBEFOREMTD &gt;=17201 and categories.CAT_NETBEFOREMTD &lt;= 17250:
+ result = 3311 
+elif categories.CAT_NETBEFOREMTD &gt;=17251 and categories.CAT_NETBEFOREMTD &lt;= 17300:
+ result = 3324 
+elif categories.CAT_NETBEFOREMTD &gt;=17301 and categories.CAT_NETBEFOREMTD &lt;= 17350:
+ result = 3337 
+elif categories.CAT_NETBEFOREMTD &gt;=17351 and categories.CAT_NETBEFOREMTD &lt;= 17400:
+ result = 3350 
+elif categories.CAT_NETBEFOREMTD &gt;=17401 and categories.CAT_NETBEFOREMTD &lt;= 17450:
+ result = 3363 
+elif categories.CAT_NETBEFOREMTD &gt;=17451 and categories.CAT_NETBEFOREMTD &lt;= 17500:
+ result = 3376 
+elif categories.CAT_NETBEFOREMTD &gt;=17501 and categories.CAT_NETBEFOREMTD &lt;= 17550:
+ result = 3389 
+elif categories.CAT_NETBEFOREMTD &gt;=17551 and categories.CAT_NETBEFOREMTD &lt;= 17600:
+ result = 3402 
+elif categories.CAT_NETBEFOREMTD &gt;=17601 and categories.CAT_NETBEFOREMTD &lt;= 17650:
+ result = 3415 
+elif categories.CAT_NETBEFOREMTD &gt;=17651 and categories.CAT_NETBEFOREMTD &lt;= 17700:
+ result = 3428 
+elif categories.CAT_NETBEFOREMTD &gt;=17701 and categories.CAT_NETBEFOREMTD &lt;= 17750:
+ result = 3441 
+elif categories.CAT_NETBEFOREMTD &gt;=17751 and categories.CAT_NETBEFOREMTD &lt;= 17800:
+ result = 3454 
+elif categories.CAT_NETBEFOREMTD &gt;=17801 and categories.CAT_NETBEFOREMTD &lt;= 17850:
+ result = 3467 
+elif categories.CAT_NETBEFOREMTD &gt;=17851 and categories.CAT_NETBEFOREMTD &lt;= 17900:
+ result = 3480 
+elif categories.CAT_NETBEFOREMTD &gt;=17901 and categories.CAT_NETBEFOREMTD &lt;= 17950:
+ result = 3493 
+elif categories.CAT_NETBEFOREMTD &gt;=17951 and categories.CAT_NETBEFOREMTD &lt;= 18000:
+ result = 3506 
+elif categories.CAT_NETBEFOREMTD &gt;=18001 and categories.CAT_NETBEFOREMTD &lt;= 18050:
+ result = 3519 
+elif categories.CAT_NETBEFOREMTD &gt;=18051 and categories.CAT_NETBEFOREMTD &lt;= 18100:
+ result = 3532 
+elif categories.CAT_NETBEFOREMTD &gt;=18101 and categories.CAT_NETBEFOREMTD &lt;= 18150:
+ result = 3545 
+elif categories.CAT_NETBEFOREMTD &gt;=18151 and categories.CAT_NETBEFOREMTD &lt;= 18200:
+ result = 3558 
+elif categories.CAT_NETBEFOREMTD &gt;=18201 and categories.CAT_NETBEFOREMTD &lt;= 18250:
+ result = 3571 
+elif categories.CAT_NETBEFOREMTD &gt;=18251 and categories.CAT_NETBEFOREMTD &lt;= 18300:
+ result = 3584 
+elif categories.CAT_NETBEFOREMTD &gt;=18301 and categories.CAT_NETBEFOREMTD &lt;= 18350:
+ result = 3597 
+elif categories.CAT_NETBEFOREMTD &gt;=18351 and categories.CAT_NETBEFOREMTD &lt;= 18400:
+ result = 3610 
+elif categories.CAT_NETBEFOREMTD &gt;=18401 and categories.CAT_NETBEFOREMTD &lt;= 18450:
+ result = 3623 
+elif categories.CAT_NETBEFOREMTD &gt;=18451 and categories.CAT_NETBEFOREMTD &lt;= 18500:
+ result = 3636 
+elif categories.CAT_NETBEFOREMTD &gt;=18501 and categories.CAT_NETBEFOREMTD &lt;= 18550:
+ result = 3649 
+elif categories.CAT_NETBEFOREMTD &gt;=18551 and categories.CAT_NETBEFOREMTD &lt;= 18600:
+ result = 3662 
+elif categories.CAT_NETBEFOREMTD &gt;=18601 and categories.CAT_NETBEFOREMTD &lt;= 18650:
+ result = 3675 
+elif categories.CAT_NETBEFOREMTD &gt;=18651 and categories.CAT_NETBEFOREMTD &lt;= 18700:
+ result = 3688 
+elif categories.CAT_NETBEFOREMTD &gt;=18701 and categories.CAT_NETBEFOREMTD &lt;= 18750:
+ result = 3701 
+elif categories.CAT_NETBEFOREMTD &gt;=18751 and categories.CAT_NETBEFOREMTD &lt;= 18800:
+ result = 3714 
+elif categories.CAT_NETBEFOREMTD &gt;=18801 and categories.CAT_NETBEFOREMTD &lt;= 18850:
+ result = 3727 
+elif categories.CAT_NETBEFOREMTD &gt;=18851 and categories.CAT_NETBEFOREMTD &lt;= 18900:
+ result = 3740 
+elif categories.CAT_NETBEFOREMTD &gt;=18901 and categories.CAT_NETBEFOREMTD &lt;= 18950:
+ result = 3753 
+elif categories.CAT_NETBEFOREMTD &gt;=18951 and categories.CAT_NETBEFOREMTD &lt;= 19000:
+ result = 3766 
+elif categories.CAT_NETBEFOREMTD &gt;=19001 and categories.CAT_NETBEFOREMTD &lt;= 19050:
+ result = 3779 
+elif categories.CAT_NETBEFOREMTD &gt;=19051 and categories.CAT_NETBEFOREMTD &lt;= 19100:
+ result = 3792 
+elif categories.CAT_NETBEFOREMTD &gt;=19101 and categories.CAT_NETBEFOREMTD &lt;= 19150:
+ result = 3805 
+elif categories.CAT_NETBEFOREMTD &gt;=19151 and categories.CAT_NETBEFOREMTD &lt;= 19200:
+ result = 3818 
+elif categories.CAT_NETBEFOREMTD &gt;=19201 and categories.CAT_NETBEFOREMTD &lt;= 19250:
+ result = 3831 
+elif categories.CAT_NETBEFOREMTD &gt;=19251 and categories.CAT_NETBEFOREMTD &lt;= 19300:
+ result = 3844 
+elif categories.CAT_NETBEFOREMTD &gt;=19301 and categories.CAT_NETBEFOREMTD &lt;= 19350:
+ result = 3857 
+elif categories.CAT_NETBEFOREMTD &gt;=19351 and categories.CAT_NETBEFOREMTD &lt;= 19400:
+ result = 3870 
+elif categories.CAT_NETBEFOREMTD &gt;=19401 and categories.CAT_NETBEFOREMTD &lt;= 19450:
+ result = 3883 
+elif categories.CAT_NETBEFOREMTD &gt;=19451 and categories.CAT_NETBEFOREMTD &lt;= 19500:
+ result = 3896 
+elif categories.CAT_NETBEFOREMTD &gt;=19501 and categories.CAT_NETBEFOREMTD &lt;= 19550:
+ result = 3909 
+elif categories.CAT_NETBEFOREMTD &gt;=19551 and categories.CAT_NETBEFOREMTD &lt;= 19600:
+ result = 3922 
+elif categories.CAT_NETBEFOREMTD &gt;=19601 and categories.CAT_NETBEFOREMTD &lt;= 19650:
+ result = 3935 
+elif categories.CAT_NETBEFOREMTD &gt;=19651 and categories.CAT_NETBEFOREMTD &lt;= 19700:
+ result = 3948 
+elif categories.CAT_NETBEFOREMTD &gt;=19701 and categories.CAT_NETBEFOREMTD &lt;= 19750:
+ result = 3961 
+elif categories.CAT_NETBEFOREMTD &gt;=19751 and categories.CAT_NETBEFOREMTD &lt;= 19800:
+ result = 3974 
+elif categories.CAT_NETBEFOREMTD &gt;=19801 and categories.CAT_NETBEFOREMTD &lt;= 19850:
+ result = 3987 
+elif categories.CAT_NETBEFOREMTD &gt;=19851 and categories.CAT_NETBEFOREMTD &lt;= 19900:
+ result = 4000 
+elif categories.CAT_NETBEFOREMTD &gt;=19901 and categories.CAT_NETBEFOREMTD &lt;= 19950:
+ result = 4013 
+elif categories.CAT_NETBEFOREMTD &gt;=19951 and categories.CAT_NETBEFOREMTD &lt;= 20000:
+ result = 4026 
+elif categories.CAT_NETBEFOREMTD &gt;=20001 and categories.CAT_NETBEFOREMTD &lt;= 20050:
+ result = 4039 
+elif categories.CAT_NETBEFOREMTD &gt;=20051 and categories.CAT_NETBEFOREMTD &lt;= 20100:
+ result = 4052 
+elif categories.CAT_NETBEFOREMTD &gt;=20101 and categories.CAT_NETBEFOREMTD &lt;= 20150:
+ result = 4065 
+elif categories.CAT_NETBEFOREMTD &gt;=20151 and categories.CAT_NETBEFOREMTD &lt;= 20200:
+ result = 4078 
+elif categories.CAT_NETBEFOREMTD &gt;=20201 and categories.CAT_NETBEFOREMTD &lt;= 20250:
+ result = 4091 
+elif categories.CAT_NETBEFOREMTD &gt;=20251 and categories.CAT_NETBEFOREMTD &lt;= 20300:
+ result = 4104 
+elif categories.CAT_NETBEFOREMTD &gt;=20301 and categories.CAT_NETBEFOREMTD &lt;= 20350:
+ result = 4117 
+elif categories.CAT_NETBEFOREMTD &gt;=20351 and categories.CAT_NETBEFOREMTD &lt;= 20400:
+ result = 4130 
+elif categories.CAT_NETBEFOREMTD &gt;=20401 and categories.CAT_NETBEFOREMTD &lt;= 20450:
+ result = 4143 
+elif categories.CAT_NETBEFOREMTD &gt;=20451 and categories.CAT_NETBEFOREMTD &lt;= 20500:
+ result = 4156 
+elif categories.CAT_NETBEFOREMTD &gt;=20501 and categories.CAT_NETBEFOREMTD &lt;= 20550:
+ result = 4169 
+elif categories.CAT_NETBEFOREMTD &gt;=20551 and categories.CAT_NETBEFOREMTD &lt;= 20600:
+ result = 4182 
+elif categories.CAT_NETBEFOREMTD &gt;=20601 and categories.CAT_NETBEFOREMTD &lt;= 20650:
+ result = 4195 
+elif categories.CAT_NETBEFOREMTD &gt;=20651 and categories.CAT_NETBEFOREMTD &lt;= 20700:
+ result = 4208 
+elif categories.CAT_NETBEFOREMTD &gt;=20701 and categories.CAT_NETBEFOREMTD &lt;= 20750:
+ result = 4221 
+elif categories.CAT_NETBEFOREMTD &gt;=20751 and categories.CAT_NETBEFOREMTD &lt;= 20800:
+ result = 4234 
+elif categories.CAT_NETBEFOREMTD &gt;=20801 and categories.CAT_NETBEFOREMTD &lt;= 20850:
+ result = 4247 
+elif categories.CAT_NETBEFOREMTD &gt;=20851 and categories.CAT_NETBEFOREMTD &lt;= 20900:
+ result = 4260 
+elif categories.CAT_NETBEFOREMTD &gt;=20901 and categories.CAT_NETBEFOREMTD &lt;= 20950:
+ result = 4273 
+elif categories.CAT_NETBEFOREMTD &gt;=20951 and categories.CAT_NETBEFOREMTD &lt;= 21000:
+ result = 4286
+elif categories.CAT_NETBEFOREMTD - BONUS  &gt; 21000:
+ result =  ((categories.CAT_NETBEFOREMTD - BONUS - 21000) * 0.26) + 4286</field>
+            <field name="category_id" ref="hr_salary_rule_category_CATLHDN"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_pcb0" model="hr.salary.rule">
+            <field name="code">PCB2013</field>
+            <field eval="501" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="hr_contribution_register_pcb"/>
+            <field name="amount_select">fix</field>
+            <field eval="0" name="active"/>
+            <field name="name">PCB 2013</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days.
+# inputs: object containing the computed inputs.
+
+# Note: returned value have to be set in the variable 'result'
+
+result = contract.wage * 0.10</field>
+            <field name="category_id" ref="hr_salary_rule_category_CATLHDN"/>
+            <field name="quantity">1</field>
+        </record>
+
+        <record id="hr_payroll_HRDF_levy" model="hr.salary.rule">
+            <field name="code">HRDF_LEVY</field>
+            <field eval="151" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">HRDF Levy</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'</field>
+            <field name="amount_python_compute">result = 0
+if malay_emp_ids and malay_emp_ids &gt;= 10:
+    result = (contract.wage * 1) / 100
+elif malay_emp_ids and malay_emp_ids &lt;= 9 and malay_emp_ids &gt;= 5:
+    result = (contract.wage * 0.5) / 100
+            </field>
+            <field name="category_id" ref="hr_payroll.GROSS"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+
+<!-- ##############################################################
+                        Salary Rules For PCB
+     ############################################################## -->
+
+        <record id="hr_salary_rule_pcbcp0" model="hr.salary.rule">
+            <field name="code">PCBCP38</field>
+            <field eval="553" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="hr_contribution_register_pcb"/>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">PCB-CP38</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10
+            </field>
+            <field name="amount_python_compute">
+result = 0.0
+if employee.pcb_number:
+    if contract.default_pcb_amount > 0:
+        result = contract.default_pcb_amount
+    else:
+        result = inputs.INPUTCP38 and inputs.INPUTCP38.amount or 0
+            </field>
+            <field name="category_id" ref="hr_salary_rule_category_CATLHDN_Normal"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+
+        <record id="hr_salary_rule_pcbapproveddeductions0" model="hr.salary.rule">
+            <field name="code">PCBAPPROVEDDEDUCTIONS</field>
+            <field eval="550" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="hr_contribution_register_pcb"/>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">PCB Approved Deductions</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">
+result = 0.0
+if employee.pcb_number:
+    lh1 = 0.0
+    if inputs.LHDNDED01 and inputs.LHDNDED01.amount:
+        lh1 = inputs.LHDNDED01.amount
+    lh2 = 0.0
+    if inputs.LHDNDED02 and inputs.LHDNDED02.amount:
+        lh2 = inputs.LHDNDED02.amount
+    lh3 = 0.0
+    if inputs.LHDNDED03 and inputs.LHDNDED03.amount:
+        lh3 = inputs.LHDNDED03.amount
+    lh4 = 0.0
+    if inputs.LHDNDED04 and inputs.LHDNDED04.amount:
+        lh4 = inputs.LHDNDED04.amount
+    lh5 = 0.0
+    if inputs.LHDNDED05 and inputs.LHDNDED05.amount:
+        lh5 = inputs.LHDNDED05.amount
+    lh6 = 0.0
+    if inputs.LHDNDED06 and inputs.LHDNDED06.amount:
+        lh6 = inputs.LHDNDED06.amount
+    lh7 = 0.0
+    if inputs.LHDNDED07 and inputs.LHDNDED07.amount:
+        lh7 = inputs.LHDNDED07.amount
+    lh8 = 0.0
+    if inputs.LHDNDED08 and inputs.LHDNDED08.amount:
+        lh8 = inputs.LHDNDED08.amount
+    lh9 = 0.0
+    if inputs.LHDNDED09 and inputs.LHDNDED09.amount:
+        lh9 = inputs.LHDNDED09.amount
+    lh10 = 0.0
+    if inputs.LHDNDED10 and inputs.LHDNDED10.amount:
+        lh10 = inputs.LHDNDED10.amount 
+    lh12 = 0.0
+    if inputs.LHDNDED12 and inputs.LHDNDED12.amount:
+        lh12 = inputs.LHDNDED12.amount
+    lh13 = 0.0
+    if inputs.LHDNDED13 and inputs.LHDNDED13.amount:
+        lh13 = inputs.LHDNDED13.amount
+    lh14 = 0.0
+    if inputs.LHDNDED14 and inputs.LHDNDED14.amount:
+        lh14 = inputs.LHDNDED14.amount
+    lh15 = 0.0
+    if inputs.LHDNDED15 and inputs.LHDNDED15.amount:
+        lh15 = inputs.LHDNDED15.amount
+    lh16 = 0.0
+    if inputs.LHDNDED16 and inputs.LHDNDED16.amount:
+        lh16 = inputs.LHDNDED16.amount
+    lh17 = 0.0
+    if inputs.LHDNDED17 and inputs.LHDNDED17.amount:
+        lh17 = inputs.LHDNDED17.amount
+    lh18 = 0.0
+    if inputs.LHDNDED18 and inputs.LHDNDED18.amount:
+        lh18 = inputs.LHDNDED18.amount
+    lh19 = 0.0
+    if inputs.LHDNDED19 and inputs.LHDNDED19.amount:
+        lh19 = inputs.LHDNDED19.amount
+    result = lh1 + lh2 + lh3 + lh4 + lh5 + lh6 + lh7 + lh8 + lh9 + lh10 + lh12 + lh13 + lh14+ lh15+ lh16+ lh17+ lh18+ lh19</field>
+            <field name="category_id" ref="hr_salary_rule_category_CATLHDNDED"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_pcb_tax_income" model="hr.salary.rule">
+            <field name="code">PCBTAXINCOMEN</field>
+            <field eval="551" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="hr_contribution_register_pcb"/>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">P(Taxable Income) - Normal</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = 0.0
+if employee.pcb_number:
+    if employee.residence_status and employee.residence_status != 'nonresident':
+        Y = payslip.total_ytd_gross
+        K = payslip.total_ytd_epf_employee
+        if K &gt; payslip.company_id.pcb_epf_limit:
+            K = payslip.company_id.pcb_epf_limit
+        Y1 = categories.GROSS - categories.EXP  + categories.BIK - categories.ADDT
+        K1 = categories.DEPFE
+        if inputs.LHDNDED11 and inputs.LHDNDED11.amount:
+            K1 += inputs.LHDNDED11.amount
+        if K + K1 &gt; payslip.company_id.pcb_epf_limit:
+            K1 = (payslip.company_id.pcb_epf_limit - K)
+        Yt = 0.0
+        Kt = 0.0
+        n = payslip.remaining_month
+        Y2 = 0
+        K2 = 0
+        if n != 0:
+            Y2 = categories.GROSS - categories.EXP + categories.BIK - categories.ADDT
+            K2 = (payslip.company_id.pcb_epf_limit-(K+K1+Kt))/n
+            if K2:
+                K2 = round(K2, 10)
+                K2 = math.floor(K2 * 100)/100
+            if K2 &gt; K1:
+                K2 = K1
+        LP = payslip.total_ytd_pcb_ded
+        LP1 = categories.CATLHDNDED
+        D = employee.d_amount or 0
+        S = employee.s_amount or 0
+        C = employee.c_amount or 0
+    
+        result = ((Y - K) + (Y1 - K1) + ((Y2 - K2) * n) + (Yt - Kt )) - (D+S+(2000*C)+ (LP + LP1))
+    
+    if result &lt; 0.0:
+        result = 0.0
+    
+    if result &gt; 0:
+        if result:
+            result = round(result, 10)
+            result = math.floor(result * 100)/100</field>
+            <field name="category_id" ref="hr_salary_rule_category_PCBTAXINCOMECAT"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_pcb_current_month" model="hr.salary.rule">
+            <field name="code">PCBCURRMONTHNOR</field>
+            <field eval="553" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="hr_contribution_register_pcb"/>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">PCB - Normal</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+# if P  &gt;= 1000000:
+#                M = 1000000.0
+#                R = 28.0
+#                B = 237650.0
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = 0.0
+presult = 0.0
+pbresult = 0.0
+total = 0.0
+if employee.pcb_number:
+    if employee.residence_status and employee.residence_status == 'nonresident':
+        if categories.GROSS:
+            result = ((categories.GROSS - categories.EXP) * 28 ) / 100
+    
+    if employee.residence_status and employee.residence_status == 'resident':
+        P = categories.PCBTAXINCOMECAT or 0.0
+        PB = categories.PCBTAXINCOMEADD or 0.0
+        Z = payslip.total_ytd_zakat or 0.0
+        n = payslip.remaining_month
+        X = payslip.total_ytd_pcb
+    
+        if employee.type_of_resident and employee.type_of_resident  == 'normal' :
+            M = 0.0
+            R = 0.0
+            B = 0.0
+            for con in contract.category_mrb.con_cat_line_ids:
+                if (con.from_amount &lt;= P and P &lt;= con.to_amount) or (P &gt;= con.from_amount and P &gt;= con.to_amount):
+                    M = con.m_amount
+                    R = con.r_amount
+                    if employee.dsc_category1 == 2:
+                        B = con.b2_amount
+                    else:
+                        B = con.b13_amount
+                result = ((((P - M) * R)/100 + B) - (Z+ X))/ (n+1)
+                if PB:
+                    presult = (((P - M) * R)/100 + B) - (Z+ X)
+                    pbresult = (((PB - M) * R)/100 + B) - (Z+ X)
+                    total = pbresult - presult
+                    result = result + total
+    
+        elif employee.type_of_resident and employee.type_of_resident == 'returningexpertprogram' :
+            R = 15.0
+            B = 0.0
+            if P &lt;= 35000:
+                if employee.dsc_category1 == 2:
+                    B = 800
+                else:
+                    B = 400
+            elif P &gt; 35000:
+                    B = 0
+            result = ((((P*R)/100) - B) - (Z+ X))/ (n+1)
+    
+        elif employee.type_of_resident and employee.type_of_resident == 'knowledgeworker' :
+            R = 15.0
+            result = (((P*R)/100) - (Z+ X))/ (n+1)
+    
+        if result &gt; 0:
+            result = round(result, 10)
+            result = math.floor(result * 100)/100
+    
+    if result &lt; 0:
+        result = 0.0
+    if result:
+        toal_amt = (math.floor(result * 1000)/1000)
+        frac, whole = math.modf(toal_amt)
+        frac_amt = "%.2f" % (frac)
+        amt = frac_amt[-1:]
+        if int(amt) == 5 or int(amt) == 0:
+            result = toal_amt
+        elif int(amt) &lt; 5:
+            result = round(toal_amt, 1)+0.05
+        elif int(amt) &gt; 5:
+            result = round(toal_amt, 1)
+        else:
+            result = toal_amt
+    
+    
+    if categories.ZAKAT:
+        result = result - categories.ZAKAT
+    if inputs.INPUTCP38 and inputs.INPUTCP38.amount or contract.default_pcb_amount:
+        result= 0</field>
+            <field name="category_id" ref="hr_salary_rule_category_CATLHDN_Normal"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_pcb_tax_income_add" model="hr.salary.rule">
+            <field name="code">PCBTAXINCOMEA</field>
+            <field eval="552" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="hr_contribution_register_pcb"/>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">P(Taxable Income) - Additional</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = 0.0
+if employee.pcb_number:
+    if employee.residence_status and employee.residence_status != 'nonresident' and categories.FEES or categories.ADDT:
+        Y = payslip.total_ytd_gross
+        K = payslip.total_ytd_epf_employee
+        if K &gt; payslip.company_id.pcb_epf_limit:
+            K = payslip.company_id.pcb_epf_limit
+        Y1 = categories.GROSS - categories.EXP + categories.BIK - categories.ADDT
+        K1 = categories.DEPFE + inputs.LHDNDED11.amount
+        if K + K1 &gt; payslip.company_id.pcb_epf_limit:
+            K1 = (payslip.company_id.pcb_epf_limit - K)
+        Yt = categories.ADDT + categories.FEES
+        Kt = 0.0
+        if categories.ADDT:
+            if categories.EPF_E_ADD:
+                Kt = categories.EPF_E_ADD
+        if Kt:
+            Kt = round(Kt, 10)
+            Kt = math.floor(Kt * 100)/100
+        n = payslip.remaining_month
+        if K + K1 + Kt &gt; payslip.company_id.pcb_epf_limit:
+            Kt = payslip.company_id.pcb_epf_limit - K - K1
+    
+        Y2 = 0
+        K2 = 0
+        if n != 0:
+            Y2 = categories.GROSS - categories.EXP  + categories.BIK - categories.ADDT
+            K2 = (payslip.company_id.pcb_epf_limit-(K+K1+Kt))/n
+            if K2:
+                K2 = round(K2, 10)
+                K2 = math.floor(K2 * 100)/100
+                if K2 &gt; K1:
+                    K2 = K1
+    
+        LP = payslip.total_ytd_pcb_ded
+        LP1 = categories.CATLHDNDED
+        D = employee.d_amount or 0
+        S = employee.s_amount or 0
+        C = employee.c_amount or 0
+    
+        result = ((Y - K) + (Y1 - K1) + ((Y2 - K2)*n) + (Yt - Kt )) - (D+S+(2000*C)+ (LP + LP1))
+    
+        if result &gt; 0:
+            result = round(result, 10)
+            result = math.floor(result * 1000)/1000</field>
+            <field name="category_id" ref="hr_salary_rule_category_PCBTAXINCOMEADD"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_pcb_current_month_WOUT_ADD" model="hr.salary.rule">
+            <field name="code">PCBCURRMONTHADD</field>
+            <field eval="554" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="hr_contribution_register_pcb"/>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">PCB -Additions</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+# if P &gt;= 1000000:
+#     M = 1000000.0
+#     R = 28.0
+#     B = 237650.0
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = 0.0
+if employee.pcb_number:
+    if employee.residence_status and employee.residence_status == 'resident':
+        if employee.type_of_resident and categories.ADDT or categories.FEES:
+            tot_MTD_year = 0.0
+            X = payslip.total_ytd_pcb
+            n = payslip.remaining_month
+            current_pcb = categories.CATLHDNNORMAL
+            if categories.ZAKAT:
+                current_pcb = current_pcb + categories.ZAKAT
+            P = categories.PCBTAXINCOMEADD or 0.0
+            result2 = 0.0
+            if employee.type_of_resident  not in ('returningexpertprogram','knowledgeworker'):
+                M = 0.0
+                R = 0.0
+                B = 0.0
+                for con in contract.category_mrb.con_cat_line_ids:
+                    if (con.from_amount &lt;= P and P &lt;= con.to_amount) or (con.from_amount &gt;= P and P &gt;= con.to_amount):
+                        M = con.m_amount
+                        R = con.r_amount
+                        if employee.dsc_category1 == 2:
+                            B = con.b2_amount
+                        else:
+                            B = con.b13_amount
+                    result2 = (((P - M) * R)/100 + B)
+            elif employee.type_of_resident == 'returningexpertprogram':
+                R = 15.0
+                B = 0.0
+                if P &lt;= 35000:
+                    if employee.dsc_category1 == 2:
+                        B = 800
+                    else:
+                        B = 400
+                elif P &gt; 35000:
+                        B = 0
+                result2 = (((P*R)/100) - B)
+            elif employee.type_of_resident == 'knowledgeworker':
+                R = 15.0
+                result2 = ((P*R)/100)
+    
+            if result2:
+                result2 = round(result2, 10) 
+                result2 = math.floor(result2 * 100)/100
+    
+            normal_pcb = current_pcb * (n + 1)
+            if normal_pcb:
+                normal_pcb = round(normal_pcb, 10) 
+                normal_pcb = math.floor(normal_pcb * 100)/100
+    
+            tot_MTD_year = X + normal_pcb
+            result = result2 - (tot_MTD_year + payslip.total_ytd_zakat)</field>
+            <field name="category_id" ref="hr_salary_rule_category_CATLHDN_With_ADD"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_pcb_current_month_Total_PCB" model="hr.salary.rule">
+            <field name="code">PCBCURRMONTH</field>
+            <field eval="555" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="hr_contribution_register_pcb"/>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">PCB</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = 0.0
+if employee.pcb_number:
+    if categories.CATLHDNNORMAL:
+        result += categories.CATLHDNNORMAL
+    if categories.CATLHDNWOUTADD:
+        if categories.CATLHDNWOUTADD &lt; 10 and categories.CATLHDNWOUTADD &gt; 0:
+            result = result + 0.0
+        else:
+            result += categories.CATLHDNWOUTADD
+    
+    if result &lt; 0.0:
+        result = 0.0
+    
+    if result:
+        toal_amt = (math.floor(result * 1000)/1000)
+        frac, whole = math.modf(toal_amt)
+        frac_amt = "%.2f" % (frac)
+        amt = frac_amt[-1:]
+        if int(amt) == 5 or int(amt) == 0:
+            result = toal_amt
+        elif int(amt) &lt; 5:
+            result = round(toal_amt, 1)+0.05
+        elif int(amt) &gt; 5:
+            result = round(toal_amt, 1)
+        else:
+            result = toal_amt
+        
+    if inputs.INPUTCP38 and inputs.INPUTCP38.amount > 0 and contract.default_pcb_amount > 0:
+        result= contract.default_pcb_amount or 0
+                </field>
+            <field name="category_id" ref="hr_salary_rule_category_CATLHDN"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+
+        <record id="hr_salary_rule_BIK" model="hr.salary.rule">
+            <field name="code">BIK</field>
+            <field eval="413" name="sequence"/>
+            <field eval="0" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">BIK</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = 0.0
+if contract.bik_vola_emp:
+    result = contract.bik_vola_emp
+</field>
+            <field name="category_id" ref="hr_salary_rule_category_BIK"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+
+<!-- ##############################################################
+                        Salary Rules For ZAKAT    
+     ############################################################## -->
+
+        <record id="hr_salary_rule_ZAKAT" model="hr.salary.rule">
+            <field name="code">ZAKAT</field>
+            <field eval="410" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">ZAKAT</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = inputs.ZAKAT and inputs.ZAKAT.amount or 0</field>
+            <field name="category_id" ref="hr_salary_rule_category_zakat"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_tp1_ZAKAT" model="hr.salary.rule">
+            <field name="code">ZAKAT_TP1</field>
+            <field eval="411" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">ZAKAT-TP1</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = inputs.TP1ZKT and inputs.TP1ZKT.amount or 0</field>
+            <field name="category_id" ref="hr_salary_rule_category_zakat_tp1"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_zakat_current" model="hr.salary.rule">
+            <field name="code">ZKT_CURRENT</field>
+            <field eval="412" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">ZAKAT-Current Month</field>
+            <field name="condition_python">
+# Available variables:
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = categories.ZAKAT + categories.TP1ZAKAT or 0</field>
+            <field name="category_id" ref="hr_salary_rule_category_zakat_curr"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+
+        <record id="hr_salary_rule_nontax_allowance" model="hr.salary.rule">
+            <field name="code">NONTAXALW</field>
+            <field eval="505" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Non Taxable Allowance</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">alw1 = 0.0
+if inputs.ALW_NONTAX_1 and inputs.ALW_NONTAX_1.amount:
+    alw1 = inputs.ALW_NONTAX_1.amount
+alw2 = 0.0
+if inputs.ALW_NONTAX_2 and inputs.ALW_NONTAX_2.amount:
+    alw2 = inputs.ALW_NONTAX_2.amount
+alw3 = 0.0
+if inputs.ALW_NONTAX_3 and inputs.ALW_NONTAX_3.amount:
+    alw3 = inputs.ALW_NONTAX_3.amount
+alw4 = 0.0
+if inputs.ALW_NONTAX_4 and inputs.ALW_NONTAX_4.amount:
+    alw4 = inputs.ALW_NONTAX_4.amount
+alw5 = 0.0
+if inputs.ALW_NONTAX_5 and inputs.ALW_NONTAX_5.amount:
+    alw5 = inputs.ALW_NONTAX_5.amount
+alw6 = 0.0
+if inputs.ALW_NONTAX_6 and inputs.ALW_NONTAX_6.amount:
+    alw6 = inputs.ALW_NONTAX_6.amount
+alw7 = 0.0
+if inputs.ALW_NONTAX_7 and inputs.ALW_NONTAX_7.amount:
+    alw7 = inputs.ALW_NONTAX_7.amount
+alw8 = 0.0
+if inputs.ALW_NONTAX_8 and inputs.ALW_NONTAX_8.amount:
+    alw8 = inputs.ALW_NONTAX_8.amount
+result = alw1 + alw2 + alw3 + alw4 + alw5 + alw6 + alw7 + alw8</field>
+            <field name="category_id" ref="hr_salary_rule_category_allownce_nontax"/>
+            <field name="quantity">1.0</field>
+        </record>
+        
+        <record id="hr_salary_rule_arrears_and_others_per_mnth" model="hr.salary.rule">
+            <field name="code">ARR_OTHRS</field>
+            <field eval="107" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Arrears and Others</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = inputs.ARREARS_OTHERS and inputs.ARREARS_OTHERS.amount or 0</field>
+            <field name="category_id" ref="hr_salary_rule_category_additions"/>
+            <field name="quantity">1.0</field>
+        </record>
+        
+        <record id="hr_salary_rule_gratuity" model="hr.salary.rule">
+            <field name="code">GRATUITY</field>
+            <field eval="108" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Gratuity</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = inputs.GRATUITY and inputs.GRATUITY.amount or 0</field>
+            <field name="category_id" ref="hr_salary_rule_category_additions"/>
+            <field name="quantity">1.0</field>
+        </record>
+        
+        <record id="hr_salary_rule_category_dir_fees" model="hr.salary.rule">
+            <field name="code">DIR_FEES</field>
+            <field eval="101" name="sequence"/>
+            <field eval="1" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">Directors Fees</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = inputs.IDIRECT and inputs.IDIRECT.amount or 0</field>
+            <field name="category_id" ref="hr_salary_rule_category_fees"/>
+            <field name="quantity">1.0</field>
+        </record>
+        
+        <record id="hr_salary_rule_vola" model="hr.salary.rule">
+            <field name="code">VOLA</field>
+            <field eval="413" name="sequence"/>
+            <field eval="0" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">VOLA</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = 0.0
+if contract.vola_emp:
+    result = contract.vola_emp
+</field>
+            <field name="category_id" ref="hr_salary_rule_category_BIK"/>
+            <field name="quantity">1.0</field>
+        </record>
+        
+        <record id="hr_salary_rule_esos" model="hr.salary.rule">
+            <field name="code">ESOS</field>
+            <field eval="413" name="sequence"/>
+            <field eval="0" name="appears_on_payslip"/>
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field eval="1" name="active"/>
+            <field name="name">ESOS(Employee share option scheme)</field>
+            <field name="condition_python">
+# Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = 0.0
+if contract.esos_emp:
+    result = contract.esos_emp
+</field>
+            <field name="category_id" ref="hr_salary_rule_category_esos"/>
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_hrdf" model="hr.salary.rule">
+            <field name="code">HRDF</field>
+            <field eval="409" name="sequence" />
+            <field eval="1" name="appears_on_payslip" />
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="l10n_my_payroll.hr_contribution_register_hrdf" />
+            <field name="amount_select">code</field>
+            <field eval="1" name="active" />
+            <field name="name">HRDF</field>
+            <field name="condition_python">
+                # Available variables:
+                #----------------------
+                # payslip: object containing the payslips
+                # employee: hr.employee object
+                # contract: hr.contract object
+                # rules: object containing the rules code (previously computed)
+                # categories: object containing the computed salary rule categories
+                (sum of amount of all rules belonging to that category).
+                # worked_days: object containing the computed worked days
+                # inputs: object containing the computed inputs
+
+                # Note: returned value have to be set in the variable 'result'
+
+                result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = 0
+if employee.company_id.hrdf:
+  result = (categories.BASIC + categories.ADDT * 1) / 100
+            </field>
+            <field name="category_id"
+                ref="l10n_my_payroll.hr_salary_rule_category_contributions_hrdf_employer" />
+            <field name="quantity">1.0</field>
+        </record>
+
+</odoo>

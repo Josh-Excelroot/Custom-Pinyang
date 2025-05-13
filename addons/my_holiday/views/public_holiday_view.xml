@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Search View : Public Holiday -->
+    <record id="hr_holiday_public_search" model="ir.ui.view">
+        <field name='name'>hr.holiday.public.search</field>
+        <field name='model'>hr.holiday.public</field>
+        <field name='arch' type='xml'>
+            <search string="Search holiday">
+                <field name="hr_year_id"/>
+                <field name="country_id"/>
+                <field name="state"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Tree View : Public Holiday -->
+    <record id="hr_holiday_public_tree" model="ir.ui.view">
+        <field name='name'>hr.holiday.public.tree</field>
+        <field name='model'>hr.holiday.public</field>
+        <field name='arch' type='xml'>
+            <tree string="Holidays">
+                <field name="hr_year_id"/>
+                <field name="country_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View : Public Holiday -->
+    <record id="hr_holiday_public_form" model="ir.ui.view">
+        <field name="name">hr.holiday.public.form</field>
+        <field name="model">hr.holiday.public</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Holiday detail">
+                <header>
+                    <button string="Reset to Draft" class="oe_highlight" type="object" name="set_state_draft" states="cancelled" groups="hr.group_hr_manager"/>
+                    <!--<button string="Confirm" class="oe_highlight" type="object" name="set_state_confirm" states="draft" groups="hr.group_hr_manager"/>-->
+                    <button string="Validate" class="oe_highlight" type="object" name="set_state_validate" states="draft" groups="hr.group_hr_manager"/>
+                    <button string="Refuse" type="object" name="set_state_refuse" states="draft" groups="hr.group_hr_manager"/>
+                    <button string="Cancel" type="object" name="set_state_cancel" states="validated,refused" groups="hr.group_hr_manager"/>
+                    <field name="state" widget="statusbar" groups="hr.group_hr_manager" statusbar_visible="draft,validated,refused,cancelled"/>
+<!--                #### This button calls a function that will automatically fill the holiday lines / Lo Gee Yen / 12/10/2023-->
+                    <button name="action_fill_holidays" string="Get Holidays" class="btn-primary"
+                            type="object"/>
+<!--                #### This button calls a function that will automatically fill the holiday lines / Lo Gee Yen / 12/10/2023-->
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <!--<field name="name" attrs="{'readonly':[('state','=','validated')]}"/>-->
+                            <field name="hr_year_id"/>
+<!--                #### This field has been set to read only / Lo Gee Yen / 12/10/2023-->
+                            <field name="country_id" readonly="1" force_save="1"/>
+<!--                #### This field has been set to read only / Lo Gee Yen / 12/10/2023-->
+                        </group>
+                        <group>
+                            <field name="company_ids" widget="many2many_tags" options="{'no_create': True}"/>
+<!--                #### This field shows which state the company is in / Lo Gee Yen / 12/10/2023-->
+                            <field name="company_state" readonly="1" force_save="1"/>
+<!--                #### This field shows which state the company is in / Lo Gee Yen / 12/10/2023-->
+                        </group>
+                    </group>
+                    <newline/>
+                    <notebook colspan="4">
+                        <page string="Holidays">
+                            <field name="holiday_line_ids" nolabel="1" colspan="4" attrs="{'readonly':[('state','=','validated')]}">
+                                <tree string="Holidays">
+                                    <field name="holiday_date"/>
+                                    <field name="holiday_type"/>
+                                    <field name="state_ids" widget="many2many_tags" />
+                                    <field name="name"/>
+                                    <field name="day"/>
+                                    <field name="rate"/>
+                                </tree>
+                                <form string="Holiday detail">
+                                    <group colspan="4" col="4">
+                                        <field name="holiday_date"/>
+                                        <field name="name"/>
+                                        <field name="day"/>
+                                        <field name="holiday_type"/>
+                                        <field name="rate"/>
+                                        <field name="state_ids" widget="many2many_tags" attrs="{'required':[('holiday_type', '=', 'state')]}" domain="[('country_id','=',parent.country_id)]"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Email body">
+                            <field name="email_body" nolabel="1" colspan="4"/>
+                        </page>
+                    </notebook>
+                    <newline/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action of hr_holiday_public -->
+    <record id="hr_holiday_public_action" model="ir.actions.act_window">
+        <field name='name'>Public Holidays</field>
+        <field name='res_model'>hr.holiday.public</field>
+        <field name='view_type'>form</field>
+        <field name='view_mode'>tree,form</field>
+        <field name="search_view_id" ref="hr_holiday_public_search"/>
+    </record>
+
+    <!-- Search View : Public Holiday Lines -->
+    <record id="hr_holiday_lines_search" model="ir.ui.view">
+        <field name='name'>hr.holiday.lines.search</field>
+        <field name='model'>hr.holiday.lines</field>
+        <field name='arch' type='xml'>
+            <search string="Search holiday">
+                <field name="holiday_date"/>
+                <field name="name"/>
+                <field name="day"/>
+                <field name="holiday_type"/>
+                <field name="holiday_id"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Tree View : Public Holiday Lines -->
+    <record id="hr_holiday_lines_tree" model="ir.ui.view">
+        <field name='name'>hr.holiday.lines.tree</field>
+        <field name='model'>hr.holiday.lines</field>
+        <field name='arch' type='xml'>
+            <tree string="Holidays">
+                <field name="holiday_date"/>
+                <field name="holiday_type"/>
+                <field name="state_ids" widget="many2many_tags" />
+                <field name="name"/>
+                <field name="day"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View : Public Holiday Lines -->
+    <record id="hr_holiday_lines_form" model="ir.ui.view">
+        <field name='name'>hr.holiday.lines.form</field>
+        <field name='model'>hr.holiday.lines</field>
+        <field name='arch' type='xml'>
+            <form string="Holiday detail">
+                <group colspan="4" col="4">
+                    <field name="holiday_date"/>
+                    <field name="name"/>
+                    <field name="day"/>
+                    <field name="holiday_type"/>
+                    <field name="state_ids" widget="many2many_tags" attrs="{'required':[('holiday_type', '=', 'state')]}"/>
+                </group>
+            </form>
+        </field>
+    </record>
+</odoo>

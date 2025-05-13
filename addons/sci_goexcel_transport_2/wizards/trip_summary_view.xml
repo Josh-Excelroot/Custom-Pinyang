@@ -1,0 +1,18 @@
+<odoo>
+
+    <record id="trip_summary_view_form" model="ir.ui.view">
+        <field name="name">trip_summary</field>
+        <field name="model">trip.summary.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Trip Summary">
+                <group>
+                    <field name="summary"  decoration-bf ="1"  placeholder="Trip Summary" class="o_address_street"/>
+                </group>
+
+                     <footer>
+                    <button name="action_create" string="Okay" type="object" class="btn-primary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

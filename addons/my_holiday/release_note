@@ -1,0 +1,48 @@
+-----------------------------------------------------------------------------
+
+Version 12.0.1.1.6 - 12 Oct 2023 - Lo Gee Yen
+=================================
+Added new feature
+
+a) added a Get Holiday button under the "Public Holiday" form view. This button when clicked will scrap malaysia holiday data and fill the data in the holiday lines.
+
+Disabled functions
+
+a) disabled a the "_check_current_year_leave_req(self):" function in hr_leave because it doesn't allow the program to create holidays for next year
+
+Dependencies
+
+a) pip install bs4
+b) pip install requests
+
+-----------------------------------------------------------------------------
+Done
+-----------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------
+
+Version 12.0.1.2.6 - 12 Oct 2023 - Lo Gee Yen
+=================================
+Added new check.
+
+a) Now the system will use selenium if request.get is blocked by cloudflare. After using selenium to bypass, the system will try to use request.get again. (Max retries: 3)
+
+Dependencies
+
+a) pip install selenium
+b) pip install webdriver_manager
+c) pip install selenium_stealth
+
+-----------------------------------------------------------------------------
+Done
+-----------------------------------------------------------------------------
+
+Version 12.0.1.2.7 - 12 Oct 2023 - Lo Gee Yen
+=================================
+Changed a compute field
+
+a) remove store=true in hr_employee.py. This is because the compute function won't run on this field if the field has store=true
+
+-----------------------------------------------------------------------------
+Done
+-----------------------------------------------------------------------------

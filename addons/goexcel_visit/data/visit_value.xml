@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<odoo>
+     <record id="visit_spanco_value__provide_knowledge" model="visit.spanco.value">
+         <field name="name">Provide Knowledge</field>
+     </record>
+
+    <record id="visit_spanco_value__solve_problem" model="visit.spanco.value">
+        <field name="name">Solve Problem</field>
+    </record>
+
+    <record id="visit_spanco_value__technical_help" model="visit.spanco.value">
+        <field name="name">Technical Help</field>
+    </record>
+
+    <record id="visit_spanco_value__personal_help" model="visit.spanco.value">
+        <field name="name">Personal Help</field>
+    </record>
+
+    <record id="5" model="visit.spanco.value">
+        <field name="name">Monitor Stock</field>
+    </record>
+
+
+</odoo>

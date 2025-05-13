@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pain_analysis_form_view" model="ir.ui.view">
+        <field name="name">pain.analysis.form</field>
+        <field name="model">pain.analysis</field>
+        <field name="arch" type="xml">
+            <form string="Pain Analysis">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                            <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                        </group>
+                    </group>
+                    <field invisible="1" name="cust_pain_analysis_ids">
+                        <tree>
+                            <field name="sequence" widget="handle"/>
+                            <field name="partner_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                            <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                        </tree>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pain_analysis_tree_view" model="ir.ui.view">
+        <field name="name">pain.analysis.tree</field>
+        <field name="model">pain.analysis</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="active"/>
+                <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_pain_analysis" model="ir.actions.act_window">
+        <field name="name">Pain Analysis</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pain.analysis</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    </record>
+    <!-- need analysis -->
+    <record id="needs_analysis_form_view" model="ir.ui.view">
+        <field name="name">needs.analysis.form</field>
+        <field name="model">needs.analysis</field>
+        <field name="arch" type="xml">
+            <form string="Need Analysis">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                            <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                        </group>
+                    </group>
+                    <field invisible="1" name="cust_needs_analysis_ids">
+                        <tree>
+                            <field name="sequence" widget="handle"/>
+                            <field name="partner_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                            <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                        </tree>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="needs_analysis_tree_view" model="ir.ui.view">
+        <field name="name">needs.analysis.tree</field>
+        <field name="model">needs.analysis</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="active"/>
+                <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_needs_analysis" model="ir.actions.act_window">
+        <field name="name">Needs Analysis</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">needs.analysis</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    </record>
+    <!-- challange analysis -->
+    <record id="challenges_analysis_form_view" model="ir.ui.view">
+        <field name="name">challenges.analysis.form</field>
+        <field name="model">challenges.analysis</field>
+        <field name="arch" type="xml">
+            <form string="Challenges Analysis">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                            <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                        </group>
+                    </group>
+                    <field invisible="1" name="cust_challenges_analysis_ids">
+                        <tree>
+                            <field name="sequence" widget="handle"/>
+                            <field name="partner_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                            <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                        </tree>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="challenges_analysis_tree_view" model="ir.ui.view">
+        <field name="name">challenges.analysis.tree</field>
+        <field name="model">challenges.analysis</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="active"/>
+                <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_challenges_analysis" model="ir.actions.act_window">
+        <field name="name">Challenges Analysis</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">challenges.analysis</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    </record>
+</odoo>

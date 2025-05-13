@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_lost_reason,access_sale_lost_reason,model_sale_lost_reason,base.group_user,1,1,1,1
+access_sale_extend_reason,access_sale_extend_reason,model_sale_extend_reason,base.group_user,1,1,1,1
+access_parter_sales_person,access_parter_sales_person,model_parter_sales_person,base.group_user,1,1,1,1
+access_partner_credit_approval,access_partner_credit_approval,model_partner_credit_approval,base.group_user,1,1,1,1
+access_crm_line,access_crm_line,model_crm_line,base.group_user,1,1,1,1
+access_res_partner_inactive_config,access_res_partner_inactive_config,model_res_partner_inactive_config,base.group_user,1,1,1,1
+
+

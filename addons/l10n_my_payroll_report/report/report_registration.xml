@@ -1,0 +1,98 @@
+<odoo>
+
+    <!-- Qweb report For: HR Bank Summary Report -->
+    <report id="hr_bank_summary_report" string="HR Bank Summary Report" model="hr.payslip" report_type="qweb-pdf" name="l10n_my_payroll_report.hr_bank_summary_report_tmp" menu="False"/>
+
+    <!-- Qweb report For: HR Cheque Summary Report -->
+    <report id="hr_cheque_summary_report" string="HR Cheque Summary Report" model="hr.payslip" report_type="qweb-pdf" name="l10n_my_payroll_report.cheque_summary_report_tmp" menu="False"/>
+
+    <report id="hr_payroll_summary_receipt_report"
+            string="Payroll Summary"
+            model="hr.payroll.summary.wizard"
+            report_type="qweb-pdf"
+            menu="False"
+            name="l10n_my_payroll_report.ppt_hr_payroll_summary_receipt"/>
+
+    <record id="hr_payroll_summary_receipt_report_paperformat"
+            model="report.paperformat">
+        <field name="name">Payroll Summary</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">4</field>
+        <field name="margin_right">4</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="hr_payroll_summary_receipt_report" model="ir.actions.report">
+        <field name="paperformat_id" ref="hr_payroll_summary_receipt_report_paperformat"/>
+    </record>
+
+    <report id="hr_payslip_details_report"
+            string="Payslip"
+            model="hr.payslip"
+            report_type="qweb-pdf"
+            print_report_name="'%s' %(object.name)"
+            name="l10n_my_payroll_report.hr_payslip_detail_template"/>
+
+    <record id="hr_payslip_details_report_paperformat" model="report.paperformat">
+        <field name="name">Payslip Details Report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">45</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">8</field>
+        <field name="margin_right">8</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">45</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="hr_payslip_details_report" model="ir.actions.report">
+        <field name="paperformat_id" ref="hr_payslip_details_report_paperformat"/>
+        
+    </record>
+
+    <report id="hr_incometax_report_detail" string="Incometax Report" model="hr.payslip" report_type="qweb-pdf" name="l10n_my_payroll_report.hr_payslip_report" menu="False"/>
+
+    <record id="hr_incometax_report_detail_report_paperformat" model="report.paperformat">
+        <field name="name">Incometax Report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">8</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">4</field>
+        <field name="margin_right">4</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">8</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="hr_incometax_report_detail" model="ir.actions.report">
+        <field name="paperformat_id" ref="hr_incometax_report_detail_report_paperformat"/>
+    </record>
+
+    <report
+            id="hr_payroll.payslip_details_report"
+            model="hr.payslip"
+            string="PaySlip Details"
+            report_type="qweb-pdf"
+            name="hr_payroll.report_payslipdetails" 
+            file="hr_payroll.report_payslipdetails"
+            menu="False"
+            print_report_name="'Payslip Details - %s' % (object.employee_id.name)"
+        />
+
+</odoo>

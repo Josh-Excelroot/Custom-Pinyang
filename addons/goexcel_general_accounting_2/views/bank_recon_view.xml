@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    <record id="account_banking_reconciliation_widgets_inherited" model="ir.ui.view">-->
+<!--        <field name="name">bank.acc.rec.statement.form.inherited</field>-->
+<!--        <field name="model">bank.acc.rec.statement</field>-->
+<!--        <field name="inherit_id" ref="account_banking_reconciliation.view_bank_acc_rec_statement_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='debit_move_line_ids']" position="attributes">-->
+<!--                <attribute name="widget">section_and_note_one2many_custom</attribute>-->
+<!--            </xpath>-->
+<!--              <xpath expr="//field[@name='credit_move_line_ids']" position="attributes">-->
+<!--                <attribute name="widget">section_and_note_one2many_custom</attribute>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+</odoo>
+
+

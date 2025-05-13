@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_hr_payroll_configuration_inherit" model="ir.ui.view">
+            <field name="name">view.hr.payroll.configuration.inherit</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="hr_payroll.res_config_settings_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='hr_payroll_localization']" position="after">
+                    <h2>Payroll Reports</h2>
+                    <div class="row mt16 o_settings_container" id="hr_payroll_my_reports">
+                        <div class="col-lg-6 col-12 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="module_l10n_my_payroll_report" />
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="module_l10n_my_payroll_report" string="Generate Payroll Reports" />
+                                <div class="text-muted">
+                                    This Module helps to Generate payroll reports.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-12 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="module_my_pf_report" />
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="module_my_pf_report" string="Generate PF Reports" />
+                                <div class="text-muted">
+                                    This Module helps to generate PF report.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-12 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="module_socso_report" />
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="module_socso_report" string="Generate SOCSO Report" />
+                                <div class="text-muted">
+                                    This Module helps to generate socso report.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-12 o_setting_box">
+                            <div class="o_setting_left_pane">
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="day_of_generate_payslip"/>
+                                <field name="day_of_generate_payslip" />
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6 col-12 o_setting_box">
+                            <div class="o_setting_left_pane">
+                            </div>
+                           <div class="o_setting_right_pane">
+                                <label for="frequency_payslip"/>
+                                <field name="frequency_payslip" />
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="specific_day" attrs="{'invisible': [('frequency_payslip', '!=', 'specific')]}" />
+                                <field name="specific_day" attrs="{'invisible': [('frequency_payslip', '!=', 'specific')]}" />
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <h2>Pro-rata Salary</h2>
+                    <div class="row mt16 o_settings_container" id="hr_payroll_rata">
+                        <div class="col-lg-6 col-12 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="enable_pro_data_sal"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="enable_pro_data_sal" string="Enable Pro Rata Salary" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-12 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="public_holiday_paid" attrs="{'invisible': [('enable_pro_data_sal', '=', False)]}"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="public_holiday_paid" string="Public holidays are not paid" attrs="{'invisible': [('enable_pro_data_sal', '=', False)]}"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-12 o_setting_box">
+                            <div class="o_setting_left_pane">
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="working_days_month" string="Working Days In a Month" attrs="{'invisible': [('enable_pro_data_sal', '=', False)]}"/>
+                                <field name="working_days_month" widget="radio" attrs="{'invisible': [('enable_pro_data_sal', '=', False)]}"/>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+                <xpath expr="//div[@id='hr_payroll_accountant'] //div" position="after">
+                    <div class="col-lg-6 col-12 o_setting_box">
+                        <div class="o_setting_left_pane">
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="accraul_type" string="Accrual Type"/>
+                            <field name="accraul_type" widget="radio" attrs="{'invisible': [('enable_pro_data_sal', '=', False)]}"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-12 o_setting_box" id="payroll_accrual_epf_id">
+                        <div class="o_setting_left_pane">
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="accrual_epf_id" string="Accrual-EPF" attrs="{'invisible': [('accraul_type', '=', 'all_in_one')]}" />
+                            <field name="accrual_epf_id" attrs="{'invisible': [('accraul_type', '=', 'all_in_one')]}"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-12 o_setting_box" id="payroll_accrual_salary_id">
+                        <div class="o_setting_left_pane">
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="accrual_account_id" string="Accrual-Salary" />
+                            <field name="accrual_account_id"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-12 o_setting_box" id="payroll_socso_id">
+                        <div class="o_setting_left_pane">
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="accrual_socso_id" string="Accrual-SOCSO" attrs="{'invisible': [('accraul_type', '=', 'all_in_one')]}" />
+                            <field name="accrual_socso_id" attrs="{'invisible': [('accraul_type', '=', 'all_in_one')]}"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-12 o_setting_box" id="payroll_eis_id">
+                        <div class="o_setting_left_pane">
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="accrual_eis_id" string="Accrual-EIS" attrs="{'invisible': [('accraul_type', '=', 'all_in_one')]}" />
+                            <field name="accrual_eis_id" attrs="{'invisible': [('accraul_type', '=', 'all_in_one')]}"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-12 o_setting_box" id="payroll_pcb_id">
+                        <div class="o_setting_left_pane">
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="accrual_pcb_id" string="Accrual-PCB" attrs="{'invisible': [('accraul_type', '=', 'all_in_one')]}" />
+                            <field name="accrual_pcb_id" attrs="{'invisible': [('accraul_type', '=', 'all_in_one')]}"/>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

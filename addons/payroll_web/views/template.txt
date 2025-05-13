@@ -1,0 +1,149 @@
+ <template id="menu_sale" inherit_id="sale.portal_my_quotations">
+        <xpath expr="//t[@t-if='not quotations']" position="replace">
+            <t t-if="quotations" t-call="website.get_quotations()" />
+            <t t-if="len(quotations) &lt; 1">
+                <p>There are currently no quotations for your account.</p>
+            </t>
+        </xpath>
+        <xpath expr="//t[@t-if='quotations']" position="replace">
+            <t t-if="len(quotations) &gt; 0" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Quotation #</th>
+                        <th class="text-right">Order Date</th>
+                        <th class="text-right">Valid Until</th>
+                        <th class="text-center"/>
+                        <th class="text-right">Total</th>
+                    </tr>
+                </thead>
+                <t t-foreach="quotations" t-as="quotation">
+                    <tr>
+                        <td>
+                            <a t-att-href="quotation.get_portal_url()">
+                                <t t-esc="quotation.name"/>
+                            </a>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="quotation.date_order"/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="quotation.validity_date"/>
+                        </td>
+                        <td class="text-center">
+                            <span t-if="quotation.state == 'cancel'" class="badge badge-pill badge-secondary">
+                                <i class="fa fa-fw fa-remove"/>
+ Cancelled</span>
+                            <span t-if="quotation.is_expired" class="badge badge-pill badge-secondary">
+                                <i class="fa fa-fw fa-clock-o"/>
+ Expired</span>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="quotation.amount_total"/>
+                        </td>
+                    </tr>
+                </t>
+            </t>
+        </xpath>
+
+    </template>
+
+    <template id="portal_sale" inherit_id="sale.portal_my_home_sale">
+        <xpath expr="//t[@t-if='quotation_count']" position="replace">
+            <t t-set="quotation_count" t-value="website.get_quotation_count()" />
+            <t t-if="quotation_count > 0" t-call="portal.portal_docs_entry">
+                <t t-set="title">Quotations</t>
+                <t t-set="url" t-value="'/my/quotes'"/>
+                <t t-set="count" t-value="quotation_count"/>
+            </t>
+        </xpath>
+    </template>
+    <template id="sale_order_portal" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//t[@t-if='doc.partner_shipping_id != doc.partner_invoice_id']" position="after">
+            <div>
+                <strong>Effective date: </strong>
+                <span t-esc="doc.effect_date"/>
+            </div>
+            <div>
+                <strong>Expiry Date: </strong>
+                <span t-esc="doc.expiry_date"/>
+            </div>
+            <div>
+                <strong>Port of Discharge: </strong>
+                <span t-esc="doc.POD.name"/>
+            </div>
+            <div>
+                <strong>Port of Loading: </strong>
+                <span t-esc="doc.POL.name"/>
+            </div>
+            <div>
+                <strong>Shipment Mode: </strong>
+                <span t-esc="doc.service_type"/>
+            </div>
+
+            <div>
+                <strong>Mode: </strong>
+                <span t-esc="doc.mode"/>
+            </div>
+
+
+        </xpath>
+
+        <xpath expr="//t[@t-set='display_discount']" position="before">
+
+            <section id="container details" style="page-break-inside: auto;" class="mt32">
+                <h3 id="details">Container Details</h3>
+
+
+                <table class="table table-sm" id="sales_order_table">
+                    <thead class="bg-100">
+                        <tr>
+                            <!-- TODO: remove in master -->
+                            <t t-set="colspan" t-value="6"/>
+                            <th class="text-left">Container Type</th>
+                            <th class="text-right">Container Quantity</th>
+                            <th class="text-right">Weight &#40;kg - cargo only&#41;</th>
+                        </tr>
+                    </thead>
+                    <tbody class="sale_tbody">
+
+                        <t t-foreach="doc.container_lines" t-as="line">
+
+                            <tr t-att-class="'bg-200 font-weight-bold o_line_section'">
+
+
+                                <td class="text-left">
+                                    <div id="quote_qty">
+                                        <span t-field="line.container_type"/>
+                                    </div>
+                                </td>
+                                <td t-attf-class="text-right {{ 'd-none d-sm-table-cell' if report_type == 'html' else '' }}">
+
+                                    <span t-field="line.container_quantity"/>
+
+                                </td>
+                                <td t-attf-class="text-right {{ 'd-none d-sm-table-cell' if report_type == 'html' else '' }}">
+
+                                    <span t-field="line.weight"/>
+
+                                </td>
+
+                            </tr>
+                        </t>
+
+                    </tbody>
+                </table>
+
+
+            </section>
+        </xpath>
+    </template>
+    <template id="portal_template" name="template_name" inherit_id="sale.sale_order_portal_template">
+        <xpath expr="//div[@class='btn-group flex-grow-1 mb-1']" position="after">
+            <div class="btn-group flex-grow-1 mb-1 ml-1">
+                <a class="btn btn-secondary text-white btn-block o_confirm_btn o_portal_invoice_confirm" t-att-href="sale_order.action_confirm()" title="Confirm" target="_blank">
+                    <i class="fa fa-check"/>
+ Confirm
+                </a>
+            </div>
+        </xpath>
+    </template>

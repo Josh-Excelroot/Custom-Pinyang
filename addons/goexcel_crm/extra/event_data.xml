@@ -1,0 +1,59 @@
+<odoo>
+    <data noupdate="0">
+        <record id="001" model="">
+            <field name="name">Seminar Melaka</field>
+            <field name="active">True</field>
+            <field name="full_name">Seminar Melaka</field>
+        </record>
+        <record id="002" model="">
+            <field name="name">Seminar JB</field>
+            <field name="active">True</field>
+            <field name="full_name">Seminar JB</field>
+        </record>
+        <record id="003" model="">
+            <field name="name">Seminar BP</field>
+            <field name="active">True</field>
+            <field name="full_name">Seminar BP</field>
+        </record>
+        <record id="004" model="">
+            <field name="name">Seminar Endau</field>
+            <field name="active">True</field>
+            <field name="full_name">Seminar Endau</field>
+        </record>
+        <record id="005" model="">
+            <field name="name">Seminar Muar</field>
+            <field name="active">True</field>
+            <field name="full_name">Seminar Muar</field>
+        </record>
+        <record id="006" model="">
+            <field name="name">Tournament</field>
+            <field name="active">True</field>
+            <field name="full_name">Tournament</field>
+        </record>
+        <record id="007" model="">
+            <field name="name">Technovation</field>
+            <field name="active">True</field>
+            <field name="full_name">Technovation</field>
+        </record>
+        <record id="008" model="">
+            <field name="name">Rimula Express Workshop</field>
+            <field name="active">True</field>
+            <field name="full_name">Rimula Express Workshop</field>
+        </record>
+        <record id="009" model="">
+            <field name="name">Rimula Night</field>
+            <field name="active">True</field>
+            <field name="full_name">Rimula Night</field>
+        </record>
+        <record id="010" model="">
+            <field name="name">Social event</field>
+            <field name="active">True</field>
+            <field name="full_name">Social event</field>
+        </record>
+        <record id="011" model="">
+            <field name="name">Signboard</field>
+            <field name="active">True</field>
+            <field name="full_name">Signboard</field>
+        </record>
+    </data>
+</odoo>

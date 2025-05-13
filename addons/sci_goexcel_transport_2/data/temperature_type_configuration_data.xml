@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="temperature.type" id="temperature_type">
+            <field name="name">General</field>
+        </record>
+        <record model="temperature.type" id="temperature_type2">
+            <field name="name">CRT (15-25)</field>
+        </record>
+        <record model="temperature.type" id="temperature_type3">
+            <field name="name">CH (Chill 2-8)</field>
+        </record>
+         <record model="temperature.type" id="temperature_type4">
+            <field name="name">FZ (-18)</field>
+        </record>
+        <record model="temperature.type" id="temperature_type5">
+            <field name="name">UFZ (-25)</field>
+        </record>
+        <record model="temperature.type" id="temperature_type6">
+            <field name="name">DUAL</field>
+        </record>
+    </data>
+</odoo>

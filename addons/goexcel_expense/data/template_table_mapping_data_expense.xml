@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data noupdate="1">
+        <record id="template_table_mapping_expense_1" model="ocr.table.mapping.expense">
+            <field name="name">Currency Type</field>
+            <field name="type">currency</field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="template_table_mapping_expense_2" model="ocr.table.mapping.expense">
+            <field name="name">Shop Name</field>
+            <field name="type">shop_name</field>
+            <field name="sequence">2</field>
+        </record>
+
+        <record id="template_table_mapping_expense_3" model="ocr.table.mapping.expense">
+            <field name="name">Tax</field>
+            <field name="type">tax</field>
+            <field name="sequence">3</field>
+        </record>
+
+        <record id="template_table_mapping_expense_4" model="ocr.table.mapping.expense">
+            <field name="name">Total Amount</field>
+            <field name="type">total</field>
+            <field name="sequence">4</field>
+        </record>
+
+        <record id="template_table_mapping_expense_5" model="ocr.table.mapping.expense">
+            <field name="name">Total Amount</field>
+            <field name="type">date</field>
+            <field name="date_format">year_month_day</field>
+            <field name="sequence">5</field>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="template_table_mapping_1_1" model="ocr.table.mapping.line.expense">
+            <field name="sequence">1</field>
+            <field name="line_id" eval="ref('template_table_mapping_expense_1')"/>
+            <field name="category">Currency Type</field>
+            <field name="type">label</field>
+            <field name="name">USD</field>
+            <field name="keyword">USD</field>
+        </record>
+
+        <record id="template_table_mapping_1_2" model="ocr.table.mapping.line.expense">
+            <field name="sequence">2</field>
+            <field name="line_id" eval="ref('template_table_mapping_expense_1')"/>
+            <field name="category">Currency Type</field>
+            <field name="type">label</field>
+            <field name="name">RM</field>
+            <field name="keyword">RM</field>
+        </record>
+
+        <record id="template_table_mapping_1_3" model="ocr.table.mapping.line.expense">
+            <field name="sequence">3</field>
+            <field name="line_id" eval="ref('template_table_mapping_expense_1')"/>
+            <field name="category">Currency Type</field>
+            <field name="type">label</field>
+            <field name="name">EUR</field>
+            <field name="keyword">EUR</field>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="template_table_mapping_2_1" model="ocr.table.mapping.line.expense">
+            <field name="sequence">1</field>
+            <field name="line_id" eval="ref('template_table_mapping_expense_2')"/>
+            <field name="category">Shop Name</field>
+            <field name="type">label</field>
+            <field name="name">name:</field>
+            <field name="keyword">name:</field>
+        </record>
+
+        <record id="template_table_mapping_2_2" model="ocr.table.mapping.line.expense">
+            <field name="sequence">2</field>
+            <field name="line_id" eval="ref('template_table_mapping_expense_2')"/>
+            <field name="category">Shop Name</field>
+            <field name="type">label</field>
+            <field name="name">shop:</field>
+            <field name="keyword">shop:</field>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="template_table_mapping_3_1" model="ocr.table.mapping.line.expense">
+            <field name="sequence">1</field>
+            <field name="line_id" eval="ref('template_table_mapping_expense_3')"/>
+            <field name="category">Tax</field>
+            <field name="type">label</field>
+            <field name="name">tax:</field>
+            <field name="keyword">tax:</field>
+        </record>
+
+        <record id="template_table_mapping_3_2" model="ocr.table.mapping.line.expense">
+            <field name="sequence">2</field>
+            <field name="line_id" eval="ref('template_table_mapping_expense_3')"/>
+            <field name="category">Tax</field>
+            <field name="type">label</field>
+            <field name="name">tax</field>
+            <field name="keyword">tax</field>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="template_table_mapping_4_1" model="ocr.table.mapping.line.expense">
+            <field name="sequence">1</field>
+            <field name="line_id" eval="ref('template_table_mapping_expense_4')"/>
+            <field name="category">Total Amount</field>
+            <field name="type">label</field>
+            <field name="name">USD</field>
+            <field name="keyword">USD</field>
+        </record>
+
+        <record id="template_table_mapping_4_2" model="ocr.table.mapping.line.expense">
+            <field name="sequence">2</field>
+            <field name="line_id" eval="ref('template_table_mapping_expense_4')"/>
+            <field name="category">Total Amount</field>
+            <field name="type">label</field>
+            <field name="name">RM</field>
+            <field name="keyword">RM</field>
+        </record>
+
+        <record id="template_table_mapping_4_3" model="ocr.table.mapping.line.expense">
+            <field name="sequence">3</field>
+            <field name="line_id" eval="ref('template_table_mapping_expense_4')"/>
+            <field name="category">Total Amount</field>
+            <field name="type">label</field>
+            <field name="name">EUR</field>
+            <field name="keyword">EUR</field>
+        </record>
+
+        <record id="template_table_mapping_4_4" model="ocr.table.mapping.line.expense">
+            <field name="sequence">4</field>
+            <field name="line_id" eval="ref('template_table_mapping_expense_4')"/>
+            <field name="category">Total Amount</field>
+            <field name="type">label</field>
+            <field name="name">total</field>
+            <field name="keyword">total</field>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="template_table_mapping_5_1" model="ocr.table.mapping.line.expense">
+            <field name="sequence">1</field>
+            <field name="line_id" eval="ref('template_table_mapping_expense_5')"/>
+            <field name="category">Date</field>
+            <field name="type">label</field>
+            <field name="name">date:</field>
+            <field name="keyword">date:</field>
+        </record>
+
+        <record id="template_table_mapping_5_2" model="ocr.table.mapping.line.expense">
+            <field name="sequence">2</field>
+            <field name="line_id" eval="ref('template_table_mapping_expense_5')"/>
+            <field name="category">Date</field>
+            <field name="type">label</field>
+            <field name="name">date</field>
+            <field name="keyword">date</field>
+        </record>
+
+        <record id="template_table_mapping_5_3" model="ocr.table.mapping.line.expense">
+            <field name="sequence">3</field>
+            <field name="line_id" eval="ref('template_table_mapping_expense_5')"/>
+            <field name="category">Date</field>
+            <field name="type">label</field>
+            <field name="name">time</field>
+            <field name="keyword">time</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+            id="print_journal_entires_report"
+            model="account.move"
+            menu="True"
+            report_type="qweb-pdf"
+            string="Journal Entries"
+            name="print_journal_entries.project_journal_entries_id"
+            file="print_journal_entries.project_journal_entries_id"
+    />
+
+    <template id="project_journal_entries_id">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                 <div class="page">
+                     <div>
+                         <p>
+                             <h5 class="text-center">
+                                 Journal Entry
+                             </h5>
+                         </p>
+                         <p>
+                             <h6>
+                                 <span t-field="doc.name"/> - <span t-field="doc.state"/>
+                             </h6>
+                         </p>
+
+                     </div>
+                     <div>
+                          <table class="table table-sm o_main_table" style="font-size:9pt;">
+                                    <tr style="border-top: 1px solid black">
+                                        <td>
+                                            <strong>Journal:</strong>
+                                        </td>
+                                        <td>
+                                            <span t-field="doc.journal_id.name"/>
+                                        </td>
+                                        <td>
+                                            <strong>Date:</strong>
+                                        </td>
+                                        <td>
+                                            <span t-field="doc.date"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-top: 1px solid black">
+                                        <td>
+                                            <strong>Reference:</strong>
+                                        </td>
+                                        <td>
+                                            <span t-field="doc.ref"/>
+                                        </td>
+                                        <td>
+                                            <strong>Company:</strong>
+                                        </td>
+                                        <td>
+                                            <span t-field="doc.company_id.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-top: 1px solid black">
+                                        <td>
+                                            <strong>Amount:</strong>
+                                        </td>
+                                        <td>
+                                            <span t-field="doc.amount"/>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        <div>
+                         <h6>Journal Items</h6>
+                          <!-- <tr>
+                                <td style="text-align: left;" colspan="4">
+                                    <strong><h3>Journal Items</h3></strong>
+                                </td>
+                          </tr> -->
+                         <table class="table table-sm o_main_table" style="font-size:9pt;">
+                            <tr style="border: 1px;">
+                                <th>Account</th>
+                                <th>Date</th>
+                               <!-- <th>Due Date</th>-->
+                                <th>Partner</th>
+                                <th>Description&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</th>
+    <!--                                <th>Analytic Acct</th>-->
+                               <!-- <th>Amount</th>-->
+                                <th>Debit</th>
+                                <th>Credit</th>
+                            </tr>
+                             <t t-foreach="doc.line_ids.sorted(key=lambda b: b.sequence)" t-as="line">
+                                <tr style="border: 1px">
+                                    <td><span t-field="line.account_id.name"/></td>
+                                    <td><span t-field="line.date"/></td>
+                                  <!--  <td><span t-field="line.date_maturity"/></td>-->
+                                    <td><span t-field="line.partner_id.name"/></td>
+                                    <td><span t-field="line.name"/></td>
+    <!--                                    <td><span t-field="line.analytic_account_id.name"/></td>-->
+                                   <!-- <td><span t-field="line.amount_currency" /></td>-->
+                                    <td><span t-field="line.debit" /></td>
+                                    <td><span t-field="line.credit" /></td>
+                                </tr>
+                            </t>
+                         </table>
+                        </div>
+                        <div>
+                         <h3 t-if="doc.narration">Narration</h3>
+                         <p>
+                             <span t-field="doc.narration"/>
+                         </p>
+                     </div>
+                </div>
+              </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
+
+

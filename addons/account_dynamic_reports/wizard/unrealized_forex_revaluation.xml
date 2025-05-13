@@ -1,0 +1,41 @@
+<odoo>
+    <data>
+        <record id="unrealized_forex_revaluation_wizard" model="ir.ui.view">
+            <field name="name">unrealized.forex.revaluation.view</field>
+            <field name="model">unrealized.forex.revaluation</field>
+            <field name="arch" type="xml">
+                <form string="Make Adjustment Entry">
+                    <field name="company_id" invisible="1"/>
+                    <div attrs="{'invisible': [('show_warning_move_id', '=', False)]}" class="alert alert-warning" role="alert">Proceed with caution as there might be an existing adjustment for this period (<field name="show_warning_move_id"/>)</div>
+                    <group>
+                        <group>
+                            <field name="report_wizard_id" invisible="1" />
+                            <field name="journal_id"/>
+                            <field name="expense_account_id"/>
+                            <field name="income_account_id"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="reverse_date"/>
+                            <field name="ref"/>
+                        </group>
+                    </group>
+                    <field name="line_ids">
+                        <tree editable="bottom" create="0">
+                            <field name="currency_id" invisible="1" force_save="1"/>
+                            <field name="account_id" readonly="1" force_save="1"/>
+                            <field name="name"/>
+                            <field name="type" invisible="1" force_save="1"/>
+                            <field name="debit" readonly="1" force_save="1" sum="Total Debit"/>
+                            <field name="credit" readonly="1" force_save="1" sum="Total Credit"/>
+                        </tree>
+                    </field>
+                    <footer>
+                        <button string='Create Entry' name="create_entries" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+               </form>
+            </field>
+        </record>
+    </data>
+</odoo>

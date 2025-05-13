@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <report id="mtd_pcb2_report_view" string="PCB 2(II)" model="wiz.pcb2.report" report_type="qweb-pdf" name="my_mtd_report.report_mtd_pcb2" menu="False"/>
+
+        <template id="report_mtd_pcb2">
+            <t t-call="web.html_container">
+                <!-- <t t-call="web.internal_layout" > -->
+                <t t-set="data_report_margin_top" t-value="5"/>
+                <t t-set="data_report_margin_bottom" t-value="8"/>
+                <div class="page">
+                    <t t-foreach="get_data" t-as="o">
+                        <style>
+                            .padding {
+                                padding: 3px;
+                            }
+                        </style>
+                        <table width="100%">
+                            <tr>
+                                <td width="60%">
+                                    <b>STATEMENT OF PAYMENT BY EMPLOYER</b>
+                                </td>
+                                <td width="40%" style="text-align:right">PCB 2(II)-Pin. 2012</td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table width="100%">
+                            <tr>
+                                <td width="60%" style="font-size:12px">To:</td>
+                                <td width="40%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="50%" style="text-align:right;font-size:12px">Tarikh:</td>
+                                            <td width="50%" style="padding-left:10px;border-bottom:1px solid black;font-size:12px"><span t-esc="datetime.datetime.today().strftime('%d-%m-%Y')"/></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="60%" colspan="3" style="font-size:12px">Chief Executive Officer/Director General Inland Revenue</td>
+                                <td width="40%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="60%" colspan="3" style="font-size:12px">Inland Revenue Board Of Malaysia</td>
+                                <td width="40%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="20%" style="font-size:12px">Branch</td>
+                                <td width="30" style="border-bottom:1px solid black">
+                                    <span></span>
+                                </td>
+                                <td width="10%">
+                                    <span></span>
+                                </td>
+                                <td width="40%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table width="100%">
+                            <tr>
+                                <td style="font-size:12px">Sir,</td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="45%" style="font-size:12px">Tax Deduction Made During The Year</td>
+                                <td width="5%">
+                                    <span></span>
+                                </td>
+                                <td width="30%" style="border-bottom:1px solid black;font-size:12px"><span t-esc="o.get('tax_ded_yr')"/></td>
+                                <td width="20%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="45%" style="font-size:12px">Name Of Employee
+                                </td>
+                                <td width="5%">
+                                    <span></span>
+                                </td>
+                                <td width="40%" style="border-bottom:1px solid black;font-size:12px"><span t-esc="o.get('name')"/></td>
+                                <td width="10%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="45%" style="font-size:12px">New Identity Card No./Passport No.
+                                </td>
+                                <td width="5%">
+                                    <span></span>
+                                </td>
+                                <td width="40%" style="border-bottom:1px solid black;font-size:12px"><span t-esc="o.get('emp_ident_no')"/></td>
+                                <td width="10%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="45%" style="font-size:12px">Employee Income Tax No.
+                                </td>
+                                <td width="5%">
+                                    <span></span>
+                                </td>
+                                <td width="40%" style="border-bottom:1px solid black;font-size:12px"><span t-esc="o.get('emp_tax_no')"/></td>
+                                <td width="10%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="45%" style="font-size:12px">Staff No.
+                                </td>
+                                <td width="5%">
+                                    <span></span>
+                                </td>
+                                <td width="40%" style="border-bottom:1px solid black;font-size:12px"><span t-esc="o.get('staff_no')"/></td>
+                                <td width="10%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="45%" style="font-size:12px">Employer's No. (E)</td>
+                                <td width="5%">
+                                    <span></span>
+                                </td>
+                                <td width="40%" style="border-bottom:1px solid black;font-size:12px"><span t-esc="o.get('emplyr_E_no')"/></td>
+                                <td width="10%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table width="100%">
+                            <tr>
+                                <td width="100%" style="font-size:12px">The above matter is hereby referred.</td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="100%" style="font-size:12px">2. Deductions that have been made to the above employee in the current year are as followed:
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="border-spacing: 0; border-width: 0; padding: 0; border-width: 0;font-size:12px">
+                            <tr>
+                                <td style="border:1px solid black;text-align:center" width="10%">
+                                    <b>Year</b>
+                                </td>
+                                <td colspan="2" style="border:1px solid black;text-align:center" width="30%">
+                                    <b>Amount (RM)</b>
+                                </td>
+                                <td colspan="2" style="border:1px solid black;text-align:center" width="30%">
+                                    <b>Receipt No./Bank Slip No./Transaction No.</b>
+                                </td>
+                                <td colspan="2" style="border:1px solid black;text-align:center" width="30%">
+                                    <b>Receipt Date/Transaction Date</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;text-align:center" width="10%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black;text-align:center" width="15%">
+                                    <b>PCB</b>
+                                </td>
+                                <td style="border:1px solid black;text-align:center" width="15%">
+                                    <b>CP38</b>
+                                </td>
+                                <td style="border:1px solid black;text-align:center" width="15%">
+                                    <b>PCB</b>
+                                </td>
+                                <td style="border:1px solid black;text-align:center" width="15%">
+                                    <b>CP38</b>
+                                </td>
+                                <td style="border:1px solid black;text-align:center" width="15%">
+                                    <b>PCB</b>
+                                </td>
+                                <td style="border:1px solid black;text-align:center" width="15%">
+                                    <b>CP38</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black" width="10%">January</td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('jan_mtd')))"/></td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('jan_cp38')))"/></td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black" width="10%">February</td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('feb_mtd')))"/></td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('feb_cp38')))"/></td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black" width="10%">March</td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('mar_mtd')))"/></td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('mar_cp38')))"/></td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black" width="10%">April</td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('apr_mtd')))"/></td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('apr_cp38')))"/></td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black" width="10%">May</td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('may_mtd')))"/></td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('may_cp38')))"/></td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black" width="10%">June</td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('jun_mtd')))"/></td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('jun_cp38')))"/></td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black" width="10%">July</td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('july_mtd')))"/></td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('july_cp38')))"/></td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black" width="10%">August</td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('aug_mtd')))"/></td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('aug_cp38')))"/></td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black" width="10%">September</td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('sep_mtd')))"/></td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('sep_cp38')))"/></td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black" width="10%">October</td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('oct_mtd')))"/></td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('oct_cp38')))"/></td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black" width="10%">November</td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('nov_mtd')))"/></td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('nov_cp38')))"/></td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black" width="10%">December</td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('dec_mtd')))"/></td>
+                                <td style="border:1px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('dec_cp38')))"/></td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                                <td style="border:1px solid black" width="15%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border-top:2px solid black;border-left:3px solid black;border-bottom:3px solid black;" width="10%">
+                                    <b>Total</b>
+                                </td>
+                                <td style="border-top:2px solid black;border-left:3px solid black;border-bottom:3px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('total_mtd')))"/></td>
+                                <td style="border-top:2px solid black;border-left:3px solid black;border-right:3px solid black;border-bottom:3px solid black;text-align:right" width="15%"><span t-esc="'{0:,.2f}'.format(float(o.get('total_cp38')))"/></td>
+                                <td width="15%">
+                                    <span></span>
+                                </td>
+                                <td width="15%">
+                                    <span></span>
+                                </td>
+                                <td width="15%">
+                                    <span></span>
+                                </td>
+                                <td width="15%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table width="100%" style="font-size:12px;page-break-inside: avoid;">
+                            <tr>
+                                <td width="100%" colspan="2" style="font-size:12px">3. Deductions that have been made to the above employee for the preceeding year income in the current year are as followed:</td>
+                            </tr>
+                            <tr>
+                                <td width="90%">
+                                    <table width="100%" style="border-spacing: 0; border-width: 0; padding: 0; border-width: 0;font-size:12px">
+                                        <tr>
+                                            <td width="15%" style="border:1px solid black;text-align:center">
+                                                <b>Type Of Income</b>
+                                            </td>
+                                            <td width="15%" style="border:1px solid black;text-align:center">
+                                                <b>Month</b>
+                                            </td>
+                                            <td width="15%" style="border:1px solid black;text-align:center">
+                                                <b>Year</b>
+                                            </td>
+                                            <td width="15%" style="border:1px solid black;text-align:center">
+                                                <b>PCB Amount<br/>(RM)</b>
+                                            </td>
+                                            <td width="20%" style="border:1px solid black;text-align:center">
+                                                <b>Receipt No./<br/>Bank Slip No./<br/>Transaction No.</b>
+                                            </td>
+                                            <td width="20%" style="border:1px solid black;text-align:center">
+                                                <b>Receipt Date/<br/>Transaction Date</b>
+                                            </td>
+                                        </tr>
+                                        <tr t-foreach="o.get('other')" t-as="a" t-if="a">
+                                            <td width="15%" style="border:1px solid black;font-size:12px"><span t-esc="a.get('income_type')"/></td>
+                                            <td width="15%" style="border:1px solid black;text-align:center;font-size:12px"><span t-esc="a.get('month')"/></td>
+                                            <td width="15%" style="border:1px solid black;text-align:center;font-size:12px"><span t-esc="a.get('year')"/></td>
+                                            <td width="15%" style="border:1px solid black;text-align:right;font-size:12px"><span t-esc="a.get('arr_other')"/></td>
+                                            <td width="20%" style="border:1px solid black">
+                                                <span></span>
+                                            </td>
+                                            <td width="20%" style="border:1px solid black">
+                                                <span></span>
+                                            </td>
+                                        </tr>
+                                        <tr t-if="not o.get('other')">
+                                            <td width="15%" style="border:1px solid black">
+                                                <span><br/></span>
+                                            </td>
+                                            <td width="15%" style="border:1px solid black">
+                                                <span></span>
+                                            </td>
+                                            <td width="15%" style="border:1px solid black">
+                                                <span></span>
+                                            </td>
+                                            <td width="15%" style="border:1px solid black">
+                                                <span></span>
+                                            </td>
+                                            <td width="20%" style="border:1px solid black">
+                                                <span></span>
+                                            </td>
+                                            <td width="20%" style="border:1px solid black">
+                                                <span></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="10%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table width="100%" style="font-size:12px;page-break-inside: avoid;">
+                            <tr>
+                                <td width="100%" colspan="4">Thank you.</td>
+                            </tr>
+                            <tr>
+                                <td width="45%">Name Of Officer</td>
+                                <td width="5%">
+                                    <span></span>
+                                </td>
+                                <td width="40%" style="border-bottom:1px solid black"><span t-esc="o.get('hr_emp')"/></td>
+                                <td width="10%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="45%">Designation</td>
+                                <td width="5%">
+                                    <span></span>
+                                </td>
+                                <td width="40%" style="border-bottom:1px solid black"><span t-esc="o.get('hr_designation')"/></td>
+                                <td width="10%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="45%">Telephone No.</td>
+                                <td width="5%">
+                                    <span></span>
+                                </td>
+                                <td width="40%" style="border-bottom:1px solid black"><span t-esc="o.get('hr_contact')"/></td>
+                                <td width="10%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="45%">Name And Address Of Employer</td>
+                                <td width="5%">
+                                    <span></span>
+                                </td>
+                                <td width="40%" style="border-bottom:1px solid black"><span t-esc="o.get('hr_cmp_name')"/></td>
+                                <td width="10%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="45%">
+                                    <span><br/></span>
+                                </td>
+                                <td width="5%">
+                                    <span></span>
+                                </td>
+                                <td width="40%" style="border-bottom:1px solid black">
+                                    <span t-esc="o.get('hr_cmp_street')"/>
+                                    <span t-esc="o.get('hr_cmp_city')"/>
+                                    <span t-if="o.get('hr_cmp_city')"/>,&#160;
+                                    <span t-esc="o.get('hr_cmp_zip')"/>
+                                    <span t-if="o.get('hr_cmp_zip')">,</span>&#160;
+                                    <span t-esc="o.get('hr_cmp_state')"/>
+                                    <span t-if="o.get('hr_cmp_state')">,</span>&#160;
+                                    <span t-esc="o.get('hr_cmp_country')"/>
+                                </td>
+                                <td width="10%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- <p style="page-break-after:always;"></p> -->
+                    </t>
+                </div>
+                <!-- </t> -->
+            </t>
+        </template>
+</odoo>

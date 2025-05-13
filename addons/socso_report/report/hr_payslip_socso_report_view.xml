@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report id="hr_payslip_socso_report_detail" string="Borang 8A Report"
+            model="hr.payslip" report_type="qweb-pdf"
+            name="socso_report.ppt_hr_payslip_summary_receipt" menu="False" />
+
+        <record id="hr_payslip_socso_report_detail_report_paperformat"
+            model="report.paperformat">
+            <field name="name">Borang 8A Report</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">25</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">4</field>
+            <field name="margin_right">4</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">20</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="hr_payslip_socso_report_detail" model="ir.actions.report">
+            <field name="paperformat_id" ref="hr_payslip_socso_report_detail_report_paperformat" />
+        </record>
+
+        <template id="socso_report.ppt_hr_payslip_summary_receipt">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <t t-set="data_report_header_spacing" t-value="0" />
+                    <t t-foreach="docs" t-as="o">
+                        <div class="page">
+                            <t t-foreach="get_name" t-as="gtname">
+                                <t>
+                                    <style>
+                                        .border {
+                                        border:1px solid black;
+                                        border-collapse:collapse;
+                                        }
+                                        .padding {
+                                        padding-top:3px;
+                                        padding-bottom:3px;
+                                        padding-left:3px;
+                                        padding-right:3px;
+                                        }
+                                    </style>
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="20%" rowspan="5" align="left">
+                                                <!-- <img src="/socso_report/static/src/img/SOCSO_LOGO1.png" height="120" width="100" /> -->
+                                                <img src="/socso_report/static/src/img/logo_my.png" height="160" width="160" />
+                                            </td>
+                                            <td width="80%" style="text-align:center;font-size: 30px;">
+                                                <b>PERTUBUHAN KESELAMATAN SOSIAL</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="80%" style="text-align:center;font-size: 20px;">JADUAL CARUMAN BULANAN</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="80%" style="text-align:center;font-size: 20px;">
+                                                UNTUK CARUMAN BULAN&#160;&#160;<b><span t-esc="get_month"></span>&#160;<span t-esc="get_year"></span></b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="80" style="padding-top:15px;padding-left:10px">
+                                                Jumlah caruman untuk bulan di atas hendaklah dibayar
+                                                <br />
+                                                tidak lewat daripada
+                                                <span t-esc="get_date" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table width="100%" style="border-spacing:0;">
+                                        <tr>
+                                            <td width="20%">&#160;</td>
+                                            <td width="30%"
+                                                style="padding-left:5px;border-bottom:0px;border-top:1px solid black;border-left:1px solid black;border-right:1px solid black;">
+                                                <input class="input" type="checkbox" id="oe_import_tracking" />
+                                                &#160;Bayaran Tunai.
+                                            </td>
+                                            <td width="10%"
+                                                style="text-align:center;border-bottom:0px;border-top:1px solid black;border-left:0px;border-right:1px solid black">Amaun</td>
+                                            <td width="20%"
+                                                style="text-align:center;border-bottom:0px;border-top:1px solid black;border-left:0px;border-right:1px solid black">Bilangan Pekerja</td>
+                                            <td width="20%"
+                                                style="text-align:center;border-bottom:0px;border-top:1px solid black;border-left:0px;border-right:1px solid black">Lembaran</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="20%">&#160;</td>
+                                            <td width="30%"
+                                                style="padding-left:5px;border-left:1px solid black;border-right:1px solid black">
+                                                <input class="input" type="checkbox" id="oe_import_tracking" />
+                                                &#160;Bayaran cek. No. cek ............
+                                            </td>
+                                            <td width="10%"
+                                                style="text-align:center;border-left:0px;border-right:1px solid black">
+                                                RM&#160;
+                                                <span t-esc="get_final_total_scsey" />
+                                            </td>
+                                            <td width="20%"
+                                                style="text-align:center;border-left:0px;border-right:1px solid black">
+                                                <span t-esc="gtname.get('totalrecord')" />
+                                            </td>
+                                            <td width="20%"
+                                                style="text-align:center;border-left:0px;border-right:1px solid black">
+                                                <span t-esc="gtname.get('page_number')" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="20%" rowspan="2" align="right" style="padding-top:15px;">
+                                                No. Kod
+                                                <br />
+                                                Majikan
+                                            </td>
+                                            <td width="30%"
+                                                style="padding-left:5px;border-top:1px solid black;border-left:1px solid black;border-right:1px solid black">&#160;</td>
+                                            <td width="50%" colspan="3"
+                                                style="padding-left:5px;border-right:1px solid black;border-top:1px solid black;font-size:10px">CATATAN</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%"
+                                                style="border-left:1px solid black;border-right:1px solid black;font-size:12px">&#160;<span t-esc="get_socso_details"/></td>
+                                            <td width="50%" colspan="3" align="right"
+                                                style="border-right:1px solid black;font-size:14px;padding-right:5px">Cap Bank</td>
+                                        </tr>
+                                        <tr>
+                                            <td rowspan="7" width="20%" align="right">
+                                                Nama dan
+                                                <br />
+                                                Alamat
+                                                <br />
+                                                Majikan
+                                            </td>
+                                            <td width="30%"
+                                                style="border-left:1px solid black;border-right:1px solid black">&#160;</td>
+                                            <td width="50%" colspan="3"
+                                                style="padding-left:5px;border-right:1px solid black;font-size:9px">1) NO. PENDAFTARAN KESELAMATAN SOSIAL ADALAH NOMBOR
+                                                KAD PENGENALAN
+                                                PENDAFTARAN NEGARA.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%"
+                                                style="border-left:1px solid black;border-right:1px solid black">&#160;</td>
+                                            <td width="50%" colspan="3"
+                                                style="padding-left:5px;border-right:1px solid black;font-size:10px">2) Tandakan X di ruangan (2) jika pekerja telah
+                                                berhenti kerja dan masukkan tarikh berhenti
+                                                kerja di ruangan (3).
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%"
+                                                style="border-left:1px solid black;border-right:1px solid black;">&#160;</td>
+                                            <td width="50%" colspan="3"
+                                                style="padding-left:5px;border-right:1px solid black;font-size:10px">3) Isikan tarikh mula kerja untuk pekerja yang tidak
+                                                tersenarai sahaja di ruangan (3).
+                                                Pendaftaran pekerja sedemikian hendaklah juga dibuat dalam borang 2.
+                                            </td>
+                                        </tr>
+                                        <tr t-foreach="get_companyname" t-as="name">
+                                            <td width="30%"
+                                                style="border-left:1px solid black;border-right:1px solid black;font-size:12px">
+                                                <span t-esc="name['company_name']" />
+                                                <br />
+                                                <span t-esc="name['company_street']" />
+                                                <br />
+                                                <span t-esc="name['company_zip']" />
+                                                &#160;
+                                                <span t-esc="name['company_city']" />
+                                            </td>
+                                            <td width="50%" colspan="3"
+                                                style="padding-left:5px;border-right:1px solid black;font-size:10px">4) Jika tiada caruman sebab cuti tanpa gaji masukkan
+                                                angka 00.00 di ruangan (6).</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%"
+                                                style="border-left:1px solid black;border-right:1px solid black">&#160;</td>
+                                            <td width="50%" colspan="3"
+                                                style="padding-left:5px;border-right:1px solid black;font-size:10px">5) Jika ada butir-butir yang didapati tidak betul,
+                                                jangan buat pindaan di borang ini, sila
+                                                beritahu PERKESO secara bertulis.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%"
+                                                style="border-left:1px solid black;border-right:1px solid black">&#160;</td>
+                                            <td width="50%" colspan="3"
+                                                style="padding-left:5px;border-right:1px solid black;font-size:10px">6) Sila pastikan tulisan/angka/cap tidak menyentuh
+                                                mana-mana garisan/kotak/barcode yang
+                                                disediakan.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%"
+                                                style="border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black">&#160;</td>
+                                            <td width="50%" colspan="3"
+                                                style="padding-left:5px;border-right:1px solid black;border-bottom:1px solid black;font-size:10px">7) Format untuk tkh. mula/tkh. berhenti kerja adalah
+                                                hhbbtttt contoh 01072000.</td>
+                                        </tr>
+                                    </table>
+                                    <br />
+                                    <table width="100%"
+                                        style="border-spacing:0;border-left:1px solid black;border-right:1px solid black;border-top:1px solid black;border-bottom:1px solid black;">
+                                        <tr>
+                                            <td width="20%"
+                                                style="text-align:center;font-size:10px;border-bottom:1px solid black;border-right:1px solid black">NO. KAD PENGENALAN PENDAFTARAN NEGARA Lihat Catatan
+                                                (1)</td>
+                                            <td width="10%"
+                                                style="text-align:center;font-size:10px;border-bottom:1px solid black;border-right:1px solid black">(2)</td>
+                                            <td width="15%"
+                                                style="text-align:center;font-size:10px;border-bottom:1px solid black;border-right:1px solid black">TKH. MULA/TKH.BERHENTI KERJA hhbbtttt (3)</td>
+                                            <td width="15%"
+                                                style="text-align:center;font-size:10px;border-bottom:1px solid black;border-right:1px solid black">KEGUNAAN PERKESO (4)</td>
+                                            <td width="30%"
+                                                style="text-align:center;font-size:10px;border-bottom:1px solid black;border-right:1px solid black">NAMA PEKERJA (MENGIKUT KAD PENGENALAN) (5) </td>
+                                            <td width="10%"
+                                                style="text-align:center;font-size:10px;border-bottom:1px solid black">CARUMAN (6)</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="20%" style="border-bottom:1px solid black;">&#160;</td>
+                                            <td width="10%" style="border-bottom:1px solid black;">&#160;</td>
+                                            <td width="15%" style="border-bottom:1px solid black;">&#160;</td>
+                                            <td width="15%" style="border-bottom:1px solid black;">&#160;</td>
+                                            <td width="30%" style="font-size:10px;border-bottom:1px solid black;">Jumlah yang dibawa lembaran
+                                                terdahulu </td>
+                                            <td width="10%"
+                                                style="text-align:center;font-size:10px;border-bottom:1px solid black;">
+                                                <span t-esc="gtname.get('total_before_1')" />
+                                            </td>
+                                        </tr>
+                                        <tr t-foreach="gtname.get('records')" t-as="obj"
+                                            style="page-break-inside: avoid;">
+                                            <td width="20%"
+                                                style="font-size:10px;border-bottom:1px solid black;border-right:1px solid black;border-top:0.5px solid black;">
+                                                <span t-esc="obj['identification_no']" />
+                                            </td>
+                                            <td width="10%"
+                                                style="font-size:10px;border-bottom:1px solid black;border-right:1px solid black;border-top:0.5px solid black;">&#160;</td>
+                                            <td width="15%"
+                                                style="font-size:10px;border-bottom:1px solid black;border-right:1px solid black;border-top:0.5px solid black;">
+                                                <span t-esc="obj['joindate']" />
+                                            </td>
+                                            <td width="15%"
+                                                style="font-size:10px;border-bottom:1px solid black;border-right:1px solid black;border-top:0.5px solid black;">
+                                                <span t-esc="obj['no_perkeso']" />
+                                            </td>
+                                            <td width="30%"
+                                                style="font-size:10px;border-bottom:1px solid black;border-right:1px solid black;border-top:0.5px solid black;">
+                                                <span t-esc="obj['name']" />
+                                            </td>
+                                            <td width="10%"
+                                                style="text-align:center;font-size:10px;border-bottom:1px solid black;border-top:0.5px solid black;">
+                                                <span t-esc="obj['totalscsey']" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="20%">&#160;</td>
+                                            <td width="10%">&#160;</td>
+                                            <td width="15%">&#160;</td>
+                                            <td width="15%">&#160;</td>
+                                            <td width="30%" style="font-size:10px;">Jumlah muka surat ini</td>
+                                            <td width="10%" style="text-align:center;font-size:10px;">
+                                                <span t-esc="gtname.get('total_after_1')" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </t>
+                                <table width="100%" style="border-spacing:0;">
+                                    <tr>
+                                        <td width="40%" align="left"
+                                            style="font-size:14px;padding-left:10px;padding-top:5px;">PERHATIAN:</td>
+                                        <td width="40%" align="right"
+                                            style="padding-right:5px;font-size:14px;padding-top:5px;">* JUMLAH BESAR </td>
+                                        <td width="20%"
+                                            style="border-right:1px solid black;border-left:1px solid black;border-top:1px solid black;border-bottom:1px solid black;">
+                                            <font style="font-size:12px">
+                                                RM&#160;&#160;&#160;&#160;&#160;
+                                                <span t-esc="get_final_total_scsey" />
+                                            </font>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table width="100%">
+                                    <tr>
+                                        <td>1. Sila fotostat Borang 8A untuk rekod tuan.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2. Untuk mendapatkan khidmat penceramah PERKESO, sila
+                                            mohon di alama e-mel berikut :-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <u>perkeso@perkeso.gov.my.</u>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <br />
+                                <table width="100%" style="font-size:12px;page-break-inside: avoid;">
+                                    <tr>
+                                        <td width="20%">Tandatangan :</td>
+                                        <td width="20%" style="border-bottom:1px solid black"></td>
+                                        <td width="10%">&#160;</td>
+                                        <td width="20%">&#160;</td>
+                                        <td width="20%">&#160;</td>
+                                        <td width="10%">&#160;</td>
+                                    </tr>
+                                    <tr>
+                                        <td width="20%">Nama Penuh :</td>
+                                        <td width="20%"
+                                            style="border-bottom:1px solid black;padding-right:10px">
+                                            <span t-esc="gtname.get('name')" />
+                                        </td>
+                                        <td width="10%">&#160;</td>
+                                        <td width="20%">N Tel Cap Majikan :</td>
+                                        <td width="20%"
+                                            style="border-bottom:1px solid black;padding-right:10px">
+                                            <span t-esc="gtname.get('phone')" />
+                                        </td>
+                                        <td width="10%">&#160;</td>
+                                    </tr>
+                                </table>
+                                <p style="page-break-after:always;"></p>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

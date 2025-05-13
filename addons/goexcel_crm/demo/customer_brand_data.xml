@@ -1,0 +1,459 @@
+<odoo>
+    <data noupdate="0">
+        <record id="brand_001" model="customer.brand">
+            <field name="name">Aeroil</field>
+            <field name="active">True</field>
+            <field name="full_name">Aeroil</field>
+        </record>
+        <record id="brand_002" model="customer.brand">
+            <field name="name">Allchem</field>
+            <field name="active">True</field>
+            <field name="full_name">Allchem</field>
+        </record>
+        <record id="brand_003" model="customer.brand">
+            <field name="name">ALPHALUB</field>
+            <field name="active">True</field>
+            <field name="full_name">ALPHALUB</field>
+        </record>
+        <record id="brand_004" model="customer.brand">
+            <field name="name">AMERICA BRAND</field>
+            <field name="active">True</field>
+            <field name="full_name">AMERICA BRAND</field>
+        </record>
+        <record id="brand_005" model="customer.brand">
+            <field name="name">Ammasco Amalube</field>
+            <field name="active">True</field>
+            <field name="full_name">Ammasco Amalube</field>
+        </record>
+        <record id="brand_006" model="customer.brand">
+            <field name="name">Apollo </field>
+            <field name="active">True</field>
+            <field name="full_name">Apollo </field>
+        </record>
+        <record id="brand_007" model="customer.brand">
+            <field name="name">ATOM</field>
+            <field name="active">True</field>
+            <field name="full_name">ATOM</field>
+        </record>
+        <record id="brand_008" model="customer.brand">
+            <field name="name">Bio Ray Lubricant</field>
+            <field name="active">True</field>
+            <field name="full_name">Bio Ray Lubricant</field>
+        </record>
+        <record id="brand_009" model="customer.brand">
+            <field name="name">BP</field>
+            <field name="active">True</field>
+            <field name="full_name">BP</field>
+        </record>
+        <record id="brand_010" model="customer.brand">
+            <field name="name">Caltex</field>
+            <field name="active">True</field>
+            <field name="full_name">Caltex</field>
+        </record>
+        <record id="brand_011" model="customer.brand">
+            <field name="name">Carlzlub</field>
+            <field name="active">True</field>
+            <field name="full_name">Carlzlub</field>
+        </record>
+        <record id="brand_012" model="customer.brand">
+            <field name="name">Castrol</field>
+            <field name="active">True</field>
+            <field name="full_name">Castrol</field>
+        </record>
+        <record id="brand_013" model="customer.brand">
+            <field name="name">CAT</field>
+            <field name="active">True</field>
+            <field name="full_name">CAT</field>
+        </record>
+        <record id="brand_014" model="customer.brand">
+            <field name="name">CATERPILLAR</field>
+            <field name="active">True</field>
+            <field name="full_name">CATERPILLAR</field>
+        </record>
+        <record id="brand_015" model="customer.brand">
+            <field name="name">CB TOIL</field>
+            <field name="active">True</field>
+            <field name="full_name">CB TOIL</field>
+        </record>
+        <record id="brand_016" model="customer.brand">
+            <field name="name">CSW</field>
+            <field name="active">True</field>
+            <field name="full_name">CSW</field>
+        </record>
+        <record id="brand_017" model="customer.brand">
+            <field name="name">CUMMINS</field>
+            <field name="active">True</field>
+            <field name="full_name">CUMMINS</field>
+        </record>
+        <record id="brand_018" model="customer.brand">
+            <field name="name">DB</field>
+            <field name="active">True</field>
+            <field name="full_name">DB</field>
+        </record>
+        <record id="brand_019" model="customer.brand">
+            <field name="name">DP</field>
+            <field name="active">True</field>
+            <field name="full_name">DP</field>
+        </record>
+        <record id="brand_020" model="customer.brand">
+            <field name="name">Duckhams Oil</field>
+            <field name="active">True</field>
+            <field name="full_name">Duckhams Oil</field>
+        </record>
+        <record id="brand_021" model="customer.brand">
+            <field name="name">Dura Lube</field>
+            <field name="active">True</field>
+            <field name="full_name">Dura Lube</field>
+        </record>
+        <record id="brand_022" model="customer.brand">
+            <field name="name">Eagle</field>
+            <field name="active">True</field>
+            <field name="full_name">Eagle</field>
+        </record>
+        <record id="brand_023" model="customer.brand">
+            <field name="name">ECOLUBE</field>
+            <field name="active">True</field>
+            <field name="full_name">ECOLUBE</field>
+        </record>
+        <record id="brand_024" model="customer.brand">
+            <field name="name">ELF Lubricants</field>
+            <field name="active">True</field>
+            <field name="full_name">ELF Lubricants</field>
+        </record>
+        <record id="brand_025" model="customer.brand">
+            <field name="name">ENERPLUS</field>
+            <field name="active">True</field>
+            <field name="full_name">ENERPLUS</field>
+        </record>
+        <record id="brand_026" model="customer.brand">
+            <field name="name">Enzoil Asia</field>
+            <field name="active">True</field>
+            <field name="full_name">Enzoil Asia</field>
+        </record>
+         <record id="brand_027" model="customer.brand">
+            <field name="name">Evalube</field>
+            <field name="active">True</field>
+            <field name="full_name">Evalube</field>
+        </record>
+        <record id="brand_028" model="customer.brand">
+            <field name="name">EXN Lubricants</field>
+            <field name="active">True</field>
+            <field name="full_name">EXN Lubricants</field>
+        </record>
+        <record id="brand_029" model="customer.brand">
+            <field name="name">Fuchs Lubricants</field>
+            <field name="active">True</field>
+            <field name="full_name">Fuchs Lubricants</field>
+        </record>
+        <record id="brand_030" model="customer.brand">
+            <field name="name">FUSO oil</field>
+            <field name="active">True</field>
+            <field name="full_name">FUSO oil</field>
+        </record>
+        <record id="brand_031" model="customer.brand">
+            <field name="name">Grantt Lubricant</field>
+            <field name="active">True</field>
+            <field name="full_name">Grantt Lubricant</field>
+        </record>
+        <record id="brand_032" model="customer.brand">
+            <field name="name">Hansford lubricants</field>
+            <field name="active">True</field>
+            <field name="full_name">Hansford lubricants</field>
+        </record>
+        <record id="brand_033" model="customer.brand">
+            <field name="name">HINO</field>
+            <field name="active">True</field>
+            <field name="full_name">HINO</field>
+        </record>
+        <record id="brand_034" model="customer.brand">
+            <field name="name">HI-REV</field>
+            <field name="active">True</field>
+            <field name="full_name">HI-REV</field>
+        </record>
+        <record id="brand_035" model="customer.brand">
+            <field name="name">HITACHI</field>
+            <field name="active">True</field>
+            <field name="full_name">HITACHI</field>
+        </record>
+        <record id="brand_036" model="customer.brand">
+            <field name="name">HKK</field>
+            <field name="active">True</field>
+            <field name="full_name">HKK</field>
+        </record>
+        <record id="brand_037" model="customer.brand">
+            <field name="name">Houghton</field>
+            <field name="active">True</field>
+            <field name="full_name">Houghton</field>
+        </record>
+        <record id="brand_038" model="customer.brand">
+            <field name="name">Hyperlube Lubricant</field>
+            <field name="active">True</field>
+            <field name="full_name">Hyperlube Lubricant</field>
+        </record>
+        <record id="brand_039" model="customer.brand">
+            <field name="name">Idemitsu lubricants</field>
+            <field name="active">True</field>
+            <field name="full_name">Idemitsu lubricants</field>
+        </record>
+        <record id="brand_040" model="customer.brand">
+            <field name="name">Kendall Motor Oil</field>
+            <field name="active">True</field>
+            <field name="full_name">Kendall Motor Oil</field>
+        </record>
+        <record id="brand_041" model="customer.brand">
+            <field name="name">Kim Oil Lubricant</field>
+            <field name="active">True</field>
+            <field name="full_name">Kim Oil Lubricant</field>
+        </record>
+        <record id="brand_042" model="customer.brand">
+            <field name="name">Klüber Lubricant</field>
+            <field name="active">True</field>
+            <field name="full_name">Klüber Lubricant</field>
+        </record>
+        <record id="brand_043" model="customer.brand">
+            <field name="name">Koryo</field>
+            <field name="active">True</field>
+            <field name="full_name">Koryo</field>
+        </record>
+        <record id="brand_044" model="customer.brand">
+            <field name="name">Lubrimax Lubricants</field>
+            <field name="active">True</field>
+            <field name="full_name">Lubrimax Lubricants</field>
+        </record>
+        <record id="brand_045" model="customer.brand">
+            <field name="name">Maqflo</field>
+            <field name="active">True</field>
+            <field name="full_name">Maqflo</field>
+        </record>
+        <record id="brand_046" model="customer.brand">
+            <field name="name">MARS OIL</field>
+            <field name="active">True</field>
+            <field name="full_name">MARS OIL</field>
+        </record>
+        <record id="brand_047" model="customer.brand">
+            <field name="name">Mega Oil</field>
+            <field name="active">True</field>
+            <field name="full_name">Mega Oil</field>
+        </record>
+        <record id="brand_048" model="customer.brand">
+            <field name="name">MITSUBISHI</field>
+            <field name="active">True</field>
+            <field name="full_name">MITSUBISHI</field>
+        </record>
+        <record id="brand_049" model="customer.brand">
+            <field name="name">Mobil</field>
+            <field name="active">True</field>
+            <field name="full_name">Mobil</field>
+        </record>
+        <record id="brand_050" model="customer.brand">
+            <field name="name">MUSTANG</field>
+            <field name="active">True</field>
+            <field name="full_name">MUSTANG</field>
+        </record>
+        <record id="brand_051" model="customer.brand">
+            <field name="name">Nasa</field>
+            <field name="active">True</field>
+            <field name="full_name">Nasa</field>
+        </record>
+        <record id="brand_052" model="customer.brand">
+            <field name="name">OBERON</field>
+            <field name="active">True</field>
+            <field name="full_name">OBERON</field>
+        </record>
+        <record id="brand_053" model="customer.brand">
+            <field name="name">Oil Voil</field>
+            <field name="active">True</field>
+            <field name="full_name">Oil Voil</field>
+        </record>
+        <record id="brand_054" model="customer.brand">
+            <field name="name">OSK</field>
+            <field name="active">True</field>
+            <field name="full_name">OSK</field>
+        </record>
+        <record id="brand_055" model="customer.brand">
+            <field name="name">Pennzoil</field>
+            <field name="active">True</field>
+            <field name="full_name">Pennzoil</field>
+        </record>
+        <record id="brand_056" model="customer.brand">
+            <field name="name">Petron</field>
+            <field name="active">True</field>
+            <field name="full_name">Petron</field>
+        </record>
+        <record id="brand_057" model="customer.brand">
+            <field name="name">Petronas</field>
+            <field name="active">True</field>
+            <field name="full_name">Petronas</field>
+        </record>
+        <record id="brand_058" model="customer.brand">
+            <field name="name">Powerup - Hi-Power Lubricant</field>
+            <field name="active">True</field>
+            <field name="full_name">Powerup - Hi-Power Lubricant</field>
+        </record>
+        <record id="brand_059" model="customer.brand">
+            <field name="name">Pretech</field>
+            <field name="active">True</field>
+            <field name="full_name">Pretech</field>
+        </record>
+        <record id="brand_060" model="customer.brand">
+            <field name="name">Prince Lubricants</field>
+            <field name="active">True</field>
+            <field name="full_name">Prince Lubricants</field>
+        </record>
+        <record id="brand_061" model="customer.brand">
+            <field name="name">PROTENIC Lubricants</field>
+            <field name="active">True</field>
+            <field name="full_name">PROTENIC Lubricants</field>
+        </record>
+        <record id="brand_062" model="customer.brand">
+            <field name="name">PSP Lubricants</field>
+            <field name="active">True</field>
+            <field name="full_name">PSP Lubricants</field>
+        </record>
+        <record id="brand_063" model="customer.brand">
+            <field name="name">PTT Lubricant</field>
+            <field name="active">True</field>
+            <field name="full_name">PTT Lubricant</field>
+        </record>
+        <record id="brand_064" model="customer.brand">
+            <field name="name">repsol lubricants</field>
+            <field name="active">True</field>
+            <field name="full_name">repsol lubricants</field>
+        </record>
+        <record id="brand_065" model="customer.brand">
+            <field name="name">Rockhill</field>
+            <field name="active">True</field>
+            <field name="full_name">Rockhill</field>
+        </record>
+        <record id="brand_066" model="customer.brand">
+            <field name="name">SAVANA LUBRICANTS</field>
+            <field name="active">True</field>
+            <field name="full_name">SAVANA LUBRICANTS</field>
+        </record>
+        <record id="brand_067" model="customer.brand">
+            <field name="name">Scania</field>
+            <field name="active">True</field>
+            <field name="full_name">Scania</field>
+        </record>
+        <record id="brand_068" model="customer.brand">
+            <field name="name">Shell</field>
+            <field name="active">True</field>
+            <field name="full_name">Shell</field>
+        </record>
+        <record id="brand_069" model="customer.brand">
+            <field name="name">Sinopec</field>
+            <field name="active">True</field>
+            <field name="full_name">Sinopec</field>
+        </record>
+        <record id="brand_070" model="customer.brand">
+            <field name="name">SMART OIL</field>
+            <field name="active">True</field>
+            <field name="full_name">SMART OIL</field>
+        </record>
+        <record id="brand_071" model="customer.brand">
+            <field name="name">STOP OIL</field>
+            <field name="active">True</field>
+            <field name="full_name">STOP OIL</field>
+        </record>
+        <record id="brand_072" model="customer.brand">
+            <field name="name">STS</field>
+            <field name="active">True</field>
+            <field name="full_name">STS</field>
+        </record>
+        <record id="brand_073" model="customer.brand">
+            <field name="name">SUMO</field>
+            <field name="active">True</field>
+            <field name="full_name">SUMO</field>
+        </record>
+        <record id="brand_074" model="customer.brand">
+            <field name="name">SUPERNOVA</field>
+            <field name="active">True</field>
+            <field name="full_name">SUPERNOVA</field>
+        </record>
+        <record id="brand_075" model="customer.brand">
+            <field name="name">Taiwan Brand</field>
+            <field name="active">True</field>
+            <field name="full_name">Taiwan Brand</field>
+        </record>
+        <record id="brand_076" model="customer.brand">
+            <field name="name">TNB</field>
+            <field name="active">True</field>
+            <field name="full_name">TNB</field>
+        </record>
+        <record id="brand_077" model="customer.brand">
+            <field name="name">Tomchem</field>
+            <field name="active">True</field>
+            <field name="full_name">Tomchem</field>
+        </record>
+        <record id="brand_078" model="customer.brand">
+            <field name="name">TOP 1</field>
+            <field name="active">True</field>
+            <field name="full_name">TOP 1</field>
+        </record>
+        <record id="brand_079" model="customer.brand">
+            <field name="name">TOP OIL</field>
+            <field name="active">True</field>
+            <field name="full_name">TOP OIL</field>
+        </record>
+        <record id="brand_080" model="customer.brand">
+            <field name="name">Topaz Lubricants</field>
+            <field name="active">True</field>
+            <field name="full_name">Topaz Lubricants</field>
+        </record>
+        <record id="brand_081" model="customer.brand">
+            <field name="name">TopChem</field>
+            <field name="active">True</field>
+            <field name="full_name">TopChem</field>
+        </record>
+        <record id="brand_082" model="customer.brand">
+            <field name="name">Total</field>
+            <field name="active">True</field>
+            <field name="full_name">Total</field>
+        </record>
+        <record id="brand_083" model="customer.brand">
+            <field name="name">UKE Lubricants</field>
+            <field name="active">True</field>
+            <field name="full_name">UKE Lubricants</field>
+        </record>
+        <record id="brand_084" model="customer.brand">
+            <field name="name">Ultra</field>
+            <field name="active">True</field>
+            <field name="full_name">Ultra</field>
+        </record>
+        <record id="brand_085" model="customer.brand">
+            <field name="name">UMW</field>
+            <field name="active">True</field>
+            <field name="full_name">UMW</field>
+        </record>
+        <record id="brand_086" model="customer.brand">
+            <field name="name">Ungdaka</field>
+            <field name="active">True</field>
+            <field name="full_name">Ungdaka</field>
+        </record>
+        <record id="brand_087" model="customer.brand">
+            <field name="name">United Oil</field>
+            <field name="active">True</field>
+            <field name="full_name">United Oil</field>
+        </record>
+        <record id="brand_088" model="customer.brand">
+            <field name="name">Universal</field>
+            <field name="active">True</field>
+            <field name="full_name">Universal</field>
+        </record>
+        <record id="brand_089" model="customer.brand">
+            <field name="name">Volvo</field>
+            <field name="active">True</field>
+            <field name="full_name">Volvo</field>
+        </record>
+        <record id="brand_090" model="customer.brand">
+            <field name="name">VPRO</field>
+            <field name="active">True</field>
+            <field name="full_name">VPRO</field>
+        </record>
+        <record id="brand_091" model="customer.brand">
+            <field name="name">Zkrone</field>
+            <field name="active">True</field>
+            <field name="full_name">Zkrone</field>
+        </record>
+    </data>
+</odoo>

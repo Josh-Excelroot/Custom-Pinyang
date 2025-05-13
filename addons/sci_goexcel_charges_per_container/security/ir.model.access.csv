@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_container_volume_charges,Freight Manager,model_container_volume_charges,sci_goexcel_freight.freight_group_manager,1,1,1,1
+access_container_volume_charges,Freight User,model_container_volume_charges,sci_goexcel_freight.freight_group_user,1,1,1,1
+access_container_volume_charges,Freight Own,model_container_volume_charges,sci_goexcel_freight.freight_group_own,1,1,1,1
+access_container_volume_charges_line,Freight Manager,model_container_volume_charges_line,sci_goexcel_freight.freight_group_manager,1,1,1,1
+access_container_volume_charges_line,Freight User,model_container_volume_charges_line,sci_goexcel_freight.freight_group_user,1,1,1,1
+access_container_volume_charges_line,Freight Own,model_container_volume_charges_line,sci_goexcel_freight.freight_group_own,1,1,1,1

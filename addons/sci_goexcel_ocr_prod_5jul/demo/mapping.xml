@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data noupdate="1">
+        <record id="ocr_partner_template_1" model="ocr.partner.template">
+            <field name="name">Orient Overseas Container Line</field>
+            <field name="date_format">DD MMM YYYY</field>
+            <field name="reference_pattern">412 2869418</field>
+            <field name="bl_no_pattern">2678281350 NEXT LINE LAST</field>
+            <field name="product_section_start">VALUE RATE MYR</field>
+            <field name="product_section_end">AMOUNT DUE</field>
+            <field name="line_item_pattern">QTY PFC NIL RTE TOTAL</field>
+        </record>
+        <record id="ocr_partner_template_2" model="ocr.partner.template">
+            <field name="name">YANG MING LINE (M) SDN BHD</field>
+            <field name="date_format">DD/MM/YYYY</field>
+            <field name="reference_pattern">INV/2021/32511</field>
+            <field name="product_section_start">Freight Charges</field>
+            <field name="product_section_end">B/L No.</field>
+            <field name="line_item_pattern">QTYXNIL@CURUP TOTAL</field>
+            <field name="line_item_pattern_with_exchange_rate">QTY NIL UPI RTE TOTAL</field>
+            <field name="with_exchange_rate">True</field>
+            <field name="complex_line">True</field>
+            <field name="complex_line_pattern">QTYXNIL@UPI</field>
+        </record>
+        <record id="ocr_partner_template_3" model="ocr.partner.template">
+            <field name="name">CMA CGM Asia Shipping Pte. Ltd</field>
+            <field name="date_format">DD MMM YYYY</field>
+            <field name="reference_pattern">MYCEA051638 NEXT LINE LAST</field>
+            <field name="bl_no_pattern">2678281350</field>
+            <field name="exchange_rate_pattern">4.12 NEXT LINE</field>
+            <field name="product_section_start">Charge Description</field>
+            <field name="product_section_end">Rate of Exchange</field>
+            <field name="line_item_pattern">QTY UPI NIL TOTAL</field>
+        </record>
+        <record id="ocr_partner_template_4" model="ocr.partner.template">
+            <field name="name">COSCO SHIPPING Lines (Malaysia) Sdn. Bhd.</field>
+            <field name="date_format">DD MMM YYYY</field>
+            <field name="reference_pattern">OFTE21032176</field>
+            <field name="bl_no_pattern">COAU7230396460 NEXT LINE LAST</field>
+            <field name="product_section_start">CHARGE DESCRIPTION</field>
+            <field name="product_section_end">TOTAL AMOUNT</field>
+            <field name="line_item_pattern">QTY PFC NIL RTE NIL TOTAL</field>
+        </record>
+        <record id="ocr_partner_template_5" model="ocr.partner.template">
+            <field name="name">WAN HAI LINES (M) SDN. BHD.</field>
+            <field name="date_format">DD MM YYYY</field>
+            <field name="reference_pattern">PED2111119619</field>
+            <field name="bl_no_pattern">046BA12791</field>
+            <field name="product_section_start">PARTICULARS</field>
+            <field name="product_section_end">M.VES/VOY</field>
+            <field name="line_item_pattern">TOTAL UPI</field>
+        </record>
+        <record id="ocr_partner_template_6" model="ocr.partner.template">
+            <field name="name">SEALAND</field>
+            <field name="date_format">DD MMM YYYY</field>
+            <field name="reference_pattern">5773908400</field>
+            <field name="bl_no_pattern">213740291</field>
+            <field name="product_section_start">Description of Charges</field>
+            <field name="product_section_end">Total Due</field>
+            <field name="line_item_pattern">QTY UPI RTE TOTAL</field>
+        </record>
+
+    </data>
+</odoo>

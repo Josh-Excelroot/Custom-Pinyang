@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_external_layout_inherit" inherit_id="web.external_layout_standard">
+        <xpath expr="//div[@class='header']" position="replace">
+            <div class="header">
+                <div class="row">
+                    <div class="col-3 mb4">
+                        <img t-if="company.logo" align="left" t-att-src="image_data_uri(company.logo)" style="max-height: 120px;" alt="Logo"/>
+                    </div>
+
+                    <div class="col-8" name="company_address" style="font-family:sans-serif;font-size: 10pt;">
+                        <center>
+                            <t t-if="company.partner_id">
+                                <b>
+                                    <span style="font-size: 15pt;" t-field="company.partner_id.name"/>
+                                </b>
+                                <br/>
+                                <span style="font-size: 9pt;">
+                                Company Register No : 201501041442 (<span t-field="company.company_registry"/>
+)
+                                Service Tax Reg No:
+                                <t t-if="company.partner_id.vat">
+                                    <span t-field="company.partner_id.vat"/>
+                                </t>
+                                <br/>
+                            </span>
+                            <t t-if="o.branch">
+                                <t t-if="o.branch.name == 'JOHOR'">
+                                    89-02, Jalan Molek 3/1, Taman Molek,<br/>
+                                    81100 Johor Bahru, Johor, Malaysia.<br/>
+                                    TEL: +60 (7) 355-1188
+                                                                                                                        <![CDATA[&nbsp;&nbsp;]]>
+                                    FAX: +60 (7) 351-8495 / 96
+                                <br/>
+                            </t>
+                            <t t-if="o.branch.name == 'PENANG'">
+                                        MWE Plaza, 18th Floor, Suite 18.07,<br/>
+                                        No.8, Farquhar Street, 10200 Penang, Malaysia<br/>
+                                        TEL: +60 (4) 264-4185 / 87
+                                                                                                    <![CDATA[&nbsp;&nbsp;]]>
+                                        FAX: +60 (4) 264-4186
+                                <br/>
+                            </t>
+                            <t t-if="o.branch.name == 'SELANGOR'">
+                                    No.22A (4th floor), Jalan Tiara 2A/KU 1, Pusat Perniagaan BBK,<br/>
+                                    Bandar Baru Klang, 41150 Klang Selangor D.E. <br/>
+                                    TEL: +60 (3) 3082-9588/ 9669
+                                <br/>
+                            </t>
+                            <t t-if="o.branch.name == 'KUANTAN'">
+                                D'Rabbit Warehouse, Lot 140-B, Jalan Gebeng 2/1<br/>
+                                Kawasan Perindustrian Gebeng, 26080 Kuantan, Pahang. <br/>
+                                TEL: +60 (3) 3082-9588/ 9669
+                                <br/>
+                            </t>
+        </t>
+    <t t-if="not o.branch">
+        <span t-field="company.partner_id.street"/>
+        <t t-if="company.partner_id.street2">
+            <span t-field="company.partner_id.street2"/>
+            <br/>
+        </t>
+        <span t-field="company.partner_id.zip"/>
+        <span t-field="company.partner_id.city"/>
+,
+        <span t-field="company.partner_id.state_id.name"/>
+                                TEL: <span t-field="company.partner_id.phone"/>
+    <![CDATA[&nbsp;&nbsp;]]>
+                                FAX:    <span t-field="company.fax"/>
+    <br/>
+
+</t>
+</t>
+</center>
+</div>
+
+</div>
+<!--
+                <div class="col-14">
+                    <div style="border-bottom: 1px solid black;"/>
+                </div>
+                -->
+
+</div>
+</xpath>
+
+
+
+
+<xpath expr="//div[@class='footer o_standard_footer']" position="replace">
+
+</xpath>
+
+</template>
+
+</odoo>

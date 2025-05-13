@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paperformat_bol" model="report.paperformat">
+        <field name="name">BOL A4</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">297</field>
+        <field name="page_width">210</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">11</field>
+        <field name="margin_bottom">2</field>
+        <field name="margin_left">2</field>
+        <field name="margin_right">2</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+
+<!-- Yulia 09102024 change report type to preview using qweb-pdf   -->
+    <report id="action_bl"
+            string="HAWB"
+            model="freight.bol"
+            report_type="qweb-pdf"
+            name="sci_goexcel_freight_2.awb_report_main"
+            print_report_name="('AWB - '+object.bol_no)"
+            paperformat="paperformat_bol"
+    />
+
+    <template id="report_awb">
+        <div name="main">
+            <div name="company_info">
+                <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)"
+                     style=" margin-right:15px; max-height: 76px; max-width: 126px; float: left" alt="Logo"/>
+                <t t-if="res_company.partner_id">
+                    <span t-field="res_company.partner_id.name" style="font-family:arial;font-size:15pt;"/>
+                    <br/>
+                    <t t-if="res_company.partner_id.website">
+                        <span t-raw="res_company.partner_id.website.replace('https://','')"/>
+                        <br/>
+                    </t>
+                    <span style="font-family:arial;font-size:14pt; float: right">Air Way Bill&#160;</span>
+                    <!--                <span t-field="res_company.partner_id.street"/><br/>-->
+                    <!--                <span t-field="res_company.partner_id.zip"/>-->
+                    <!--                <span t-field="res_company.partner_id.city"/>,-->
+                    <!--                <span t-field="res_company.partner_id.state_id.name"/>,-->
+                    <!--                <span t-field="res_company.partner_id.country_id.name"/><br/>-->
+                    <!--                Hunting Line: <span t-field="res_company.partner_id.phone"/>-->
+                    <!--                <![CDATA[&nbsp;&nbsp;]]>-->
+                    <!--                <br/>-->
+                    <!--                Email : <span t-field="res_company.partner_id.email" style="font-size:11pt;"/>-->
+                    <!--                <![CDATA[&nbsp;]]>-->
+                    <!--                Website : <span t-field="res_company.partner_id.website" style="font-size:11pt;"/>-->
+                </t>
+            </div>
+
+            <!--</div>-->
+
+            <div class="page">
+                <style>
+                    .my_table {
+                    border:none;
+                    border-collapse: collapse;
+                    line-height: 150%;
+                    font-size:10px;
+                    width:100%"
+                    }
+
+                    .my_table th{
+                    padding:3px;
+                    border-top:1px solid black;
+                    border-bottom:1px solid black;
+                    border-left:1px solid black;
+                    border-right:1px solid black;
+                    }
+
+                    .my_table th:first-child{
+                    border-left:1px solid black;
+                    }
+
+                    .my_table th:last-child{
+                    border-right:1px solid black;
+                    }
+
+                    .my_table td{
+                    padding:3px;
+                    }
+
+                    .my_table td:first-child{
+                    padding:3px;
+                    border-left:1px solid black;
+                    }
+
+                    .my_table td:last-child{
+                    padding:3px;
+                    border-right:1px solid black;
+                    }
+
+                    .watermark {
+                    position: absolute;
+                    opacity:0.2;
+                    font-size:100px;
+                    width:60%;
+                    text-align:center;
+                    z-index:99;
+                    border: 2px solid black;
+                    -webkit-transform: rotate(-30deg);
+                    }
+                </style>
+                <div class="not-last-page">
+                    <div class="watermark" style="top: 600px; right: 230px;">
+                        <span t-field="o.bol_status"/>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+            <table border="1" style="border-collapse: collapse; line-height: 150%; font-size:10px; width:100%;">
+                <tr>
+                    <td rowspan="2" colspan="2" style="vertical-align: top; width:50%; padding-left: 5px; height:90px">
+                        <b>Shipper</b>
+                        <br/>
+                        <span t-field="o.shipper"/>
+                    </td>
+
+                    <td colspan="2" style="vertical-align: top; padding-left: 5px; width:50%; height: 90px;">
+                        <b>Issued By</b>
+                        <br/>
+                        <span t-field="o.carrier"/>
+                    </td>
+
+                </tr>
+                <tr>
+
+                    <td colspan="2" style="vertical-align: top; padding-left: 5px;">
+                        <b>Copies</b>
+                        <span>1 2 and 3 of this Air Waybill are originals and have the same validity</span>
+                    </td>
+
+
+                </tr>
+
+<!--                <tr>-->
+<!--                    <td rowspan="2" colspan="2" style="vertical-align: top; padding-left: 5px; height:100px">-->
+<!--                        <b>Consignee Name Address</b>-->
+<!--                        <br/>-->
+<!--                        <span t-field="o.consignee"/>-->
+<!--                    </td>-->
+
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td colspan="2" style="vertical-align: top; padding-left: 5px;">-->
+<!--                        <span>The Contract evidenced by and contained in this Bill of Lading is governed by the Law of-->
+<!--                            Malaysia and-->
+<!--                            any claims or dispute arising hereunder or in connection herewith shall be determined by the-->
+<!--                            courts in-->
+<!--                            Malaysia and no other courts-->
+<!--                        </span>-->
+<!--                    </td>-->
+<!--                </tr>-->
+
+                <tr>
+                <td style="vertical-align: top; padding-left: 5px; border-bottom: none;">
+                    <b>Consignee Name Address</b><br />
+<!--                    <span t-field="o.pre_carriage_by" /><span t-field="o.feeder_voyage" />-->
+                    <br />
+                </td>
+                <td style="vertical-align: top; padding-left: 5px;width:20%">
+                    <b>Consignee Account Number</b><br />
+                    <span t-field="o.place_of_receipt" /><br />
+                </td>
+                <td rowspan="2" colspan="2" style="vertical-align: top; padding-left: 5px;">
+                    <span> "It is agreed that the goods described herein are accepted in apparent good order (except as noted) for carriage SUBJECT TO THE CONDITIONS OF CONTRACT ON THE REVERSE HEREOF.
+                        ALL GOODS MAY BE CARRIED BY ANY OTHER MEANS, ROAD OR ANY OTHER CARRIER UNLESS SPECIFIC CONTRARY INSTRUCTIONS ARE GIVEN HEREON BY THE SHIPPER
+                        , AND SHIPPER AGREES THAT THE SHIPMENT MAY BE CARRIED VIA INTERMEDIATE STOPPING PLACES WHICH THE CARRIER DEEMS APPROPRIATE.
+                        THE SHIPPER'S ATTENTION IS DRAWN TO THE NOTICE CONCERNING CARRIER'S
+                        LIMITATION OF LIABILITY. Shipper may increase such limitation by declaring a higher value for carriage and paying a supplemental charge if required.</span>
+                </td>
+            </tr>
+
+
+            <tr>
+
+                <td colspan="1" style="vertical-align: top; padding-left: 5px; height:100px;border-top: none;border-right: none">
+                    <span t-field="o.consignee" />
+                </td>
+
+            </tr>
+
+                <!-- ////////////////////////////////////////////////// -->
+
+                <tr>
+                    <td colspan="2" style="vertical-align: top; padding-left: 5px; height:100px">
+                        <b>Carrier Agnet</b>
+                        <br/>
+                        <span t-field="o.notify_party"/>
+                    </td>
+                    <td rowspan="2" colspan="2" style="vertical-align: top; padding-left: 5px;">
+                        <b>Accounting Information</b>
+                        <br/>
+                        <span t-field="o.booking_ref.freight_type"/>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td style="vertical-align: top; padding-left: 5px;">
+                        <b>IATA Code</b>
+                        <br/>
+                        <span t-field="o.pre_carriage_by"/><span t-field="o.feeder_voyage"/>
+                        <br/>
+                    </td>
+                    <td style="vertical-align: top; padding-left: 5px;">
+                        <b>Account Number</b>
+                        <br/>
+                        <span t-field="o.place_of_receipt"/>
+                        <br/>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td colspan="2" style="vertical-align: top; padding-left: 5px;">
+                        <b>Airport Departure</b>
+                        <br/>
+                        <span t-field="o.airport_departure"/>
+                        <br/>
+                    </td>
+                    <td style="vertical-align: top; padding-left: 5px;">
+                        <b>Reference number</b>
+                        <br/>
+                        <span></span>
+                        <br/>
+                    </td>
+                    <td style="vertical-align: top; padding-left: 5px;">
+                        <b>Shipping inforamtion</b>
+                        <br/>
+                        <span></span>
+                        <br/>
+                    </td>
+                </tr>
+
+
+            </table>
+
+
+
+              <table border="1"  style="width: 100%; text-align: left; border-collapse: collapse; margin-top: 0px;   font-size:10px; ">
+                <tr >
+
+                <td style="vertical-align: top ; width:8.3%;  ">
+                    <b>To First</b><br />
+                    <span t-field="o.first_carrier_to" /><br />
+                </td>
+
+                <td style="vertical-align: top  ; width:8.3%; ">
+                    <b>By First</b><br />
+                    <span t-field="o.first_carrier_flight_no" /><br />
+                </td>
+
+                <td style="vertical-align: top  ; width:8.3%; ">
+                    <b>To Second</b><br />
+                    <span t-field="o.second_carrier_to" /><br />
+                </td>
+
+                <td style="vertical-align: top  ; width:8.3%; ">
+                    <b>By Second</b><br />
+                    <span t-field="o.second_carrier_flight_no" /><br />
+                </td>
+
+                <td style="vertical-align: top  ; width:8.3%; ">
+                    <b>To Third</b><br />
+                    <span t-field="o.third_carrier_to" /><br />
+                </td>
+
+                <td style="vertical-align: top  ; width:8.3%; ">
+                    <b>By Third</b><br />
+                    <span t-field="o.third_carrier_flight_no" /><br />
+                </td>
+
+                <td style="vertical-align: top  ; width:6.24%;  ">
+                    <b>Currency</b><br />
+                    <span t-field="o.Currency" /><br />
+                </td>
+
+                <td style="vertical-align: top  ; width:6.24%; ">
+                    <b>CHGS Code</b><br />
+                    <span t-field="o.chgs_code" /><br />
+                </td>
+
+                <td style="vertical-align: top  ; width:6.24%; ">
+                    <b>WT/PPD</b><br />
+                    <span t-field="o.wt_ppd" /><br />
+                </td>
+
+
+                <td style="vertical-align: top  ; width:6.24%; ">
+                    <b>WT/COLL</b><br />
+                    <span t-field="o.wt_coll" /><br />
+                </td>
+
+                <td style="vertical-align: top  ; width:6.24%; ">
+                    <b>Other PPD</b><br />
+                    <span t-field="o.other_ppd" /><br />
+                </td>
+
+                <td style="vertical-align: top  ; width:6.24%; ">
+                    <b>Other COLLL</b><br />
+                    <span t-field="o.other_coll" /><br />
+                </td>
+                <td style="vertical-align: top  ; width:6.24%; ">
+                    <b>Declared Value Carrier</b><br />
+                    <span t-field="o.declared_value_for_carriage" /><br />
+                </td>
+                <td style="vertical-align: top  ; width:6.24%; ">
+                    <b>Declared Value Carrier</b><br />
+                    <span t-field="o.declared_value_for_custom" /><br />
+                </td>
+
+            </tr>
+
+
+
+        </table>
+
+        <table   border="1"  style="width: 100%; text-align: left; border-collapse: collapse; margin-top: 0px;   font-size:10px;">
+
+            <tr>
+                <td style="vertical-align: top ; width:25%;  ">
+                    <b>Air Port Destination</b><br />
+                    <span t-field="o.airport_destination" /><br />
+                </td>
+                <td style="vertical-align: top ; width:25%;  ">
+                    <b>Request Flight Date</b><br />
+<!--                    <span t-field="o.place_of_delivery" /><br />-->
+                </td>
+
+                <td style="vertical-align: top ; width:16.67%;  ">
+                    <b>Account of Insurrnace</b><br />
+                     <span t-field="o.account_of_insurance" /><br />
+                </td>
+
+                <td style="vertical-align: top ; width:16.67%;  ">
+                    <span>INSURANCE - If carrier offer insurance and such insurance is requested in accordance with condition,
+                        therfore indicate amount  to be insured in figurs in box marked "Amount of insurance"</span><br />
+
+                </td>
+
+                <td style="vertical-align: top ; width:16.67%;  ">
+                    <b></b><br />
+<!--                    <span t-field="o.place_of_delivery" /><br />-->
+                </td>
+
+
+            </tr>
+
+
+        </table>
+
+        <table border="1"  style="width: 100%; text-align: left; border-collapse: collapse; margin-top: 0px;   font-size:10px;">
+
+            <tr>
+                <td rowspan="3" colspan="5"
+                    style="vertical-align: top; padding-left: 5px; border-right: none ;  ">
+                    <b>Handling Information</b><br />
+                    <span t-field="o.note" />
+                </td>
+                <td
+                    style="vertical-align: top; padding-left: 5px; height:100px;border-left: none ; ">
+
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td style="vertical-align: top; padding-top: 10px;">
+                    <b>SCI</b><br />
+<!--                    <span t-field="o.place_of_receipt" /><br />-->
+                </td>
+            </tr>
+        </table>
+
+
+
+        <table border="1" style=" line-height: 150%;font-size:10px; width:100%; ">
+            <tr>
+                <th style="width:12%; ">
+                    No of Pices
+                </th>
+                <th style="width:12%; text-align: center;">
+                    Gross Weight<br />(KGS)
+                </th>
+                <th style="width:12%; border-top: none;">
+                    KG/Lb
+                </th>
+                <th style="width:12%; border-top: none;">
+                    Commodity Item No
+                </th>
+                <th style="width:12%;">
+                    Chargable Weight<br />
+                </th>
+                <th style="width:12%; text-align: center;">
+                    Rate<br />
+                </th>
+                <th style="width:12%; text-align: center;">
+                    Total<br />(M3)
+                </th>
+                <th style="width:40%; text-align: center;">
+                    Nature and Quantiy of Goods<br />
+
+                </th>
+
+
+
+
+            </tr>
+            <t t-set="line_no" t-value="1" />
+            <t t-set="packages_no_value" t-value="0" />
+            <t t-set="exp_gross_weight" t-value="0" />
+            <t t-set="exp_net_weight" t-value="0" />
+            <t t-set="exp_vol" t-value="0" />
+              <t t-set="unit_price" t-value="0" />
+            <t t-foreach="o.cargo_line_ids" t-as="line">
+                <t t-set="line_no" t-value="line_no+1" />
+                <t t-set="packages_no_value" t-value="packages_no_value + line.packages_no_value" />
+                <t t-set="exp_gross_weight" t-value="exp_gross_weight+line.exp_gross_weight" />
+                <t t-set="exp_net_weight" t-value="exp_net_weight+line.exp_net_weight" />
+                <t t-set="exp_vol" t-value="exp_vol+line.exp_vol" />
+            </t>
+
+            <t t-foreach="o.booking_ref.cost_profit_ids" t-as="line">
+                <t t-if="line.product_id.name == 'Air Freight Charges'">
+                    <t t-set="unit_price" t-value="unit_price + line.list_price" />
+                </t>
+            </t>
+
+
+
+            <tr>
+                <td style="vertical-align: top; padding-left: 5px;  height:240px; max-height:240px;">
+                    <t t-if="o.cargo_line_ids">
+                       <t t-esc="packages_no_value" />
+                    </t>
+                </td>
+                <td style="vertical-align: top; padding-left: 5px;">
+                    <t t-if="o.cargo_line_ids">
+                        <t t-esc="exp_gross_weight" />&#160;<span t-esc="o.cargo_line_ids[0].packages_no_uom.name" />
+                    </t>
+                </td>
+                 <td style="vertical-align: top; padding-left: 5px;  height:240px; max-height:240px;">
+                    <t t-if="o.cargo_line_ids">
+                        <span>KG</span>
+                    </t>
+                </td>
+                <td style="vertical-align: top; padding-left: 5px;  height:240px; max-height:240px;">
+                    <t t-if="o.cargo_line_ids">
+                        <span >Q</span>
+                    </t>
+                </td>
+                 <td style="vertical-align: top; padding-left: 5px;">
+                    <t t-if="o.cargo_line_ids">
+                        <t t-esc="exp_net_weight" />&#160;<span t-esc="o.cargo_line_ids[0].packages_no_uom.name" />
+                    </t>
+                </td>
+                <td style="vertical-align: top; padding-left: 5px;">
+                     <t t-esc="unit_price" />
+                </td>
+                <td style="vertical-align: top; padding-left: 5px;">
+                    <t t-esc="exp_net_weight * unit_price" />
+                </td>
+                <td style="vertical-align: top; padding-left: 5px;">
+                      <t t-if="o.cargo_line_ids">
+                   <span t-esc="o.cargo_line_ids[0].container_product_name"/>
+                      </t>
+                </td>
+
+            </tr>
+
+
+
+            <tr>
+                <td colspan="2" style="vertical-align: top; padding-left: 5px;text-align: center;">
+                    <b>Prepaid</b><br/>
+                    <t t-if="o.booking_ref.freight_type == 'prepaid'">
+                        <t t-esc="exp_net_weight * unit_price" />
+                    </t>
+                </td>
+                <td colspan="2" style="vertical-align: top; padding-left: 5px;text-align: center;">
+                    <b>Collect</b><br/>
+                    <t t-if="o.booking_ref.freight_type == 'collect'">
+                        <t t-esc="exp_net_weight * unit_price" />
+                    </t>
+                </td>
+                <td rowspan = "3" colspan="4" style="vertical-align: top; padding-left: 5px;">
+                    <b>Other Charges</b><br/>
+                    <!-- <span t-field="o.routing_instruction"/> -->
+                    <span>AWB 8.00</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" style="vertical-align: top; padding-left: 5px;text-align: center;">
+                    <b>Valution Charge </b><br/>
+<!--                    <span t-field="o.pre_carriage_by"/><span t-field="o.feeder_voyage"/>-->
+                    <br/>
+                </td>
+
+            </tr>
+            <tr>
+                <td colspan="4" style="vertical-align: top; padding-left: 5px;text-align: center;">
+                    <b>Tax </b><br/>
+<!--                    <span t-field="o.pre_carriage_by"/><span t-field="o.feeder_voyage"/>-->
+                    <br/>
+                </td>
+
+            </tr>
+            <tr>
+                <td colspan="4" style="vertical-align: top; padding-left: 5px;text-align: center;">
+                    <b>Total Charge Due Agent </b><br/>
+<!--                    <span t-field="o.pre_carriage_by"/><span t-field="o.feeder_voyage"/>-->
+                    <br/>
+                </td>
+
+                <td rowspan = "3" colspan="4" style="vertical-align: top; padding-left: 5px;text-align: center;">
+                    <span>Shipper certifies that the particulars on the face hereof are correct and that insofar as any part of the consignment contains dangerous goods,
+                        such part is properly described by name and is in proper condition for carriage by air according to the applicable Dangerous Goods Regulations.</span>
+                    <br/>
+                    <br/>
+                    <br/>
+                     <t t-if="res_company.partner_id">
+                    <span t-field="res_company.partner_id.name" style="font-family:arial; font-size:8pt; font-weight: bold; border-bottom: 1px solid;" />
+                     </t>
+                     <br/>
+                    <span>Signature of Shipper or his Agent</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" style="vertical-align: top; padding-left: 5px;text-align: center;">
+                    <b>Total Charge Due Carrier </b><br/>
+<!--                    <span t-field="o.pre_carriage_by"/><span t-field="o.feeder_voyage"/>-->
+                    <br/>
+                </td>
+
+            </tr>
+            <tr>
+                <td colspan="4" style="vertical-align: top; padding-left: 5px;text-align: center;">
+                    <b> </b><br/>
+<!--                    <span t-field="o.pre_carriage_by"/><span t-field="o.feeder_voyage"/>-->
+                    <br/>
+                </td>
+               
+            </tr>
+
+            <tr>
+            <td colspan="2" style="vertical-align: top; padding-left: 5px;text-align: center;">
+                <b>Total Prepaid</b><br/>
+                <t t-if="o.booking_ref.freight_type == 'prepaid'">
+                        <t t-esc="exp_net_weight * unit_price" />
+                    </t>
+
+            </td>
+            <td colspan="2" style="vertical-align: top; padding-left: 5px;text-align: center;">
+                <b>Total Collect</b><br/>
+              <t t-if="o.booking_ref.freight_type == 'collect'">
+                        <t t-esc="exp_net_weight * unit_price" />
+                    </t>
+            </td>
+                <t t-set="current_date" t-value="datetime.datetime.today().strftime('%d%b%y').upper()" />
+
+            <td rowspan = "2" colspan="4" style="vertical-align: top; padding-left: 5px;">
+
+                <b>
+                    <span style="border-botttom: 1px solid;"   t-esc="current_date" />
+                    <span style="margin-left:30%;border-bottom: 1px solid;" t-field="o.airport_departure"/>  </b><br/>
+
+
+                <span >Date</span>
+                <span  style="margin-left:36%;" >Air Port</span>
+
+
+
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="vertical-align: top; padding-left: 5px;text-align: center;">
+                <b>Currency Conversion Rates                </b><br/>
+                <t t-if="o.booking_ref.freight_type == 'prepaid'">
+                    <t t-esc="exp_net_weight * unit_price" />
+                </t>
+            </td>
+            <td colspan="2" style="vertical-align: top; padding-left: 5px;text-align: center;">
+                <b>CC Charges in Dest. Currency</b><br/>
+                <t t-if="o.booking_ref.freight_type == 'collect'">
+                    <t t-esc="exp_net_weight * unit_price" />
+                </t>
+            </td>
+
+
+        </tr>
+
+
+        </table>
+
+
+            <p style="text-align:left;">
+
+            </p>
+        </div>
+    </template>
+
+    <template id="awb_report_main">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div name="main">
+                    <t t-set="cargo_line" t-value="0"/>
+                    <t t-foreach="o.cargo_line_ids" t-as="line">
+                        <t t-set="cargo_line" t-value="cargo_line+1"/>
+                    </t>
+                    <t t-set="page_count" t-value="1"/>
+                    <t t-if="o.lines_description &gt; 2">
+                        <t t-set="page_count" t-value="2"/>
+                    </t>
+                    <t t-if="cargo_line &gt; 10">
+                        <t t-set="page_count" t-value="2"/>
+                    </t>
+
+                    <t t-set="curr_page" t-value="1"/>
+                    <t t-foreach="range(page_count)" t-as="l">
+                        <t t-set="cargo_line_deduct" t-value="10"/>
+                        <t t-if="curr_page &gt; 1">
+                            <t t-set="cargo_line_deduct" t-value="20"/>
+                        </t>
+                        <t t-call="sci_goexcel_freight_2.report_awb"/>
+                        <t t-set="curr_page" t-value="curr_page+1"/>
+                    </t>
+
+                    <p style="page-break-after:always;"/>
+                    <img t-attf-src="https://drive.google.com/uc?export=view&amp;id=1Baa0kocBhw1ipYX2-aYyjqIGWod3zAAg"
+                         height="1250px" width="900px"/>
+                    <p style="page-break-before:always;"/>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

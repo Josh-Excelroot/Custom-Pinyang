@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id='view_ocr_table_mapping' model='ir.ui.view'>
+        <field name="name">OCR Table Mapping List</field>
+        <field name="model">ocr.table.mapping</field>
+        <field name="arch" type="xml">
+			<tree string='OCR Table Mapping List'>
+                <field name="sequence" widget="handle"/>
+				<field name="name"/>
+                <field name="type"/>
+			</tree>
+		</field>
+	</record>
+
+    <record id="view_form_ocr_table_mapping" model="ir.ui.view">
+        <field name="name">OCR Table Mapping Form</field>
+        <field name="model">ocr.table.mapping</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" required="1"/>
+                        <field name="type" required="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Label Mapping">
+                            <field name="mapping_line_ids" mode="tree">
+								<tree editable="bottom" limit="500">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="type" required="1"/>
+                                    <field name="keyword" required="1"/>
+                                    <field name="category" invisible="1"/>
+                                    <field name="name" invisible="1"/>
+                                    <field name="product_id"
+                                           attrs="{'column_invisible': [('parent.type', '!=', 'product')]}"/>
+                                    <field name="direction"
+                                           attrs="{'column_invisible': [('parent.type', '!=', 'product')]}"/>
+                                    <field name="container_size"
+                                           attrs="{'column_invisible': [('parent.type', '!=', 'product')]}"/>
+                                    <field name="payment_term_id"
+                                           attrs="{'column_invisible': [('parent.type', '!=', 'payment_term')]}"/>
+                                    <field name="currency"
+                                           attrs="{'column_invisible': [('parent.type', '!=', 'currency')]}"/>
+                                    <field name="partner_id"
+                                           attrs="{'column_invisible': [('parent.type', '!=', 'partner')]}"/>
+                                    <field name="company_id"
+                                           attrs="{'column_invisible': [('parent.type', '!=', 'partner')]}"/>
+                                    <field name="port_of_loading_id" attrs="{'column_invisible': [('parent.type', '!=', 'pol'),('parent.type', '!=', 'partner')]}"/>
+                                    <field name="user_id" attrs="{'column_invisible': [('parent.type', '!=', 'pol'),('parent.type', '!=', 'partner')]}"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id='view_ocr_partner_template' model='ir.ui.view'>
+        <field name="name">OCR Partner Template List</field>
+        <field name="model">ocr.partner.template</field>
+        <field name="arch" type="xml">
+			<tree string='OCR Partner Template List'>
+                <field name="name"/>
+                <field name="partner_id" invisible="1"/>
+			</tree>
+		</field>
+	</record>
+
+    <record id="view_form_ocr_partner_template" model="ir.ui.view">
+        <field name="name">OCR Partner Template Form</field>
+        <field name="model">ocr.partner.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="partner_id" invisible="1"/>
+                        <field name="page_segmentation_modes_value"/>
+                        <field name="density_value"/>
+                        <field name="merge_line_item"/>
+                    </group>
+                    <group string="Header Section">
+                        <group>
+                            <field name="date_template_label" domain="[('category','=','DATE'), ('type','=','label')]"/>
+                            <field name="due_date_template_label" domain="[('category','=','DUE DATE'), ('type','=','label')]"/>
+                            <field name="reference_template_label" domain="[('category','=','REFERENCE'), ('type','=','label')]"/>
+                            <field name="bl_no_template_label" domain="[('category','=','BL NO'), ('type','=','label')]"/>
+                            <field name="exchange_rate_template_label" domain="[('category','=','EXCHANGE RATE'), ('type','=','label')]"/>
+                            <field name="payment_term_template_label" domain="[('category','=','PAYMENT TERM'), ('type','=','label')]"/>
+                            <field name="currency_template_label" domain="[('category','=','CURRENCY'), ('type','=','label')]"/>
+                            <field name="pol_template_label" domain="[('category','=','PORT OF LOADING'), ('type','=','label')]"/>
+                            <!--
+                            <field name="container_template_label" domain="[('category','=','CONTAINER'), ('type','=','label')]"/>
+                            -->
+                        </group>
+                        <group>
+                            <field name="date_format"/>
+                            <br/>
+                            <field name="reference_pattern"/>
+                            <field name="bl_no_pattern"/>
+                            <field name="exchange_rate_pattern"/>
+                            <br/><br/>
+                            <br/><br/>
+                            <field name="pol_pattern"/>
+                            <!--
+                            <field name="container_pattern"/>
+                            -->
+                            <field name="multi_page_check"/>
+                            <field name="multi_page_count"/>
+                        </group>
+                    </group>
+                    <group string="Product Section">
+                        <group>
+                            <field name="product_section_start"/>
+                            <field name="container_section_start"/>
+                            <field name="line_item_pattern"/>
+                            <field name="x2nd_line_item_pattern"/>
+                            <field name="with_exchange_rate"/>
+                            <field name="complex_line"/>
+                            <field name="container_inline_product"/>
+                            <field name="container_inline_product_pattern" attrs="{'invisible': [('container_inline_product', '=', False)]}"/>
+
+                        </group>
+                        <group>
+                            <field name="product_section_end"/>
+                            <field name="container_section_end"/>
+                            <br/>
+                            <field name="line_item_pattern_with_exchange_rate"
+                                   attrs="{'invisible': [('with_exchange_rate', '=', False)]}"/>
+                            <field name="complex_line_pattern"
+                                   attrs="{'invisible': [('complex_line', '=', False)]}"/>
+                        </group>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="action_ocr_table_mapping"
+        name="Template Table Mapping"
+        res_model="ocr.table.mapping"
+        view_mode="tree,form"
+    />
+    <!--
+    <act_window id="action_ocr_date_format"
+        name="OCR Date Format"
+        res_model="ocr.date.format"
+        view_mode="tree,form"
+    />
+    -->
+    <act_window id="action_ocr_partner_template"
+            name="Vendor Invoice Template"
+        res_model="ocr.partner.template"
+        view_mode="tree,form"
+    />
+    <menuitem id="menu_ocr_table_mapping"
+              parent="menu_ocr_vendor_invoice"
+              action="action_ocr_table_mapping"/>
+    <!--
+    <menuitem id="menu_ocr_date_format"
+              parent="menu_import_invoice"
+              action="action_ocr_date_format"/>
+    -->
+    <menuitem id="menu_ocr_partner_template"
+              parent="menu_ocr_vendor_invoice"
+              action="action_ocr_partner_template"/>
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template and notification section -->
+    <data noupdate="1">
+         <record id="email_template_resailing_reschedule" model="mail.template">
+            <field name="name">Sailing Reschedule Notification: Send by email</field>
+            <field name="model_id" ref="goexcel_sailing_reschedule.model_reschedule_sailing"/>
+            <field name="email_from">${user.email}</field>
+             <field name="partner_to">${object.contact_person.id}</field>
+            <field name="subject">Sailing Reschedule Notification:</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        New ETA/ETD Date : ${object.res_booking_date} <br/>
+                        Vessel ID : ${object.res_vessel_id} <br/>
+                        New Feeder Vessel : ${object.res_feeder_vessel_name} <br/>
+                        New Vessel Name : ${object.res_vessel_name} <br/>
+                        New Feeder Voy. No : ${object.res_feeder_voyage_no} <br/>
+                        New Voyage No : ${object.res_voyage_no} <br/>
+
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

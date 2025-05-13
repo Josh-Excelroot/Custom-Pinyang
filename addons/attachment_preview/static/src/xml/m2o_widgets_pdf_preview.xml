@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--     
+	Copyright (C) 2017 MuK IT GmbH
+	
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+-->
+
+<templates id="template" xml:space="preserve">
+
+<t t-name="FieldpdfMany2One" t-extend="FieldMany2One">
+	<t t-jquery=".o_input_dropdown" t-operation="after">
+        <div t-if="widget.nodeOptions.show_pdf" class="pdfview_many2one">
+        	<button class="fa fa-dropbox" title="Preview this file" />
+        </div>
+    </t>
+</t>
+
+    <div t-name="pdf_button_showx" class="pdfview_many2one_new">
+        <div class="right">
+            <button class="fa fa-dropbox pdf_form_document_preview" style="float:right:display:inline-flex" >Preview</button>
+    </div>
+    </div>
+
+</templates>

@@ -1,0 +1,18 @@
+<odoo>
+	<!-- SQ Form -->
+	<record model="ir.ui.view" id="view_sales_quotation_view_prospect">
+		<field name="name">Partner Product Creation</field>
+		<field name="model">sale.order</field>
+		<field name="type">form</field>
+		<field name="priority" eval="1"/>
+		<field name="inherit_id" ref="sale.view_order_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='partner_id']" position="attributes">
+				<attribute name="domain">[('parent_id','=', False),'|', ('customer', '=', True), ('is_prospect', '=', True)]</attribute>
+			</xpath>
+			<xpath expr="//field[@name='partner_id']" position="before">
+				<field name="order_type" widget="radio" class="oe_inline" attrs="{'readonly': [('state', 'in', ['sale', 'done'])]}"/>
+			</xpath>
+		</field>
+	</record>
+</odoo>

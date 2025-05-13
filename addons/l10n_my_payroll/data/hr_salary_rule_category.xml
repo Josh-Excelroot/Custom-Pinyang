@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+    <record id="hr_payroll.BASIC" model="hr.salary.rule.category">
+        <field name="name">Basic</field>
+        <field name="code">BASIC</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_payroll.ALW" model="hr.salary.rule.category">
+        <field name="name">Allowance</field>
+        <field name="code">ALW</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_payroll.GROSS" model="hr.salary.rule.category">
+        <field name="name">Gross</field>
+        <field name="code">GROSS</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_payroll.DED" model="hr.salary.rule.category">
+        <field name="name">Deduction</field>
+        <field name="code">DED</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_payroll.NET" model="hr.salary.rule.category">
+        <field name="name">Net</field>
+        <field name="code">NET</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_additions" model="hr.salary.rule.category">
+        <field name="name">Additions (Taxable)</field>
+        <field name="code">ADDT</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_deductions" model="hr.salary.rule.category">
+        <field name="name">Deductions (Taxable)</field>
+        <field name="code">DEDT</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <!--<record id="hr_salary_rule_category_contributions_epf_employer" model="hr.salary.rule.category">
+        <field name="name">Contributions - EPF (Employer)</field>
+        <field name="code">EPF_Y</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>-->
+
+    <record id="hr_salary_rule_category_epf_y_normal" model="hr.salary.rule.category">
+        <field name="name">EPF - Employer</field>
+        <field name="code">EPF_Y</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <!--<record id="hr_salary_rule_category_epf_y_add" model="hr.salary.rule.category">
+        <field name="name">EPF-Addition (Employer)</field>
+        <field name="code">EPF_Y_ADD</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>-->
+
+    <record id="hr_salary_rule_category_contributions_scs_employee" model="hr.salary.rule.category">
+        <field name="name">Contributions - SCS (Employee)</field>
+        <field name="code">SCS_E</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_contributions_eis_employee" model="hr.salary.rule.category">
+        <field name="name">Contributions - EIS (Employee)</field>
+        <field name="code">EIS_E</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <!--<record id="hr_salary_rule_category_contributions_epf_employee" model="hr.salary.rule.category">
+        <field name="name">Contributions - EPF (Employee)</field>
+        <field name="code">EPF_E</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>-->
+
+    <record id="hr_salary_rule_category_contributions_scs_employer" model="hr.salary.rule.category">
+        <field name="name">Contributions - SCS (Employer)</field>
+        <field name="code">SOCSO_Y</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_contributions_eis_employer" model="hr.salary.rule.category">
+        <field name="name">Contributions - EIS (Employer)</field>
+        <field name="code">EIS_Y</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_epf_wout_add" model="hr.salary.rule.category">
+        <field name="name">EPF - Employee</field>
+        <field name="code">DEPFE</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <!--<record id="hr_salary_rule_category_epf_add" model="hr.salary.rule.category">
+        <field name="name">EPF-Addition (Employee)</field>
+        <field name="code">EPF_E_ADD</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>-->
+
+    <record id="hr_salary_rule_category_CAT_NETBEFOREMTD" model="hr.salary.rule.category">
+        <field name="name">Net (Before MTD)</field>
+        <field name="code">CAT_NETBEFOREMTD</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_CATBONUS" model="hr.salary.rule.category">
+        <field name="name">Bonus</field>
+        <field name="code">CATBONUS</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_payroll.COMP" model="hr.salary.rule.category">
+        <field name="name">Company Contribution</field>
+        <field name="code">COMP</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_CATLHDNDED" model="hr.salary.rule.category">
+        <field name="name">Contributions - LHDN Deduction</field>
+        <field name="code">CATLHDNDED</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_BIK" model="hr.salary.rule.category">
+        <field name="name">Benefit-In-Kind</field>
+        <field name="code">BIK</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_zakat" model="hr.salary.rule.category">
+        <field name="name">Zakat</field>
+        <field name="code">ZAKAT</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_zakat_tp1" model="hr.salary.rule.category">
+        <field name="name">Zakat - TP1</field>
+        <field name="code">TP1ZAKAT</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_zakat_curr" model="hr.salary.rule.category">
+        <field name="name">Zakat - Current Month</field>
+        <field name="code">ZAKAT_CURRENT</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_allownce_nontax" model="hr.salary.rule.category">
+        <field name="name">Allowance (Non-Taxable)</field>
+        <field name="code">ALWNT</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_CATLHDN_Normal" model="hr.salary.rule.category">
+        <field name="name">Contributions - LHDN (Normal)</field>
+        <field name="code">CATLHDNNORMAL</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_CATLHDN_With_ADD" model="hr.salary.rule.category">
+        <field name="name">Contributions - LHDN (Additions) </field>
+        <field name="code">CATLHDNWOUTADD</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_CATLHDN" model="hr.salary.rule.category">
+        <field name="name">Contributions - LHDN</field>
+        <field name="code">CATLHDN</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_PCBTAXINCOMECAT" model="hr.salary.rule.category">
+        <field name="name">PCB Tax Income (Normal)</field>
+        <field name="code">PCBTAXINCOMECAT</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_PCBTAXINCOMEADD" model="hr.salary.rule.category">
+        <field name="name">PCB Tax Income (Additions)</field>
+        <field name="code">PCBTAXINCOMEADD</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_fees" model="hr.salary.rule.category">
+        <field name="name">PCB Only</field>
+        <field name="code">FEES</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_esos" model="hr.salary.rule.category">
+        <field name="name">Share option scheme</field>
+        <field name="code">ESOS</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_contributions_hrdf_employer" model="hr.salary.rule.category">
+        <field name="name">HRDF Levy</field>
+        <field name="code">HRDF_EMY</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="hr_salary_rule_category_expense" model="hr.salary.rule.category">
+        <field name="name">Expense Reimbursement</field>
+        <field name="code">EXP</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+</odoo>

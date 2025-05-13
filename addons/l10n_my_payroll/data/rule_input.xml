@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+    <record id="hr_rule_input_otheradditions0" model="hr.rule.input">
+        <field name="code">IOTHERADD</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_otheradditions0"/>
+        <field name="name">Other Additions</field>
+    </record>
+    <record id="hr_rule_input_pcb0" model="hr.rule.input">
+        <field name="code">INPUTPCB</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcb_current_month_Total_PCB"/>
+        <field name="name">PCB</field>
+    </record>
+    <record id="hr_rule_input_pcbcp0" model="hr.rule.input">
+        <field name="code">INPUTPCBCP38</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcbcp0"/>
+        <field name="name">PCB - CP38</field>
+    </record>
+
+    <record id="hr_rule_input_backpay0" model="hr.rule.input">
+        <field name="code">INPUTBACKPAY</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_backpay0"/>
+        <field name="name">Back Pay</field>
+    </record>
+
+    <record id="hr_rule_input_allowance0" model="hr.rule.input">
+        <field name="code">IALLOWANCE</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_allowance0"/>
+        <field name="name">Allowance</field>
+    </record>
+
+    <record id="hr_rule_input_commission0" model="hr.rule.input">
+        <field name="code">ICOMM</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_commission0"/>
+        <field name="name">Commission</field>
+    </record>
+
+    <record id="hr_rule_input_overtime0" model="hr.rule.input">
+        <field name="code">INPUTOT</field>
+        <field name="sequence">07</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_overtime0"/>
+        <field name="name">Overtime (1.5)</field>
+    </record>
+
+    <record id="hr_rule_input_overtime_manual0" model="hr.rule.input">
+        <field name="code">INPUTOTMANUAL</field>
+        <field name="sequence">07</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_overtime0"/>
+        <field name="name">Overtime (Manual)</field>
+    </record>
+
+    <record id="hr_rule_input_otherdeductions0" model="hr.rule.input">
+        <field name="code">INPUTOTHDED</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_otherdeductions0"/>
+        <field name="name">Other Deductions</field>
+    </record>
+
+    <record id="hr_rule_input_unpaidleave0" model="hr.rule.input">
+        <field name="code">IUPL</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_unpaidleave0"/>
+        <field name="name">Unpaid Leave</field>
+    </record>
+
+    <record id="hr_rule_input_paidleave0" model="hr.rule.input">
+        <field name="code">IPL</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_paidleave0"/>
+        <field name="name">Paid Leave</field>
+    </record>
+
+
+    <record id="hr_rule_input_adjustments0" model="hr.rule.input">
+        <field name="code">IADJADD</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_adjustmentsaddition0"/>
+        <field name="name">Adjustments</field>
+    </record>
+
+    <record id="hr_rule_input_bonus0" model="hr.rule.input">
+        <field name="code">IBONUS</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_bonus0"/>
+        <field name="name">Contractual Bonus</field>
+    </record>
+
+    <record id="hr_rule_input_bonus1" model="hr.rule.input">
+        <field name="code">PBONUS</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_bonus1"/>
+        <field name="name">Performance Bonus</field>
+    </record>
+
+    <record id="hr_rule_input_overtimepublicholiday0" model="hr.rule.input">
+        <field name="code">INPUTOTPH</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_overtimepublicholiday0"/>
+        <field name="name">Overtime - Public Holiday</field>
+    </record>
+
+    <record id="hr_rule_input_otherdeductionsbasic0" model="hr.rule.input">
+        <field name="code">IOTHDEDBASIC</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_otherdeductionsbasic0"/>
+        <field name="name">Other Deductions (Basic)</field>
+    </record>
+
+    <record id="hr_rule_input_lhdnmedicalexpensesforownparents0" model="hr.rule.input">
+        <field name="code">LHDNDED01</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0"/>
+        <field name="name">LHDN - Medical expenses for own parents, special need and parent care</field>
+    </record>
+
+    <record id="hr_rule_input_lhdnbasicsupportingequipmentfordisabled0" model="hr.rule.input">
+        <field name="code">LHDNDED02</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0"/>
+        <field name="name">LHDN - Basic supporting equipment for disabled self, spouse, child or parent</field>
+    </record>
+
+    <record id="hr_rule_input_lhdneducationfees0" model="hr.rule.input">
+        <field name="code">LHDNDED03</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0"/>
+        <field name="name">LHDN -  Education fees</field>
+    </record>
+
+    <record id="hr_rule_input_lhdnmedicalexpensesonseriousdiseases0" model="hr.rule.input">
+        <field name="code">LHDNDED04</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0"/>
+        <field name="name">LHDN - Medical expenses on serious diseases for self, spouse or child</field>
+    </record>
+
+    <record id="hr_rule_input_lhdncompletemedicalexamination0" model="hr.rule.input">
+        <field name="code">LHDNDED05</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0"/>
+        <field name="name">LHDN - Complete medical examination for self, spouse or child</field>
+    </record>
+
+    <record id="hr_rule_input_lhdnpurchaseofbooksmagazinesjournalssimilar0" model="hr.rule.input">
+        <field name="code">LHDNDED06</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0"/>
+        <field name="name">LHDN - Tax Deduction For Lifestyle</field>
+    </record>
+
+    <record id="hr_rule_input_lhdnpurchaseofpersonalcomputerforindividual0" model="hr.rule.input">
+        <field name="code">LHDNDED07</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0"/>
+        <field name="name">LHDN - Tax Deduction For Purchase Of Breastfeeding Equipment</field>
+    </record>
+
+    <record id="hr_rule_input_lhdnnetdepositinskimsimpanan0" model="hr.rule.input">
+        <field name="code">LHDNDED08</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0"/>
+        <field name="name">LHDN- Net deposit in Skim Simpanan Pendidikan Nasional (SSPN)</field>
+    </record>
+
+    <record id="hr_rule_input_lhdnpurchaseofsportsequipmentforanysportactivity0" model="hr.rule.input">
+        <field name="code">LHDNDED09</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0"/>
+        <field name="name">LHDN - Tax Deduction For Fees Paid To Child Care Centres And Kindergartens</field>
+    </record>
+
+    <record id="hr_rule_input_lhdnpaymentofalimonytoformerwife0" model="hr.rule.input">
+        <field name="code">LHDNDED10</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0"/>
+        <field name="name">LHDN - Payment of alimony to former wife</field>
+    </record>
+
+    <record id="hr_rule_input_lhdnlifeinsuranceandprovidentfund0" model="hr.rule.input">
+        <field name="code">LHDNDED11</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0"/>
+        <field name="name">LHDN - Life insurance and provident fund</field>
+    </record>
+
+    <record id="hr_rule_input_lhdneducationandmedicalinsurancepremium0" model="hr.rule.input">
+        <field name="code">LHDNDED12</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0"/>
+        <field name="name">LHDN - Education and medical insurance premium</field>
+    </record>
+
+    <record id="hr_rule_input_lhdndeferredannuitypremiumorcontribution0" model="hr.rule.input">
+        <field name="code">LHDNDED13</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0"/>
+        <field name="name">LHDN - Deferred annuity premium or contribution to private returement scheme</field>
+    </record>
+
+    <record id="hr_rule_input_lhdninterestonhousingloan0" model="hr.rule.input">
+        <field name="code">LHDNDED14</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0"/>
+        <field name="name">LHDN - Interest on Housing Loan</field>
+    </record>
+
+    <record id="hr_rule_input_lhdntp1editme10" model="hr.rule.input">
+        <field name="code">LHDNDED15</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0"/>
+        <field name="name">LHDN - TP1-edit me</field>
+    </record>
+
+    <record id="hr_rule_input_lhdntp1editme20" model="hr.rule.input">
+        <field name="code">LHDNDED16</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0"/>
+        <field name="name">LHDN - TP1-edit me</field>
+    </record>
+
+    <record id="hr_rule_input_lhdn17" model="hr.rule.input">
+        <field name="code">LHDNDED17</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0"/>
+        <field name="name">Parental care - mother</field>
+    </record>
+
+    <record id="hr_rule_input_lhdn18" model="hr.rule.input">
+        <field name="code">LHDNDED18</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0"/>
+        <field name="name">Parental care - father</field>
+    </record>
+
+    <record id="hr_rule_input_lhdn19" model="hr.rule.input">
+        <field name="code">LHDNDED19</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0"/>
+        <field name="name">SOCSO Payment</field>
+    </record>
+
+    <record id="hr_rule_input_pcb_zakat" model="hr.rule.input">
+        <field name="code">ZAKAT</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_ZAKAT"/>
+        <field name="name">Zakat</field>
+    </record>
+    <record id="hr_rule_input_pcb_tp1_zakat" model="hr.rule.input">
+        <field name="code">TP1ZKT</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_tp1_ZAKAT"/>
+        <field name="name">TP1 Zakat</field>
+    </record>
+    <!--       ####################################### -->
+    <!--        <record id="hr_rule_input_car_allowance" model="hr.rule.input">-->
+    <!--            <field name="code">Car(A)</field>-->
+    <!--            <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_nontax_allowance"/>-->
+    <!--            <field name="name">Car Allowance</field>-->
+    <!--        </record>-->
+    <!--        <record id="hr_rule_input_fuel_allowance" model="hr.rule.input">-->
+    <!--            <field name="code">Fuel(A)</field>-->
+    <!--            <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_nontax_allowance"/>-->
+    <!--            <field name="name">Fuel Allowance</field>-->
+    <!--        </record>-->
+    <!--        <record id="hr_rule_input_insurance_allowance" model="hr.rule.input">-->
+    <!--            <field name="code">Insurance(A)</field>-->
+    <!--            <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_nontax_allowance"/>-->
+    <!--            <field name="name">Insurance Allowance</field>-->
+    <!--        </record>-->
+    <!--        <record id="hr_rule_input_rent_allowance" model="hr.rule.input">-->
+    <!--            <field name="code">Rental(A)</field>-->
+    <!--            <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_nontax_allowance"/>-->
+    <!--            <field name="name">Rental Allowance</field>-->
+    <!--        </record>-->
+
+
+
+
+    <!--        <record id="hr_rule_input_non_tax_allwnce_1" model="hr.rule.input">-->
+    <!--            <field name="code">ALW_NONTAX_1</field>-->
+    <!--            <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_nontax_allowance"/>-->
+    <!--            <field name="name">Petrol card, petrol allowance, travelling allowance or toll payment or any-->
+    <!--of its combination for official duties.</field>-->
+    <!--        </record>-->
+
+    <!--        <record id="hr_rule_input_non_tax_allwnce_2" model="hr.rule.input">-->
+    <!--            <field name="code">ALW_NONTAX_2</field>-->
+    <!--            <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_nontax_allowance"/>-->
+    <!--            <field name="name">Child care allowance in respect of children up to 12 years of age.</field>-->
+    <!--        </record>-->
+
+    <!--        <record id="hr_rule_input_non_tax_allwnce_3" model="hr.rule.input">-->
+    <!--            <field name="code">ALW_NONTAX_3</field>-->
+    <!--            <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_nontax_allowance"/>-->
+    <!--            <field name="name">Gift of fixed line telephone, mobile phone, pager or PDA including cost of registration and installation.</field>-->
+    <!--        </record>-->
+
+    <!--        <record id="hr_rule_input_non_tax_allwnce_4" model="hr.rule.input">-->
+    <!--            <field name="code">ALW_NONTAX_4</field>-->
+    <!--            <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_nontax_allowance"/>-->
+    <!--            <field name="name">Monthly bills for subscription of broadband, fixed line telephone, mobile phone,-->
+    <!--pager and PDA registered in the name of the employee or employer including cost of registration and installation.</field>-->
+    <!--        </record>-->
+
+    <!--        <record id="hr_rule_input_non_tax_allwnce_5" model="hr.rule.input">-->
+    <!--            <field name="code">ALW_NONTAX_5</field>-->
+    <!--            <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_nontax_allowance"/>-->
+    <!--            <field name="name">Perquisite (whether in money or otherwise) provided to the employee-->
+    <!--pursuant to his employment</field>-->
+    <!--        </record>-->
+
+    <!--        <record id="hr_rule_input_non_tax_allwnce_6" model="hr.rule.input">-->
+    <!--            <field name="code">ALW_NONTAX_6</field>-->
+    <!--            <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_nontax_allowance"/>-->
+    <!--            <field name="name">Parking rate and parking allowance. This includes parking rate paid by the-->
+    <!--employer directly to the parking operator.</field>-->
+    <!--        </record>-->
+
+    <!--        <record id="hr_rule_input_non_tax_allwnce_7" model="hr.rule.input">-->
+    <!--            <field name="code">ALW_NONTAX_7</field>-->
+    <!--            <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_nontax_allowance"/>-->
+    <!--            <field name="name">Meal allowance received on a regular basis and given at the same rate to-->
+    <!--all employees.</field>-->
+    <!--        </record>-->
+
+    <!--        <record id="hr_rule_input_non_tax_allwnce_8" model="hr.rule.input">-->
+    <!--            <field name="code">ALW_NONTAX_8</field>-->
+    <!--            <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_nontax_allowance"/>-->
+    <!--            <field name="name">Subsidised interest for housing, education or car loan.</field>-->
+    <!--        </record>-->
+
+    <record id="hr_rule_input_arrears_and_others_per_mnth" model="hr.rule.input">
+        <field name="code">ARREARS_OTHERS</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_arrears_and_others_per_mnth"/>
+        <field name="name">Arrears and Others</field>
+    </record>
+
+    <record id="hr_rule_input_gratuity" model="hr.rule.input">
+        <field name="code">GRATUITY</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_gratuity"/>
+        <field name="name">GRATUITY</field>
+    </record>
+
+    <record id="hr_rule_input_dir_fees" model="hr.rule.input">
+        <field name="code">IDIRECT</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_category_dir_fees"/>
+        <field name="name">Director Fees</field>
+    </record>
+
+    <record id="hr_rule_input_meal_allowance0" model="hr.rule.input">
+        <field name="code">IMEAL</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_allowance0"/>
+        <field name="name">Meal Allowance</field>
+    </record>
+
+    <record id="hr_rule_input_travelling_allowance0" model="hr.rule.input">
+        <field name="code">ITRAVELLING</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_allowance0"/>
+        <field name="name">Travelling Allowance</field>
+    </record>
+    <record id="hr_rule_input_part_timer" model="hr.rule.input">
+        <field name="code">PART_TIMER</field>
+        <field name="input_id" ref="l10n_my_payroll.hr_salary_rule_part_timer"/>
+        <field name="name">PART-TIMER</field>
+    </record>
+</odoo>

@@ -1,0 +1,24 @@
+<odoo>
+    <data noupdate="0">
+        <record id="001" model="">
+            <field name="name">D</field>
+            <field name="active">True</field>
+            <field name="full_name">D - Dominance</field>
+        </record>
+        <record id="002" model="">
+            <field name="name">I</field>
+            <field name="active">True</field>
+            <field name="full_name">I - Influence</field>
+        </record>
+        <record id="003" model="">
+            <field name="name">S</field>
+            <field name="active">True</field>
+            <field name="full_name">S - Steadiness</field>
+        </record>
+        <record id="004" model="">
+            <field name="name">C</field>
+            <field name="active">True</field>
+            <field name="full_name">C - Conscientiousness</field>
+        </record>
+    </data>
+</odoo>

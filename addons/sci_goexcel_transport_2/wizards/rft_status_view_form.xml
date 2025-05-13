@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id='view_tree_rft_status' model='ir.ui.view'>
+        <field name="name">RFT Status List</field>
+        <field name="model">rft.job.status</field>
+        <field name="arch" type="xml">
+			<tree string='RFT Status'>
+				<field name="rft_status_wizard"/>
+				<field name="notification_parties" widget='many2many_tags' />
+			</tree>
+		</field>
+	</record>
+
+    <record id="view_form_rft_status" model="ir.ui.view">
+        <field name="name">RFT Status Form</field>
+        <field name="model">rft.job.status</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="rft_status_wizard"  required="1"/>
+                        <field name="notification_parties" widget='many2many_tags'  required="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id='view_tree_trip' model='ir.ui.view'>
+        <field name="name">Trip Type List</field>
+        <field name="model">trip.type</field>
+        <field name="arch" type="xml">
+			<tree string='Trip Type'>
+				<field name="name" required="1" />
+
+			</tree>
+		</field>
+	</record>
+
+    <record id="view_form_trip" model="ir.ui.view">
+        <field name="name">Trip Type Form</field>
+        <field name="model">trip.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"  required="1"/>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="action_configure_rft_status"
+        name="RFT Status"
+        res_model="rft.job.status"
+        view_mode="tree,form"
+    />
+
+          <act_window id="action_configure_trip_type"
+        name="Trip Type"
+        res_model="trip.type"
+        view_mode="tree,form"
+    />
+
+    <menuitem id="menu_transport_configure_rft_status"    name="RFT Status"    parent="sci_goexcel_transport.menu_transport_configure"    action="action_configure_rft_status"/>
+    <menuitem id="menu_transport_configure_trip_type"    name="Trip Type"    parent="sci_goexcel_transport.menu_transport_configure"    action="action_configure_trip_type"/>
+
+
+
+
+
+
+</odoo>

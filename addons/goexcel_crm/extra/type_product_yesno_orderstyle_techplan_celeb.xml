@@ -1,0 +1,69 @@
+<odoo>
+    <data noupdate="0">
+        <record id="001" model="">
+            <field name="name">Automotive gear oil</field>
+            <field name="active">True</field>
+            <field name="full_name">Automotive gear oil</field>
+        </record>
+        <record id="002" model="">
+            <field name="name">Grease</field>
+            <field name="active">True</field>
+            <field name="full_name">Grease</field>
+        </record>
+        <record id="003" model="">
+            <field name="name">Heavy duty engine oil</field>
+            <field name="active">True</field>
+            <field name="full_name">Heavy duty engine oil</field>
+        </record>
+        <record id="004" model="">
+            <field name="name">Hydraulic oil</field>
+            <field name="active">True</field>
+            <field name="full_name">Hydraulic oil</field>
+        </record>
+        <record id="005" model="">
+            <field name="name">Industrial gear oil</field>
+            <field name="active">True</field>
+            <field name="full_name">Industrial gear oil</field>
+        </record>
+        <record id="006" model="">
+            <field name="name">Transmission oil</field>
+            <field name="active">True</field>
+            <field name="full_name">Transmission oil</field>
+        </record>
+
+
+<!-- Yes/no data -->
+        <record id="001" model="">
+            <field name="name">Yes</field>
+            <field name="active">True</field>
+            <field name="full_name">Yes</field>
+        </record>
+        <record id="002" model="">
+            <field name="name">No</field>
+            <field name="active">True</field>
+            <field name="full_name">No</field>
+        </record>
+
+<!-- celebration data -->
+        <record id="001" model="">
+            <field name="name">Chinese New Year</field>
+            <field name="active">True</field>
+            <field name="full_name">Chinese New Year</field>
+        </record>
+        <record id="002" model="">
+            <field name="name">Christmas</field>
+            <field name="active">True</field>
+            <field name="full_name">Christmas</field>
+        </record>
+        <record id="003" model="">
+            <field name="name">Raya Puasa</field>
+            <field name="active">True</field>
+            <field name="full_name">Raya Puasa</field>
+        </record>
+        <record id="004" model="">
+            <field name="name">Deepavali</field>
+            <field name="active">True</field>
+            <field name="full_name">Deepavali</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="my_income_tax_report_paperformat" model="report.paperformat">
+        <field name="name">Malaysia Income Tax Report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">9</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">8</field>
+        <field name="margin_right">8</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">93</field>
+    </record>
+
+    <report id="report_income_tax_my" string="Incometax Report" model="hr.employee" report_type="qweb-pdf" name="my_mtd_report.income_tax_report_my" menu="False"/>
+
+    <record id="report_income_tax_my" model="ir.actions.report">
+        <field name="paperformat_id" ref="my_income_tax_report_paperformat"/>
+    </record>
+
+    <template id="income_tax_report_my">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <t t-foreach="get_data" t-as="o">
+                        <style>
+                            .padding {
+                            padding: 3px;
+                            }
+                        </style>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr style="line-height: 15px;">
+                                <td width="30%">
+                                    <table width="100%" style="font-size:13px">
+                                        <tr>
+                                            <td width="100%" style="padding-bottom:10px">(C.P. 8A - Pin. <span t-esc="o.get('year')"/>)</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%">
+                                                <span></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="30%">
+                                    <table width="100%" style="padding-left:25px">
+                                        <tr>
+                                            <td width="100%" style="font-size:13px;text-align:center">MALAYSIA</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" style="font-size:17px;text-align:center">
+                                                <b>&#160;&#160;&#160;&#160;&#160;&#160;CUKAI PENDAPATAN</b>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="40%" style="padding-left:40px">
+                                    <table width="100%" style="margin-top:20px;">
+                                        <tr>
+                                            <td width="90%" style="font-size:12px;color:white;background:black;text-align:center;line-height: 15px;">Penyata Gaji Pekerja SWASTA</td>
+                                            <td width="10%" style="font-size:17px;padding-left:3px;vertical-align:bottom;">
+                                                <b>EA</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" width="100%" style="font-size:12px;padding-left:14px">No. Pengenalan Cukai (TIN) Pekerja</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr style="line-height: 15px;">
+                                <td width="25%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="50%" style="font-size:12px">No. Siri</td>
+                                            <td width="50%" style="border: 1px solid black;">
+                                                <span></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="45%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="100%" style="font-size:12px;text-align:center">PENYATA SARAAN DARIPADA PENGGAJIAN</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="30%">
+                                    <table width="100%" style="height:19px;">
+                                        <tr style="border: 1px solid black;font-size:11px">
+                                            <td width="100"><span t-esc="o.get('c_income_tax')"/></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr style="line-height: 15px;">
+                                <td width="25%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="50%" style="font-size:12px">No. Majikan E</td>
+                                            <td width="50%" style="border: 1px solid black;font-size:11px"><span t-esc="o.get('e_number')"/></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="45%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="100%" style="font-size:12px;text-align:center">BAGI TAHUN BERAKHIR 31 DISEMBER
+                                                <span style="border: 1px solid black" t-esc="o.get('year')"/></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="30%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="45%" style="font-size:12px">LHDNM Negeri</td>
+                                            <td width="55%" style="border: 1px solid black;">
+                                                <span>&#160;</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr style="line-height:2px"/>
+                        </table>
+                        <!--                            <br/>-->
+                        <table width="100%" style="line-height: 20px;margin-top:5px;">
+                            <tr>
+                                <td width="100%" style="font-size:15px;color:white;background:black;text-align:center;vertical-align:middle;"><b>BORANG EA INI PERLU DISEDIAKAN UNTUK DISERAHKAN KEPADA PEKERJA BAGI TUJUAN CUKAI PENDAPATAN</b></td>
+                            </tr>
+                            <tr style="line-height: 10px;">
+                                <td>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%" style="font-size:11px;color:white;background:black;text-align:center;padding-top:5px">A</td>
+                                <td width="97%" style="font-size:11px;padding-left:5px;padding-top:2px">
+                                    <b>BUTIRAN PEKERJA<br/></b>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="42%" style="font-size:12px">1. &#160;&#160;&#160;Nama Penuh Pekerja / Pesara (Encik/Cik/Puan)</td>
+                                <td width="55%" style="border: 1px solid black;font-size:11px"><span t-esc="o.get('name')"/></td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="18%" style="font-size:12px">2. &#160;&#160;&#160;Jawatan</td>
+                                <td width="29%" style="font-size:11px;border: 1px solid black;"><span t-esc="o.get('designation')"/></td>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="18%" style="font-size:12px">3. &#160;&#160;&#160;No.Kakitangan / No.Gaji</td>
+                                <td width="29%" style="font-size:11px;border: 1px solid black;"><span t-esc="o.get('payroll_no')"/></td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="18%" style="font-size:12px">4. &#160;&#160;&#160;No K.P. Baru</td>
+                                <td width="29%" style="font-size:11px;border: 1px solid black;"><span t-esc="o.get('id_no')"/></td>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="18%" style="font-size:12px">5. &#160;&#160;&#160;No. Passport </td>
+                                <td width="29%" style="font-size:11px;border: 1px solid black;"><span t-esc="o.get('passport')"/></td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="18%" style="font-size:12px">6. &#160;&#160;&#160;No. KWSP</td>
+                                <td width="29%" style="font-size:11px;border: 1px solid black;"><span t-esc="o.get('epf_no')"/></td>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="18%" style="font-size:12px">7. &#160;&#160;&#160;No. PERKESO</td>
+                                <td width="29%" style="font-size:11px;border: 1px solid black;"><span t-esc="o.get('socso')"/></td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="22%" style="font-size:12px">8. &#160;&#160;&#160;Bilangan anak yang layak </td>
+                                <td width="25%">
+                                    <span></span>
+                                </td>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="47%" style="font-size:12px">9. &#160;&#160;&#160;Jika bekerja tidak genap setahun, nyatakan:</td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="25%" style="font-size:12px">&#160;&#160;&#160;&#160;&#160;&#160;&#160;untuk pelepasan cukai</td>
+                                <td width="22%" style="font-size:11px;border: 1px solid black;;padding-left:2px"><span t-esc="o.get('no_child')"/></td>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="25%" style="font-size:12px">&#160;&#160;&#160;&#160;&#160;&#160;&#160;(a) Tarikh mula bekerja</td>
+                                <td width="22%" style="font-size:11px;border: 1px solid black;;text-align:right;"><span t-esc="o.get('commencement')"/></td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="22%">
+                                    <span></span>
+                                </td>
+                                <td width="25%">
+                                    <span></span>
+                                </td>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="22%" style="font-size:12px">&#160;&#160;&#160;&#160;&#160;&#160;&#160;(b) Tarikh berhenti kerja</td>
+                                <td width="25%" style="font-size:11px;border: 1px solid black;"><span t-esc="o.get('cessation')"/></td>
+                            </tr>
+
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%" style="font-size:11px;color:white;background:black;text-align:center;padding-top:2px;line-height:11px;">B</td>
+                                <td width="80%" style="font-size:11px;padding-left:5px;padding-top:2px;padding-bottom:0px;line-height:11px;">
+                                    <b>PENDAPATAN PENGGAJIAN, MANFAAT DAN TEMPAT KEDIAMAN<br/>
+                                        <span style="font-size:10px; line-height:10px;padding-top:0px">(Tidak Termasuk Elaun / Perkuisit / Pemberian / Manfaat Yang Dikecualikan Cukai)</span>
+                                    </b>
+                                </td>
+                                <td width="17%" style="font-size:11px;padding-top:2px;text-align:center;">
+                                    <b>RM</b>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="1%" style="font-size:12px">&#160;&#160;1.</td>
+                                <td width="76%" style="font-size:12px">&#160;&#160;&#160;(a) Gaji kasar, upah atau gaji cuti (termasuk gaji lebih masa)</td>
+                                <td width="20%" style="border: 1px solid black;font-size:11px;text-align:right"><span t-esc="'{0:,.2f}'.format(float(o.get('ytd_gross')))"/></td>
+                            </tr>
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="1%">
+                                    <span></span>
+                                </td>
+                                <td width="76%" style="font-size:12px">&#160;&#160;&#160;(b) Fi (termasuk fi pengarah), komisen atau bonus</td>
+                                <td width="20%" style="border: 1px solid black;font-size:11px;text-align:right"><span t-esc="'{0:,.2f}'.format(float(o.get('tot_fees')))"/></td>
+                            </tr>
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="1%">
+                                    <span></span>
+                                </td>
+                                <td width="76%" style="font-size:12px">&#160;&#160;&#160;(c) Tip kasar, perkuisit, penerimaan sagu hati atau elaun-elaun lain (Perihal pembayaran: .................)</td>
+                                <td width="20%" style="border: 1px solid black;font-size:11px;text-align:right;"><span t-esc="'{0:,.2f}'.format(float(o.get('allow')))"/></td>
+                            </tr>
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="1%">
+                                    <span></span>
+                                </td>
+                                <td width="76%" style="font-size:12px">&#160;&#160;&#160;(d) Cukai pendapatan yang dibayar oleh majikan bagi pihak pekerja</td>
+                                <td width="20%" style="border: 1px solid black;font-size:11px;text-align:right;"><!--<span t-esc="'{0:,.2f}'.format(float(o.get('incm_tx_born_by_emplr')))"/>--></td>
+                            </tr>
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="1%">
+                                    <span></span>
+                                </td>
+                                <td width="76%" style="font-size:12px;">&#160;&#160;&#160;(e) Manfaat Skim Opsyen Saham Pekerja (ESOS)</td>
+                                <td width="20%" style="border: 1px solid black">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="1%">
+                                    <span></span>
+                                </td>
+                                <td width="76%" style="font-size:12px;">&#160;&#160;&#160;(f) Ganjaran bagi tempoh dari .......................... hingga ............................</td>
+                                <td width="20%" style="border: 1px solid black;text-align:right;font-size:11px"><span t-esc="'{0:,.2f}'.format(float(o.get('gratuity')))"/></td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="1%" style="font-size:12px">&#160;&#160;2.</td>
+                                <td width="76%" style="font-size:12px">&#160;&#160;&#160;Butiran bayaran tunggakan dan lain-lain bagi tahun-tahun terdahulu dalam tahun semasa</td>
+                                <td width="20%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="1%">
+                                    <span></span>
+                                </td>
+                                <td width="18%" style="font-size:12px;">&#160;&#160;&#160;&#160;&#160;Jenis pendapatan</td>
+                                <td width="4%" style="font-size:12px;">(a)</td>
+                                <td width="24%" style="border: 1px solid black;text-align:center;font-size:11px"><span t-esc="'{0:,.2f}'.format(float(o.get('arr_others')))"/></td>
+                                <td width="31%">
+                                    <span></span>
+                                </td>
+                                <td width="20%"></td>
+                            </tr>
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="1%">
+                                    <span></span>
+                                </td>
+                                <td width="18%">
+                                    <span></span>
+                                </td>
+                                <td width="4%" style="font-size:12px;">(b)</td>
+                                <td width="24%" style="border: 1px solid black">
+                                    <span></span>
+                                </td>
+                                <td width="31%">
+                                    <span></span>
+                                </td>
+                                <td width="20%" style="border: 1px solid black;text-align:right;font-size:11px"><span t-esc="'{0:,.2f}'.format(float(o.get('arr_others')))"/></td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="1%" style="font-size:12px">&#160;&#160;3.</td>
+                                <td width="76%" style="font-size:12px">&#160;&#160;&#160;Manfaat berupa barangan (Nyatakan: .................................................................................................................... )</td>
+                                <td width="20%" style="border: 1px solid black;font-size:11px;text-align:right"><span t-esc="'{0:,.2f}'.format(float(o.get('benefit_in_kind')))"/></td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="1%" style="font-size:12px">&#160;&#160;4.</td>
+                                <td width="76%" style="font-size:12px">&#160;&#160;&#160;Nilai tempat kediaman (Alamat: ........................................................................... )</td>
+                                <td width="20%" style="border: 1px solid black;">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="1%" style="font-size:12px">&#160;&#160;5.</td>
+                                <td width="76%" style="font-size:12px">&#160;&#160;&#160;Bayaran balik daripada Kumpulan Wang Simpanan / Pencen yang tidak diluluskan</td>
+                                <td width="20%" style="border: 1px solid black;">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="1%" style="font-size:12px">&#160;&#160;6.</td>
+                                <td width="76%" style="font-size:12px">&#160;&#160;&#160;Pampasan kerana kehilangan pekerjaan</td>
+                                <td width="20%" style="border: 1px solid black;">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%" style="font-size:11px;color:white;background:black;text-align:center;padding-top:1px">C</td>
+                                <td width="97%" style="font-size:11px;padding-left:5px;padding-top:5px;">
+                                    <b>PENCEN DAN LAIN-LAIN</b>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="77%" style="font-size:12px;">&#160;&#160;1. &#160;&#160;&#160;Pencen</td>
+                                <td width="20%" style="border: 1px solid black;text-align:right;font-size:11px"><span t-esc="'{0:,.2f}'.format(float(o.get('pension')))"/></td>
+                            </tr>
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="77%" style="font-size:12px;">&#160;&#160;2. &#160;&#160;&#160;Anuiti atau bayaran berkala yang lain</td>
+                                <td width="20%" style="border: 1px solid black">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="77%" style="font-size:12px;">
+                                    <b>&#160;&#160;JUMLAH</b>
+                                </td>
+                                <td width="20%" style="border:1px solid black;text-align:right;font-size:11px">
+                                    <b><span t-if="o.get('total_income')" t-esc="'{0:,.2f}'.format(float(o.get('total_income')))"/></b>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%" style="font-size:11px;color:white;background:black;text-align:center;padding-top:1px">D</td>
+                                <td width="97%" style="font-size:11px;;padding-left:5px;padding-top:5px;">
+                                    <b>TOTAL DEDUCTION</b>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="77%" style="font-size:12px;">&#160;&#160;1. &#160;&#160;&#160;Potongan cukai bulanan (PCB) yang dibayar kepada LHDNM</td>
+                                <td width="20%" style="border: 1px solid black;font-size:11px;text-align:right"><span style="padding-right:3px;" t-esc="'{0:,.2f}'.format(float(o.get('MTD')))"/></td>
+                            </tr>
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="77%" style="font-size:12px;">&#160;&#160;2. &#160;&#160;&#160;Arahan potongan CP38 yang dibayar kepada LHDNM</td>
+                                <td width="20%" style="border: 1px solid black;font-size:11px;text-align:right"><!--<span t-esc="'{0:,.2f}'.format(float(o.get('CP38')))"/>--></td>
+                            </tr>
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="77%" style="font-size:12px;">&#160;&#160;3. &#160;&#160;&#160;Zakat yang dibayar melalui potongan gaji</td>
+                                <td width="20%" style="border: 1px solid black;text-align:right;font-size:11px"><span style="padding-right:3px;" t-esc="'{0:,.2f}'.format(float(o.get('zakat')))"/></td>
+                            </tr>
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="77%" style="font-size:12px;">&#160;&#160;4. &#160;&#160;&#160;Derma / hadiah / sumbangan diluluskan yang dibayar melalui potongan gaji</td>
+                                <td width="20%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="77%" style="font-size:12px;">&#160;&#160;5. &#160;&#160;&#160;Jumlah tuntutan potongan oleh pekerja melalui Borang TP1 berkaitan:</td>
+                                <td width="20%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="1%">
+                                    <span></span>
+                                </td>
+                                <td width="51%" style="font-size:12px">&#160;&#160;&#160;&#160;&#160;&#160;(a) &#160;&#160;&#160;Pelepasan</td>
+                                <td width="4%" style="font-size:12px">RM</td>
+                                <td width="16%" style="border: 1px solid black;text-align:right;font-size:11px"><span style="padding-right:3px;" t-esc="'{0:,.2f}'.format(float(o.get('zakat_tp1')))"/></td>
+                                <td width="5%">
+                                    <span></span>
+                                </td>
+                                <td width="20%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="1%">
+                                    <span></span>
+                                </td>
+                                <td width="51%" style="font-size:12px">&#160;&#160;&#160;&#160;&#160;&#160;(b) &#160;&#160;&#160;Zakat selain yang dbayar melalui potongan gaji bulanan</td>
+                                <td width="4%" style="font-size:12px">RM</td>
+                                <td width="16%" style="border: 1px solid black;text-align:right;font-size:11px"><span style="padding-right:3px;" t-esc="'{0:,.2f}'.format(float(o.get('zakat_mnthly')))"/></td>
+                                <td width="5%">
+                                    <span></span>
+                                </td>
+                                <td width="20%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="77%" style="font-size:12px">&#160;&#160;6. &#160;&#160;&#160;Jumlah pelepasan bagi anak yang layak</td>
+                                <td width="20%" style="border: 1px solid black;text-align:right;font-size:11px"><span style="padding-right:3px;" t-esc="'{0:,.2f}'.format(float(o.get('child_relif')))"/></td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%" style="font-size:11px;color:white;background:black;text-align:center;padding-top:1px">E</td>
+                                <td width="97%" style="font-size:11px;padding-top:5px;padding-left:5px;">
+                                    <b>CARUMAN YANG DIBAYAR OLEH PEKERJA KUMPULAN WANG SIMPANAN / PENCEN YANG DILULUSKAN DAN PERKESO</b>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="22%" style="font-size:12px">&#160;&#160;1. &#160;&#160;Nama Kumpulan Wang</td>
+                                <td width="75%" style="border: 1px solid black;padding-left:10px;font-size:11px">
+                                    <span>KWSP</span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="1%">
+                                    <span></span>
+                                </td>
+                                <td width="72%" style="font-size:12px">&#160;&#160;&#160;&#160;&#160;Amaun caruman yang wajib dibayar (nyatakan bahagian pekerja sahaja)</td>
+                                <td width="4%" style="font-size:12px">RM</td>
+                                <td width="20%" style="border: 1px solid black;text-align:right;font-size:11px"><span style="padding-right:3px;" t-esc="'{0:,.2f}'.format(float(o.get('epf_e')))"/></td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="73%" style="font-size:12px">&#160;&#160;2. &#160;&#160;PERKESO: Amaun caruman yang wajib dibayar (nyatakan bahagian pekerja sahaja)</td>
+                                <td width="4%" style="font-size:12px">RM</td>
+                                <td width="20%" style="border: 1px solid black;text-align:right;font-size:11px"><span style="padding-right:3px;" t-esc="'{0:,.2f}'.format(float(o.get('scs_e')) + float(o.get('eis_e')))"/></td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="3%" style="font-size:11px;color:white;background:black;text-align:center;padding-top:1px">F</td>
+                                <td width="73%" style="font-size:11px;padding-top:5px;padding-left:5px;">
+                                    <b>JUMLAH ELAUN / PERKUISIT / PEMBERIAN / MANFAAT YANG DIKECUALIKAN CUKAI</b>
+                                </td>
+                                <td width="4%" style="font-size:11px;padding-top:5px">
+                                    <b>RM</b>
+                                </td>
+                                <td width="20%" style="padding-top:5px;border: 1px solid black;text-align:right;"></td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="line-height: 20px;">
+                            <tr>
+                                <td width="25%">
+                                    <table width="100%">
+                                        <tr colspan="4">
+                                            <td width="15%">
+                                                <span></span>
+                                            </td>
+                                            <td width="65%">
+                                                <span></span>
+                                            </td>
+                                            <td width="20%">
+                                                <span></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="15%" style="font-size:12px;padding-top:50px">Tarikh:</td>
+                                            <td width="65%" style="border: 1px solid black;padding-top:50px;font-size:12px;text-align:center">28-2-<span t-esc="o.get('current_year')"/></td>
+                                            <td width="20%">
+                                                <span></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <br/>
+                                <td width="75%">
+                                    <table width="100%" style="border:1px solid black;">
+                                        <tr>
+                                            <td width="35%" style="font-size:12px;padding-left:10px;">Nama Pegawai</td>
+                                            <td width="65%" style="border: 1px solid black;font-size:11px;padding-left:10px"><span t-esc="o.get('hr_emp')"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="35%" style="font-size:12px;padding-left:10px;">Jawatan</td>
+                                            <td width="65%" style="border: 1px solid black;font-size:11px;padding-left:10px"><span t-esc="o.get('hr_designation')"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="35%" style="font-size:12px;padding-left:10px;">Nama dan Alamat Majikan</td>
+                                            <td width="65%" style="border: 1px solid black;font-size:11px;padding-left:10px"><span t-esc="o.get('hr_cmp_name')"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="35%" style="font-size:12px">
+                                                <span><br/></span>
+                                            </td>
+                                            <td width="65%" style="border: 1px solid black;font-size:11px;padding-left:10px">
+                                                <span t-esc="o.get('hr_cmp_street')"/>
+                                                <span t-esc="o.get('hr_cmp_city')"/>
+                                                <t t-if="o.get('hr_cmp_city')">,</t>
+                                                <span t-esc="o.get('hr_cmp_zip')"/>
+                                                <t t-if="o.get('hr_cmp_zip')">,</t>
+                                                <span t-esc="o.get('hr_cmp_state')"/>
+                                                <t t-if="o.get('hr_cmp_state')">,</t>
+                                                <span t-esc="o.get('hr_cmp_country')"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td width="35%" style="font-size:12px;padding-left:10px;">No. Telefon Majikan</td>
+                                            <td width="65%" style="border: 1px solid black;font-size:11px;padding-left:10px"><span t-esc="o.get('hr_cmp_contact')"/></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <p style="page-break-after:always;"></p>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

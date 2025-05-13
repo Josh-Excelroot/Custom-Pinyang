@@ -1,0 +1,11 @@
+Version  1.0 - 29 April 2024 - Hunain
+===================================
+
+1. Library/Dependency Installation
+    a) pip3 install Ipython
+    b) pip3 install xlrd==1.0.0
+    c) pip3 install xlwt==1.3
+
+===================================
+
+2. install module on system

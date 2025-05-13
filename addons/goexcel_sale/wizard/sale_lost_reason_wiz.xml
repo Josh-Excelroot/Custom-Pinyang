@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="sale_lost_wiz_view_form" model="ir.ui.view">
+        <field name="name">sale.lost.reason.wiz.form</field>
+        <field name="model">sale.lost.reason.wiz</field>
+        <field name="arch" type="xml">
+            <form string="Lost Reason">
+                <group class="oe_title">
+                    <field name="lost_reason_id"/>
+                </group>
+                <footer>
+                    <button name="action_set_lost_reason" string="Submit" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="crm_lead_lost_action" model="ir.actions.act_window">
+        <field name="name">Lost Reason</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.lost.reason.wiz</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="sale_lost_wiz_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <record id="sale_won_wiz_view_form" model="ir.ui.view">
+        <field name="name">sale.won.reason.wiz.form</field>
+        <field name="model">sale.won.reason.wiz</field>
+        <field name="arch" type="xml">
+            <form string="Won Reason">
+                <group class="oe_title">
+                    <field name="sale_won_reason_id" placeholder="Select won reason"/>
+                </group>
+                <footer>
+                    <button name="action_set_won_reason" string="Submit" type="object" class="btn-primary"/>
+                    <button string="Cancel" name="action_set_cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="crm_lead_won_action" model="ir.actions.act_window">
+        <field name="name">Won Reason</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.won.reason.wiz</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="sale_won_wiz_view_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -1,0 +1,223 @@
+<?xml version="1.0"?>
+<odoo>
+    <menuitem id="menu_visit_configure" name="Configuration" parent="menu_visit_root" sequence="30"/>
+    <!-- visit Purpose -->
+    <record id="view_tree_visit_purpose" model="ir.ui.view">
+        <field name="name">Visit Purpose List</field>
+        <field name="model">visit.purpose</field>
+        <field name="arch" type="xml">
+            <tree string="Visit Purpose">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_form_visit_purpose" model="ir.ui.view">
+        <field name="name">Visit Purpose Form</field>
+        <field name="model">visit.purpose</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" required="1"/>
+                        <field name="code" required="1"/>
+                        <field name="active" required="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <act_window id="action_configure_visit_purpose" name="Visit Purpose" res_model="visit.purpose" view_mode="tree,form"/>
+    <menuitem action="action_configure_visit_purpose" id="menu_visit_configure_visit_purpose" name="Visit Purpose" parent="menu_visit_configure" sequence="5"/>
+    <record id="visit_outcome_form_view" model="ir.ui.view">
+        <field name="name">visit.outcome.form</field>
+        <field name="model">visit.outcome</field>
+        <field name="arch" type="xml">
+            <form string="Visit Outcome">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                        </group>
+                        <group>
+                            <field name="is_unsucessfull"/>
+                            <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_open': True, 'no_edit': True, 'no_create_edit': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="visit_outcome_tree_view" model="ir.ui.view">
+        <field name="name">visit.outcome.tree</field>
+        <field name="model">visit.outcome</field>
+        <field name="arch" type="xml">
+            <tree string="Visit Outcome">
+                <field name="name"/>
+                <field name="is_unsucessfull"/>
+                <field groups="base.group_multi_company" invisible="1" name="company_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_visit_outcome" model="ir.actions.act_window">
+        <field name="name">Visit Outcome</field>
+        <field name="res_model">visit.outcome</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem action="action_visit_outcome" id="menu_visit_outcome" name="Visit Outcome" parent="menu_visit_configure" sequence="6"/>
+    <!-- visit spenco -->
+    <record id="visit_spanco_form_view" model="ir.ui.view">
+        <field name="name">visit.spanco.form</field>
+        <field name="model">visit.spanco</field>
+        <field name="arch" type="xml">
+            <form string="Visit CRM Stage">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="stage" required="1"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                            <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_open': True, 'no_edit': True, 'no_create_edit': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="visit_spanco_tree_view" model="ir.ui.view">
+        <field name="name">visit.spanco.tree</field>
+        <field name="model">visit.spanco</field>
+        <field name="arch" type="xml">
+            <tree string="Visit CRM Stage">
+                <field name="name"/>
+                <field name="stage"/>
+                <field name="description"/>
+                <field groups="base.group_multi_company" invisible="1" name="company_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_visit_spanco" model="ir.actions.act_window">
+        <field name="name">Visit CRM Stage</field>
+        <field name="res_model">visit.spanco</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem action="action_visit_spanco" id="menu_visit_spanco" name="Visit CRM Stage" parent="menu_visit_configure" sequence="6"/>
+
+    <record id="visit_spanco_value_form_view" model="ir.ui.view">
+        <field name="name">visit.spanco.value.form</field>
+        <field name="model">visit.spanco.value</field>
+        <field name="arch" type="xml">
+            <form string="Visit Value">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                        </group>
+                        <group>
+                            <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_open': True, 'no_edit': True, 'no_create_edit': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="visit_spanco_value_tree_view" model="ir.ui.view">
+        <field name="name">visit.spanco.value.tree</field>
+        <field name="model">visit.spanco.value</field>
+        <field name="arch" type="xml">
+            <tree string="Visit Value">
+                <field name="name"/>
+                <field groups="base.group_multi_company" invisible="1" name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_visit_spanco_value" model="ir.actions.act_window">
+        <field name="name">Visit Value</field>
+        <field name="res_model">visit.spanco.value</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem action="action_visit_spanco_value" id="menu_visit_spanco_value" name="Visit Value" parent="menu_visit_configure" sequence="6"/>
+
+    <record id="visit_spanco_purpose_form_view" model="ir.ui.view">
+        <field name="name">visit.spanco.purpose.form</field>
+        <field name="model">visit.spanco.purpose</field>
+        <field name="arch" type="xml">
+            <form string="Visit Objectives">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="description" />
+                        </group>
+                        <group>
+                            <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_open': True, 'no_edit': True, 'no_create_edit': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="visit_spanco_purpose_tree_view" model="ir.ui.view">
+        <field name="name">visit.spanco.purpose.tree</field>
+        <field name="model">visit.spanco.purpose</field>
+        <field name="arch" type="xml">
+            <tree string="Visit Value">
+                <field name="name"/>
+                <field name="description" />
+                <field groups="base.group_multi_company" invisible="1" name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_visit_spanco_purpose" model="ir.actions.act_window">
+        <field name="name">Visit Objectives</field>
+        <field name="res_model">visit.spanco.purpose</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem action="action_visit_spanco_purpose" id="menu_visit_spanco_purpose" name="Visit Objectives" parent="menu_visit_configure" sequence="6"/>
+
+    <!-- method of VISIT -->
+    <record id="visit_method_form_view" model="ir.ui.view">
+        <field name="name">visit.method.form</field>
+        <field name="model">visit.method</field>
+        <field name="arch" type="xml">
+            <form string="Visit Method">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                            <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_open': True, 'no_edit': True, 'no_create_edit': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="visit_method_tree_view" model="ir.ui.view">
+        <field name="name">visit.method.tree</field>
+        <field name="model">visit.method</field>
+        <field name="arch" type="xml">
+            <tree string="Visit Method">
+                <field name="name"/>
+                <field name="description"/>
+                <field groups="base.group_multi_company" invisible="1" name="company_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_visit_method" model="ir.actions.act_window">
+        <field name="name">Visit Method</field>
+        <field name="res_model">visit.method</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem action="action_visit_method" id="menu_visit_method_id" name="Visit Method" parent="menu_visit_configure" sequence="6"/>
+</odoo>

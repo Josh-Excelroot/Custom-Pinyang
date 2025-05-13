@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_freight_master_booking_transport,Multimodal Manager,model_freight_master_booking_transport,master_booking_group_manager,1,1,1,1
+access_operator_code,access_operator_code,model_operator_code,base.group_user,1,1,1,1
+access_shipment_term,access_shipment_term,model_shipment_term,base.group_user,1,1,1,1
+access_cargo_type,access_cargo_type,model_cargo_type,base.group_user,1,1,1,1

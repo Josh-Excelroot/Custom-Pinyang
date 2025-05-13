@@ -1,0 +1,265 @@
+<odoo>
+    <template id="l10n_my_payroll_report.ppt_hr_payroll_summary_receipt">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <style>
+                            .border {
+                                border: 1px solid black;
+                                border-collapse: collapse;
+                            }
+
+                            .padding {
+                                padding: 3px;
+                            }
+                        </style>
+                        <table width="100%">
+                            <t t-foreach="get_groupname" t-as="group">
+                                <tr>
+                                    <td style="text-align:center;font-size:18px;color:blue;">
+                                        <b>
+                                            <span t-esc="group.get('user')"/>
+                                        </b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center;font-size:18px;color:blue;">
+                                        <b>Payroll Summary Report</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>&#160;</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:left;color:blue;padding-left:40px">
+                                        <b>
+                                            Period :
+                                            <span t-esc="group.get('start_date')"/>
+                                            TO
+                                            <span t-esc="group.get('end_date')"/>
+                                        </b>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+                        <br/>
+                        <table width="100%">
+                            <tr>
+                                <td width="10%">&#160;</td>
+                                <td width="10%">&#160;</td>
+                                <td width="10%">&#160;</td>
+                                <td width="10%">&#160;</td>
+                                <td width="10%">&#160;</td>
+                                <td width="10%">&#160;</td>
+                                <td width="10%">&#160;</td>
+                                <td width="10%">&#160;</td>
+                                <td width="10%">&#160;</td>
+                                <td width="10%">&#160;</td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="20%" style="border-top:1px solid black;border-left:1px solid black;">&#160;</td>
+                                <td width="10%" style="padding-top:5px;text-align:center;border-top:1px solid black;border-left:1px solid black;">Wage</td>
+                                <td width="10%" style="padding-top:5px;text-align:center;border-top:1px solid black;border-left:1px solid black;">Unpaid Leave</td>
+                                <td width="10%" style="padding-top:5px;text-align:center;border-top:1px solid black;border-left:1px solid black;">Bonus</td>
+                                <td width="10%" style="border-top:1px solid black;border-left:1px solid black;">&#160;</td>
+                                <td width="10%" style="border-top:1px solid black;border-left:1px solid black;">&#160;</td>
+                                <td width="10%" style="padding-top:5px;text-align:center;border-top:1px solid black;border-left:1px solid black;">EE EPF</td>
+                                <td width="10%" style="padding-top:5px;text-align:center;border-top:1px solid black;border-left:1px solid black;">EE SCS</td>
+                                <td width="10%" style="border-top:1px solid black;border-left:1px solid black;border-right:1px solid black">&#160;</td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <!-- <td width="10%" style="border-left:0px ;border-bottom:1px solid black;border-right:0px ;border-top:0px ;padding-top:5px;">Employee ID </td> -->
+                                <td width="20%" style="border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">Employee Name
+                                </td>
+                                <td width="10%" style="border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">Overtime</td>
+                                <td width="10%" style="border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">BakPay</td>
+                                <td width="10%" style="border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">Other Allowance
+                                </td>
+                                <td width="10%" style="border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">Gross
+                                </td>
+                                <td width="10%" style="border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">Other Deduct</td>
+                                <td width="10%" style="border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">ER EPF
+                                </td>
+                                <td width="10%" style="border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">ER SCS</td>
+                                <td width="10%" style="border-left:1px solid black;border-bottom:1px solid black;border-right:1px solid black;padding-top:5px;text-align:center">NET</td>
+                            </tr>
+                            <t t-set="grand_total_twage" t-value="0.0"/>
+                            <t t-set="grand_total_lvd" t-value="0.0"/>
+                            <t t-set="grand_total_exa" t-value="0.0"/>
+                            <t t-set="grand_total_gross" t-value="0.0"/>
+                            <t t-set="grand_total_exd" t-value="0.0"/>
+                            <t t-set="grand_total_cpf" t-value="0.0"/>
+                            <t t-set="grand_total_pf" t-value="0.0"/>
+                            <t t-set="grand_total_net" t-value="0.0"/>
+                            <t t-foreach="get_name" t-as="name">
+                                <t t-foreach="name.get('lines')" t-as="line" style="page-break-inside: avoid;">
+                                    <t t-set="total_twage" t-value="0.0"/>
+                                    <t t-set="total_lvd" t-value="0.0"/>
+                                    <t t-set="total_exa" t-value="0.0"/>
+                                    <t t-set="total_gross" t-value="0.0"/>
+                                    <t t-set="total_exd" t-value="0.0"/>
+                                    <t t-set="total_cpf" t-value="0.0"/>
+                                    <t t-set="total_pf" t-value="0.0"/>
+                                    <t t-set="total_net" t-value="0.0"/>
+                                    <tr>
+                                        <td width="20%" style="text-align:center;border-left:1px solid black;">
+                                            <span t-esc="line.get('ename')"/>
+                                        </td>
+                                        <td width="10%" style="text-align:right;border-left:1px solid black;padding-right:5px;">
+                                            <span t-esc="line.get('currency')"/>
+                                            <span t-esc="line.get('twage')"/>
+                                        </td>
+                                        <td width="10%" style="text-align:right;border-left:1px solid black;padding-right:5px;">
+                                            <span t-esc="line.get('currency')"/>
+                                            <span t-esc="line.get('lvd')"/>
+                                        </td>
+                                        <td width="10%" style="text-align:right;border-left:1px solid black;padding-right:5px;">
+                                            <span t-esc="line.get('currency')"/>
+                                            <span t-esc="line.get('exa')"/>
+                                        </td>
+                                        <td width="10%" style="text-align:right;border-left:1px solid black;padding-right:5px;">
+                                            <span t-esc="line.get('currency')"/>
+                                            <span t-esc="line.get('gross')"/>
+                                        </td>
+                                        <td width="10%" style="text-align:right;border-left:1px solid black;padding-right:5px;">
+                                            <span t-esc="line.get('currency')"/>
+                                            <span t-esc="line.get('exd')"/>
+                                        </td>
+                                        <td width="10%" style="text-align:right;border-left:1px solid black;padding-right:5px;">
+                                            <span t-esc="line.get('currency')"/>
+                                            <span t-esc="line.get('cpf')"/>
+                                        </td>
+                                        <td width="10%" style="text-align:right;border-left:1px solid black;padding-right:5px;">
+                                            <span t-esc="line.get('currency')"/>
+                                            <span t-esc="line.get('pf')"/>
+                                        </td>
+                                        <td width="10%" style="text-align:right;border-left:1px solid black;border-right:1px solid black;padding-right:5px;">
+                                            <span t-esc="line.get('currency')"/>
+                                            <span t-esc="line.get('net')"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="20%" style="border-bottom:1px solid gray;border-left:1px solid black;">&#160;</td>
+                                        <td width="10%" style="border-bottom:1px solid gray;text-align:right;border-left:1px solid black;padding-right:5px;">
+                                            <span t-esc="line.get('overtime')"/>
+                                        </td>
+                                        <td width="10%" style="border-bottom:1px solid gray;text-align:right;border-left:1px solid black;padding-right:5px;">
+                                            <span t-esc="line.get('backpay')"/>
+                                        </td>
+                                        <td width="10%" style="border-bottom:1px solid gray;text-align:right;border-left:1px solid black;padding-right:5px;">
+                                            <span t-esc="line.get('oth_alw')"/>
+                                        </td>
+                                        <td width="10%" style="border-bottom:1px solid gray;border-left:1px solid black;">&#160;</td>
+                                        <td width="10%" style="border-bottom:1px solid gray;border-left:1px solid black;">&#160;</td>
+                                        <td width="10%" style="border-bottom:1px solid gray;text-align:right;border-left:1px solid black;padding-right:5px;">
+                                            <span t-esc="line.get('epfy')"/>
+                                        </td>
+                                        <td width="10%" style="border-bottom:1px solid gray;text-align:right;border-left:1px solid black;padding-right:5px;">
+                                            <span t-esc="line.get('scsy')"/>
+                                        </td>
+                                        <td width="10%" style="border-bottom:1px solid gray;border-left:1px solid black;border-right:1px solid black">&#160;</td>
+                                    </tr>
+                                    <t t-set="total_twage" t-value="total_twage+line.get('twage')+line.get('overtime')"/>
+                                    <t t-set="total_lvd" t-value="total_lvd+line.get('lvd')+line.get('backpay')"/>
+                                    <t t-set="total_exa" t-value="total_exa+line.get('exa')+line.get('oth_alw')"/>
+                                    <t t-set="total_gross" t-value="total_gross+line.get('gross')"/>
+                                    <t t-set="total_exd" t-value="total_exd+line.get('exd')"/>
+                                    <t t-set="total_cpf" t-value="total_cpf+line.get('cpf')+line.get('epfy')"/>
+                                    <t t-set="total_pf" t-value="total_pf+line.get('pf')+line.get('scsy')"/>
+                                    <t t-set="total_net" t-value="total_net+line.get('net')"/>
+                                    <tr>
+                                        <td width="20%" style="font-size:12px;border-bottom:1px solid gray;text-align:center;border-left:1px solid black">Total</td>
+                                        <td width="10%" style="border-bottom:1px solid gray;text-align:right;padding-right:5px;border-left:1px solid black;">
+                                            <span t-esc="total_twage"/>
+                                        </td>
+                                        <td width="10%" style="border-bottom:1px solid gray;text-align:right;padding-right:5px;border-left:1px solid black;">
+                                            <span t-esc="total_lvd"/>
+                                        </td>
+                                        <td width="10%" style="border-bottom:1px solid gray;text-align:right;padding-right:5px;border-left:1px solid black;">
+                                            <span t-esc="total_exa"/>
+                                        </td>
+                                        <td width="10%" style="border-bottom:1px solid gray;text-align:right;padding-right:5px;border-left:1px solid black;">
+                                            <span t-esc="total_gross"/>
+                                        </td>
+                                        <td width="10%" style="border-bottom:1px solid gray;text-align:right;padding-right:5px;border-left:1px solid black;">
+                                            <span t-esc="total_exd"/>
+                                        </td>
+                                        <td width="10%" style="border-bottom:1px solid gray;text-align:right;padding-right:5px;border-left:1px solid black;">
+                                            <span t-esc="total_cpf"/>
+                                        </td>
+                                        <td width="10%" style="border-bottom:1px solid gray;text-align:right;padding-right:5px;border-left:1px solid black;">
+                                            <span t-esc="total_pf"/>
+                                        </td>
+                                        <td width="10%" style="border-bottom:1px solid gray;text-align:right;padding-right:5px;border-left:1px solid black;border-right:1px solid black">
+                                            <span t-esc="total_net"/>
+                                        </td>
+                                    </tr>
+                                    <t t-set="grand_total_twage" t-value="grand_total_twage+total_twage"/>
+                                    <t t-set="grand_total_lvd" t-value="grand_total_lvd+total_lvd"/>
+                                    <t t-set="grand_total_exa" t-value="grand_total_exa+total_exa"/>
+                                    <t t-set="grand_total_gross" t-value="grand_total_gross+total_gross"/>
+                                    <t t-set="grand_total_exd" t-value="grand_total_exd+total_exd"/>
+                                    <t t-set="grand_total_cpf" t-value="grand_total_cpf+total_cpf"/>
+                                    <t t-set="grand_total_pf" t-value="grand_total_pf+total_pf"/>
+                                    <t t-set="grand_total_net" t-value="grand_total_net+total_net"/>
+                                </t>
+                            </t>
+                        </table>
+                        <table width="100%">
+                            <tr style="page-break-inside: avoid;">
+                                <td width="20%" style="font-size:14px;border-bottom:1px solid black;border-top:1px solid black;border-left:1px solid black;text-align:center">
+                                    <b>Grand Total</b>
+                                </td>
+                                <td width="10%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="grand_total_twage"/>
+                                    </b>
+                                </td>
+                                <td width="10%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="grand_total_lvd"/>
+                                    </b>
+                                </td>
+                                <td width="10%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="grand_total_exa"/>
+                                    </b>
+                                </td>
+                                <td width="10%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="grand_total_gross"/>
+                                    </b>
+                                </td>
+                                <td width="10%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="grand_total_exd"/>
+                                    </b>
+                                </td>
+                                <td width="10%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="grand_total_cpf"/>
+                                    </b>
+                                </td>
+                                <td width="10%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="grand_total_pf"/>
+                                    </b>
+                                </td>
+                                <td width="10%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;border-right:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="grand_total_net"/>
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

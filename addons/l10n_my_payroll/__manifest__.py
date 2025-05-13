@@ -1,0 +1,54 @@
+# See LICENSE file for full copyright and licensing details
+
+{
+    "name": "Malaysia Payroll",
+    "version": "12.0.1.0.17",
+    "license": "LGPL-3",
+    "depends": [
+        "hr_payroll",
+        "my_holiday",
+        "hr_payroll_account",
+        "hr_attendance",
+        "hr_expense",
+        "hr_attendances_overtime",
+        "hr_contract"
+    ],
+
+    "author": "Serpent Consulting Services Pvt. Ltd.",
+    "website": "http://www.serpentcs.com",
+    "sequence": 1,
+    "category": "Human Resources",
+    "description": """
+        This module provide wizard to confirm payslip.
+    """,
+    "summary": """Manage Employees, Contracts, Payslips.""",
+    "data": [
+        "security/group.xml",
+        "security/ir.model.access.csv",
+        "data/hr_salary_rule_category.xml",
+        "data/hr_contribution_register.xml",
+        "data/payroll_extended_data.xml",
+        "data/salary_rule.xml",
+        "data/salary_rule_allowances.xml",
+        "data/rule_input.xml",
+        "data/my_hr_payroll_data.xml",
+        "data/payroll_sequence.xml",
+        "data/payroll_schedule_data.xml",
+        "views/res_company_view.xml",
+        "views/hr_employee_view.xml",
+        "views/hr_contract_view.xml",
+        "views/hr_payslip_view.xml",
+        "views/hr_payroll_menu.xml",
+        "views/payroll_config_view.xml",
+        "views/hr_rule_input_view.xml",
+        "views/payroll_schdular.xml",
+        "wizard/comput_confirm_payslip_wiz_view.xml",
+        'wizard/payslips.xml',
+        "report/report_my_payslip.xml",
+    ],
+    "installable": True,
+    'images': ['static/description/banner.png'],
+    "application": True,
+    "price": 149,
+    "currency": "EUR",
+}

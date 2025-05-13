@@ -1,0 +1,20 @@
+<odoo>
+
+    <record model="ir.ui.view" id="view_invoice_form_rft">
+		<field name="name">account_invoice.transport_rft.form</field>
+		<field name="model">account.invoice</field>
+		<field name="inherit_id" ref="account.invoice_form"/>
+        <field name="type">form</field>
+		<field name="priority" eval="1"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='invoice_line_ids']//tree[1]//field[@name='name']" position="after">
+				<field name="rft_id" attrs="{'column_invisible':[('parent.invoice_type','=','without_lorry')]}"/>
+<!--				<field name="rft_line_id" attrs="{'column_invisible':[('parent.invoice_type','=','without_lorry')]}"/>-->
+			</xpath>
+			<xpath expr="//field[@name='freight_booking']" position="attributes">
+                <attribute name="attrs">{'invisible':[('invoice_type','!=','without_lorry')]}</attribute>
+            </xpath>
+		</field>
+	</record>
+
+</odoo>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="container_data_for_invoice_report">
+        <t t-set="line_no" t-value="0"/>
+        <t t-if="o.freight_booking.cargo_type == 'fcl'"
+           t-foreach="o.freight_booking.operation_line_ids" t-as="line">
+            <t t-if="line_no > 0">
+                /
+            </t>
+            <t t-set="line_no" t-value="line_no + 1"/>
+            <t t-if="line.container_product_id">
+                <span t-field="line.container_no"/>
+                <t t-set="container_line1" t-value="container_line1 + 1"/>
+            </t>
+            <!--<t t-if="line.container_product_id">
+                ,<span t-field="line.seal_no"/>
+            </t>-->
+        </t>
+        <t t-if="o.freight_booking.cargo_type == 'lcl'"
+           t-foreach="o.freight_booking.operation_line_ids2" t-as="line">
+            <t t-if="line_no > 0">
+                /
+            </t>
+            <t t-set="line_no" t-value="line_no + 1"/>
+            <t t-if="line.container_no">
+                <span t-field="line.container_no"/>
+                <t t-set="container_line1" t-value="container_line1 + 1"/>
+            </t>
+            <!-- <t t-if="line.container_product_id">
+                 ,<span t-field="line.seal_no"/>
+             </t>-->
+        </t>
+    </template>
+
+    <template id="report_external_layout_inherit_2" inherit_id="web.external_layout_standard">
+        <xpath expr="//div[@class='header']" position="replace">
+            <div class="header">
+                <div class="row">
+                    <div class="col-2.5 mb4">
+                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                             style="max-height: 90px; max-width: 300px;" alt="Logo"/>
+                    </div>
+                    <div style="font-size: 12px;margin-left:20px;">
+                        <t t-if="company.partner_id">
+                            &#160;&#160;<b>
+                            <span t-field="company.partner_id.name" style="font-family:arial;font-size: 20px;"/>
+                        </b>
+                            <span style="font-size: 11px;" t-field="company.company_registry"/>
+                            <br/>
+                            &#160;&#160;<span t-field="company.partner_id.street"/>
+                            <br/>
+                            &#160;&#160;<span t-field="company.partner_id.zip"/>
+                            <span t-field="company.partner_id.city"/>,
+                            <span t-field="company.partner_id.state_id.name"/>,
+                            <span t-field="company.partner_id.country_id.name"/>
+                            <br/>
+                            &#160;&#160;Hunting Line:
+                            <span t-field="company.partner_id.phone"/>
+                            <![CDATA[&nbsp;&nbsp;]]>
+                            <br/>
+                            <span style="font-size: 11px;">
+                                &#160;&#160;Email :
+                            </span>
+                            <span t-field="company.email" style="font-size: 12px;"></span>
+                            <span style="font-size: 11px;">
+                                &#160;&#160;SST :
+                            </span>
+                            <span t-field="company.vat" style="font-size: 12px;"></span>
+                        </t>
+                    </div>
+
+                </div>
+
+            </div>
+        </xpath>
+
+
+        <xpath expr="//div[@class='footer o_standard_footer']" position="replace">
+            <div class="footer o_standard_footer">
+                <div class="text-center" style="border-top: 1px solid black;">
+                    <div name="financial_infos">
+                        <span t-field="company.report_footer"/>
+                    </div>
+
+                    <div t-if="report_type == 'pdf'" class="text-muted">
+                        Page:
+                        <span class="page"/>
+                        /
+                        <span class="topage"/>
+                    </div>
+                </div>
+            </div>
+
+
+        </xpath>
+    </template>
+
+</odoo>

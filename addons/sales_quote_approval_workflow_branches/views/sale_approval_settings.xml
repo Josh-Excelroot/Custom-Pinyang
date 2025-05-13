@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="sale_settings_form_view" model="ir.ui.view">
+            <field name="name">sale.approval.settings.form.view</field>
+            <field name="model">sale.approval.settings</field>
+            <field name="type">form</field>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <label for="sq_branch" string="Branch"/>
+                <field name='sq_branch' />
+                <br/>
+                <label for="sq_approval_user_ids" string="Approvers"/>
+                <field name="sq_approval_user_ids" widget="many2many_tags"/>
+                <br/>
+                <label for="sq_notification_user_ids" string="Notification Recipients"/>
+                <field name='sq_notification_user_ids' widget="many2many_tags"/>
+            </field>
+        </record>
+
+        <record id="sale_settings_tree_view" model="ir.ui.view">
+            <field name="name">sale.approval.settings.tree.view</field>
+            <field name="model">sale.approval.settings</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <field name='sq_branch'/>
+                <field name="sq_approval_user_ids" widget="many2many_tags"/>
+                <field name='sq_notification_user_ids' widget="many2many_tags"/>
+            </field>
+        </record>
+    </data>
+</odoo>

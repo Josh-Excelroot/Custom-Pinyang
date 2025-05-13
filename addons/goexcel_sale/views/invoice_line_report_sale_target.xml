@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="invoice_line_sale_target_report_tree_view">
+            <field name="name">invoice.line.report.tree</field>
+            <field name="model">invoice.line.report.sales.target</field>
+            <field name="arch" type="xml">
+                <tree string="Invoice Line">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="target_sale"/>
+                    <field name="partner_id"/>
+                    <field name="product_id"/>
+                    <field name="invoice_qty" sum="Total"/>
+                    <field name="uom_id"/>
+                    <field name="vol" sum="Total"/>
+                    <field name="vol_sub_total" sum="Total"/>
+                    <field name="price_unit"/>
+                    <field name="subtotal" sum="Total"/>
+                    <field name="product_category_id"/>
+                    <field name="product_group_id"/>
+                    <field name="product_grade_id"/>
+                    <field name="city"/>
+                    <field name="sector_id"/>
+                    <field name="state"/>
+                    <field name="user_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="invoice_line_sale_target_report_search_view" model="ir.ui.view">
+            <field name="name">invoice.line.report.search</field>
+            <field name="model">invoice.line.report.sales.target</field>
+            <field name="arch" type="xml">
+                <search string="Invoice Lines">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="partner_id"/>
+                    <field name="product_id"/>
+                    <field name="state"/>
+                    <field name="city"/>
+                    <field name="user_id"/>
+                    <filter string="This Month" name="this_month"
+                            domain="[('date','&lt;',(context_today()+relativedelta(months=1)).strftime('%%Y-%%m-01')), ('date','&gt;=',time.strftime('%%Y-%%m-01'))]"/>
+                    <!--domain="[('date','&lt;',(context_today()+relativedelta(months=1)).strftime('%%Y-%%m-01')), ('date','&gt;=',time.strftime('%%Y-%%m-01'))]"-->
+                    <filter string="Order Date" name="filter_sale_order_date" date="date"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Customer" name="group_partner_id" context="{'group_by':'partner_id'}"/>
+                        <filter string="Product" name="group_product_id" context="{'group_by':'product_id'}"/>
+                        <filter string="Status" name="group_state" context="{'group_by':'state'}"/>
+                        <filter string="Salesperson" name="group_user_id" context="{'group_by':'user_id'}"/>
+                        <filter string="Product Category" name="group_product_category_id"
+                                context="{'group_by':'product_category_id'}"/>
+                        <filter string="Product Group" name="group_product_group_id"
+                                context="{'group_by':'product_group_id'}"/>
+                        <filter string="Product Grade" name="group_product_grade_id"
+                                context="{'group_by':'product_grade_id'}"/>
+                        <filter string="Sector" name="group_sector_id" context="{'group_by':'sector_id'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by':'date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="invoice_line_saletarget_report_pivot_view" model="ir.ui.view">
+            <field name="name">invoice.line.report.pivot</field>
+            <field name="model">invoice.line.report.sales.target</field>
+            <field name="arch" type="xml">
+                <pivot string="Invoice Analysis">
+                    <field name="date" interval="month" type="row"/>
+                    <field name="subtotal" type="measure"/>
+                    <field name="vol_sub_total" type="measure"/>
+                    <field name="invoice_qty" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+
+        <record id="invoice_line_saletarget_report_acton" model="ir.actions.act_window">
+            <field name="name">Invoice Reports Sale Target</field>
+            <field name="res_model">invoice.line.report.sales.target</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,pivot</field>
+            <field name="view_id" ref="invoice_line_sale_target_report_tree_view"/>
+            <field name="context">{"search_default_this_month":1}</field>
+            <field name="search_view_id" ref="invoice_line_sale_target_report_search_view"/>
+        </record>
+
+        <menuitem action="invoice_line_saletarget_report_acton" id="menu_invoice_saletarget_line_report1"
+                  name="Invoice Report Sale Target" parent="sale.sale_order_menu" sequence="15"/>
+    </data>
+</odoo>   

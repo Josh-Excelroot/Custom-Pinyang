@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sale_order_form" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="sq_min_amount" invisible="1"/>
+
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="approve_by"/>
+                <field name="approve_date_time"/>
+            </xpath>
+            <!--<xpath expr="//header/button[@name='action_confirm'][@id='action_confirm']" position="replace">
+                <button name="action_to_approve" type="object" states="draft" string="Confirm" class="btn-primary"/>
+            </xpath> -->
+            <!--<xpath expr="//button[@name='action_confirm']" position="replace">
+                <button name="action_to_approve" type="object" states="sent" string="Request Approval" class="btn-primary"/>
+            </xpath>-->
+            <!-- there are 2 action_confirm buttons, need to hide both -->
+            <!--                <xpath expr="//button[@name='action_confirm'][1]" position="attributes">-->
+            <!--                    <attribute name="states"></attribute>-->
+            <!--                    <attribute name="attrs">{'invisible':['|',('state', 'in', ('draft','approve')),('amount_total','&gt;=','sq_min_amount')]}</attribute>-->
+            <!--                </xpath>-->
+            <!-- <xpath expr="//button[@name='action_confirm']" position="attributes">
+                <attribute name="states"></attribute>
+                <attribute name="attrs">{'invisible':['&amp;',('state', 'in', ('draft','approve','sent','sale','done','cancel'))]}</attribute>
+            </xpath> -->
+
+            <xpath expr="//header/button[@name='print_quotation']" position="attributes">
+                <attribute name="states"></attribute>
+                <attribute name="attrs">{'invisible':['|',('state', 'not in', ('approved')),('amount_total','&gt;','sq_min_amount')]}</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='print_quotation']" position="attributes">
+                <attribute name="states"></attribute>
+                <attribute name="attrs">{'invisible':['|',('state', 'not in', ('approved')),('amount_total','&gt;','sq_min_amount')]}</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='action_quotation_sent']" position="attributes">
+                <attribute name="states"></attribute>
+                <attribute name="attrs">{'invisible':['|',('state', 'in',
+                    ('draft','approve','sent','sale','done','cancel')),('amount_total','&gt;','sq_min_amount')]}
+                </attribute>
+            </xpath>
+            <!-- <xpath expr="//header/button[@name='preview_sale_order']" position="attributes">
+                <attribute name="states"></attribute>
+                <attribute name="attrs">{'invisible':['|',('state', 'in', ('draft','approve')),('amount_total','&gt;','sq_min_amount')]}</attribute>
+            </xpath> -->
+
+            <xpath expr="//header/field[@name='state']" position="replace">
+                <!--
+                <field name="state" widget="statusbar" statusbar_visible="draft,approve,approved,sent,sale" attrs="{'invisible': ['|',('state', 'in', ('draft','approve')),('amount_total','&gt;=','sq_min_amount')]}"/>
+-->
+                <field name="state" widget="statusbar" statusbar_visible="draft,approve,approved,sent,sale"/>
+
+            </xpath>
+
+            <xpath expr="//header" position="inside">
+                <!--                <field name="approve_reject_sq" invisible="1"/>-->
+                <field name="approve_show_button" invisible="1"/>
+                <button name="action_request_approve" type="object" states="draft" string="Request Approval"
+                        class="oe_highlight"
+                        attrs="{'invisible': ['|',('state', 'not in', ('draft')),('amount_total','&gt;','sq_min_amount')]}"/>
+                <!-- <button name="action_approve" type="object" states="approve" string="Approve" class="oe_highlight" attrs="{'invisible': ['|', '|', ('approve_reject_sq','=', False), ('amount_total','&gt;','sq_min_amount')]}"/> -->
+                <button name="action_approve" type="object" string="Approve" class="oe_highlight"
+                        attrs="{'invisible': ['|', ('state', '!=', 'approve'), ('approve_show_button', '=', False)]}"/>
+                <button name="action_reject" type="object" string="Reject" class="oe_highlight"
+                        attrs="{'invisible': ['|', ('state', '!=', 'approve'), ('approve_show_button', '=', False)]}"/>
+
+            </xpath>
+            <!--  <xpath expr="//header" position="inside">
+                <button name="action_approve" type="object" states="approve" string="Approve" class="oe_highlight" attrs="{'invisible': [('approve_reject_sq','=', True)]}"/>
+           </xpath>-->
+            <!-- attrs="{'invisible': [('approve_reject_sq','=', False)]}"/>
+           -->
+            <!--  <xpath expr="//header" position="inside">
+                <button name="action_reject" type="object" states="approve" string="Reject" class="oe_highlight" attrs="{'invisible': ['|',('state', 'not in', ('approve')),('amount_total','&gt;','sq_min_amount')]}"/>
+            </xpath>-->
+            <!-- bug TS - user should not see confirm button in draft -->
+            <xpath expr="//header/button[@name='action_confirm'][1]" position="attributes">
+                <attribute name="states"></attribute>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='action_confirm'][2]" position="attributes">
+                <attribute name="states"></attribute>
+                <attribute name="attrs">{'invisible': [('state', 'not in', ['sent','approved'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='sale_order_template_id']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='contact_name']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='show_subtotal']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='hide_subtotal']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='show_subtotal_in_line']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='show_foreign_currency']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='split_signature']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+
+            <!--    Yulia 12032025 must comment this part, error when upgrade module        -->
+            <!--            <xpath expr="//field[@name='tag_ids']" position="attributes">-->
+            <!--                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}</attribute>-->
+            <!--  			</xpath>-->
+            <xpath expr="//field[@name='date_order']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='validity_date']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='pricelist_id']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='currency_id']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <!--      Yulia 12032025 no need branch      -->
+            <!--            <xpath expr="//field[@name='branch']" position="attributes">-->
+            <!--                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}</attribute>-->
+            <!--  			</xpath>-->
+            <xpath expr="//field[@name='sq_description']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='incoterm']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='commodity1']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='carrier']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='POL']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='POD']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='service_type']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='mode']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='type']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('state', '=', 'approve'), ('state', '=', 'approved')]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="attrs">{'readonly' : ['|','|','|',('state', '=', 'approved'),('state', '=',
+                    'approve'),('state', '=', 'sale'),('state', '=', 'sent')]}
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_sale_quotation_inherit" model="ir.ui.view">
+        <field name="name">sale.quotation.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//filter[@name='draft']" position="replace">
+                <!-- <filter string="Quotations" name="draft" domain="[('branch','=',self.env['sale.approval.settings'].search([('sq_approvers', 'in',[self.env.user])], limit=1).branch)]"/> -->
+                <filter string="Quotations" name="draft" domain="[('branch','=', 'SELANGOR')]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- <record id="sale.sale_order_action_view_quotation_tree" model="ir.actions.act_window">
+        <field name="domain">[('branch','=',self.env['sale.approval.settings'].search([('sq_approvers', 'in',[self.env.user])], limit=1).branch)]</field>
+        <field name="domain">[('branch','=','JOHOR')]</field>
+    </record> -->
+
+    <record id="view_sq_inherit_search_freight" model="ir.ui.view">
+        <field name="name">sq.search.freight.booking</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='my_quotation']" position="replace">
+                <!--<xpath expr="//filter[@name='upselling']" position="replace">-->
+                <separator/>
+                <filter string="Quotations" name="my_quotation" domain="[('state','in',('draft', 'sent', 'rfq'))]"/>
+                <separator/>
+            </xpath>
+            <xpath expr="//filter[@name='my_quotation']" position="after">
+                <!--<xpath expr="//filter[@name='upselling']" position="replace">-->
+                <separator/>
+                <filter string="Cancelled" name="cancelled_quotation" domain="[('state','=','cancel')]"/>
+                <separator/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="action_sale_approval_settings" model="ir.actions.act_window">
+        <field name="name">Approval Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.approval.settings</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- remove the Action button to print -->
+    <report id="sale.action_report_saleorder" string="Quotation / Order" model="sale.order" report_type="qweb-pdf"
+            file="sale.report_saleorder" name="sale.report_saleorder"
+            print_report_name="(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)"
+            menu="False"/>
+    <menuitem id="menu_sales_approval_settings" parent="sale.menu_sale_config" action="action_sale_approval_settings"
+              sequence="4"/>
+
+
+</odoo>

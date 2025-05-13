@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <report file="sci_goexcel_payment_receipt.report_sr_details" id="report_sr_action" menu="False" model="account.voucher" name="sci_goexcel_payment_receipt.report_sr_details" report_type="qweb-pdf" string="Official Receipt"/>
+        <report file="sci_goexcel_payment_receipt.report_av_pr_details" id="report_av_pr_action" menu="False" model="account.voucher" name="sci_goexcel_payment_receipt.report_av_pr_details" report_type="qweb-pdf" string="Payment Receipt"/>
+</odoo>

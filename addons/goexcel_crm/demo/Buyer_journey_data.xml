@@ -1,0 +1,74 @@
+<odoo>
+    <data noupdate="0">
+        <record id="001" model="buying.journary">
+            <field name="name">Industrial Supplier in the market - Aware</field>
+            <field name="active">True</field>
+            <field name="full_name">Industrial Supplier in the market - Aware</field>
+        </record>
+        <record id="002" model="buying.journary">
+            <field name="name">Prospect of supplier - engage</field>
+            <field name="active">True</field>
+            <field name="full_name">Prospect of supplier - engage</field>
+        </record>
+        <record id="003" model="buying.journary">
+            <field name="name">Aware of problem</field>
+            <field name="active">True</field>
+            <field name="full_name">Aware of problem</field>
+        </record>
+        <record id="004" model="buying.journary">
+            <field name="name">Unaware of problem</field>
+            <field name="active">True</field>
+            <field name="full_name">Unaware of problem</field>
+        </record>
+        <record id="005" model="buying.journary">
+            <field name="name">Study problem and info searching</field>
+            <field name="active">True</field>
+            <field name="full_name">Study problem and info searching</field>
+        </record>
+        <record id="006" model="buying.journary">
+            <field name="name">Solution searching</field>
+            <field name="active">True</field>
+            <field name="full_name">Solution searching</field>
+        </record>
+        <record id="007" model="buying.journary">
+            <field name="name">Evaluate, supplier shortlisting</field>
+            <field name="active">True</field>
+            <field name="full_name">Evaluate, supplier shortlisting</field>
+        </record>
+        <record id="008" model="buying.journary">
+            <field name="name">Rationise the purchase</field>
+            <field name="active">True</field>
+            <field name="full_name">Rationise the purchase</field>
+        </record>
+        <record id="009" model="buying.journary">
+            <field name="name">Decide the purchase - select</field>
+            <field name="active">True</field>
+            <field name="full_name">Decide the purchase - select</field>
+        </record>
+        <record id="010" model="buying.journary">
+            <field name="name">Purcahse</field>
+            <field name="active">True</field>
+            <field name="full_name">Purcahse</field>
+        </record>
+        <record id="011" model="buying.journary">
+            <field name="name">Receiving - evaluate, excite</field>
+            <field name="active">True</field>
+            <field name="full_name">Receiving - evaluate, excite</field>
+        </record>
+        <record id="012" model="buying.journary">
+            <field name="name">Use the product - Ascend</field>
+            <field name="active">True</field>
+            <field name="full_name">Use the product - Ascend</field>
+        </record>
+        <record id="013" model="buying.journary">
+            <field name="name">Advocate - say good, testimonial</field>
+            <field name="active">True</field>
+            <field name="full_name">Advocate - say good, testimonial</field>
+        </record>
+        <record id="014" model="buying.journary">
+            <field name="name">Promoter - Refer to others</field>
+            <field name="active">True</field>
+            <field name="full_name">Promoter - Refer to others</field>
+        </record>
+    </data>
+</odoo>

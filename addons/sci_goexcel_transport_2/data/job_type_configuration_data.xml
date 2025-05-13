@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="transport.job.type" id="transport_job_type1">
+            <field name="name">Haulage</field>
+        </record>
+        <record model="transport.job.type" id="transport_job_type2">
+            <field name="name">General</field>
+        </record>
+        <record model="transport.job.type" id="transport_job_type3">
+            <field name="name">Temperature</field>
+        </record>
+
+    </data>
+</odoo>

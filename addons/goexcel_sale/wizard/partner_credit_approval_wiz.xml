@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="partner_credit_change_form_view" model="ir.ui.view">
+        <field name="name">partner.credit.approval.wiz.form</field>
+        <field name="model">partner.credit.approval.wiz</field>
+        <field name="arch" type="xml">
+            <form string="Credit Update">
+                <group>
+                    <group>
+                        <field name="partner_id" readonly="1"/>
+                        <field name="old_credit_term_id" readonly="1"/>
+                        <field name="new_credit_term_id" options="{'no_create': True, 'no_open': True, 'no_edit': True, 'no_create_edit': True}"/>
+                    </group>
+                    <group>
+                        <field name="requested_by_id" readonly="1"/>
+                        <field name="old_credit_limit" readonly="1"/>
+                        <field name="new_credit_limit"/>
+                    </group>
+                    <group>
+                        <field name="remark"/>
+                    </group>
+                </group>
+                <footer>
+                    <button class="btn-primary" name="action_for_create_data" string="Submit" type="object"/>
+                    <button class="btn-secondary" special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="partner_credit_change_action" model="ir.actions.act_window">
+        <field name="name">Credit Update</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">partner.credit.approval.wiz</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="partner_credit_change_form_view"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

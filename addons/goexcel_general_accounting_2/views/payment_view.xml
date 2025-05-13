@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_payment_form_widgets_inherited" model="ir.ui.view">
+        <field name="name">view.account.payment.form.inherited</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id"
+               ref="onepayment_against_multipleinvoices_mdpmdp89.view_account_payment_form_inherited"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_invoice_ids']" position="attributes">
+                <attribute name="widget">section_and_note_one2many_custom</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_payment_form_widgets_inherited_credit" model="ir.ui.view">
+        <field name="name">view.account.payment.form.inherited</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="credit_note_for_payment.view_account_payment_form_credit_inherited"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='credit_invoice_ids']" position="attributes">
+                <attribute name="widget">section_and_note_one2many_custom</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+
+

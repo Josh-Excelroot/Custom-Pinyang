@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_reschedule_sailing_form" model="ir.ui.view">
+        <field name="name">view.reschedule.sailing.form</field>
+        <field name="model">reschedule.sailing</field>
+        <field name="arch" type="xml">
+            <form string="Reschedule Sailing">
+                <group>
+                    <group>
+                        <field name="port_of_loading"/>
+<!--                        <field name="vessel_name"/>-->
+                        <field name="voyage_no"/>
+                    </group>
+                    <group>
+                        <field name="booking_date"/>
+<!--                        <field name="carrier_booking_no"/>-->
+                    </group>
+                </group>
+<!--                <div class="oe_title oe_left">-->
+<!--                    <button name="action_search_related_job3" string="Search" type="object" class="btn-primary"/>-->
+<!--                </div>-->
+                <group>
+                    <separator string="Reschedule Booking Job" />
+                </group>
+                <group>
+                    <group>
+                        <field name="res_booking_date"/>
+                        <field name="res_feeder_vessel_name"/>
+                        <field name="res_feeder_voyage_no"/>
+                        <field name="res_pol_eta"/>
+                        <field name="res_pod_eta"/>
+<!--                        <field name="res_carrier_booking_no"/>-->
+                    </group>
+                    <group>
+                        <field name="res_vessel_id"/>
+                        <field name="res_vessel_name"/>
+                        <field name="res_voyage_no"/>
+                        <field name="res_place_of_delivery_eta"/>
+                        <field name="res_shipment_close_date_time"/>
+                    </group>
+                </group>
+                <group string="">
+                    <!--<field name="split_booking_line_id2"/>-->
+                    <field name="job_line_ids">
+                        <tree create="false" delete="false" editable='bottom'>
+                            <field name="add"/>
+                            <field name="booking_no" readonly="1" force_save="1"/>
+                            <field name="carrier_booking_no" readonly="1"/>
+                            <field name="booking_date" readonly="1"/>
+                            <field name="port_of_loading" readonly="1"/>
+                            <field name="port_of_discharge" readonly="1"/>
+                            <field name="vessel_name" readonly="1"/>
+                            <field name="voyage_no" readonly="1"/>
+                            <field name="customer" readonly="1"/>
+                            <field name="contact_person" domain="[('parent_id', '=', customer)]"/>
+                            <field name="shipper" readonly="1"/>
+                            <field name="consignee" readonly="1"/>
+                            <field name="booking_status" readonly="1"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button string="Update All Job" name="update_job" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Update All and Email" name="update_send_email" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_reschedule_sailing" model="ir.actions.act_window">
+        <field name="name">Reschedule Sailing</field>
+        <field name="res_model">reschedule.sailing</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_reschedule_sailing_form"/>
+    </record>
+
+    <menuitem id="menu_reschedule_sailing"
+              name="Reschedule Sailing"
+              parent="sci_goexcel_freight.menu_freight_booking"
+              action="action_reschedule_sailing"/>
+
+</odoo>
+

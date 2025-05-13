@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form_soa" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.soa.inherit</field>
+            <field name="model">res.config.settings</field>
+            <field eval="40" name="priority"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]/div[hasclass('app_settings_block')]/div[@id='invoicing_settings']" position="after">
+                    <h2>Customer SOA Setting</h2>
+                    <div class="row mt16 o_settings_container" name="customer_soa_setting_container">
+                        <div class="col-12 col-lg-6 o_setting_box" title="Customer SOA Note">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Customer SOA Note</span>
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <!-- <label string="SOA NOte" for="soa_note" class="col-lg-3 o_light_label"/>-->
+                                        <field name="soa_note" widget="html"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">SOA Type</span>
+                                <div class="content-group">
+                                    <div class="row mt16 ml4">
+                                        <field name="soa_type" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True, 'no_open': True}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">SOA Invoice Date Type</span>
+                                <div class="content-group">
+                                    <div class="row mt16 ml4">
+                                        <field name="soa_invoice_date_type" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True, 'no_open': True}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="show_payment_term"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="show_payment_term"/>
+                                <div class="text-muted">Show Payment Term</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Ageing Group</span>
+                                <div class="content-group">
+                                    <div class="row mt16 ml4">
+                                        <field name="aging_group" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True, 'no_open': True}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                               <!-- <field name="show_payment_term"/>-->
+                            </div>
+                            <div class="o_setting_right_pane">
+                               <!-- <label for="show_payment_term"/>
+                                <div class="text-muted">Show Payment Term</div>-->
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

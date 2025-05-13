@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- #kashif 17may23 - added group on create inv button-->
+        <record id="view_order_form_inherit_picking_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_picking_manual.view_order_form_inherit_picking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='%(sale_picking_manual.action_sale_picking)d']" position="attributes">
+                    <attribute name="groups">account.group_account_invoice ,sale.group_sale_manager</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="sale_order_view_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_management.sale_order_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d']" position="attributes">
+                    <attribute name="groups">account.group_account_invoice,sale.group_sale_manager</attribute>
+                </xpath>
+                <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d']" position="attributes">
+                    <attribute name="groups">account.group_account_invoice,sale.group_sale_manager</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!--        #end-->
+
+        <record id="view_order_form_go_excel" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="before">
+                    <field name="order_type" widget="radio" class="oe_inline" attrs="{'readonly': [('state', 'in', ['sale', 'done'])]}"/>
+                    <field name="make_auto_delivery" attrs="{'invisible': [('order_type', '!=', 'cash_order')], 'readonly': [('state', 'in', ['sale', 'done'])]}"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                    <attribute name="domain">[('parent_id', '=', partner_id),('type', '!=', 'contact')]</attribute>
+                    <attribute name="options">{'no_create': True, 'no_create_edit':True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+                    <attribute name="domain">[('parent_id', '=', partner_id),('type', '!=', 'contact')]</attribute>
+                    <attribute name="options">{'no_create': True, 'no_create_edit':True}</attribute>
+                </xpath>
+                <xpath expr="//header/button[@name='print_quotation'][1]" position="attributes">
+                    <attribute name="states"/>
+                    <attribute name="attrs">{'invisible':['|', ('state', 'in', ('approve', 'sale', 'done', 'cancel', 'lost')), ('req_discount_approval', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//header/button[@name='print_quotation'][2]" position="attributes">
+                    <attribute name="attrs"/>
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//header/button[@name='action_quotation_send']" position="attributes">
+                    <attribute name="states"/>
+                    <attribute name="attrs">{'invisible':['|', ('state', 'in', ('approve', 'sale', 'done', 'cancel', 'lost')), ('req_discount_approval', '=', True)]}</attribute>
+                    <attribute name="string">Email</attribute>
+                </xpath>
+                <xpath expr="//header/button[@name='action_confirm'][1]" position="attributes">
+                    <attribute name="attrs">{'invisible':['|', ('state', 'in', ('approve', 'sale', 'done', 'cancel', 'lost')), ('req_discount_approval', '=', True)]}</attribute>
+                    <attribute name="string">Confirm SO</attribute>
+                </xpath>
+                <xpath expr="//header/button[@name='action_confirm'][2]" position="attributes">
+                    <attribute name="attrs"/>
+                    <attribute name="invisible">1</attribute>
+                    <attribute name="string">Confirm SO</attribute>
+                </xpath>
+                <xpath expr="//header/button[@name='action_quotation_send'][4]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                    <attribute name="attrs">{'invisible':[('state', 'in', ('lost'))]}</attribute>
+                </xpath>
+                <xpath expr="//header" position="inside">
+                    <button type="action" name="%(whatsapp_integration.send_whatsapp_msg_template_action)d" class="btn-lg btn-link mb4 fa fa-whatsapp"
+                    aria-label="Send By WhatsApp" title="Send By WhatsApp" attrs="{'invisible':['|', ('state', 'in', ('approve', 'sale', 'done', 'cancel', 'lost')), ('req_discount_approval', '=', True)]}"/>
+                    <button attrs="{'invisible': ['|', ('state', 'not in', ('draft')), ('req_discount_approval', '=', False)]}" class="oe_highlight" name="action_to_approve" string="To Approve" type="object"/>
+                    <button attrs="{'invisible': ['|',('approve_reject_sq','=', False), ('state', '!=', 'approve')]}" class="oe_highlight" name="action_to_approved" string="Approve" type="object"/>
+                    <button name="action_quotation_sent" string="Mark As Sent" type="object" attrs="{'invisible': ['|', ('state', 'not in', ('draft', 'approved')), ('req_discount_approval', '=', True)]}" class="oe_highlight"/>
+                    <button attrs="{'invisible': ['|',('approve_reject_sq','=', False), ('state', '!=', 'approve')]}" class="oe_highlight" name="action_reject" string="Reject" type="object"/>
+                    <button attrs="{'invisible': [('state', 'in', ('draft', 'approve', 'sale', 'done', 'cancel', 'lost'))]}" class="oe_highlight" name="action_sale_lost" string="Mark As Lost" type="object"/>
+                    <button attrs="{'invisible': [('state', '!=', 'lost')]}" class="oe_highlight" name="action_draft" string="Reset To Draft" type="object"/>
+                </xpath>
+                <!--  <xpath expr="//field[@name='order_line']/form/field[@name='product_id']" position="after"><field name="avaible_qty" readonly="1"/></xpath>-->
+                <xpath expr="//field[@name='validity_date']" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                    <attribute name="attrs">{'readonly':[('state', 'in', ('sale', 'done'))]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="req_credit_limit_approved" invisible="0"/>
+                </xpath>
+                <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('state', 'in', ('sale', 'sent', 'done','cancel'))]}</attribute>
+                    <attribute name="attrs">{'required': True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field invisible="1" name="approve_reject_sq"/>
+                    <field attrs="{'invisible': [('state', '!=', 'lost')]}" name="sale_lost_reason_id" readonly="1"/>
+                    <field attrs="{'invisible': [('sale_won_reason_id', '=', False)]}" name="sale_won_reason_id" readonly="1"/>
+                    <field invisible="1" name="sq_sent_date"/>
+                </xpath>
+                <xpath expr="//div[@name='button_box']" position='inside'>
+                    <button type="object" name="action_view_credit_request" class="oe_stat_button" icon="fa-usd"
+                            attrs="{'invisible': [('credit_count', '=', 0)]}">
+                        <field name="credit_count" widget="statinfo" string="Credit Req."/>
+                    </button>
+                </xpath>
+                <xpath expr="//field[@name='contact_name']" position="replace"></xpath>
+                <xpath expr="//field[@name='partner_id']" position='after'>
+                    <field name="cash_order_payment_method_id" options="{'no_create':True, 'no_open': True}" attrs="{'invisible': [('order_type', '!=', 'cash_order')]}"/>
+                    <field name="cash_contact_name" placeholder="Contact Name for Cash Sale"  attrs="{'invisible': [('order_type', '!=', 'cash_order')]}"/>
+                    <field name="cash_address" attrs="{'invisible': [('order_type', '!=', 'cash_order')]}" placeholder="Delivery Address for Cash Sale"/>
+                </xpath>
+               <!--  <xpath expr="//field[@name='partner_invoice_id']" position='attributes'>
+                    <attribute name="attrs">{'invisible': [('order_type', '=', 'cash_order')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_shipping_id']" position='attributes'>
+                    <attribute name="attrs">{'invisible': [('order_type', '=', 'cash_order')]}</attribute>
+                </xpath> -->
+
+                <xpath expr="//field[@name='partner_shipping_id']" position='after'>
+                    <field name='contact_person_id' domain="[('parent_id', '=', partner_id)]" options="{'no_create':True, 'no_open': True}" attrs="{'invisible': [('order_type', '=', 'cash_order')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
+                    <field name="avaible_qty" readonly="1"/>
+                </xpath>
+                <xpath expr="//header/field[@name='state']" position="attributes">
+                    <attribute name="statusbar_visible"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form//label[@for='discount']" position="before">
+                    <field groups="sale.group_discount_per_so_line" name="discount_fixed"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='discount']" position="before">
+                    <field groups="sale.group_discount_per_so_line" name="discount_fixed"/>
+                </xpath>
+                <xpath expr="//page[last()]" position="after">
+                    <page name="manage_review" string="Manager Review">
+                        <group>
+                            <field name="manage_review"/>
+                            <field name="manager_review" placeholder="Manager Review"/>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree" position="attributes">
+                    <attribute name="editable">bottom</attribute>
+                </xpath>
+                <xpath expr="//group[@name='technical']" position="attributes">
+                    <attribute name="groups"></attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='sales_person']" position="inside">
+                    <field name="signature_type" widget="radio" options="{'horizontal': true}"/>
+                    <field name="print_signature" attrs="{'invisible': [('signature_type', '!=', 'digital_signate')]}"/>
+                    <field name="signature_id" invisible="1"/>
+                    <field name="approved_by_id" invisible="1"/>
+                    <field name="rejected_by_id" invisible="1"/>
+
+                </xpath>
+
+                <xpath expr="//field[@name='sale_order_template_id']" position="after">
+                    <field name="approval_reasons" readonly="1" attrs="{'invisible': [('approval_reasons', '=', False)]}"/>
+                    <field name="payment_term_approval" attrs="{'invisible': True}"/>
+                    <field name="req_discount_approval" attrs="{'invisible': True}"/>
+                    <field name="req_credit_limit_approval" attrs="{'invisible': True}"/>
+                </xpath>
+               
+            </field>
+        </record>
+
+        <record model="ir.ui.menu" id="sale_management.sale_order_template_menu">
+            <field name="active">False</field>
+        </record>
+
+        <record id="credit_approvel_from_view" model="ir.ui.view">
+            <field name="name">partner.credit.approval.form</field>
+            <field name="model">partner.credit.approval</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+<!--                  #kashif 3oct23: added reveiwed state-->
+                         <button attrs="{'invisible': ['|',('approve_reject_credit_limit','=', False), ('status', '!=', 'draft')]}"
+                                class="oe_highlight" name="action_reveiwed" string="Reviewed" type="object"/>
+                        <button attrs="{'invisible': ['|',('approve_reject_credit_limit','=', False), ('status', '=', 'approved')]}" class="oe_highlight" name="action_approve_request" string="Approve" type="object"/>
+                        <button attrs="{'invisible': ['|',('approve_reject_credit_limit','=', False), ('status', '=', 'draft')]}" class="oe_highlight" name="action_reject" string="Reject" type="object"/>
+                        <button attrs="{'invisible': [('status', '!=', 'draft')]}" class="oe_highlight" name="action_cancel" string="Cancel" type="object"/>
+                        <field name="status" widget="statusbar"/>
+                        <field invisible="1" name="approve_reject_credit_limit"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id" readonly="1"/>
+                                <field name="order_id"/>
+                                <field name="old_credit_term_id" readonly="1"/>
+                                <field name="new_credit_term_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"
+                                       attrs="{'readonly': [('approve_reject_credit_limit','=', False)]}"/>
+                            </group>
+                            <group>
+                                <field name="requested_by_id" readonly="1"/>
+                                <field name="old_credit_limit" readonly="1"/>
+                                <field name="new_credit_limit" attrs="{'readonly': [('approve_reject_credit_limit','=', False)]}"/>
+                            </group>
+                            <group>
+                                <field name="current_is_overdue_block" readonly="1" attrs="{'invisible': [('current_is_overdue_block', '=', False)]}"/>
+                                <field name="unblock_is_overdue_block" attrs="{'invisible': [('current_is_overdue_block', '=', False)],
+                                                'readonly': [('approve_reject_credit_limit','=', False)]}"
+                                    />
+                            </group>
+                            <group>
+                                <field name="remark" placeholder="Remark" attrs="{'readonly': [('approve_reject_credit_limit','=', False)]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="credit_approvel_tree_view" model="ir.ui.view">
+            <field name="name">partner.credit.approval.tree</field>
+            <field name="model">partner.credit.approval</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="requested_by_id"/>
+                    <field name="approved_by_id"/>
+                    <field name="remark" placeholder="Remark"/>
+
+                    <field name="status"/>
+                    <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_credit_approvel" model="ir.actions.act_window">
+            <field name="name">Credit Request</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">partner.credit.approval</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+        </record>
+        <menuitem action="action_credit_approvel" id="menu_credit_approvel" name="Credit Request" parent="goexcel_crm.res_partner_menu_technical_master" sequence="11"/>
+        <menuitem id="sale_management.sale_order_template_menu" action="sale_management.sale_order_template_action" parent="sale.sale_menu_root" sequence="4" name="Quotation Templates" groups="sale_management.group_sale_order_template,sales_team.group_sale_salesman_all_leads"/>
+
+    </data>
+</odoo>

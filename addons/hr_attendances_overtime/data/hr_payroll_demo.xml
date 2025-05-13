@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+      <record id="CD" model="hr.salary.rule.category">
+            <field name="name">Credit</field>
+            <field name="code">CD</field>
+        </record>
+        <!-- Salary Rules -->
+
+        <record id="hr_salary_rule_absent" model="hr.salary.rule">
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+if contract.is_applicable_ot:
+    result = -(employee.attendance_sheet_id.absent) or False 
+else:
+    result = 0           
+            </field>
+            <field name="code">ABS</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="name">Absent Rule</field>
+            <field name="sequence" eval="7"/>
+        </record>
+           <!-- if employee.attendance_sheet_id.total_absence > absent.time: -->
+
+        <record id="hr_salary_rule_overtime" model="hr.salary.rule">
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+if contract.is_applicable_ot:
+    result = (employee.attendance_sheet_id.overtime)
+else:
+    result = 0        
+            </field>
+            <field name="code">OT</field>
+            <field name="category_id" ref="hr_attendances_overtime.CD"/>
+            <field name="name">Attendance OT</field>
+            <field name="sequence" eval="8"/>
+        </record>
+
+        <record id="hr_salary_rule_timedifferent" model="hr.salary.rule">
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+if contract.is_applicable_ot:
+    result = -(employee.attendance_sheet_id.time_different)
+else:
+    result = 0
+            </field>
+            <field name="code">TDF</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="name">Time-Different Rule</field>
+            <field name="sequence" eval="9"/>
+        </record>
+
+        <record id="hr_salary_rule_latein" model="hr.salary.rule">
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+if contract.is_applicable_ot:
+    result = -(employee.attendance_sheet_id.latein)
+else:
+    result = 0
+            </field>
+            <field name="code">LT</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="name">Late In Rule</field>
+            <field name="sequence" eval="10"/>
+        </record>
+</odoo>

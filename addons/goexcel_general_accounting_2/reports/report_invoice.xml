@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="report_invoice_fix_address" inherit_id="account.report_invoice_document">
+        <xpath expr="//t[@t-set='address']" position="replace">
+            <div class="float-right" style="line-height: 1.2;padding-right:150px;font-color:black;font-family:sans-serif;">
+                <strong t-field="o.partner_id.name" />
+                <br />
+                <span t-field="o.partner_id.street" />
+                <br/>
+                <span t-field="o.partner_id.street2" />
+                ,
+                <br />
+                <span t-field="o.partner_id.city" />
+                ,
+                <span t-field="o.partner_id.state_id.name" />
+                <span t-field="o.partner_id.zip" />
+                <br/>
+                <span t-field="o.partner_id.country_id.name" />
+            </div>
+        </xpath>
+    </template>
+
+    <template id="external_layout_background_inherited" inherit_id="web.external_layout_background">
+        <xpath expr="//div[hasclass('company_address')]" position="replace">
+            <div class="float-left">
+                <strong t-field="company.partner_id.name" />
+                <br />
+                <span t-field="company.partner_id.street" />
+                <br/>
+                <span t-field="company.partner_id.street2" />
+                ,
+                <br />
+                <span t-field="company.partner_id.city" />
+                ,
+                <span t-field="company.partner_id.state_id.name" />
+                <span t-field="company.partner_id.zip" />
+                <br/>
+                <span t-field="company.partner_id.country_id.name" />
+            </div>
+        </xpath>
+    </template>
+
+
+</odoo>

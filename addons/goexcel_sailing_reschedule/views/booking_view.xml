@@ -1,0 +1,25 @@
+<odoo>
+    <record id="view_form_booking_log" model="ir.ui.view">
+        <field name="name">Booking Job</field>
+        <field name="model">freight.booking</field>
+        <field name="inherit_id" ref="sci_goexcel_freight.view_form_booking"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='remark']" position="after">
+                <page name="log" string="Logs">
+                    <field name="booking_log_lines_ids">
+                        <tree string="Logs">
+                            <field name="update_date"/>
+                            <field name="field_value"/>
+                            <field name="old_value"/>
+                            <field name="new_value"/>
+                            <field name="update_by"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+
+
+</odoo>

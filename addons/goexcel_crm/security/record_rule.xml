@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- 1 <Sale Journary> -->
+        <record id="rule_sale_journary_multi_company" model="ir.rule">
+            <field name="name">Sale Journary Multi Company</field>
+            <field ref="goexcel_crm.model_sale_journary" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 2 <buying journary> -->
+        <record id="rule_buying_journary_multi_company" model="ir.rule">
+            <field name="name">Buying Journary Multi Company</field>
+            <field ref="goexcel_crm.model_buying_journary" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 3 <buying journary detail> -->
+        <record id="rule_buying_journary_detail_multi_company" model="ir.rule">
+            <field name="name">Buying Journary Detail Multi Company</field>
+            <field ref="goexcel_crm.model_buying_journary_detail" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 4 <communication method> -->
+        <record id="rule_communication_method_multi_company" model="ir.rule">
+            <field name="name">Communication Method Multi Company</field>
+            <field ref="goexcel_crm.model_communication_method" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 5 <communication method line> -->
+        <record id="rule_communication_method_line_multi_company" model="ir.rule">
+            <field name="name">Communication Method Line Multi Company</field>
+            <field ref="goexcel_crm.model_communication_method_line" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 6 <customer priority> -->
+        <record id="rule_customer_priority_multi_company" model="ir.rule">
+            <field name="name">Customer Priority Multi Company</field>
+            <field ref="goexcel_crm.model_customer_priority" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 7 <customer sector> -->
+        <record id="rule_customer_sector_multi_company" model="ir.rule">
+            <field name="name">Customer Sector Multi Company</field>
+            <field ref="goexcel_crm.model_customer_sector" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 8 <customer brand> -->
+        <record id="rule_customer_brand_multi_company" model="ir.rule">
+            <field name="name">Customer Brand Multi Company</field>
+            <field ref="goexcel_crm.model_customer_brand" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 9 <customer brand line> -->
+        <record id="rule_customer_brand_line_multi_company" model="ir.rule">
+            <field name="name">Customer Brand Line Multi Company</field>
+            <field ref="goexcel_crm.model_customer_brand_line" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 10 <competetitor brand line> -->
+        <record id="rule_competetitor_brand_line_multi_company" model="ir.rule">
+            <field name="name">Competetitor Brand Line Multi Company</field>
+            <field ref="goexcel_crm.model_competetitor_brand_line" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 11 <product group> -->
+        <record id="rule_product_group_multi_company" model="ir.rule">
+            <field name="name">Product Group Multi Company</field>
+            <field ref="goexcel_crm.model_product_group" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 12 <religious fetsival> -->
+        <record id="rule_religious_fetsival_multi_company" model="ir.rule">
+            <field name="name">Religious Fetsival Multi Company</field>
+            <field ref="goexcel_crm.model_religious_fetsival" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 13 <religious fetsival line> -->
+        <record id="rule_religious_fetsival_line_multi_company" model="ir.rule">
+            <field name="name">Religious Fetsival Line Multi Company</field>
+            <field ref="goexcel_crm.model_religious_fetsival_line" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 14 <order style> -->
+        <record id="rule_order_style_multi_company" model="ir.rule">
+            <field name="name">Order Style Multi Company</field>
+            <field ref="goexcel_crm.model_order_style" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 15 <order style line> -->
+        <record id="rule_order_style_line_multi_company" model="ir.rule">
+            <field name="name">Order Style Line Multi Company</field>
+            <field ref="goexcel_crm.model_order_style_line" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record> 
+
+        <!-- 16 <invoice method> -->
+        <record id="rule_invoice_method_multi_company" model="ir.rule">
+            <field name="name">Invoice Method Multi Company</field>
+            <field ref="goexcel_crm.model_invoice_method" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 17 <invoice method line> -->
+        <record id="rule_invoice_method_line_multi_company" model="ir.rule">
+            <field name="name">Invoice Method Line Multi Company</field>
+            <field ref="goexcel_crm.model_invoice_method_line" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 18 <payment mode> -->
+        <record id="rule_payment_mode_multi_company" model="ir.rule">
+            <field name="name">Payment Mode Multi Company</field>
+            <field ref="goexcel_crm.model_payment_mode" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 19 <payment mode line> -->
+        <record id="rule_payment_mode_line_multi_company" model="ir.rule">
+            <field name="name">Payment Mode Line Multi Company</field>
+            <field ref="goexcel_crm.model_payment_mode_line" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 20 <personality contact> -->
+        <record id="rule_personality_contact_multi_company" model="ir.rule">
+            <field name="name">Personality Contact Multi Company</field>
+            <field ref="goexcel_crm.model_personality_contact" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 21 <buyer relationship> -->
+        <record id="rule_buyer_relationship_multi_company" model="ir.rule">
+            <field name="name">Buyer Relationship Multi Company</field>
+            <field ref="goexcel_crm.model_buyer_relationship" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 22 <type of partner> -->
+        <record id="rule_type_of_partner_multi_company" model="ir.rule">
+            <field name="name">Type Of Partner Multi Company</field>
+            <field ref="goexcel_crm.model_type_of_partner" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 23 <type of purchase> -->
+        <record id="rule_type_of_purchase_multi_company" model="ir.rule">
+            <field name="name">Type Of Purchase Multi Company</field>
+            <field ref="goexcel_crm.model_type_of_purchase" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 24 <technical plan> -->
+        <record id="rule_technical_plan_multi_company" model="ir.rule">
+            <field name="name">Technical Plan Multi Company</field>
+            <field ref="goexcel_crm.model_technical_plan" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 25 <technical customer plan> -->
+        <record id="rule_technical_customer_plan_multi_company" model="ir.rule">
+            <field name="name">Technical Customer Plan Multi Company</field>
+            <field ref="goexcel_crm.model_technical_customer_plan" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 26 <machine machine> -->
+        <record id="rule_machine_machine_multi_company" model="ir.rule">
+            <field name="name">Machine Machine Multi Company</field>
+            <field ref="goexcel_crm.model_machine_machine" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 27 <Department Department> -->
+        <record id="rule_department_department_multi_company" model="ir.rule">
+            <field name="name">Department Department Multi Company</field>
+            <field ref="goexcel_crm.model_department_department" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 28 <Discovery Sheet> -->
+        <record id="rule_discovery_sheet_multi_company" model="ir.rule">
+            <field name="name">Discovery Sheet Multi Company</field>
+            <field ref="goexcel_crm.model_discovery_sheet" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!-- 29 <Discovery Sheet line> -->
+        <record id="rule_discovery_sheet_line_multi_company" model="ir.rule">
+            <field name="name">Discovery Sheet Line Multi Company</field>
+            <field ref="goexcel_crm.model_discovery_sheet_line" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+    </data>
+</odoo>

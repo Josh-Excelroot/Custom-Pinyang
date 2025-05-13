@@ -1,0 +1,45 @@
+<odoo>
+    <!-- Inherited the res partner view -->
+    <record model="ir.ui.view" id="res_partner_general_form">
+        <field name="name">General Accounting</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field name="priority" eval="20"/>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='ref']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="before">
+                <field name="ref"/>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="before">
+                <field name="roc"/>
+            </xpath>
+            <xpath expr="//button[@name='action_view_partner_invoices']" position="attributes">
+                <attribute name="groups">account.group_account_manager,account.group_account_user</attribute>
+            </xpath>
+            <xpath expr="//button[@name='%(account.action_open_partner_analytic_accounts)d']" position="attributes">
+                <attribute name="groups">account.group_account_manager,account.group_account_user</attribute>
+            </xpath>
+<!--            12.3.3.1 | change state_id attribute-->
+            <xpath expr="//field[@name='state_id']" position="attributes">
+                <attribute name="options">{'no_create_edit': True,'no_create': True, 'no_quick_create': True, 'no_open': True}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Default tree view for contacts -->
+    <record id="contacts.action_contacts" model="ir.actions.act_window">
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <record id="contacts.action_contacts_view_kanban"
+            model="ir.actions.act_window.view">
+        <field name="sequence" eval="9"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="base.res_partner_kanban_view"/>
+        <field name="act_window_id" ref="contacts.action_contacts"/>
+    </record>
+
+
+</odoo>

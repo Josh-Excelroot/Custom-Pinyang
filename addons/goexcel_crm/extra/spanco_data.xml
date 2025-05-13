@@ -1,0 +1,69 @@
+<odoo>
+    <data noupdate="0">
+        <record id="001" model="">
+            <field name="name">S</field>
+            <field name="active">True</field>
+            <field name="full_name">Suspect</field>
+        </record>
+        <record id="002" model="">
+            <field name="name">P</field>
+            <field name="active">True</field>
+            <field name="full_name">Prospect</field>
+        </record>
+        <record id="003" model="">
+            <field name="name">A</field>
+            <field name="active">True</field>
+            <field name="full_name">Approach</field>
+        </record>
+        <record id="004" model="">
+            <field name="name">N</field>
+            <field name="active">True</field>
+            <field name="full_name">Negotiation</field>
+        </record>
+        <record id="005" model="">
+            <field name="name">C</field>
+            <field name="active">True</field>
+            <field name="full_name">Closing</field>
+        </record>
+        <record id="006" model="">
+            <field name="name">O</field>
+            <field name="active">True</field>
+            <field name="full_name">Order</field>
+        </record>
+        <record id="007" model="">
+            <field name="name">R</field>
+            <field name="active">True</field>
+            <field name="full_name">Referral</field>
+        </record>
+        <record id="008" model="">
+            <field name="name">PAY</field>
+            <field name="active">True</field>
+            <field name="full_name">PAY Payment</field>
+        </record>
+        <record id="009" model="">
+            <field name="name">SV</field>
+            <field name="active">True</field>
+            <field name="full_name">SV service</field>
+        </record>
+        <record id="010" model="">
+            <field name="name">UP</field>
+            <field name="active">True</field>
+            <field name="full_name">UP update</field>
+        </record>
+        <record id="011" model="">
+            <field name="name">PM</field>
+            <field name="active">True</field>
+            <field name="full_name">PM promote</field>
+        </record>
+        <record id="012" model="">
+            <field name="name">D</field>
+            <field name="active">True</field>
+            <field name="full_name">D Disqualified</field>
+        </record>
+        <record id="013" model="">
+            <field name="name">L</field>
+            <field name="active">True</field>
+            <field name="full_name">L lost</field>
+        </record>
+    </data>
+</odoo>

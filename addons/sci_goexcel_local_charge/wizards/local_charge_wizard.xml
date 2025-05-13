@@ -1,0 +1,53 @@
+<odoo>
+
+ 		<record id="local_charges_wizard_view_form" model="ir.ui.view">
+            <field name="name">Local Charges Wizard View Form</field>
+            <field name="model">charge.wizard</field>
+            <field name="type">form</field>
+            <field name="priority" eval="1"/>
+            <field name="inherit_id" ref="sci_goexcel_charge_base.charge_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='main']" position="after">
+                    <group attrs="{'invisible': ['|',('service', '!=', 'local_charges'),('local_charge_check', '=', False)]}">
+                        <field name="local_charge_check" invisible="1"/>
+                        <field name="carrier" attrs="{'required': [('service','=', 'local_charges')]}"/>
+                        <field name="port_of_loading" attrs="{'required': [('service','=', 'local_charges')]}"/>
+                        <field name="currency"/>
+                    </group>
+                    <!--
+
+                    <group attrs="{'invisible': ['|',('service', '!=', 'local_charges'),('local_charge_check', '=', False)]}">
+                        <field name="price_thc"/>
+                        <field name="price_doc_fee"/>
+                        <field name="price_seal_fee"/>
+                        <field name="price_edi"/>
+                        <field name="price_telex_release_charge"/>
+                        <field name="price_obl"/>
+                        <field name="price_communication"/>
+                    </group>
+                    -->
+                    <group attrs="{'invisible': ['|',('service', '!=', 'local_charges'),('local_charge_check', '=', False)]}">
+                        <field name="local_charge_line_ids" mode="tree">
+                            <tree editable="bottom" create="false" delete="false">
+                                <field name="product_id" readonly="True" force_save="1"/>
+                                <field name="cost_price"/>
+                                <field name="price"/>
+
+                            </tree>
+                        </field>
+                    </group>
+
+                    <group attrs="{'invisible': ['|',('service', '!=', 'local_charges'),('local_charge_check', '=', True)]}">
+                        <p>Local Charges is not activated</p>
+                    </group>
+                </xpath>
+                <xpath expr="//footer[@name='action']" position="after">
+                    <button name="action_local_charge" string="Add" type="object" class="btn-primary"
+                            attrs="{'invisible': ['|',('service', '!=', 'local_charges'),('local_charge_check', '=', False)]}"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+</odoo>

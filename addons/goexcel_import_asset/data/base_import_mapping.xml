@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="import_mapping_account_asset_asset_sh_bundle_id" model="base_import.mapping">
+            <field name="res_model">account.asset.asset</field>
+            <field name="field_name">method_number</field>
+            <field name="column_name">number of recognitions</field>
+        </record>
+
+        <record id="import_mapping_account_asset_asset_sh_product_id" model="base_import.mapping">
+            <field name="res_model">account.asset.asset</field>
+            <field name="field_name">already_depreciated_amount_import</field>
+            <field name="column_name">already recognized amount import</field>
+        </record>
+
+        <record id="import_mapping_account_asset_asset_sh_qty" model="base_import.mapping">
+            <field name="res_model">account.asset.asset</field>
+            <field name="field_name">depreciation_number_import</field>
+            <field name="column_name">recognition number import</field>
+        </record>
+
+        <record id="import_mapping_account_asset_asset_sh_uom" model="base_import.mapping">
+            <field name="res_model">account.asset.asset</field>
+            <field name="field_name">first_depreciation_date_import</field>
+            <field name="column_name">first recognition date import</field>
+        </record>
+
+        <record id="import_mapping_account_asset_asset_sh_uom" model="base_import.mapping">
+            <field name="res_model">account.asset.asset</field>
+            <field name="field_name">invoice_id</field>
+            <field name="column_name">bill</field>
+        </record>
+
+    </data>
+</odoo>

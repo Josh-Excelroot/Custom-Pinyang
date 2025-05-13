@@ -1,0 +1,8 @@
+<odoo>
+    <template id="assets_backend" name="restrict_product_partner assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript"
+                    src="/restrict_product_partner/static/src/js/custom_partner_warning.js"/>
+        </xpath>
+    </template>
+</odoo>

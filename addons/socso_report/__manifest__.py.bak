@@ -1,0 +1,31 @@
+# See LICENSE file for full copyright and licensing details
+{
+    "name": "Malaysia SOCSO Report",
+    "version": "12.0.1.0.2",
+    "license": "LGPL-3",
+    "website": "http://www.serpentcs.com",
+    "author": "Serpent Consulting Services Pvt. Ltd.",
+    "sequence": 1,
+    "category": "HR",
+    "summary": """Socso Text and Pdf report.""",
+    "description": """
+        This module provide wizard to print socso text file and pdf report.
+    """,
+    "depends": [
+        "l10n_my_payroll", "hr_attendances_overtime",
+    ],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/hr_employee_view.xml",
+        "wizard/socso_txt_file_view.xml",
+        "report/hr_payslip_socso_report_view.xml",
+        "data/salary_rule.xml",
+        "data/socso_demo_data.xml",
+        "data/eis_demo_data.xml",
+    ],
+    "installable": True,
+    "images": ['static/description/banner.png'],
+    "application": True,
+    "price": 49,
+    "currency": "EUR",
+}

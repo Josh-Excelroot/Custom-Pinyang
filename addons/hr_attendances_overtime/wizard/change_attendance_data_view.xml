@@ -1,0 +1,35 @@
+<odoo>
+
+	<record id ='change_attendance_data_wizard_view' model='ir.ui.view'>
+		<field name ='name'>change.attendance.data.wizard.view</field>
+		<field name	='model'>hr.change.attendance</field>
+		<field name ='arch' type='xml'>
+			<form string="Change Attendance">
+				<group>
+					<field name='overtime' widget="float_time"/>
+					<field name='latein' widget="float_time"/>
+					<field name='difftime' widget="float_time"/>
+					<field name='reason' nolable="1" placeholder="Reason For Change" required="1"/>
+				</group>
+				<footer>
+					<button name='apply_changes' type='object' string='Apply'
+						class="oe_highlight"/>
+					<button name='Cancel' string='Cancel' special="cancel"
+						class="oe_highlight"/>
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<!-- <act_window> -->
+	<record id='action_change_attendance_data_wizard_view' model='ir.actions.act_window'>
+		<field name='name'>Change Attendance</field>
+		<field name='res_model'>hr.change.attendance</field>
+		<field name='view_type'>form</field>
+		<field name='view_mode'>form</field>
+		<field name='target'>new</field>
+	</record>
+
+
+
+</odoo>

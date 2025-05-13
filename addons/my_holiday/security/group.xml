@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr.group_hr_user" model="res.groups">
+        <field name="name">Approving Manager</field>
+        <field name="category_id" ref="base.module_category_human_resources"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!-- HR Holidays Security Rules-->
+
+    <record id="hr_holidays.hr_leave_rule_officer_read" model="ir.rule">
+        <field name="name">Leave Officer</field>
+        <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+        <field name="domain_force">['|',('employee_id.user_id','=',user.id),('employee_id.parent_id.user_id','=',user.id)]</field>
+        <field name="groups" eval="[(4,ref('hr_holidays.group_hr_holidays_user'))]"/>
+    </record>
+
+    <record id="hr_holidays.hr_leave_rule_employee" model="ir.rule">
+        <field name="name">Leaves: employee</field>
+        <field name="model_id" ref="model_hr_leave"/>
+        <field name="domain_force">['|',('employee_id.user_id','=',user.id),('employee_id.parent_id.user_id','=',user.id)]</field>
+        <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+
+    <record id="hr_holidays.hr_leave_allocation_rule_officer_read" model="ir.rule">
+        <field name="name">Leave Allocation Officer</field>
+        <field name="model_id" ref="hr_holidays.model_hr_leave_allocation"/>
+        <field name="domain_force">['|',('employee_id.user_id','=',user.id),('employee_id.parent_id.user_id','=',user.id)]</field>
+        <field name="groups" eval="[(4,ref('hr_holidays.group_hr_holidays_user'))]"/>
+    </record>
+
+    <!-- HR Employee Security Rules-->
+    <record id="property_rule_hr_employee_group_user" model="ir.rule">
+        <field name="name">Employee can see own record</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="domain_force">[('user_id','child_of',user.id)]</field>
+        <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+
+    <record id="propert_rule_hr_employee_officers" model="ir.rule">
+        <field name="name">Officer can see own and child employees record</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="domain_force">['|',('user_id','child_of',user.id),('parent_id.user_id','child_of',user.id)]</field>
+        <field name="groups" eval="[(4,ref('hr.group_hr_user'))]"/>
+    </record>
+
+    <record id="property_rule_hr_employee_manager" model="ir.rule">
+        <field name="name">Manager can see all employee records</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('hr.group_hr_manager'))]"/>
+    </record>
+    <record id="property_rule_hr_year_holidays_public" model="ir.rule">
+        <field name="name">Year Wise Holidays</field>
+        <field name="model_id" ref="my_holiday.model_hr_year"/>
+        <field name="domain_force">['|', ('company_ids','=',False), ('company_ids','in',[user.company_id.id])]</field>
+        <field name="global" eval="True"/>
+    </record>
+    <record id="record_rule_holidays_public" model="ir.rule">
+        <field name="name">Company Wise Public Holidays</field>
+        <field name="model_id" ref="my_holiday.model_hr_holiday_public"/>
+        <field name="domain_force">['|', ('company_ids','=',False), ('company_ids', 'in', [user.company_id.id])]</field>
+        <field name="global" eval="True"/>
+    </record>
+    <record id="property_rule_hr_leave_type" model="ir.rule">
+        <field name="name">Leave Type</field>
+        <field name="model_id" ref="hr_holidays.model_hr_leave_type"/>
+        <field name="domain_force">['|', ('company_ids','=',False), ('company_ids','in',[user.company_id.id])]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+   <!-- <record id="property_rule_hr_holidays_public" model="ir.rule">
+        <field name="name">Public Holidays</field>
+        <field name="model_id" ref="my_holiday.model_hr_holiday_public"/>
+        <field name="domain_force">['|', ('company_ids','=',False), ('company_ids','in',[user.company_id.id])]</field>
+        <field name="global" eval="True"/>
+    </record>-->
+
+    <record id="hr_holidays.hr_leave_rule_multicompany" model="ir.rule">
+        <field name="name">Leaves: multi company global rule</field>
+        <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('holiday_status_id.company_ids', '=', False), ('holiday_status_id.company_ids', 'in', [user.company_id.id])]</field>
+    </record>
+    <record id="hr_holidays.hr_holidays_status_rule_multi_company" model="ir.rule">
+        <field name="name">Leaves multi company rule</field>
+        <field name="model_id" ref="hr_holidays.model_hr_leave_type"/>
+        <field name="global" eval="False"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','in',[user.company_id.id])]</field>
+    </record>
+</odoo>

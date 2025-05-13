@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <report
+            id="action_bank_bulk_payment_report_xlsx"
+            model="payroll.posting.wiz"
+            string="Bank Bulk Payment"
+            report_type="xlsx"
+            name="l10n_my_payroll_report.bank_bulk_payment_report_xlsx"
+            file="l10n_my_payroll_report.bank_bulk_payment_report_xlsx"
+            attachment_use="False"
+        />
+
+    </data>
+</odoo>

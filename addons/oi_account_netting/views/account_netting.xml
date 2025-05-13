@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="view_account_netting_form" model="ir.ui.view">
+		<field name="name">account.netting.form</field>
+		<field name="model">account.netting</field>
+		<field name="arch" type="xml">
+			<form>
+				<header>
+					<field name="state" widget="statusbar" statusbar_visible="draft,posted" />
+					<button name="action_post" string="Post" class="oe_highlight" type="object" attrs="{'invisible': [('state', '!=', 'draft')]}" />
+					<button name="button_cancel" string="Cancel" type="object" attrs="{'invisible': [('state', '=', 'draft')]}" />
+					<button name="action_register_payment" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('state','!=', 'posted'), ('amount_residual','&lt;=', 0)]}"
+						string="Register Payment" />
+				</header>
+				<sheet>
+					<div name="button_box" class="oe_button_box">
+						<button name="action_view_payments" class="oe_stat_button" icon="fa-dollar" type="object" attrs="{'invisible': [('payment_count','=', 0)]}">
+							<field name="payment_count" string="Payments" widget="statinfo" />
+						</button>
+					</div>
+
+					<div class="oe_title">
+						<h1>
+							<field name="name" readonly="1" />
+						</h1>
+					</div>
+					<group>
+						<group>
+							<field name="date" />
+							<field name="receivable_partner_id" string="Partner" />
+							<field name="payable_partner_id" invisible="1" />
+							<field name="ref" />							
+						</group>
+						<group>
+							<field name="company_id" options="{'no_create': True}" groups="base.group_multi_company" />
+							<field name="journal_id" />
+							<field name="currency_id" options="{'no_create': True}" groups="base.group_multi_currency" />
+							<field name="move_id" attrs="{'invisible': [('move_id', '=', False)]}" />
+						</group>
+					</group>
+					<group string="Balance">
+						<group>
+							<field name="receivable_balance" />
+							<field name="payable_balance" />
+						</group>
+						<group>
+							<field name="balance" />
+							<field name="balance_type" />
+							<field name="amount_residual" />
+							<field name="payment_state" attrs="{'invisible': [('payment_state', '=', False)]}"  />
+						</group>
+					</group>
+					<group name="receivable" string="Receivable">
+						<field name="receivable_line_ids" nolabel="1"
+							domain="[('partner_id','=', receivable_partner_id), ('account_id.internal_type', '=', 'receivable'),('parent_state','=', 'posted'), '|', ('amount_residual','&gt;', 0), ('amount_residual_currency','&gt;', 0)]">
+							<tree>
+								<field name="move_id" />
+								<field name="name" />
+								<field name="date" />
+								<field name="account_id" />
+								<field name="debit" string="Original Amount" sum="Amount Debit"/>
+								<field name="amount_residual" string="Amount Due" sum="Amount Due" />
+								<field name="company_currency_id" invisible="1" />
+								<field name="amount_residual_currency" string="Amount Due in Currency" />
+								<!--<field name="currency_id" />-->
+							</tree>
+						</field>
+					</group>
+					<group name="payable" string="Payable">
+						<field name="payable_line_ids" nolabel="1"
+							domain="[('partner_id','=', payable_partner_id), ('account_id.internal_type', '=', 'payable'),('reconciled','=',False),('parent_state','=', 'posted'), '|', ('amount_residual','&lt;', 0), ('amount_residual_currency','&lt;', 0)]">
+							<tree>
+								<field name="move_id" />
+								<field name="name" />
+								<field name="date" />
+								<field name="account_id" />
+								<field name="credit" string="Original Amount" sum="Amount Credit"/>
+								<field name="amount_residual" string="Amount Due" sum="Amount Due" />
+								<field name="company_currency_id" invisible="1" />
+								<field name="amount_residual_currency" string="Amount Due in Currency" />
+								<!--<field name="currency_id" />-->
+							</tree>
+						</field>
+					</group>
+
+				</sheet>
+				<div class="oe_chatter">
+					<field name="message_follower_ids" widget="mail_followers" />
+					<field name="activity_ids" widget="mail_activity" />
+					<field name="message_ids" widget="mail_thread" />
+				</div>
+			</form>
+		</field>
+	</record>
+
+	<record id="view_account_netting_tree" model="ir.ui.view">
+		<field name="name">account.netting.tree</field>
+		<field name="model">account.netting</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" />
+				<field name="date" />
+				<field name="ref" />
+				<field name="receivable_partner_id" string="Partner" />
+				<field name="state" />
+				<field name="payment_state" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="view_account_netting_search" model="ir.ui.view">
+		<field name="name">account.netting.search</field>
+		<field name="model">account.netting</field>
+		<field name="arch" type="xml">
+			<search>
+				<field name="name" />
+				<field name="ref" />
+				<field name="receivable_partner_id" string="Partner" />
+				<separator />
+				<filter name="draft" string="Draft" domain="[('state','=','draft')]" />
+				<filter name="posted" string="Posted" domain="[('state', '=', 'posted')]" />
+				<separator />
+				<filter name="paid" string="Paid" domain="[('payment_state', '=', 'paid'), ('state', '=', 'posted')]" />
+				<filter name="partial" string="Partially Paid" domain="[('payment_state', '=', 'partial'), ('state', '=', 'posted')]" />
+				<filter name="unpaid" string="Not Paid" domain="[('payment_state', '=', 'not_paid'), ('state', '=', 'posted')]" />
+				<separator />
+				<group expand="0" string="Group By">
+					<filter string="Partner" name="group_partner" context="{'group_by':'receivable_partner_id'}" />
+					<filter string="Status" name="group_status" context="{'group_by':'state'}" />
+					<filter string="Payment Status" name="group_payment_state" context="{'group_by':'payment_state'}" />
+					<filter string="Date" name="group_date" context="{'group_by': 'date'}" />
+				</group>
+			</search>
+		</field>
+	</record>
+
+
+</odoo>

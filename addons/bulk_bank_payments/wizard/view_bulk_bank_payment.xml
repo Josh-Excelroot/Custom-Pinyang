@@ -1,0 +1,60 @@
+<odoo>
+    <data>
+        <record id="view_bulk_bank_payments_form" model="ir.ui.view">
+            <field name="name">bulk.bank.payments.form</field>
+            <field name="model">bulk.bank.payments</field>
+            <field name="arch" type="xml">
+                <form string="Bulk Bank Payments">
+                    <group>
+                        <group>
+                            <field name="bank_id" no_create="1" no_create_edit="1" no_quick_create="1"/>
+                        </group>
+                        <group>
+                            <button name="refresh_filters" type="object" icon="fa-refresh"/>
+                        </group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                        <group>
+                            <field name="state"/>
+                            <field name="currency_id"/>
+                        </group>
+                        <field name="vendor_payment_ids" widget="many2many_tree">
+                            <tree string="Bulk Payments" editable="bottom">
+                                <field name="name" readonly="1"/>
+                                <field name="payment_date" readonly="1"/>
+                                <field name="journal_id" readonly="1"/>
+                                <field name="partner_id" readonly="1"/>
+                                <field name="amount" readonly="1"/>
+                                <field name="currency_id" readonly="1"/>
+                                <field name="state" readonly="1"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        <button name="print_xlsx_report" string="Export XLSX" type="object" class="btn-primary"/>
+                        <button name="print_csv_report" string="Export CSV" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_bulk_bank_payments" model="ir.actions.act_window">
+            <field name="name">Bulk Bank Payments</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bulk.bank.payments</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record id="menu_vendor_bulk_bank_payments" model="ir.ui.menu">
+            <field name="name">Bulk Bank Payments</field>
+            <field name="action" ref="action_bulk_bank_payments"/>
+            <field name="parent_id" ref="account.menu_finance_payables"/>
+            <field name="sequence" type="int">300</field>
+        </record>
+    </data>
+</odoo>

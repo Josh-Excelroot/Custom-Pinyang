@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_attendance_overtime_view_form" model="ir.ui.view">
+        <field name="model">hr.attendance.overtime</field>
+        <field name="inherit_id" ref="hr_attendances_overtime.overtime_rules_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="activate_overtime" type="object" string="Activate Overtime"
+                            attrs="{'invisible':[('overtime_active','=',True)]}" class="btn-primary"/>
+                </header>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="overtime_active" readonly="True"/>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="hr_attendances_overtime.overtime_rules" parent="hr_attendance.menu_hr_attendance_root"
+              name="Attendance Rules" groups="goexcel_attendance.group_hr_attendance_hr"/>
+
+</odoo>

@@ -1,0 +1,1513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="external_layout">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+
+        <div class="header" t-att-style="report_header_style">
+            <!--            external layout standard-->
+            <div class="row">
+                <div class="col-2.5 mb4">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                         style="max-height: 90px; max-width: 300px;" alt="Logo"/>
+                </div>
+                <div style="font-size: 12px;margin-left:20px;">
+                    <t t-if="company.partner_id">
+                        &#160;&#160;<b>
+                        <span t-field="company.partner_id.name" style="font-family:arial;font-size: 20px;"/>
+                    </b>
+                        <span style="font-size: 11px;" t-field="company.company_registry"/>
+                        <br/>
+                        &#160;&#160;<span t-field="company.partner_id.street"/>
+                        <br/>
+                        &#160;&#160;<span t-field="company.partner_id.zip"/>
+                        <span t-field="company.partner_id.city"/>,
+                        <span t-field="company.partner_id.state_id.name"/>,
+                        <span t-field="company.partner_id.country_id.name"/>
+                        <br/>
+                        &#160;&#160;Hunting Line:
+                        <span t-field="company.partner_id.phone"/>
+                        <![CDATA[&nbsp;&nbsp;]]>
+                        <br/>
+                        <span style="font-size: 11px;">
+                            &#160;&#160;Email :
+                        </span>
+                        <span t-field="company.email" style="font-size: 12px;"></span>
+                        <span style="font-size: 11px;">
+                            &#160;&#160;SST :
+                        </span>
+                        <span t-field="company.vat" style="font-size: 12px;"></span>
+                    </t>
+                </div>
+
+            </div>
+            <!--            external layout standard-->
+            <br/>
+            <t t-if="o._name != 'freight.booking'">
+                <div class="row">
+                    <t t-if="o.freight_booking.service_type != 'air'">
+                        <t t-if="o.should_containers_list_on_every_page() or not show_container_list">
+
+                            <table style="table-layout: fixed; font-size:10pt; width:100%;" border="1">
+                                <thead>
+                                    <tr>
+                                        <td style="width:3%;"/>
+                                        <td style="width:12%;"/>
+                                        <td style="width:3%;"/>
+                                        <td style="width:14%;"/>
+                                        <td style="width:8%;"/>
+                                        <td style="width:7%;"/>
+                                        <td style="width:9%;"/>
+                                        <td style="width:3%;"/>
+                                        <td style="width:5%;"/>
+                                        <td style="width:8%;"/>
+                                        <td style="width:7%;"/>
+                                        <td style="width:1%;"/>
+                                        <td style="width:2%;"/>
+                                        <td style="width:4%;"/>
+                                        <td style="width:14%;"/>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2">
+                                            <strong>TO:</strong>
+                                        </th>
+                                        <td>
+                                            <strong></strong>
+                                        </td>
+                                        <td colspan="5"></td>
+                                        <td></td>
+                                        <t t-if="o.type == 'out_refund'">
+                                            <th colspan="2">
+                                                <strong>CREDIT NOTE NO</strong>
+                                            </th>
+                                        </t>
+                                        <t t-if="o.type == 'in_refund'">
+                                            <th colspan="2">
+                                                <strong>CREDIT NOTE NO</strong>
+                                            </th>
+                                        </t>
+                                        <t t-if="o.type == 'in_invoice'">
+                                            <th colspan="2">
+                                                <strong>VENDOR BILL NO</strong>
+                                            </th>
+                                        </t>
+                                        <t t-if="o.type == 'out_invoice' and o.customer_debit_note == False">
+                                            <td colspan="2">
+                                                INVOICE NO
+                                            </td>
+                                        </t>
+                                        <t t-if="o.type == 'out_invoice' and o.customer_debit_note == True">
+                                            <th colspan="2">
+                                                <strong>DEBIT NOTE NO</strong>
+                                            </th>
+                                        </t>
+                                        <td colspan="2">
+                                            <strong>:</strong>
+                                        </td>
+                                        <td colspan="2">
+                                            <span t-field="o.number"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="7" colspan="8">
+                                            <b>
+                                                <span style="font-size:11pt" t-field="o.partner_id.name"/>
+                                            </b>
+                                            <br/>
+                                            <span t-field="o.partner_id.street"/>,
+                                            <br/>
+                                            <t t-if="o.partner_id.street2">
+                                                <span t-field="o.partner_id.street2"/>,
+                                                <br/>
+                                            </t>
+                                            <t t-if="o.partner_id.zip">
+                                                <span t-field="o.partner_id.zip"/>&#160;
+                                            </t>
+                                            <t t-if="o.partner_id.city">
+                                                <span t-field="o.partner_id.city"/>,&#160;
+                                            </t>
+                                            <t t-if="o.partner_id.state_id">
+                                                <span t-field="o.partner_id.state_id.name"/>,
+                                            </t>
+                                            <t t-if="o.partner_id.country_id">
+                                                <span t-field="o.partner_id.country_id.name"/>
+                                            </t>
+                                            <br/>SST:&#160;<t t-if="o.partner_id.buyer_sst_no"><span t-field="o.partner_id.buyer_sst_no"/></t>
+                                            <br/>Phone No.:&#160;<t t-if="o.partner_id.phone"><span t-field="o.partner_id.phone"/></t>
+                                            <br/>Email:&#160;<t t-if="o.partner_id.email"><span t-field="o.partner_id.email"/></t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td colspan="2">BILL DATE</td>
+                                        <td colspan="2">:</td>
+                                        <td colspan="2">
+                                            <span t-field="o.date_invoice"/>
+                                            <!--                                    <h1>test</h1>-->
+                                            <!--                                        <span t-esc="test"/>-->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td colspan="2">TERM</td>
+                                        <td colspan="2">:</td>
+                                        <td colspan="2">
+                                            <span t-field="o.payment_term_id.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td colspan="2">EX. RATE</td>
+                                        <td colspan="2">:</td>
+                                        <td colspan="2">
+                                            <t t-if="o.company_id.currency_id.id != o.currency_id.id">
+                                                <span t-esc="o.exchange_rate_inverse"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td></td>
+                                        <td colspan="2">SALESPERSON</td>
+                                        <td colspan="2">:</td>
+                                        <td colspan="2">
+                                            <span t-field="o.sudo().user_id.name"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+<!--                                        <td colspan="2"></td>-->
+<!--                                        <td></td>-->
+<!--                                        <td colspan="5">-->
+<!--                                        </td>-->
+                                        <td></td>
+                                        <td colspan="2">PAGE NO</td>
+                                        <td colspan="2">:</td>
+                                        <td colspan="2">
+                                            Page:
+                                            <span style="font-size:13px" class="page"/>
+                                            of
+                                            <span style="font-size:13px" class="topage"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom:1px solid black;">
+<!--                                        <td colspan="2"></td>-->
+<!--                                        <td></td>-->
+<!--                                        <td colspan="5">-->
+<!--                                        </td>-->
+                                        <td></td>
+                                        <td colspan="2">ISSUE BY</td>
+                                        <td colspan="2">:</td>
+                                        <td colspan="2">
+                                            <span t-esc="user.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td></td>
+                                        <td colspan="5">
+                                        </td>
+                                    </tr>
+                                    <!--                            new border-->
+                                    <tr>
+                                        <td colspan="2">FEDERAL VESSEL</td>
+                                        <td>:</td>
+                                        <td colspan="5"><span t-field="o.freight_booking.feeder_vessel_name"/>/
+                                            <span t-field="o.freight_booking.feeder_voyage_no"/>
+                                        </td>
+                                        <td></td>
+                                        <td colspan="2">COMMODITY</td>
+                                        <td colspan="2">:</td>
+                                        <td colspan="2">
+                                            <t t-if="o.freight_booking">
+                                                <t t-if="o.freight_booking.commodity1">
+                                                    <span t-esc="o.freight_booking.commodity1.name"/>
+                                                </t>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">BOOKING NO.</td>
+                                        <td>:</td>
+                                        <td colspan="5">
+                                            <span t-field="o.freight_booking.booking_no"/>
+                                        </td>
+                                        <td></td>
+                                        <td colspan="2">ETA POL</td>
+                                        <td colspan="2">:</td>
+                                        <td colspan="2">
+                                            <t t-if="o.freight_booking.booking_date_time not in [False, None, '']">
+                                                <span t-esc="o.freight_booking.booking_date_time.strftime('%d-%m-%Y')"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <!--                            new-->
+                                    <tr>
+                                        <td colspan="2">P.O. LOADING</td>
+                                        <td>:</td>
+                                        <td colspan="5">
+                                            <span t-field="o.freight_booking.port_of_loading"/>
+                                        </td>
+                                        <td></td>
+                                        <td colspan="2">ETD DEST</td>
+                                        <td colspan="2">:</td>
+                                        <td colspan="2">
+                                            <t t-if="o.freight_booking.place_of_delivery_eta">
+                                                <span t-esc="o.freight_booking.place_of_delivery_eta.strftime('%d-%m-%Y')"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">P.O. DISCHARGE</td>
+                                        <td>:</td>
+                                        <td colspan="5">
+                                            <span t-field="o.freight_booking.port_of_discharge"/>
+
+                                        </td>
+                                        <td></td>
+                                        <td colspan="2">FINAL DESTINATION</td>
+                                        <td colspan="2">:</td>
+                                        <td colspan="2">
+                                            <span t-field="o.freight_booking.place_of_delivery"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">NO OF PKGS</td>
+                                        <td>:</td>
+                                        <td colspan="5">
+                                            <!--           Yulia 22102024 make no pkgs comma separated                                 -->
+                                            <span t-esc="report_data['packages']"/>
+                                            <!--                                            <span t-esc="sum(o.freight_booking.operation_line_ids.mapped('packages_no'))"/>-->
+                                            <!--                                            <span t-esc="o.freight_booking.operation_line_ids.packages_no_uom.name"/>-->
+                                        </td>
+                                        <td></td>
+                                        <td colspan="2">MBL NO</td>
+                                        <td colspan="2">:</td>
+                                        <td colspan="2">
+                                            <span t-field="o.freight_booking.obl_no"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">MEAS23 / WEIGHT</td>
+                                        <td>:</td>
+                                        <td colspan="5">
+                                            <!--        Yulia 22102024 make meas/weight comma separated                                    -->
+                                            <span t-esc="report_data['weight']"/>
+                                            <!--                                            <span t-esc="'{:.2f}'.format(float(o.freight_booking.operation_line_ids.exp_vol))"/>-->
+                                            <!--                                            M3 /-->
+                                            <!--                                            <span t-esc="'{:.2f}'.format(sum(o.freight_booking.operation_line_ids.mapped('exp_gross_weight')))"/>-->
+                                            <!--                                            KG-->
+                                        </td>
+                                        <td></td>
+                                        <td colspan="2">HBL NO</td>
+                                        <td colspan="2">:</td>
+                                        <td colspan="2">
+                                            <span t-field="o.freight_booking.hbl_no"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">CNTR DETAILS</td>
+                                        <td>:</td>
+                                        <td colspan="5">
+                                            <t t-set="container_line1" t-value="0"/>
+                                            <t t-if="o.freight_booking">
+                                                <t t-if="o.should_containers_list_on_every_page()">
+                                                    <t t-call="sci_goexcel_freight_2.container_data_for_invoice_report"/>
+                                                </t>
+                                                <t t-elif="not show_container_list">
+                                                    <span>See last page for container lines</span>
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <td></td>
+                                        <td colspan="2">CONSIGNEE</td>
+                                        <td colspan="2">:</td>
+                                        <td colspan="2">
+                                            <span t-field="o.freight_booking.consignee.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <t t-if="not o.freight_booking.service_type == 'air'">
+                                            <td colspan="2">CONTAINER</td>
+                                            <td>:</td>
+                                            <td colspan="5">
+                                                <t t-set="container_no" t-value="0"/>
+                                                <t t-set="container_no" t-value="0"/>
+                                                <t t-set="container_type1" t-value=""/>
+                                                <t t-set="container_type2" t-value=""/>
+                                                <t t-set="container_type3" t-value=""/>
+                                                <t t-set="container_type4" t-value=""/>
+                                                <t t-set="container_no1" t-value="0"/>
+                                                <t t-set="container_no2" t-value="0"/>
+                                                <t t-set="container_no3" t-value="0"/>
+                                                <t t-set="container_no4" t-value="0"/>
+                                                <!--                                            for lcl    -->
+                                                <t t-if="o.freight_booking.operation_line_ids2">
+                                                    <t t-if="o.freight_booking.cargo_type == 'lcl'" t-foreach="o.freight_booking.operation_line_ids2" t-as="line">
+                                                        <t t-set="is_first" t-value="False"/>
+                                                        <t t-set="container_no" t-value="container_no+1"/>
+                                                        <t t-if="not container_type1">
+                                                            <t t-set="container_type1"
+                                                               t-value="line.container_product_id.name"/>
+                                                            <t t-set="container_no1" t-value="container_no1+1"/>
+                                                            <t t-set="is_first" t-value="True"/>
+                                                        </t>
+                                                        <t t-if="container_type1 and not is_first">
+                                                            <t t-if="container_type1 != line.container_product_id.name">
+                                                                <t t-if="not container_type2">
+                                                                    <t t-set="container_type2"
+                                                                       t-value="line.container_product_id.name"/>
+                                                                    <t t-set="container_no2"
+                                                                       t-value="container_no2+1"/>
+                                                                    <t t-set="is_first" t-value="True"/>
+                                                                </t>
+                                                                <t t-if="container_type2 and not is_first">
+                                                                    <t t-if="container_type2 != line.container_product_id.name">
+                                                                        <t t-if="not container_type3">
+                                                                            <t t-set="container_type3"
+                                                                               t-value="line.container_product_id.name"/>
+                                                                            <t t-set="container_no3"
+                                                                               t-value="container_no3+1"/>
+                                                                            <t t-set="is_first" t-value="True"/>
+                                                                        </t>
+                                                                        <t t-if="container_type3 and not is_first">
+                                                                            <t t-if="container_type3 != line.container_product_id.name">
+                                                                                <t t-if="not container_type4">
+                                                                                    <t t-set="container_type4"
+                                                                                       t-value="line.container_product_id.name"/>
+                                                                                    <t t-set="container_no4"
+                                                                                       t-value="container_no4+1"/>
+                                                                                    <t t-set="is_first"
+                                                                                       t-value="True"/>
+                                                                                </t>
+                                                                                <t t-if="container_type4 and not is_first">
+                                                                                    <t t-if="container_type4 != line.container_product_id.name">
+                                                                                        <t t-set="container_no4"
+                                                                                           t-value="container_no4+1"/>
+                                                                                    </t>
+                                                                                    <t t-if="container_type4 == line.container_product_id.name">
+                                                                                        <t t-set="container_no4"
+                                                                                           t-value="container_no4+1"/>
+                                                                                    </t>
+                                                                                </t>
+                                                                            </t>
+                                                                            <t t-if="container_type3 == line.container_product_id.name">
+                                                                                <t t-set="container_no3"
+                                                                                   t-value="container_no3+1"/>
+                                                                            </t>
+                                                                        </t>
+                                                                    </t>
+                                                                    <t t-if="container_type2 == line.container_product_id.name">
+                                                                        <t t-set="container_no2"
+                                                                           t-value="container_no2+1"/>
+                                                                    </t>
+                                                                </t>
+                                                            </t>
+                                                            <t t-if="container_type1 == line.container_product_id.name">
+                                                                <t t-set="container_no1" t-value="container_no1+1"/>
+                                                            </t>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                                <!--                                          Yulia 26112024 display container type      -->
+                                                <!--                                         for fcl       -->
+                                                <t t-if="o.freight_booking.operation_line_ids">
+                                                    <t t-if="o.freight_booking.cargo_type == 'fcl'" t-foreach="o.freight_booking.operation_line_ids" t-as="line">
+                                                        <t t-set="is_first" t-value="False"/>
+                                                        <t t-set="container_no" t-value="container_no+1"/>
+                                                        <t t-if="not container_type1">
+                                                            <t t-set="container_type1"
+                                                               t-value="line.container_product_id.name"/>
+                                                            <t t-set="container_no1" t-value="container_no1+1"/>
+                                                            <t t-set="is_first" t-value="True"/>
+                                                        </t>
+                                                        <t t-if="container_type1 and not is_first">
+                                                            <t t-if="container_type1 != line.container_product_id.name">
+                                                                <t t-if="not container_type2">
+                                                                    <t t-set="container_type2"
+                                                                       t-value="line.container_product_id.name"/>
+                                                                    <t t-set="container_no2"
+                                                                       t-value="container_no2+1"/>
+                                                                    <t t-set="is_first" t-value="True"/>
+                                                                </t>
+                                                                <t t-if="container_type2 and not is_first">
+                                                                    <t t-if="container_type2 != line.container_product_id.name">
+                                                                        <t t-if="not container_type3">
+                                                                            <t t-set="container_type3"
+                                                                               t-value="line.container_product_id.name"/>
+                                                                            <t t-set="container_no3"
+                                                                               t-value="container_no3+1"/>
+                                                                            <t t-set="is_first" t-value="True"/>
+                                                                        </t>
+                                                                        <t t-if="container_type3 and not is_first">
+                                                                            <t t-if="container_type3 != line.container_product_id.name">
+                                                                                <t t-if="not container_type4">
+                                                                                    <t t-set="container_type4"
+                                                                                       t-value="line.container_product_id.name"/>
+                                                                                    <t t-set="container_no4"
+                                                                                       t-value="container_no4+1"/>
+                                                                                    <t t-set="is_first"
+                                                                                       t-value="True"/>
+                                                                                </t>
+                                                                                <t t-if="container_type4 and not is_first">
+                                                                                    <t t-if="container_type4 != line.container_product_id.name">
+                                                                                        <t t-set="container_no4"
+                                                                                           t-value="container_no4+1"/>
+                                                                                    </t>
+                                                                                    <t t-if="container_type4 == line.container_product_id.name">
+                                                                                        <t t-set="container_no4"
+                                                                                           t-value="container_no4+1"/>
+                                                                                    </t>
+                                                                                </t>
+                                                                            </t>
+                                                                            <t t-if="container_type3 == line.container_product_id.name">
+                                                                                <t t-set="container_no3"
+                                                                                   t-value="container_no3+1"/>
+                                                                            </t>
+                                                                        </t>
+                                                                    </t>
+                                                                    <t t-if="container_type2 == line.container_product_id.name">
+                                                                        <t t-set="container_no2"
+                                                                           t-value="container_no2+1"/>
+                                                                    </t>
+                                                                </t>
+                                                            </t>
+                                                            <t t-if="container_type1 == line.container_product_id.name">
+                                                                <t t-set="container_no1" t-value="container_no1+1"/>
+                                                            </t>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                                <t t-if="container_no1 > 0">
+                                                    <span t-esc="container_no1"/>
+                                                    X
+                                                    <span t-esc="container_type1"/>
+                                                </t>
+                                                <t t-if="container_no2 > 0">
+                                                    ,&#160;<span t-esc="container_no2"/>
+                                                    X
+                                                    <span t-esc="container_type2"/>
+                                                </t>
+                                                <t t-if="container_no3 > 0">
+                                                    ,&#160;<span t-esc="container_no3"/>
+                                                    X
+                                                    <span t-esc="container_type3"/>
+                                                </t>
+                                                <t t-if="container_no4 > 0">
+                                                    ,&#160;<span t-esc="container_no4"/>
+                                                    X
+                                                    <span t-esc="container_type4"/>
+                                                </t>
+                                            </td>
+                                        </t>
+                                        <td></td>
+                                        <td colspan="2">SHIPPER</td>
+                                        <td colspan="2">:</td>
+                                        <td colspan="5">
+                                            <span t-field="o.freight_booking.shipper.name"/>
+                                        </td>
+
+                                    </tr>
+                                    <tr height="10px"/>
+                                </thead>
+                            </table>
+                        </t>
+                    </t>
+                    <t t-elif="o.freight_booking.service_type == 'air'">
+                        <t t-if="o.should_containers_list_on_every_page() or not show_container_list">
+                            <table style="table-layout: fixed; line-height: 150%; font-size:10pt; width:100%;" border="1">
+                                <thead>
+                                    <tr>
+                                        <td style="width:3%;"/>
+                                        <td style="width:12%;"/>
+                                        <td style="width:3%;"/>
+                                        <td style="width:14%;"/>
+                                        <td style="width:8%;"/>
+                                        <td style="width:7%;"/>
+                                        <td style="width:9%;"/>
+                                        <td style="width:3%;"/>
+                                        <td style="width:5%;"/>
+                                        <td style="width:8%;"/>
+                                        <td style="width:7%;"/>
+                                        <td style="width:1%;"/>
+                                        <td style="width:2%;"/>
+                                        <td style="width:4%;"/>
+                                        <td style="width:14%;"/>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2">
+                                            <strong>BILL TO</strong>
+                                        </th>
+                                        <td>
+                                            <strong>:</strong>
+                                        </td>
+                                        <td colspan="5"></td>
+                                        <td></td>
+                                        <t t-if="o.type == 'out_refund'">
+                                            <th colspan="2">
+                                                <strong>CREDIT NOTE NO</strong>
+                                            </th>
+                                        </t>
+                                        <t t-if="o.type == 'in_refund'">
+                                            <th colspan="2">
+                                                <strong>CREDIT NOTE NO</strong>
+                                            </th>
+                                        </t>
+                                        <t t-if="o.type == 'in_invoice'">
+                                            <th colspan="2">
+                                                <strong>VENDOR BILL NO</strong>
+                                            </th>
+                                        </t>
+                                        <t t-if="o.type == 'out_invoice' and o.customer_debit_note == False">
+                                            <th colspan="2" style="font-size: 12pt;">
+                                                <strong>INVOICE NO</strong>
+                                            </th>
+                                        </t>
+                                        <t t-if="o.type == 'out_invoice' and o.customer_debit_note == True">
+                                            <th colspan="2">
+                                                <strong>DEBIT NOTE NO</strong>
+                                            </th>
+                                        </t>
+                                        <td colspan="2">
+                                            <strong>:</strong>
+                                        </td>
+                                        <td colspan="2" style="font-size:11pt">
+                                            <strong>
+                                                <span t-field="o.number"/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="5" colspan="8">
+                                            <b>
+                                                <span style="font-size:11pt" t-field="o.partner_id.name"/>
+                                            </b>
+                                            <br/>
+                                            <span t-field="o.partner_id.street"/>,
+                                            <br/>
+                                            <t t-if="o.partner_id.street2">
+                                                <span t-field="o.partner_id.street2"/>,
+                                                <br/>
+                                            </t>
+                                            <t t-if="o.partner_id.zip">
+                                                <span t-field="o.partner_id.zip"/>&#160;
+                                            </t>
+                                            <t t-if="o.partner_id.city">
+                                                <span t-field="o.partner_id.city"/>,&#160;
+                                            </t>
+                                            <t t-if="o.partner_id.state_id">
+                                                <span t-field="o.partner_id.state_id.name"/>,
+                                            </t>
+                                            <t t-if="o.partner_id.country_id">
+                                                <span t-field="o.partner_id.country_id.name"/>
+                                            </t>
+                                            <br/>SST:&#160;<t t-if="o.partner_id.buyer_sst_no"><span t-field="o.partner_id.buyer_sst_no"/></t>
+                                            <br/>Phone No.:&#160;<t t-if="o.partner_id.phone"><span t-field="o.partner_id.phone"/></t>
+                                            <br/>Email:&#160;<t t-if="o.partner_id.email"><span t-field="o.partner_id.email"/></t>
+                                        </td>
+                                        <td></td>
+                                        <td colspan="2">JOB NO.</td>
+                                        <td colspan="2">:</td>
+                                        <td colspan="2">
+                                            <span t-field="o.freight_booking.booking_no"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td colspan="2">INVOICE DATE</td>
+                                        <td colspan="2">:</td>
+                                        <td colspan="2">
+                                            <span t-field="o.date_invoice"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td colspan="2">TERM</td>
+                                        <td colspan="2">:</td>
+                                        <td colspan="2">
+                                            <span t-field="o.payment_term_id.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td colspan="2">SALESPERSON</td>
+                                        <td colspan="2">:</td>
+                                        <td colspan="2">
+                                            <span t-field="o.sudo().user_id.name"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+<!--                                        <td></td>-->
+<!--                                        <td colspan="2">CUST REF</td>-->
+<!--                                        <td colspan="2">:</td>-->
+<!--                                        <td colspan="2">-->
+<!--                                            <div style="">-->
+<!--                                                <span t-field="o.freight_booking.cust_ref"/>-->
+<!--                                            </div>-->
+<!--                                        </td>-->
+                                    </tr>
+
+                                    <tr>
+                                        <t t-if="not o.freight_booking.service_type == 'air'">
+                                            <td colspan="2">POL</td>
+                                            <td>:</td>
+                                            <td colspan="5">
+                                                <span t-field="o.freight_booking.port_of_loading"/>
+                                            </td>
+                                        </t>
+                                        <t t-if="o.freight_booking.service_type == 'air'">
+                                            <td colspan="2">DEPARTURE</td>
+                                            <td>:</td>
+                                            <td colspan="5">
+                                                <span t-field="o.freight_booking.airport_departure.name"/>
+                                            </td>
+                                        </t>
+                                        <td></td>
+                                        <t t-if="o.freight_booking.service_type == 'air'">
+                                            <td colspan="2">ETD</td>
+                                            <td colspan="2">:</td>
+                                            <td colspan="2">
+                                                <span t-field="o.freight_booking.first_carrier_etd"/>
+                                            </td>
+                                        </t>
+                                        <!--Ahmad Zaman - Added ETD for Land bookings-->
+                                        <t t-if="o.freight_booking.service_type == 'land'">
+                                            <td colspan="2">ETD</td>
+                                            <td colspan="2">:</td>
+                                            <td colspan="2">
+                                                <span t-field="o.freight_booking.booking_date_time"/>
+                                            </td>
+                                        </t>
+                                        <t t-if="o.freight_booking.service_type != 'air' and o.freight_booking.service_type != 'land'">
+                                            <td colspan="2">ETD</td>
+                                            <td colspan="2">:</td>
+                                            <td colspan="2">
+                                                <span t-field="o.freight_booking.port_of_loading_eta"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                    <tr>
+                                        <t t-if="not o.freight_booking.service_type == 'air'">
+                                            <td colspan="2">POD</td>
+                                            <td>:</td>
+                                            <td colspan="5">
+                                                <span t-field="o.freight_booking.port_of_discharge"/>
+                                            </td>
+                                        </t>
+                                        <t t-if="o.freight_booking.service_type == 'air'">
+                                            <td colspan="2">DESTINATION</td>
+                                            <td>:</td>
+                                            <td colspan="5">
+                                                <span t-field="o.freight_booking.airport_destination.name"/>
+                                            </td>
+                                        </t>
+
+                                        <td></td>
+                                        <t t-if="o.freight_booking.service_type == 'air'">
+                                            <td colspan="2">ETA</td>
+                                            <td colspan="2">:</td>
+                                            <td colspan="2">
+                                                <t t-if="o.freight_booking.third_carrier_eta">
+                                                    <span t-field="o.freight_booking.third_carrier_eta"/>
+                                                </t>
+                                                <t t-if="not o.freight_booking.third_carrier_eta and o.freight_booking.second_carrier_eta">
+                                                    <span t-field="o.freight_booking.second_carrier_eta"/>
+                                                </t>
+                                                <t t-if="not o.freight_booking.third_carrier_eta and not o.freight_booking.second_carrier_eta
+                                                and o.freight_booking.first_carrier_eta">
+                                                    <span t-field="o.freight_booking.first_carrier_eta"/>
+                                                </t>
+                                            </td>
+                                        </t>
+                                        <t t-if="not o.freight_booking.service_type == 'air'">
+                                            <td colspan="2">ETA</td>
+                                            <td colspan="2">:</td>
+                                            <td colspan="2">
+                                                <span t-field="o.freight_booking.port_of_discharge_eta"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                    <tr>
+                                        <t t-if="not o.freight_booking.service_type == 'air'">
+                                            <td colspan="2">VESSEL/VOY</td>
+                                            <td>:</td>
+                                            <td colspan="5"><span
+                                                    t-field="o.freight_booking.feeder_vessel_name"/>/
+                                                <span t-field="o.freight_booking.feeder_voyage_no"/>
+                                            </td>
+                                            <td></td>
+                                            <td colspan="2">MBL NO.</td>
+                                            <td colspan="2">:</td>
+                                            <td colspan="2">
+                                                <span t-field="o.freight_booking.obl_no"/>
+                                            </td>
+                                        </t>
+                                        <t t-if="o.freight_booking.service_type == 'air'">
+                                            <td colspan="2">FLIGHT</td>
+                                            <td>:</td>
+                                            <td colspan="5">
+                                                <span t-field="o.freight_booking.first_carrier_flight_no.name"/>
+                                            </td>
+                                            <td></td>
+                                            <td colspan="2">MAWB</td>
+                                            <td colspan="2">:</td>
+                                            <td colspan="2">
+                                                <span t-field="o.freight_booking.mawb_no"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                    <tr>
+<!--                                        <td colspan="2">MOTHER VESSEL</td>-->
+<!--                                        <td>:</td>-->
+<!--                                        <td colspan="5"><span t-field="o.freight_booking.vessel_name"/>/-->
+<!--                                            <span t-field="o.freight_booking.voyage_no"/>-->
+<!--                                        </td>-->
+                                        <td colspan="2">SHIPPER</td>
+                                        <td>:</td>
+                                        <td colspan="5">
+                                            <span t-field="o.freight_booking.shipper.name"/>
+                                        </td>
+                                        <td></td>
+                                        <t t-if="not o.freight_booking.service_type == 'air'">
+                                            <td colspan="2">HBL NO.</td>
+                                            <td colspan="2">:</td>
+                                            <td colspan="2">
+                                                <span t-field="o.freight_booking.hbl_no"/>
+                                            </td>
+                                        </t>
+                                        <t t-if="o.freight_booking.service_type == 'air'">
+                                            <td colspan="2">HAWB NO.</td>
+                                            <td colspan="2">:</td>
+                                            <td colspan="2">
+                                                <span t-field="o.freight_booking.awb_no"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">CONSIGNEE</td>
+                                        <td>:</td>
+                                        <td colspan="5">
+                                            <span t-field="o.freight_booking.consignee.name"/>
+                                        </td>
+                                        <td></td>
+                                        <td colspan="2">PREPARED BY</td>
+                                        <td colspan="2">:</td>
+                                        <td colspan="2">
+                                            <span t-esc="user.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <t t-if="not o.freight_booking.service_type == 'air'">
+                                            <t t-set="container_line1" t-value="0"/>
+                                            <td colspan="2">CONTAINER</td>
+                                            <td>:</td>
+                                            <td colspan="12">
+                                                <t t-if="o.freight_booking">
+                                                    <t t-if="o.should_containers_list_on_every_page()">
+                                                        <t t-call="sci_goexcel_freight_2.container_data_for_invoice_report"/>
+                                                    </t>
+                                                    <t t-elif="not show_container_list">
+                                                        <span>See last page for container lines</span>
+                                                    </t>
+                                                </t>
+                                            </td>
+                                        </t>
+                                        <t t-if="o.freight_booking.service_type == 'air'">
+                                            <td colspan="2">M3/WT</td>
+                                            <td>:</td>
+                                            <td colspan="12">
+                                                <t t-if="o.freight_booking and o.freight_booking.operation_line_ids2">
+                                                    <span t-esc="o.freight_booking.operation_line_ids2[0].exp_vol"/>
+                                                    /
+                                                    <span t-esc="o.freight_booking.operation_line_ids2[0].chargeable_weight"/>
+                                                </t>
+                                            </td>
+
+                                        </t>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">DESCRIPTIONS</td>
+                                        <td>:</td>
+                                        <td colspan="5">
+                                            <t t-if="o.freight_booking">
+                                                <t t-if="o.freight_booking.commodity1">
+                                                    <span t-esc="o.freight_booking.commodity1.name"/>
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <td></td>
+                                        <td colspan="2">CONT TYPE</td>
+                                        <td colspan="2">:</td>
+                                        <td colspan="2">
+                                            <!--                                            <t t-if="o.freight_booking.cargo_type == 'fcl' or o.freight_booking.land_cargo_type == 'ftl'">-->
+                                            <t t-set="container_no" t-value="0"/>
+                                            <t t-set="container_no" t-value="0"/>
+                                            <t t-set="container_type1" t-value=""/>
+                                            <t t-set="container_type2" t-value=""/>
+                                            <t t-set="container_type3" t-value=""/>
+                                            <t t-set="container_type4" t-value=""/>
+                                            <t t-set="container_no1" t-value="0"/>
+                                            <t t-set="container_no2" t-value="0"/>
+                                            <t t-set="container_no3" t-value="0"/>
+                                            <t t-set="container_no4" t-value="0"/>
+                                            <t t-if="o.freight_booking.operation_line_ids">
+                                                <t t-foreach="o.freight_booking.operation_line_ids"
+                                                   t-as="line">
+                                                    <t t-set="is_first" t-value="False"/>
+                                                    <t t-set="container_no" t-value="container_no+1"/>
+                                                    <t t-if="not container_type1">
+                                                        <t t-set="container_type1"
+                                                           t-value="line.container_product_id.name"/>
+                                                        <t t-set="container_no1" t-value="container_no1+1"/>
+                                                        <t t-set="is_first" t-value="True"/>
+                                                    </t>
+                                                    <t t-if="container_type1 and not is_first">
+                                                        <t t-if="container_type1 != line.container_product_id.name">
+                                                            <t t-if="not container_type2">
+                                                                <t t-set="container_type2"
+                                                                   t-value="line.container_product_id.name"/>
+                                                                <t t-set="container_no2"
+                                                                   t-value="container_no2+1"/>
+                                                                <t t-set="is_first" t-value="True"/>
+                                                            </t>
+                                                            <t t-if="container_type2 and not is_first">
+                                                                <t t-if="container_type2 != line.container_product_id.name">
+                                                                    <t t-if="not container_type3">
+                                                                        <t t-set="container_type3"
+                                                                           t-value="line.container_product_id.name"/>
+                                                                        <t t-set="container_no3"
+                                                                           t-value="container_no3+1"/>
+                                                                        <t t-set="is_first" t-value="True"/>
+                                                                    </t>
+                                                                    <t t-if="container_type3 and not is_first">
+                                                                        <t t-if="container_type3 != line.container_product_id.name">
+                                                                            <t t-if="not container_type4">
+                                                                                <t t-set="container_type4"
+                                                                                   t-value="line.container_product_id.name"/>
+                                                                                <t t-set="container_no4"
+                                                                                   t-value="container_no4+1"/>
+                                                                                <t t-set="is_first"
+                                                                                   t-value="True"/>
+                                                                            </t>
+                                                                            <t t-if="container_type4 and not is_first">
+                                                                                <t t-if="container_type4 != line.container_product_id.name">
+                                                                                    <t t-set="container_no4"
+                                                                                       t-value="container_no4+1"/>
+                                                                                </t>
+                                                                                <t t-if="container_type4 == line.container_product_id.name">
+                                                                                    <t t-set="container_no4"
+                                                                                       t-value="container_no4+1"/>
+                                                                                </t>
+                                                                            </t>
+                                                                        </t>
+                                                                        <t t-if="container_type3 == line.container_product_id.name">
+                                                                            <t t-set="container_no3"
+                                                                               t-value="container_no3+1"/>
+                                                                        </t>
+                                                                    </t>
+                                                                </t>
+                                                                <t t-if="container_type2 == line.container_product_id.name">
+                                                                    <t t-set="container_no2"
+                                                                       t-value="container_no2+1"/>
+                                                                </t>
+                                                            </t>
+                                                        </t>
+                                                        <t t-if="container_type1 == line.container_product_id.name">
+                                                            <t t-set="container_no1"
+                                                               t-value="container_no1+1"/>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                            <t t-if="container_no1 > 0">
+                                                <span t-esc="container_no1"/>
+                                                X
+                                                <span t-esc="container_type1"/>
+                                            </t>
+                                            <t t-if="container_no2 > 0">
+                                                ,&#160;<span t-esc="container_no2"/>
+                                                X
+                                                <span t-esc="container_type2"/>
+                                            </t>
+                                            <t t-if="container_no3 > 0">
+                                                ,&#160;<span t-esc="container_no3"/>
+                                                X
+                                                <span t-esc="container_type3"/>
+                                            </t>
+                                            <t t-if="container_no4 > 0">
+                                                ,&#160;<span t-esc="container_no4"/>
+                                                X
+                                                <span t-esc="container_type4"/>
+                                            </t>
+                                            <!--                                            </t>-->
+                                        </td>
+                                    </tr>
+                                    <tr height="10px"/>
+                                </thead>
+                            </table>
+                        </t>
+                        <t t-elif="show_container_list">
+                            <table style="table-layout: fixed; line-height: 150%; font-size:10pt; width:100%;">
+                                <thead>
+                                    <tr>
+                                        <td style="width:3%;"/>
+                                        <td style="width:12%;"/>
+                                        <td style="width:3%;"/>
+                                        <td style="width:14%;"/>
+                                        <td style="width:8%;"/>
+                                        <td style="width:7%;"/>
+                                        <td style="width:9%;"/>
+                                        <td style="width:3%;"/>
+                                        <td style="width:5%;"/>
+                                        <td style="width:8%;"/>
+                                        <td style="width:7%;"/>
+                                        <td style="width:1%;"/>
+                                        <td style="width:2%;"/>
+                                        <td style="width:4%;"/>
+                                        <td style="width:14%;"/>
+                                    </tr>
+                                    <tr>
+                                        <t t-if="not o.freight_booking.service_type == 'air'">
+                                            <t t-set="container_line1" t-value="0"/>
+                                            <td colspan="2">CONTAINER</td>
+                                            <td>:</td>
+                                            <td colspan="12">
+                                                <t t-if="o.freight_booking">
+                                                    <t t-call="sci_goexcel_freight_2.container_data_for_invoice_report"/>
+                                                </t>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                    <tr height="10px"/>
+                                </thead>
+                            </table>
+                        </t>
+                    </t>
+
+                </div>
+
+            </t>
+            <div class="row">
+                <t t-if="len(o.invoice_line_ids) &gt;= 9">
+                    <table style="font-size:9pt; width:100%;">
+                        <thead>
+                            <tr>
+                                <th
+                                        style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:5%;">
+                                    <span>No.</span>
+                                </th>
+                                <th
+                                        style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:25%;padding:0;">
+                                    <span>DESCRIPTION</span>
+                                </th>
+                                <th
+                                        style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:8%">
+                                    <span>Qty</span>
+                                </th>
+                                <th
+                                        style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:15%">
+                                    <span>Currency</span>
+                                </th>
+                                <th
+                                        style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:15%">
+                                    <span>Price/Unit</span>
+                                </th>
+                                <th
+                                        style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:15%">
+                                    <span>Ex. Rate</span>
+                                </th>
+                                <th
+                                        style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:8%">
+                                    <span>SST</span>
+                                </th>
+                                <!--                                <th class="text-right" style="border-top:1pt solid black; border-bottom:1pt solid black;"><span>SST</span></th>
+                            <th colspan="4" class="text-right" style="border-top:1pt solid black; border-bottom:1pt solid black;"><span>BEFORE TAX</span></th>-->
+                                <th
+                                        style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:15%;text-align:center;">
+                                    <span>Sub Total</span>
+                                </th>
+                                <th
+                                        style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:14%;text-align:right;">
+                                    <span>Total(<t t-esc="o.currency_id.name"/>)
+                                    </span>
+                                    <!--                                    <span>Total(RM)</span>-->
+                                    <!--                                    <span t-esc="o.currency_id.symbol"/>-->
+                                </th>
+                            </tr>
+                            <tr height="1px"/>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <t t-set="line_no" t-value="0"/>
+                            <t t-foreach="o.invoice_line_ids" t-as="line">
+                                <t t-if="not line.display_type">
+                                    <t t-set="line_no" t-value="line_no + 1"/>
+                                    <tr>
+                                        <td style="font-size: 9pt;">
+                                            <span t-esc="line_no"/>
+                                        </td>
+                                        <td style="font-size: 9pt;">
+                                            <span t-field="line.name"/>
+                                        </td>
+                                        <td style="font-size: 9pt;">
+                                            <span t-esc="int(line.quantity)"/>
+                                        </td>
+                                        <td style="font-size: 9pt;">
+                                          <span t-field="line.freight_currency.name"/>
+                                        </td>
+                                        <td style="font-size: 9pt;">
+                                            <t t-if="line.freight_currency_rate > 1">
+                                                <span t-esc="'%.2f'% float(line.freight_foreign_price)"/>
+                                            </t>
+                                            <t t-if="line.freight_currency_rate == 1">
+                                                <span t-esc="'{0:,.2f}'.format(float(line.price_unit))"/>
+                                            </t>
+                                        </td>
+                                        <td style="font-size: 9pt;">
+                                            <t t-if="line.freight_currency_rate &gt; 1">
+                                                  
+                                                <span t-esc="'%.4f'%  float(line.freight_currency_rate)"/>
+                                            </t>
+                                            <t t-if="line.freight_currency_rate == 1">
+                                                  1.0000
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span t-field="line.price_tax"/>
+                                        </td>
+                                        <!-- <td class="text-right">
+                                        <span t-esc="  float(line.price_tax)"/>
+                                    </td>-->
+                                        <!-- <td colspan="4" class="text-right">
+                                        <span t-esc="'{0:,.2f}'.format(float(line.price_subtotal))"/>
+                                    </td>-->
+                                        <td style="font-size: 9pt;text-align:right;">
+                                            <span t-esc="'{0:,.2f}'.format(float(line.price_total))"/>
+                                        </td>
+                                        <td style="font-size: 9pt;text-align:right;">
+                                            <span t-esc="'{0:,.2f}'.format(float(line.price_total))"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <t t-if="line.display_type == 'line_section'">
+                                    <td colspan="99">
+                                        <strong>
+                                            <span t-field="line.name"/>
+                                        </strong>
+                                    </td>
+                                </t>
+                                <t t-if="line.display_type == 'line_note'">
+                                    <td colspan="99">
+                                        <strong>
+                                            <span t-field="line.name"/>
+                                        </strong>
+                                    </td>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </div>
+        </div>
+
+        <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-call="web.address_layout"/>
+            <t t-raw="0"/>
+        </div>
+    </template>
+
+
+    <!-- Full copied template from account.report_invoice_document -->
+    <template id="report_invoice_document_full_custom" inherit_id="sci_goexcel_freight_2.report_account_invoice_doc">
+        <xpath expr="//t[@t-name='sci_goexcel_freight_2.report_account_invoice_doc']" position="replace">
+            <t t-name="sci_goexcel_freight_2.report_account_invoice_doc">
+                <t t-set="report_data" t-value="o._get_package_weight()"/>
+                <t t-call="custom_pinyang.external_layout">
+                    <div class="page">
+                        <t t-if="len(o.invoice_line_ids) &lt;= 8">
+                            <div t-if="o.freight_booking.service_type != 'air'">
+                                <div style="height:365px;"></div>
+                            </div>
+                            <div t-else="">
+                                <div style="height: 280px;"/>
+                            </div>
+                            <!--TODO: Add index to the table-->
+                            <t t-set="index" t-value="0"/>
+                            <table style="font-size:10pt; width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:5%;">
+                                            <span>No.</span>
+                                        </th>
+
+                                        <th
+                                                style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:25%;padding:0;">
+                                            <span>DESCRIPTION</span>
+                                        </th>
+                                        <th
+                                                style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:8%">
+                                            <span>Qty</span>
+                                        </th>
+                                        <th
+                                                style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:15%">
+                                            <span>Currency</span>
+                                        </th>
+                                        <th
+                                                style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:15%">
+                                            <span>Price/Unit</span>
+                                        </th>
+                                        <th
+                                                style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:15%">
+                                            <span>Ex. Rate</span>
+                                        </th>
+                                        <th
+                                                style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:8%">
+                                            <span>SST</span>
+                                        </th>
+                                        <!--                                <th class="text-right" style="border-top:1pt solid black; border-bottom:1pt solid black;"><span>SST</span></th>
+                                    <th colspan="4" class="text-right" style="border-top:1pt solid black; border-bottom:1pt solid black;"><span>BEFORE TAX</span></th>-->
+                                        <th
+                                                style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:15%;text-align:center;">
+                                            <span>Sub-Tot.</span>
+                                        </th>
+                                        <th
+                                                style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:14%;text-align:right;">
+                                            <span>Total(<t t-esc="o.currency_id.name"/>)
+                                            </span>
+                                            <!--                                    <span>Total(RM)</span>-->
+                                            <!--                                    <span t-esc="o.currency_id.symbol"/>-->
+                                        </th>
+                                    </tr>
+                                    <tr height="1px"/>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <t t-set="line_no" t-value="0"/>
+                                    <t t-foreach="o.invoice_line_ids" t-as="line">
+                                        <t t-if="not line.display_type">
+                                            <t t-set="line_no" t-value="line_no + 1"/>
+                                            <tr>
+                                                <td style="font-size: 9pt">
+                                                    <span t-esc="line_no"/>
+                                                </td>
+                                                <td style="font-size: 9pt;">
+                                                    <span t-field="line.name"/>
+                                                </td>
+                                                <td style="font-size: 9pt;">
+                                                    <span t-esc="int(line.quantity)"/>
+                                                </td>
+                                                <td style="font-size: 9pt;">
+                                                    <span t-field="line.freight_currency.name"/>
+                                                </td>
+                                                <td style="font-size: 9pt;">
+                                                    <t t-if="line.freight_currency_rate > 1">
+                                                        <span t-esc="'%.2f'% float(line.freight_foreign_price)"/>
+                                                    </t>
+                                                    <t t-if="line.freight_currency_rate == 1">
+                                                        <span t-esc="'{0:,.2f}'.format(float(line.price_unit))"/>
+                                                    </t>
+                                                </td>
+                                                <td style="font-size: 9pt;">
+                                                    <t t-if="line.freight_currency_rate &gt; 1">
+                                                          
+                                                        <span t-esc="'%.4f'%  float(line.freight_currency_rate)"/>
+                                                    </t>
+                                                    <t t-if="line.freight_currency_rate == 1">
+                                                          1.0000
+                                                    </t>
+                                                </td>
+                                                <td>
+                                                    <span t-field="line.price_tax"/>
+                                                </td>
+                                                <!-- <td class="text-right">
+                                                <span t-esc="  float(line.price_tax)"/>
+                                            </td>-->
+                                                <!-- <td colspan="4" class="text-right">
+                                                <span t-esc="'{0:,.2f}'.format(float(line.price_subtotal))"/>
+                                            </td>-->
+                                                <td style="font-size: 9pt;text-align:right;">
+                                                    <span t-esc="'{0:,.2f}'.format(float(line.price_total))"/>
+                                                </td>
+                                                <td style="font-size: 9pt;text-align:right;">
+                                                    <span t-esc="'{0:,.2f}'.format(float(line.price_total))"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="line.display_type == 'line_section'">
+                                            <td colspan="99">
+                                                <strong>
+                                                    <span t-field="line.name"/>
+                                                </strong>
+                                            </td>
+                                        </t>
+                                        <t t-if="line.display_type == 'line_note'">
+                                            <td colspan="99">
+                                                <strong>
+                                                    <span t-field="line.name"/>
+                                                </strong>
+                                            </td>
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+                        <t t-else="">
+                            <span>pages</span>
+                        </t>
+                    </div>
+                    <div class="footer">
+                        <div style="margin-bottom:0px;height:20px;"/>
+                        <div id="total">
+                            <style>
+                                body {
+                                font-family: georgia;
+                                font-size:10pt;
+                                }
+                            </style>
+                            <div class="last-page">
+                                <div/>
+                                <div class="amount-text" style="border-bottom: 1px solid black;" width="100">
+                                    <strong>
+                                        <!--<span t-field="o.currency_id.currency_unit_label"/> :-->
+                                        <span t-esc="o.currency_id.amount_to_text(o.amount_total).upper().replace(',','')"/>
+                                         ONLY
+                                    </strong>
+
+                                </div>
+                                <table width="100%" style="line-height: 200%;" name="total">
+                                    <tr>
+
+                                        <td width="44%">
+                                        </td>
+                                        <td width="20%">
+                                        </td>
+
+                                        <!--                                <t t-if="o.currency_id.name == 'USD'">-->
+                                        <!--                                    <td class="text-right mx-4">-->
+                                        <!--                                        <strong>TOTAL (MYR)</strong>-->
+                                        <!--                                    </td>-->
+                                        <!--                                </t>-->
+                                        <!--TODO: Temporarily Removed, requested by user-->
+<!--                                        <t t-if="o.currency_id.id != o.company_id.currency_id.id">-->
+<!--                                            <t t-if="o.currency_id">-->
+<!--                                                <td class="text-right mx-4">-->
+<!--                                                    <strong>TOTAL (MYR)</strong>-->
+<!--                                                </td>-->
+<!--                                            </t>-->
+<!--                                        </t>-->
+
+
+                                        <td class="text-right">
+                                            <strong>TOTAL (<t t-esc="o.currency_id.name"/>)
+                                            </strong>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td width="44%">
+                                            <strong>Sub Total</strong>
+                                        </td>
+                                        <td width="29%">
+                                        </td>
+                                        <!--TODO: Temporarily Removed, requested by user-->
+<!--                                        <t t-if="o.currency_id.id != o.company_id.currency_id.id">-->
+<!--                                            <t t-if="o.currency_id">-->
+<!--                                                <td class="text-right mx-4" style="font-size: 12pt;">-->
+<!--                                                    <strong>-->
+<!--                                                        <span t-esc="'{0:,.2f}'.format(float(o.amount_untaxed * o.exchange_rate_inverse))"/>-->
+<!--                                                    </strong>-->
+<!--                                                </td>-->
+<!--                                            </t>-->
+<!--                                        </t>-->
+                                        <!--                                <t t-if="o.currency_id.name == 'USD'">-->
+                                        <!--                                    <td class="text-right mx-4" style="font-size: 12pt;">-->
+                                        <!--                                        <strong>-->
+                                        <!--                                            <span t-esc="'{0:,.2f}'.format(float(o.amount_untaxed * o.exchange_rate_inverse))"/>-->
+                                        <!--                                        </strong>-->
+                                        <!--                                    </td>-->
+                                        <!--                                </t>-->
+
+                                        <td class="text-right" style="font-size: 12pt;">
+                                            <strong>
+                                                <span t-esc="'{0:,.2f}'.format(float(o.amount_untaxed))"/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td width="44%">
+                                            <strong>Add SST</strong>
+                                        </td>
+                                        <td width="20%">
+                                        </td>
+                                        <!--TODO: Temporarily Removed, requested by user-->
+<!--                                        <t t-if="o.currency_id.id != o.company_id.currency_id.id">-->
+<!--                                            <t t-if="o.currency_id">-->
+<!--                                                <td class="text-right mx-4" style="font-size: 12pt;">-->
+<!--                                                    <strong>-->
+<!--                                                        <span t-esc="'{0:,.2f}'.format(float(o.amount_tax * o.exchange_rate_inverse))"/>-->
+<!--                                                    </strong>-->
+<!--                                                </td>-->
+<!--                                            </t>-->
+<!--                                        </t>-->
+
+                                        <!--                                <t t-if="o.currency_id.name == 'USD'">-->
+
+                                        <!--                                    <td class="text-right mx-4" style="font-size: 12pt;">-->
+                                        <!--                                        <strong>-->
+                                        <!--                                            <span t-esc="'{0:,.2f}'.format(float(o.amount_tax * o.exchange_rate_inverse))"/>-->
+                                        <!--                                        </strong>-->
+                                        <!--                                    </td>-->
+                                        <!--                                </t>-->
+
+                                        <td class="text-right" style="font-size: 12pt;">
+                                            <strong>
+                                                <span t-esc="'{0:,.2f}'.format(float(o.amount_tax))"/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-top: 1px solid black;">
+                                        <td width="44%">
+                                            <strong>Total Payable Including SST</strong>
+                                        </td>
+                                        <td width="20%">
+                                        </td>
+                                        <!--TODO: Temporarily Removed, requested by user-->
+<!--                                        <t t-if="o.currency_id.id != o.company_id.currency_id.id">-->
+<!--                                            <t t-if="o.currency_id">-->
+<!--                                                <td class="text-right mx-4" style="font-size: 12pt;">-->
+<!--                                                    <strong>-->
+<!--                                                        <span t-esc="'{0:,.2f}'.format(float(o.amount_total * o.exchange_rate_inverse))"/>-->
+<!--                                                    </strong>-->
+<!--                                                </td>-->
+<!--                                            </t>-->
+<!--                                        </t>-->
+                                        <!--                                <t t-if="o.currency_id.name == 'USD'">-->
+
+                                        <!--                                    <td class="text-right mx-4" style="font-size: 12pt;">-->
+                                        <!--                                        <strong>-->
+                                        <!--                                            <span t-esc="'{0:,.2f}'.format(float(o.amount_total * o.exchange_rate_inverse))"/>-->
+                                        <!--                                        </strong>-->
+                                        <!--                                    </td>-->
+                                        <!--                                </t>-->
+
+                                        <td class="text-right" style="font-size: 12pt;">
+                                            <strong>
+                                                <span t-esc="'{0:,.2f}'.format(float(o.amount_total))"/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div style="border-top: 1px solid black;"/>
+                                <div>
+                                    <table width="100%" border="1">
+                                        <!--                                    <t t-set="report_data" t-value="o._report_data()"/>-->
+                                        <!--TODO: Add signature space-->
+                                        <tr>
+                                            <td width="70%">
+                                                <span style="font-size:8pt;" t-field="o.sale_term"/>
+                                            </td>
+                                            <td width="30%" style="text-align:center; vertical-align:bottom;">
+                                                <div style="padding-top: 30px;">
+                                                    <hr width="100%" style="border: 1px solid black; margin: 0 auto;" />
+                                                    <span style="font-size:8pt;">AUTHORISED SIGNATURE</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="font-size:9pt; padding-top: 5px;">
+                            <center>*** E. &amp; O. E ****</center>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </xpath>
+    </template>
+
+    <record id="report_qweb_paperformat_invoice" model="report.paperformat">
+        <field name="name">Invoice report qweb paperformat</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">35</field>
+        <field name="margin_bottom">80</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">30</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <template id="report_account_invoice_doc_pinyang">
+        <t t-call="web.html_container">
+            <t t-as="o" t-foreach="docs">
+                <t t-call="custom_pinyang.report_invoice_document_full_custom"/>
+            </t>
+        </t>
+    </template>
+
+    <report
+            id="account.account_invoices"
+            string="Invoices"
+            model="account.invoice"
+            report_type="qweb-pdf"
+            file="custom_pinyang.report_account_invoice_doc_pinyang"
+            name="custom_pinyang.report_account_invoice_doc_pinyang"
+            paperformat="custom_pinyang.report_qweb_paperformat_invoice"
+            menu="True"
+    />
+
+    <record id="account.account_invoices_without_payment" model="ir.actions.report">
+        <field name="paperformat_id" ref="report_qweb_paperformat_invoice"/>
+    </record>
+
+    <record id="account.account_invoices" model="ir.actions.report">
+        <field name="paperformat_id" ref="report_qweb_paperformat_invoice"/>
+    </record>
+
+
+</odoo>
+
+

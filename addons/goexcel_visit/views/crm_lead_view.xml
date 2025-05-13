@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_crm_lead_visit_form" model="ir.ui.view">
+        <field name="name">crm.lead.visit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm_project.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form//header" position="inside">
+                <button id="create_order_visit" name="action_create_opportunity_visit" string="Create Visit" type="object"/>
+            </xpath>
+            <xpath expr="//form//field[@name='team_id']" position="after">
+                <field name="visit_id" readonly="1" attrs="{'invisible': [('visit_id', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

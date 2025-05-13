@@ -1,0 +1,50 @@
+<odoo>
+
+    <!-- SQ Form -->
+    <record model="ir.ui.view" id="view_sales_quotation_view_booking_suria">
+        <field name="name">Freight Booking</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="priority" eval="1"/>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='show_subtotal']" position="after">
+                <field name="hide_subtotal"/>
+                <field name="show_subtotal_in_line"/>
+                <field name="show_foreign_currency"/>
+            </xpath>
+            <xpath expr="//field[@name='validity_date']" position="before">
+                <field name="date_order"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//form //field[@name='price_unit']" position="before">
+                <field name="cost_price"/>
+                <field name="cost_currency"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_unit']"
+                   position="before">
+                <field name="cost_price"/>
+                <field name="cost_currency"/>
+                <field name="cost_exc_rate"/>
+                <!--	Yulia 07102024 merge from ion		-->
+                <field name="profit"/>
+                <field name="vendor" options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}"/>
+            </xpath>
+            <!--	Yulia 07102024 merge from ion		-->
+            <xpath expr="//group[@name='sale_total']" position="after">
+                <group class="oe_subtotal_footer oe_right" name="total_amount" style="margin-right: 80px;">
+                    <field name="total_sales" widget='monetary' options="{'currency_field': 'company_currency_id'}"/>
+                    <field name="total_cost" widget='monetary' options="{'currency_field': 'company_currency_id'}"/>
+                    <field name="total_profit" widget='monetary' options="{'currency_field': 'company_currency_id'}"/>
+                </group>
+            </xpath>
+
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='price_unit']"
+                   position="replace">
+                <field name="price_unit"/>
+            </xpath>
+
+        </field>
+    </record>
+
+
+</odoo>

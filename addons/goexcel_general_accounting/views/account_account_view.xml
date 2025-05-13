@@ -1,0 +1,31 @@
+<odoo>
+
+	<record model="ir.ui.view" id="view_account_form_generic">
+		<field name="name">CoA Generic</field>
+		<field name="model">account.account</field>
+		<field name="type">form</field>
+		<field name="priority" eval="1"/>
+		<field name="inherit_id" ref="account.view_account_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='tax_ids']"
+				   position="before">
+				<field name="default_ar_ap" />
+			</xpath>
+
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_tree_account_account_generic">
+		<field name="name">CoA Generic Tree</field>
+		<field name="model">account.account</field>
+		<field name="inherit_id" ref="account.view_account_list"/>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='company_id']" position="before">
+				<field name="default_ar_ap" />
+			</xpath>
+		</field>
+	</record>
+
+
+</odoo>

@@ -1,0 +1,489 @@
+Version 12.0.6 - 12.0.7 - 23 Aug 2021 - Kinjal
+===================================
+Improvement
+
+ a) In the General Journal Report, for manual JE, the Description will be JE reference.
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.2 - 12.1.3 - 8 April 2022 - Kinjal
+===================================
+Improvement
+
+ a) FIXED-> Partner Aging Report sort by Partner name in PDF and View 
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.3 - 12.1.3.1 - 12 April 2022 - Kinjal
+
+Version 12.1.3.2 - 12.1.3.3 - 12 Aug 2022 - MIss
+===================================
+Improvement
+
+ a)  Fixed Date range issue in Balance sheet
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.3.3 - 12.1.3.4 - 20 Mar 2023 - Rajeel
+===================================
+Improvement
+
+ a)  Hide Empty Lines in Profit & Loss & Balance Sheet
+ b)  Margin % in Profit & Loss & Balance Sheet
+ c)  Partners will not be printed in Partner Ageing anymore
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.3.4 - 12.1.3.5 - 27 Mar 2023 - Rajeel
+===================================
+Improvement
+
+ a)  Date Range above headings in Profit & Loss & Balance Sheet
+ b)  Add web_widget_many2many_tags_multi_selection module in depends
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.3.5 - 12.1.4.0 - 29 Mar 2023 - Rajeel
+===================================
+Improvement
+
+ a)  Analytic Report from Journal Items
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.4.0 - 12.1.4.1 - 30 Mar 2023 - Rajeel
+===================================
+Improvement
+
+ a)  General Ledger PDF in Portrait
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.4.1 - 12.1.4.2 - 06 Apr 2023 - Rajeel
+===================================
+Improvement
+
+ a)  Date Range above headings in Profit & Loss and Balance Sheet (XLSX)
+ b)  Column width increased in Profit & Loss and Balance Sheet (XLSX)
+ c)  Removed 1st row (Report name which is generated row) in Profit & Loss and Balance Sheet (XLSX)
+ d)  pip3 install pandas
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.4.2 - 12.1.4.3 - 12 Apr 2023 - Rajeel
+===================================
+Improvement
+
+ a)  Expandable/Collapsible Feature Enhancements
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.4.4 - 2nd June 2023 - Rajeel
+===================================
+Improvement
+
+ a)  Partner Ageing bugs and Partner Ledger sorting by name
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.4.5 - July 2023 - Rajeel
+===================================
+Improvement
+
+ a)  Exclude Accounts feature in P&L and BS
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.5.0 - 27 Aug 2023 - Rajeel
+===================================
+Improvement
+
+ a)  For All Projects
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.5.1 - 28 Aug 2023 - Rajeel
+===================================
+Improvement
+
+ a)  Add Total YTD column in P&L and BS
+ b)  Fix wrong values in Trial Balance
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+Version 12.1.5.2 - 28 Aug 2023 - Rajeel
+===================================
+Improvement
+
+ a)  Fix partner ageing values showing when it should not be
+ b)  Fix filters in PnL and BS reports
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+Version 12.1.5.3 - 01 Sep 2023 - Rajeel
+===================================
+Improvement
+
+ a)  Fix partner ageing not showing overpaid payments
+ b)  Period 13 Feature in PnL, BS, GL
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+Version 12.1.5.4 - 07 Sep 2023 - Rajeel
+===================================
+Improvement
+
+ a)  Fix partner ageing bugs
+ b)  Fix partner ageing PDF showing total in MYR always
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+Version 12.1.6.0 - 30 Oct 2023 - Rajeel
+===================================
+Improvement
+
+ a)  Option to include partner's ref in ageing, payment, ledger reports
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+Version 12.1.6.1 - 06 Nov 2023 - Rajeel
+===================================
+Improvement
+
+ a)  Fix ny start date issue in financial report
+ b)  Fix values ~= 0 showing in partner ageing
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.6.2 - 07 Nov 2023 - Rajeel
+===================================
+Improvement
+
+ a)  Percent margin monthly wise in PnL & BS
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.6.3 - 10 Nov 2023 - Ahmed Zaman
+===================================
+Improvement
+
+ a)  Landscape on PnL & BS
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.6.4 - 29 Nov 2023 - Rajeel
+===================================
+Improvement
+
+ a)  Thousand seperator in total of trial balance XLSX (dynamic_xlsx)
+ b)  Exclude Exchange Rate JIs in partner ageing
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.6.5 - 01 Dec 2023 - Rajeel
+===================================
+Improvement
+
+ a)  Fixed > Include Partner Ref in partner ageing
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.6.6 - 31 Dec 2023 - Rajeel
+===================================
+Improvement
+
+ a)  Fix gibberish
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+
+Version 12.1.6.7 - 08 Jan 2024 - Rajeel
+===================================
+Improvement
+
+ a)  Change name of prof loss report
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.6.8 - 16 Jan 2024 - Rajeel
+===================================
+Improvement
+
+ a)  Date from and to are now required in Financial Report wizard
+ b)  Total debit, credit, balance in partner ledger report
+ c)  bug fixes in partner ledger report
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+Version 12.1.6.9 - 17 Jan 2024 - Rajeel
+===================================
+Improvement
+
+ a)  Trial Balance sequence by code in pdf and UI
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+Version 12.1.7.0 - 18 Jan 2024 - Rajeel
+===================================
+Improvement
+
+ a)  Mixins for all dynamic reports
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+Version 12.1.7.1 - 19 Jan 2024 - Rajeel
+===================================
+Improvement
+
+ a)  Fix view general ledger from TB and BS reports
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+Version 12.1.7.4 - 31 Jan 2024 - Rajeel
+===================================
+Improvement
+
+ a)  partner ledger showing all lines if we select recvble(payable) only
+ b)  partner ledger option with balance not 0 still showing line
+ c)  partner ledger PDF format
+ d)  Partner Ageing if filter by USD and 31/12/2023, cant appear in the result.
+ e)  put date on partner ageing pdf,xlsx,ui
+ f)  add init bal, currency and amount currency in general ledger main line and also in sub lines
+ g)  balance sheet comparison amount sign issue
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.7.5 - Mar 2024 - Zaman
+===================================
+Improvement
+
+ a)  paper format and remove spaces in PDF reports
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.7.6 - 25 Mar 2024 - Rajeel
+===================================
+Improvement
+
+ a)  Option to include Exchange rate entries in Partner ageing & general ledger
+ b)  Option to load last viewed/printed record
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.7.7 - 18 Apr 2024 - Rajeel
+===================================
+Improvement
+
+ a)  Option to include unposted entries
+
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.1.7.8 - 20 Apr 2024 - Rajeel
+===================================
+ a)  Add: view filter button on reports UI
+ b)  Fix: UI header filters
+ c)  Fix: UI reload issue
+
+Version 12.1.7.9 - 7 May 2024 - Rajeel
+===================================
+ a)  Fix: Duplicate lines in GL
+
+Version 12.1.8.0 - 13 May 2024 - Rajeel
+===================================
+ a)  Multi-company financial report feature
+
+Version 12.1.8.1 - 20 May 2024 - Rajeel
+===================================
+ a)  Accumulative balance sheet
+ b)  show sub-category in financial reports
+ c)  defaults for financial reports
+
+Version 12.1.8.2 - 21 May 2024 - Rajeel
+===================================
+ a)  Yearly financial report
+
+Version 12.1.8.3 - 23 May 2024 - Rajeel
+===================================
+ a)  Exclude accounts in partner ageing (exclude moves which have line having these accounts)
+
+Version 12.1.8.4 - 06 Jun 2024 - Rajeel
+===================================
+ a)  Aging days on partner aging based on 'As on date'
+
+Version 12.1.8.5 - 21 Jun 2024 - Rajeel
+===================================
+ a)  Performance optimization in TrialBalance, GeneralLedger, PartnerAgeing
+ b)  Fix: Wrong header values for partner on partner ageing report
+
+Version 12.1.8.6 - 21 Jun 2024 - Rajeel
+===================================
+ a)  Remove active partner domains from FR and GL
+ b)  Fix: Initial balance on GL
+ c)  Fix: Initial balance on PL (xlsx)
+
+Version 12.1.8.7 - 02 Jul 2024 - Rajeel
+===================================
+ a)  Fix: PnL yearly margin
+
+Version 12.1.8.8 - 02 Jul 2024 - Rajeel
+===================================
+ a)  Add: Yearly Type in PnL to calculate amount based on Financial or Calendar year
+ b)  Add: Performance % in PnL
+
+Version 12.1.8.9 - 24 Jul 2024 - Rajeel
+===================================
+ a)  Fix: TB not cumulating NULL partner items
+
+Version 12.1.8.10 - 25 Jul 2024 - Rajeel
+===================================
+ a)  Auto-update missing financial report menu
+
+Version 12.1.8.11 - 29 Jul 2024 - Rajeel
+===================================
+ a)  Fix: General Ledger discrepancy
+ b)  Fix: GL Xlsx (dynamic_xlsx)
+ c)  Financial Reports file name modified
+
+Version 12.1.8.12 - 30 Jul 2024 - Rajeel
+===================================
+ a)  Option to include ending balance only in TB
+ b)  Hide initial balance for PnL items in TB
+
+Version 12.1.8.13 - 31 Jul 2024 - Rajeel
+===================================
+ a)  Fix: Trial Balance total
+
+Version 12.1.8.14 - 11 Jul 2024 - Osama Nousher
+===================================
+ a)  New columns in Partner Invoice report
+
+Version 12.1.8.15 - 05 Aug 2024 - Rajeel
+===================================
+ a)  FR view fix
+ b)  Date validation in wizards
+ c)  Hide initial balance for PnL items in GL
+
+Version 12.1.8.16 - 19 Aug 2024 - Rajeel
+===================================
+ a)  Partner invoice add company currency columns and performance optimization
+
+Version 12.1.8.17 - 20 Aug 2024 - Rajeel
+===================================
+ a)  Performance % for comparison period in FR reports
+
+Version 12.1.9.0 - 24 Sep 2024 -
+===================================
+ a)  Hide sub-lines option in analytic report [Osama Nousher]
+ b)  Fix view lines button after hiding sub-lines in analytic report [Rajeel]
+
+ Version 12.1.9.1 - 4 Oct 2024 - Kenny
+===================================
+ a)  Fix analytic tags showing analytic account in general ledger
+
+ Version 12.1.9.2 - 14 Oct 2024 - Rajeel
+===================================
+ a) changes in GL
+    - include partner ref
+    - account type filter
+    - total line in bottom
+    - remove ref and desc column
+
+ Version 12.1.9.3 - 25 Oct 2024 - Rajeel
+===================================
+ a) Amount Currency in Partner Ledger and General Ledger
+ b) Add Print Portrait/Landscape PDF options on Partner Ledger
+
+ Version 12.1.9.3.1 - 04 Nov 2024 - Rajeel
+===================================
+ a) Add Print Portrait/Landscape PDF options on Financial reports and Trial balance
+
+ Version 12.1.9.4.0 - 15 Nov 2024 - Rajeel
+===================================
+ a) Add Unrealized Forex Report and create adjustment from report
+
+ Version 12.1.9.4.1 - 22 Nov 2024 - Rajeel
+===================================
+ a) Add Asset UI/Xlsx report
+
+ Version 12.1.9.4.2 - 26 Nov 2024 - Rajeel
+===================================
+ a) Group Menu
+
+ Version 12.1.9.4.3 - 07 Jan 2024 - Rajeel
+===================================
+ a) Remove apply filter from all report views
+ b) Fix GL bug
+
+ Version 12.1.9.4.4 - 07 Jan 2024 - Rajeel
+===================================
+ -a) include subline in FR even bal=0 but amount in any month/year
+ -b) Fix analytic tags filter in GL
+  a) sort by account code in GL and include code in PDF
+
+ Version 12.1.9.4.5 - 23 Jan 2024 - Rajeel
+===================================
+ a) remove unused files
+ b) fix collapse feature for excel download from FR view
+
+ Version 12.1.9.4.6 - 27 Jan 2024 - Rajeel
+===================================
+ a) Add aging by filter in partner aging
+ b) Add date column in partner aging
+
+ Version 12.1.9.4.7 - 14 Mar 2024 - Rajeel
+===================================
+ a) Hide not due column on aging by invoice date in partner ageing
+

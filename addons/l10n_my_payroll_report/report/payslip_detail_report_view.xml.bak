@@ -1,0 +1,242 @@
+<odoo>
+    <template id="report_hr_payslip_detail">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <div class="header">
+                        <div class="row" >
+                            <div class="col-2 text-left">
+                                <img t-if="res_company.logo" style="width:150px;height:40px;margin-left:30px;margin-top:50px;" t-att-src="image_data_uri(res_company.logo)" class="float-left" alt="Logo" />
+                            </div>
+                            <div class= "col-8 text-center">
+                                <br/>
+                                <div>
+                                    <b><span t-field="res_company.name" style="font-size:30px;"/></b><t t-if="res_company.company_registry">(<span t-field="res_company.company_registry" style="font-size:10px;"/>)</t>
+                                </div>
+                                <t t-if="res_company.street">
+                                    <t t-esc="res_company.street" />
+                                    ,
+                                </t>
+                                <t t-if="res_company.street2">
+                                    <t t-esc="res_company.street2" />
+                                </t>
+                                <br />
+                                <t t-if="res_company.zip">
+                                    <t t-esc="res_company.zip" />
+                                </t>
+                                <t t-if="res_company.state_id">
+                                    <t t-esc="res_company.state_id.name" />
+                                    ,
+                                </t>
+                                <t t-if="res_company.country_id">
+                                    <t t-esc="res_company.country_id.name" />
+                                    .
+                                </t>
+                                <br />
+                                <t t-if="res_company.phone">
+                                    Tel :
+                                    <t t-esc="res_company.phone" />
+                                </t>
+                                <t t-if="res_company.partner_id.fax">
+                                    Fax :
+                                    <t t-esc="res_company.partner_id.fax" />
+                                </t>
+                                <div class= "col-2 text-center">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt32 mb32" id="informations">
+                        <div style="text-align:center;" class="col-12">
+                            <h4><b>Salary Slip</b></h4>
+                        </div>
+                    </div>
+                    <div class="row mt32 mb32" id="informations">
+                        <div style="float:left;" class="col-4">
+                            EMP#:
+                            <span t-esc="data.get('emp_no')" />
+                            <br />
+                            NAME:
+                            <span t-esc="data.get('name')" />
+                            <br />
+                            EPF#:
+                            <span t-esc="data.get('epf_no')" />
+                        </div>
+                        <div style="float:left;" class="col-4">
+                            I/C#:
+                            <span t-esc="data.get('icno')" />
+                            <br />
+                            DEPT:
+                            <span t-esc="data.get('department')" />
+                            <br/>
+                            PCB#:
+                            <span t-esc="data.get('pcb_no')"/>
+                        </div>
+                        <div style="float:left;" class="col-4">
+                            PERIOD:
+                            <span t-esc="data.get('get_date')" />
+                            <br />
+                            SOCSO#:
+                            <span t-if="data.get('socso')" t-esc="data.get('socso')"/>
+                            <span t-else='' t-esc="data.get('icno')"/>
+                        </div>
+                    </div>
+                    <t t-set="total_earning" t-value="0.0" />
+                    <t t-set="total_deduction" t-value="0.0" />
+                    <t t-set="total_contribution" t-value="0.0" />
+
+                    <table class="table" style="margin-bottom:0px;">
+                        <tr>
+                            <td style="border: 0px;border-top: 1px solid black;border-right: 1px solid black;padding:1px" width="37%">
+                                EARNING
+                            </td>
+                            <td style="border: 0px;border-top: 1px solid black;border-left: 1px solid black;padding:1px" width="13%"></td>
+                            
+                            <td style="border: 0px;border-top: 1px solid black;border-left: 1px solid black;padding: 1px" width="37%">
+                            &#160; &#160;DEDUCTION
+                            </td>
+                            <td style="border: 0px;border-top: 1px solid black;border-left: 1px solid black;padding:1px" width="13%"></td>
+                        </tr>
+                        <tr>
+                            <td width="37%" style="border: 0px;padding: 1px">
+                                <t t-foreach="data.get('basic_list')" t-as="line">
+                                    <span t-esc="line.get('code')" />
+                                    <br />
+                                </t>
+                            </td>
+                            <td width="13%" class="text-right" style="border: 0px;text-align:right;padding: 1px;border-left: 1px solid black;border-right: 1px solid black;">
+                                <t t-foreach="data.get('basic_list')" t-as="line">
+                                    <span t-if="line.get('total')" t-esc="line.get('total')"  t-options='{"widget": "float", "precision": 2}'/>&#160;
+                                    <t t-set="total_earning" t-value="total_earning + line.get('total')" />
+                                    <br />
+                                </t>
+                            </td>
+                            <td width="37%" style="border: 0px;padding: 1px;border-right: 1px solid black;">
+                                <t t-foreach="data.get('basic_list')" t-as="line">
+                                    &#160; &#160;<span t-esc="line.get('dcode')" />
+                                    <br />
+                                </t>
+                            </td>
+                            <td width="13%" class="text-right" style="border: 0px;text-align:right;padding: 1px">
+                                <t t-foreach="data.get('basic_list')" t-as="line">
+                                    <span t-if="line.get('dtotal')" t-esc="line.get('dtotal')"  t-options='{"widget": "float", "precision": 2}'/>
+                                    <t t-set="total_deduction" t-value="total_deduction + line.get('dtotal')" />
+                                    <br />
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="37%" style="border: 0px;padding: 1px;border-bottom: 1px solid black;">
+                                 <b>TOTAL EARNING :</b>
+                            </td>
+                            <td class="text-right" style="border: 0px;border-bottom: 1px solid black;text-align:right;padding: 1px;border-left: 1px solid black;border-right: 1px solid black;" width="13%">
+                                <b><span t-esc="total_earning"  t-options='{"widget": "float", "precision": 2}'/>&#160;&#160;</b>
+                            </td>
+                            <td width="37%" style="border: 0px;border-bottom: 1px solid black;padding: 1px;border-right: 1px solid black;">
+                                &#160;&#160;<b>TOTAL DEDUCTION :</b>
+                            </td>
+                            <td class="text-right" style="border: 0px;border-bottom: 1px solid black;text-align:right;padding: 1px" width="13%">
+                                <b><span t-esc="total_deduction"  t-options='{"widget": "float", "precision": 2}'/></b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="37%" style="border: 0px;padding: 1px;">
+                                <b>NET PAY :</b>
+                            </td>
+                            <td width="13%" style="border: 0px;text-align:right;padding: 1px;border-right: 1px solid black;">
+                                <b><span t-esc="data.get('net')" t-options='{"widget": "float", "precision": 2}'/>&#160;&#160;</b>
+                            </td>
+                            <td colspan="2" style="border: 0px;padding: 1px;text-align:center">
+                            ------------------------------LEAVE----------------------------
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid black;">
+                            <td colspan="2" style="border: 0px;padding: 0px;">
+                                <table class="table" style="margin-bottom:0px;">
+                                    <tr style="border: 0px;">
+                                        <td style="border: 0px;text-align: left;padding: 1px" colspan="3">
+                                        BANK ACC# :
+                                        <span t-esc="data.get('bank')"/> - <span t-esc="data.get('account_no')" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 0px;padding: 0px;" colspan="2">
+                                            <t t-foreach="data.get('basic_list')" t-as="line">
+                                                <span t-esc="line.get('ccode')"/>
+                                                <br/>
+                                            </t>
+                                        </td>
+                                        <td style="text-align:right;border: 0px;padding: 0px;border-right:1px solid black;">
+                                            <t t-foreach="data.get('basic_list')" t-as="line">
+                                                <span t-if="line.get('ctotal')" t-esc="line.get('ctotal')"  t-options='{"widget": "float", "precision": 2}'/>
+                                                <br/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td colspan="2" style="border: 0px;padding: 0px;">
+                                <table style="padding:0.80em;margin-bottom:0px;">
+                                    <tr style="border: 0px;">
+                                        <td style="border: 0px;border-left: 1px solid black;">
+                                        </td>
+                                        <td style="border: 0px;">
+                                        </td>
+                                        <td style="border: 0px;text-align:right;">
+                                            Total
+                                        </td>
+                                        <td style="border: 0px;text-align:right;">
+                                            Taken
+                                        </td>
+                                        <td style="border: 0px;text-align:right;">
+                                            Balance
+                                        </td>
+                                    </tr>
+                                    <tr style="border: 0px;">
+                                        <td style="border: 0px;padding: 0px;border-left: 1px solid black;">
+                                            &#160;&#160;&#160;ANNUAL LEAVE:
+                                        </td>
+                                        <td style="border: 0px;padding: 0px;">
+                                        </td>
+                                        <td style="border: 0px;text-align:right;padding: 0px;">
+                                           <span t-esc="'%.1f'% data.get('a_total')"/>
+                                        </td>
+                                        <td style="border: 0px;text-align:right;padding: 0px;">
+                                            <span t-esc="'%.1f'% data.get('a_taken')"/>
+                                        </td>
+                                        <td style="border: 0px;text-align:right;padding: 0px;">
+                                            <span t-esc="'%.1f'% data.get('a_bal')"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="border: 0px;">
+                                        <td style="border: 0px;padding: 0px;border-left: 1px solid black;">
+                                            &#160;&#160;&#160;SICK LEAVE:
+                                        </td>
+                                        <td style="border: 0px;padding: 0px;">
+                                        </td>
+                                        <td style="border: 0px;text-align:right;padding: 0px;">
+                                            <span t-esc="'%.1f'% data.get('s_total')"/>
+                                        </td>
+                                        <td style="border: 0px;text-align:right;padding: 0px;">
+                                            <span t-esc="'%.1f'% data.get('s_taken')"/>
+                                        </td>
+                                        <td style="border: 0px;text-align:right;padding: 0px;">
+                                            <span t-esc="'%.1f'% data.get('s_bal')"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <p style="page-break-before:always;" />
+                </div>
+            </t>
+    </template>
+    <template id="hr_payslip_detail_template">
+        <t t-call="web.html_container">
+            <t t-foreach="get_detail_data" t-as="data">>
+                <t t-call="l10n_my_payroll_report.report_hr_payslip_detail"/>
+            </t>
+        </t>
+    </template>
+</odoo>

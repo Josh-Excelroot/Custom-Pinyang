@@ -1,0 +1,74 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_form_view_oppor_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.oppor.inherit.view</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <field name="commodity1_id"/>
+                    <field name="service_id"/>
+                    <field name="incoterm"/>
+                </xpath>
+
+                <xpath expr="/form/sheet/group/group[4]" position="after">
+                    <group name="ports_info" col="12" colspan="2">
+                        <group col="2" colspan="3">
+                            <field name="port_of_loading"/>
+                            <field name="port_of_loading_country" string="POL Country"/>
+                        </group>
+                        <group col="2" colspan="3">
+                            <field name="port_of_discharge"/>
+                            <field name="port_of_discharge_country" string="POD Country"/>
+                        </group>
+                        <group col="2" colspan="3">
+                            <field name="type_of_movement"/>
+                            <field name="place_of_delivery"/>
+                        </group>
+                    </group>
+                </xpath>
+
+                <xpath expr="/form/sheet/group/group[4]" position="after">
+                    <group name="cargo_info">
+                        <field name="shipment_mode" widget="radio" options="{'horizontal':true}"/>
+                        <field name="mode"  widget="radio" options="{'horizontal':true}"/>
+                    </group>
+                </xpath>
+
+                <xpath expr="/form/sheet/group/group[4]" position="after">
+                    <group name="cargo_info">
+                        <field name="cargo_type" widget="radio" options="{'horizontal':true}"/>
+                        <field name="container_size_id" attrs="{'invisible':[('cargo_type','!=','fcl')]}"/>
+                        <field name="container_qty" attrs="{'invisible':[('cargo_type','!=','fcl')]}"/>
+                        <field name="teus" attrs="{'invisible':[('cargo_type','!=','fcl')]}"/>
+                        <field name="lcl_height" attrs="{'invisible':[('cargo_type','!=','lcl')]}"/>
+                        <field name="lcl_width" attrs="{'invisible':[('cargo_type','!=','lcl')]}"/>
+                        <field name="lcl_length" attrs="{'invisible':[('cargo_type','!=','lcl')]}"/>
+                        <field name="lcl_weight" attrs="{'invisible':[('cargo_type','!=','lcl')]}"/>
+                        <field name="lcl_quantity" attrs="{'invisible':[('cargo_type','!=','lcl')]}"/>
+                        <field name="chargeable_weight" attrs="{'invisible':[('cargo_type','!=','lcl')]}"/>
+                        <field name="volumetric_weight" invisible="1"/>
+                    </group>
+                </xpath>
+
+                <xpath expr="//page[@name='lead']" position="before">
+                    <page name="container_lines" string="Container Lines">
+                        <field name="container_line_ids">
+                            <tree string="Container Lines" editable="bottom">
+                                <field name="categ_id" invisible="1"/>
+                                <field name="container_category_id" invisible="1"/>
+                                <field name="size_id" domain="[('categ_id', '=', container_category_id)]"/>
+                                <field name="quantity"/>
+                                <field name="weight"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+
+</odoo>

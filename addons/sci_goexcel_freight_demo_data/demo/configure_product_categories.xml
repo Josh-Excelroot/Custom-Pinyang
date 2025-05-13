@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!--   Yulia 12032025 for demo data product.category     -->
+        <record id="product_category_logistics" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">LOGISTICS</field>
+        </record>
+        <record id="product_category_container" model="product.category">
+            <field name="parent_id" ref="sci_goexcel_freight_demo_data.product_category_logistics"/>
+            <field name="name">CONTAINER</field>
+        </record>
+        <record id="product_category_commodity" model="product.category">
+            <field name="parent_id" ref="sci_goexcel_freight_demo_data.product_category_logistics"/>
+            <field name="name">COMMODITY</field>
+        </record>
+
+        <!--   Yulia 12032025 for demo data freight.product.category    -->
+        <record id="record_freight_product_category_container" model="freight.product.category">
+            <field name="type">container</field>
+            <field name="product_category" ref="sci_goexcel_freight_demo_data.product_category_container"/>
+            <field name="active">True</field>
+        </record>
+
+         <record id="record_freight_product_category_commodity" model="freight.product.category">
+            <field name="type">commodity</field>
+            <field name="product_category" ref="sci_goexcel_freight_demo_data.product_category_commodity"/>
+            <field name="active">True</field>
+        </record>
+    </data>
+</odoo>

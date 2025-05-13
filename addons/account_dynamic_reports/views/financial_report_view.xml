@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="ins_report_financial">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <t t-set="data_report_margin_top" t-value="12"/>
+                <t t-set="data_report_header_spacing" t-value="9"/>
+                <t t-set="data_report_dpi" t-value="110"/>
+                <div class="page">
+                    <style>.pims_report_content{
+                            font-size: 14px;
+                            font-family&quot; 'Arial';
+                        }
+
+                        .pims_report_line_table {
+                            width:100%;
+                        }
+
+                        .pims_report_summary_table {
+                            width:100%;
+                            font-weight: bold;
+                        }
+
+                        .pims_report_line_main_tr {
+                            font-weight:bold;
+                            font-size: 14px;
+                            font-family&quot; 'Arial';
+                            border-bottom:1px solid grey;
+                        }
+
+                        .pims_report_line_initial_tr {
+                            font-style:italic;
+                        }
+
+                        .pims_report_line_subtotal {
+                            font-weight:bold;
+                            background-color: white;
+                            border:1px solid grey;
+                        }
+                    </style>
+                    <!-- #TS - update header title -->
+                    <h5>
+                        <span t-esc="data['form']['report_heading']"/>
+                    </h5>
+                    <!-- #TS - update header content -->
+                    <t t-if="data['form']['analytic_ids'] or data['form']['analytic_tag_ids']">
+                        <div class="row mt32 pims_report_content">
+                            <t t-if="data['form']['analytic_tag_ids']">
+                                <div class="col-3">
+                                    <strong>Analytic Tag:</strong>
+                                    <t t-set="analytic_tag_name" t-value=""/>
+                                    <t t-as="analytic_tag_id" t-foreach="data['form']['analytic_tag_ids']">
+                                        <t t-as="analytic_tag" t-foreach="data['form']['analytic_tag_list']">
+                                            <t t-if="analytic_tag_id == analytic_tag[0]">
+                                                <t t-if="analytic_tag_name">
+                                                    <t t-set="analytic_tag_name" t-value="analytic_tag_name + ', ' + analytic_tag[1]"/>
+                                                </t>
+                                                <t t-if="not analytic_tag_name">
+                                                    <t t-set="analytic_tag_name" t-value="analytic_tag[1]"/>
+                                                </t>
+                                            </t>
+                                        </t>
+                                    </t>
+                                    <p t-esc="analytic_tag_name"/>
+                                </div>
+                            </t>
+                            <t t-if="data['form']['analytic_ids']">
+                                <div class="col-3">
+                                    <strong>Analytic Account:</strong>
+                                    <t t-set="analytic_name" t-value=""/>
+                                    <t t-as="analytic_id" t-foreach="data['form']['analytic_ids']">
+                                        <t t-as="analytic" t-foreach="data['form']['analytics_list']">
+                                            <t t-if="analytic_id == analytic[0]">
+                                                <t t-if="analytic_name">
+                                                    <t t-set="analytic_name" t-value="analytic_name + ', ' + analytic[1]"/>
+                                                </t>
+                                                <t t-if="not analytic_name">
+                                                    <t t-set="analytic_name" t-value="analytic[1]"/>
+                                                </t>
+                                            </t>
+                                        </t>
+                                    </t>
+                                    <p t-esc="analytic_name"/>
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+                    <div class="row mt32 pims_report_content">
+                        <div class="col-3">
+                            <strong>Target Moves:</strong>
+                            <p>
+                                <span t-if="data['form']['target_move'] == 'all'">All Entries</span>
+                                <span t-if="data['form']['target_move'] == 'posted'">All Posted Entries</span>
+                            </p>
+                        </div>
+                        <!--  Commented By Rajeel | 20/03/2023
+                        <div class="col-3">
+                            <strong>Date From:</strong>
+                            <p t-esc="data['form']['date_from']" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                        </div>
+                        <div class="col-3">
+                            <strong>Date To:</strong>
+                            <p t-esc="data['form']['date_to']" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                        </div>-->
+                    </div>
+                    <!--  Commented By Rajeel | 20/03/2023
+                    <t t-if="data['form']['enable_filter']">
+                        <div class="row mt32 pims_report_content">
+                            <div class="col-3">
+                                <strong>Comparison Date From:</strong>
+                                <p t-esc="data['form']['comparison_context']['date_from']" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                            </div>
+                            <div class="col-3">
+                                <strong>Comparison Date To:</strong>
+                                <p t-esc="data['form']['comparison_context']['date_to']" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                            </div>
+                        </div>
+                    </t>-->
+                    <br/>
+                    <br/>
+                    <table class="pims_report_line_table" t-if="data['form']['debit_credit'] == 1">
+                        <thead>
+                            <tr>
+                                <th/>
+                                <th class="text-right">Debit</th>
+                                <th class="text-right">Credit</th>
+                                <th class="text-right">Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="pims_report_line_main_tr" t-as="a" t-foreach="report_lines">
+                                <t t-if="a.get('level') != 0">
+                                    <t t-if="a.get('level') &gt; 3">
+                                        <t t-set="style" t-value="'font-weight: normal;'"/>
+                                    </t>
+                                    <t t-if="not a.get('level') &gt; 3">
+                                        <t t-set="style" t-value="'font-weight: bold;'"/>
+                                    </t>
+                                    <td>
+                                        <span style="color: white;" t-esc="'..' * a.get('level', 0)"/>
+                                        <span t-att-style="style" t-esc="a.get('name')"/>
+                                    </td>
+                                    <t t-if="a.get('debit')">
+                                        <td class="text-right" style="white-space: text-nowrap;">
+                                            <span t-att-style="style" t-esc="a.get('debit')" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                        </td>
+                                    </t>
+                                    <t t-else="">
+                                        <td class="text-center">-</td>
+                                    </t>
+                                    <t t-if="a.get('credit')">
+                                        <td class="text-right" style="white-space: text-nowrap;">
+                                            <span t-att-style="style" t-esc="a.get('credit')" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                        </td>
+                                    </t>
+                                    <t t-else="">
+                                        <td class="text-center">-</td>
+                                    </t>
+                                    <t t-if="a.get('balance')">
+                                        <td class="text-right" style="white-space: text-nowrap;">
+                                            <span t-att-style="style" t-esc="a.get('balance')" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                        </td>
+                                    </t>
+                                    <t t-else="">
+                                        <td class="text-center">-</td>
+                                    </t>
+                                </t>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="pims_report_line_table" t-if="not data['form']['debit_credit']">
+                        <thead>
+                            <tr>
+                                <th/>
+                                <t t-if="data['form']['enable_filter']">
+                                    <th class="text-right">
+                                        <!-- Rajeel | 20/03/2023 | Start -->
+                                        <span>
+                                            <t t-esc="data['form']['comparison_context']['date_from']" t-options="{&quot;widget&quot;: &quot;date&quot;}"/> -
+                                            <t t-esc="data['form']['comparison_context']['date_to']" t-options="{&quot;widget&quot;: &quot;date&quot;}"/><br></br>
+                                        </span>
+                                        <!-- Rajeel End -->
+                                        <t t-esc="data['form']['label_filter']"/>
+                                    </th>
+                                    <!-- Margin % in P&L and BS (CR-9 Additional #A3) | Rajeel | 20/03/2023 - Start -->
+                                    <t t-if="data['form']['show_percent_margin']">
+                                        <th class="text-right">
+                                            <p>Marg %</p>
+                                        </th>
+                                    </t>
+                                    <!-- Rajeel | End-->
+                                </t>
+                                <t t-if="data['form']['group_by'] != 'no_grouping'">
+                                    <!-- Canon -->
+                                    <t t-as="month_list" t-foreach="data['form']['month_list']">
+                                        <th class="amt-head" colspan="1">
+                                            <span t-raw="month_list"/>
+                                        </th>
+                                        <t t-if="data['form']['show_percent_margin']">
+                                            <th class="amt-head" colspan="1">
+                                                <span>Marg %</span>
+                                            </th>
+                                        </t>
+                                        <t t-if="data['form']['month_list'][0] != month_list and data['form']['show_percent_performance']">
+                                            <th class="amt-head" colspan="1">
+                                                <span>Perf %</span>
+                                            </th>
+                                        </t>
+                                    </t>
+                                    <t t-if="data['form']['report_type'] != 'balance_sheet' and not data['form']['show_percent_margin']">
+                                        <th class="amt-head">
+                                            <span>Total YTD</span>
+                                        </th>
+                                    </t>
+                                    <!--
+                                        <t t-if="data['form']['JAN']">
+                                            <th class="text-right">Jan</th>
+                                        </t>
+                                        <t t-if="data['form']['FEB']">
+                                            <th class="text-right">Feb</th>
+                                        </t>
+                                        <t t-if="data['form']['MAR']">
+                                            <th class="text-right">March</th>
+                                        </t>
+                                        <t t-if="data['form']['APR']">
+                                            <th class="text-right">April</th>
+                                        </t>
+                                        <t t-if="data['form']['MAY']">
+                                            <th class="text-right">May</th>
+                                        </t>
+                                        <t t-if="data['form']['JUN']">
+                                            <th class="text-right">June</th>
+                                        </t>
+                                        <t t-if="data['form']['JUL']">
+                                            <th class="text-right">July</th>
+                                        </t>
+                                        <t t-if="data['form']['AUG']">
+                                            <th class="text-right">Aug</th>
+                                        </t>
+                                        <t t-if="data['form']['SEP']">
+                                            <th class="text-right">Sep</th>
+                                        </t>
+                                        <t t-if="data['form']['OCT']">
+                                            <th class="text-right">Oct</th>
+                                        </t>
+                                        <t t-if="data['form']['NOV']">
+                                            <th class="text-right">Nov</th>
+                                        </t>
+                                        <t t-if="data['form']['DEC']">
+                                            <th class="text-right">Dec</th>
+                                        </t>
+                                      -->
+                                    </t>
+
+                                    <t t-if="data['form']['group_by'] == 'no_grouping'">
+                                        <th class="text-right">
+                                            <!-- Rajeel | 20/03/2023 | Start -->
+                                            <span>
+                                                <t t-esc="data['form']['date_from']" t-options="{&quot;widget&quot;: &quot;date&quot;}"/> -
+                                                <t t-esc="data['form']['date_to']" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                                            </span>
+                                            <p>    Balance</p>
+                                            <!-- Rajeel End -->
+                                        </th>
+                                        <t t-if="data['form']['show_percent_performance']">
+                                            <th class="text-right">
+                                                <span>Perf %</span>
+                                            </th>
+                                        </t>
+                                        <!-- Margin % in P&L and BS (CR-9 Additional #A3) | Rajeel | 20/03/2023 - Start -->
+                                        <t t-if="data['form']['show_percent_margin']">
+                                            <th class="text-right">
+                                                <span>Marg %</span>
+                                            </th>
+                                        </t>
+                                        <!-- Rajeel | End-->
+                                    </t>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="pims_report_line_main_tr" t-as="a" t-foreach="report_lines">
+                                <t t-if="a.get('level') != 0">
+                                    <t t-if="a.get('level') &gt; 3">
+                                        <t t-set="style" t-value="'font-weight: normal;'"/>
+                                    </t>
+                                    <t t-if="not a.get('level') &gt; 3">
+                                        <t t-set="style" t-value="'font-weight: bold;'"/>
+                                    </t>
+                                    <td>
+                                        <span style="color: white;" t-esc="'..' * a.get('level', 0)"/>
+                                        <span t-att-style="style" t-esc="a.get('name')"/>
+                                    </td>
+                                    <t t-if="data['form']['enable_filter']">
+                                        <t t-if="a.get('balance_cmp')">
+                                            <td class="text-right">
+                                                <span t-att-style="style" t-esc="a.get('balance_cmp')" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                            </td>
+                                            <!-- Margin % in P&L and BS (CR-9 Additional #A3) | Rajeel | 20/03/2023 - Start -->
+                                            <t t-if="data['form']['show_percent_margin']">
+                                                <th class="text-right">
+                                                    <span t-att-style="style" t-esc="a.get('balance_cmp_margin')"/>
+                                                </th>
+                                            </t>
+                                            <!-- Rajeel | End-->
+                                        </t>
+                                        <t t-else="">
+                                            <td class="text-center">-</td>
+                                        </t>
+                                    </t>
+                                    <!-- Canon - Start -->
+                                    <t t-if="data['form']['group_by'] != 'no_grouping'">
+                                        <t t-as="month_list" t-foreach="data['form']['month_list']">
+                                            <td class="amt" t-att-style="style_td">
+                                                <span t-raw="a.get(month_list, 0.0)" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                            </td>
+                                            <t t-if="data['form']['show_percent_margin']">
+                                                <td class="amt" t-att-style="style_td">
+                                                    <span t-att-style="style" t-esc="a.get('balance_margin_month').get(month_list)"/>
+                                                </td>
+                                            </t>
+                                            <!--first period will not have perf %-->
+                                            <t t-if="data['form']['month_list'][0] != month_list and data['form']['show_percent_performance']">
+                                                <td class="amt" t-att-style="style_td">
+                                                    <span t-att-style="style" t-esc="a.get('performance_percent').get(month_list)"/>
+                                                </td>
+                                            </t>
+                                        </t>
+                                        <t t-if="data['form']['report_type'] != 'balance_sheet' and not data['form']['show_percent_margin']">
+                                            <td class="amt">
+                                                <span t-att-style="style_td" t-esc="a.get('balance')" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                            </td>
+                                        </t>
+                                        <!--
+                                        <t t-if="data['form']['JAN']">
+                                            <td class="text-right">
+                                                <span t-att-style="style" t-esc="a.get('JAN')"/>
+                                            </td>
+                                        </t>
+                                        <t t-if="data['form']['FEB']">
+                                            <td class="text-right">
+                                                <span t-att-style="style" t-esc="a.get('FEB')"/>
+                                            </td>
+                                        </t>
+                                        <t t-if="data['form']['MAR']">
+                                            <td class="text-right">
+                                                <span t-att-style="style" t-esc="a.get('MAR')"/>
+                                            </td>
+                                        </t>
+                                        <t t-if="data['form']['APR']">
+                                            <td class="text-right">
+                                                <span t-att-style="style" t-esc="a.get('APR')" />
+                                            </td>
+                                        </t>
+                                        <t t-if="data['form']['MAY']">
+                                            <td class="text-right">
+                                                <span t-att-style="style" t-esc="a.get('MAY')" />
+                                            </td>
+                                        </t>
+                                        <t t-if="data['form']['JUN']">
+                                            <td class="text-right">
+                                                <span t-att-style="style" t-esc="a.get('JUN')"/>
+                                            </td>
+                                        </t>
+                                        <t t-if="data['form']['JUL']">
+                                            <td class="text-right">
+                                                <span t-att-style="style" t-esc="a.get('JUL')"/>
+                                            </td>
+                                        </t>
+                                        <t t-if="data['form']['AUG']">
+                                            <td class="text-right">
+                                                <span t-att-style="style" t-esc="a.get('AUG')"/>
+                                            </td>
+                                        </t>
+                                        <t t-if="data['form']['SEP']">
+                                            <td class="text-right">
+                                                <span t-att-style="style" t-esc="a.get('SEP')"/>
+                                            </td>
+                                        </t>
+                                        <t t-if="data['form']['OCT']">
+                                            <td class="text-right">
+                                                <span t-att-style="style" t-esc="a.get('OCT')"/>
+                                            </td>
+                                        </t>
+                                        <t t-if="data['form']['NOV']">
+                                            <td class="text-right">
+                                                <span t-att-style="style" t-esc="a.get('NOV')"/>
+                                            </td>
+                                        </t>
+                                        <t t-if="data['form']['DEC']">
+                                            <td class="text-right">
+                                                <span t-att-style="style" t-esc="a.get('DEC')"/>
+                                            </td>
+                                        </t>
+                                        -->
+                                    </t>
+
+                                    <t t-if="data['form']['group_by'] == 'no_grouping'">
+                                        <td class="text-right">
+                                            <span t-att-style="style" t-esc="a.get('balance')" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                        </td>
+                                        <t t-if="data['form']['show_percent_performance']">
+                                            <th class="text-right">
+                                                <span t-att-style="style" t-esc="a.get('performance_percent')"/>
+                                            </th>
+                                        </t>
+                                        <!-- Margin % in P&L and BS (CR-9 Additional #A3) | Rajeel | 20/03/2023 - Start -->
+                                        <t t-if="data['form']['show_percent_margin']">
+                                            <th class="text-right">
+                                                <span t-att-style="style" t-esc="a.get('balance_margin')"/>
+                                            </th>
+                                        </t>
+                                        <!-- Rajeel | End-->
+                                    </t>
+                                    <!-- Canon - End -->
+                                </t>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <t t-if="data['initial_balance'] or data['current_balance'] or data['ending_balance']">
+                        <br/>
+                        <div class="row">
+                            <div class="col-8"/>
+                            <div class="col-4">
+                                <table class="pims_report_summary_table">
+                                    <tr>
+                                        <td>Initial Cash Balance</td>
+                                        <t t-if="data['initial_balance']">
+                                            <td class="text-right">
+                                                <span t-att-style="style" t-esc="data['initial_balance']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                            </td>
+                                        </t>
+                                        <t t-else="">
+                                            <td class="text-center">-</td>
+                                        </t>
+                                    </tr>
+                                    <tr>
+                                        <td>Current Cash Balance</td>
+                                        <t t-if="data['current_balance']">
+                                            <td class="text-right">
+                                                <span t-att-style="style" t-esc="data['current_balance']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                            </td>
+                                        </t>
+                                        <t t-else="">
+                                            <td class="text-center">-</td>
+                                        </t>
+                                    </tr>
+                                    <tr>
+                                        <td>Net Cash Balance</td>
+                                        <t t-if="data['ending_balance']">
+                                            <td class="text-right">
+                                                <span t-att-style="style" t-esc="data['ending_balance']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                            </td>
+                                        </t>
+                                        <t t-else="">
+                                            <td class="text-center">-</td>
+                                        </t>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!--Ahmad Zaman - 15/02/24 - P&L Report Changes-->
+    <report file="account_dynamic_reports.ins_report_financial"
+            id="ins_financial_report_pdf"
+            model="ins.financial.report"
+            name="account_dynamic_reports.ins_report_financial"
+            report_type="qweb-pdf"
+            string="Financial reports"
+            paperformat="account_dynamic_reports.paperformat_compact_dynamic_reports"
+    />
+    <!--end-->
+</odoo>

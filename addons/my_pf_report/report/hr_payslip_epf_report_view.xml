@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<report id="hr_payslip_epf_report_detail" string="EPF Report" model="hr.payslip" report_type="qweb-pdf" name="my_pf_report.hr_payslip_epf_report" menu="False"/>
+
+	<record id="hr_payslip_epf_report_detail_report_paperformat" model="report.paperformat">
+		<field name="name">EPF Report</field>
+		<field name="default" eval="True"/>
+		<field name="format">A4</field>
+		<field name="page_height">0</field>
+		<field name="page_width">0</field>
+		<field name="orientation">Portrait</field>
+		<field name="margin_top">15</field>
+		<field name="margin_bottom">10</field>
+		<field name="margin_left">4</field>
+		<field name="margin_right">4</field>
+		<field name="header_line" eval="False"/>
+		<field name="header_spacing">15</field>
+		<field name="dpi">90</field>
+	</record>
+
+	<record id="hr_payslip_epf_report_detail" model="ir.actions.report">
+		<field name="paperformat_id" ref="hr_payslip_epf_report_detail_report_paperformat"/>
+	</record>
+
+	<template id="my_pf_report.hr_payslip_epf_report">
+		<t t-call="web.html_container">
+			<t t-call="web.internal_layout">
+				<t t-foreach="docs" t-as="o">
+					<style>
+						.border {
+							border: 1px solid black;
+							border-collapse: collapse;
+						}
+						.padding {
+							padding: 3px;
+						}
+					</style>
+					<div class="page">
+						<br/>
+						<table width="100%" style="border-spacing:0;border-left:2px solid black;border-right:2px solid black;border-top:2px solid black">
+							<tr>
+								<td width="100%" align="right" style="padding-top:20px;">
+									<b>BORANG(BBCD)&#160;&#160;&#160;&#160;</b>
+								</td>
+							</tr>
+						</table>
+						<table width="100%" style="border-spacing:0;border-left:2px solid black;border-right:2px solid black;">
+							<tr>
+								<td width="100%" style="text-align:center;font-size:26px;">
+									<b>KUMPULAN WANG SIMPANAN PEKERJA</b>
+								</td>
+							</tr>
+							<tr>
+								<td width="100%" style="text-align:center;font-size:16px;">PERATURAN-PERATURAN DAN KAEDAH-KAEDAH KWSP 1991 KAEDAH 11(1)</td>
+							</tr>
+							<tr>
+								<td width="100%" style="text-align:center;font-size:20px;">
+									<b>(BORANG BAYARAN CARUMAN BULANAN - PITA/DISKET(BBCD))</b>
+								</td>
+							</tr>
+						</table>
+						<table width="100%" style="border-spacing:0;border-left:2px solid black;border-right:2px solid black;">
+							<tr>
+								<td width="100%" style="text-align:center;font-size:16px;">
+									<b>SISTEM PENGHANTARAN DATA PITA/DISKET</b>
+								</td>
+							</tr>
+							<tr>
+								<td width="100%" style="text-align:center;font-size:16px;">
+									<b>JADUAL CARUMAN BULAN <span t-esc="get_from_to_dates.get('form_date')"/></b>
+								</td>
+							</tr>
+						</table>
+						<table width="100%" style="border-spacing:0;border-left:2px solid black;border-right:2px solid black;">
+							<tr>
+								<td width="15%" align="right" style="padding-right:10px">
+									<b>Nama &amp;<br/>Alamat</b>
+								</td>
+								<td width="70%">
+									<table width="100%" style="border-spacing:0;border:1px solid black">
+										<tr>
+											<td width="33%" align="center" style="border-bottom:1px solid black;border-right:1px solid black;font-size:12px;">
+												<b>No Rujukan Majikan</b>
+											</td>
+											<td width="33%" align="center" style="border-bottom:1px solid black;border-right:1px solid black;font-size:12px;">
+												<b>Bulan Caruman</b>
+											</td>
+											<td width="33%" align="center" style="border-bottom:1px solid black;font-size:12px;">
+												<b>Amaun Caruman</b>
+											</td>
+										</tr>
+										<tr>
+											<td width="33%" align="center" style="border-bottom:1px solid black;border-right:1px solid black;font-size:12px;"><span t-esc="res_company.company_registry"/></td>
+											<td width="33%" align="center" style="border-bottom:1px solid black;border-right:1px solid black;font-size:12px;"><span t-esc="get_monthyear"/></td>
+											<td width="33%" align="center" style="border-bottom:1px solid black;font-size:12px;">RM
+												<span t-esc="get_totalrm1"/></td>
+										</tr>
+										<tr>
+											<td colspan="3" style="font-size:12px;padding-left:10px;padding-top:10px;">Jumlah caruman untuk bulan di atas (untuk potongan gaji bulan &#160;<span t-esc="get_from_to_dates.get('to_date')"/>) hendaklah dibayar kepada KESP/Ejen Kutipan KWSP tidak lewat daripada 15hb setiap bulan</td>
+										</tr>
+										<tr>
+											<td colspan="3" style="font-size:12px;"><br/>&#160;&#160;<input class="input" type="checkbox" id="oe_import_tracking"/>&#160;&#160; Wang Tunai &#160;&#160;&#160;&#160;&#160;&#160;<input class="input" type="checkbox" id="oe_import_tracking"/>&#160;&#160; Cek/Kiriman Wang/Wang Pos/Draf Bank*No ________________________________
+											</td>
+										</tr>
+										<tr>
+											<td width="33%">&#160;</td>
+											<td width="33%">&#160;</td>
+											<td width="33%">&#160;</td>
+										</tr>
+										<tr t-foreach="get_companyname" t-as="name">
+											<td width="33%" style="font-size:12px;">
+                                                &#160;<span t-esc="name['company_name']"/><br/>
+                                                &#160;<span t-esc="name['company_street']"/><br/>
+                                                &#160;<span t-esc="name['company_zip']"/>&#160;<span t-esc="name['company_city']"/></td>
+											<td width="33%">&#160;</td>
+											<td width="33%">&#160;</td>
+										</tr>
+									</table>
+								</td>
+								<td width="15%" style="font-size:12px" align="center">
+									<div style="width:50pt; height:50pt; border: 1pt solid black; border-collapse:separate; border-radius:100pt; margin:5pt"></div><br/>
+									<b>Cop Agen <br/>Kutipan</b>
+								</td>
+							</tr>
+						</table>
+						<table width="100%" style="border-spacing:0;border-left:2px solid black;border-right:2px solid black;border-bottom:1px solid black;">
+							<tr>
+								<td width="100%">&#160;</td>
+							</tr>
+						</table>
+
+						<table width="100%" style="border-spacing:0;border-left:2px solid black;border-right:2px solid black;">
+							<tr>
+                                <td width="5%"></td>
+								<td width="85%" style="font-size:14px;padding-top:20px;">
+									<b>SAYA MENGESAHKAN DAN MEMBERI JAMINAN BAHAWA BUTIRAN DAN JUMLAH CARUMAN BULAN OGOS 2012 SEPERTI YANG TERKANDUNG DI DALAM PITA/DISKET KOMPUTER YANG DISERTAKAN ADALAH SAMA DENGAN AMAUN BAYARAN DALAM BORANG INI.</b>
+								</td>
+                                <td width="10%"></td>
+							</tr>
+						</table>
+						<table width="100%" style="border-spacing:0;border-left:2px solid black;border-right:2px solid black;">
+							<tr>
+								<td width="100%" style="font-size:10px">&#160;</td>
+							</tr>
+						</table>
+						<table width="100%" style="border-spacing:0;border-left:2px solid black;border-right:2px solid black;border-bottom:2px solid black;">
+							<tr>
+								<td width="5%">&#160;</td>
+								<td width="20%">&#160;</td>
+                                <td width="40%">&#160;</td>
+                                <td width="5%">&#160;</td>
+								<td width="30%" style="font-size:12px">
+									<b>CATATAN:</b>
+								</td>
+							</tr>
+
+							<tr>
+                                <td width="5%">&#160;</td>
+								<td width="20%" style="padding-left:20px;font-size:12px"><b>TANDATANGAN : </b></td>
+								<td width="40%" style="border-bottom:1px solid black;font-size:12px">&#160;</td>
+                                <td width="5%">&#160;</td>
+								<td width="30%" style="padding-left:5px;font-size:12px">1. Nombor Rujukan Majikan mesti ditulis di belakang cek.</td>
+							</tr>
+							<tr>
+                                <td width="5%">&#160;</td>
+								<td width="20%" style="padding-left:20px;font-size:12px"><b>NAMA PENUH : </b></td>
+								<td width="40%" style="border-bottom:1px solid black;font-size:12px"><span t-esc="get_payroll_admin.get('name')"/></td>
+                                <td width="5%">&#160;</td>
+								<td width="30%" style="padding-left:5px;font-size:12px">2. Jumlah cek mesti sama dengan jumlah Borang BBCD</td>
+							</tr>
+							<tr>
+                                <td width="5%">&#160;</td>
+								<td width="20%" style="padding-left:20px;font-size:12px"><b>NO KPDN : </b></td>
+								<td width="40%" style="border-bottom:1px solid black;font-size:12px">&#160;</td>
+                                <td width="5%">&#160;</td>
+								<td width="30%" rowspan="3" style="padding-left:5px;font-size:12px">3. Sekiranya terdapat lebih dari satu nombor majikan dalam pita/disket majikan hendaklah menggunakan Borang BBCD berasingan bagi setiap nombor yang berkanaan</td>
+							</tr>
+							<tr>
+                                <td width="5%">&#160;</td>
+								<td width="20%" style="padding-left:20px;font-size:12px"><b>JAWATAN : </b></td>
+								<td width="40%" style="border-bottom:1px solid black;font-size:12px"><span t-esc="get_payroll_admin.get('position')"/></td>
+                                <td width="5%">&#160;</td>
+							</tr>
+							<tr>
+                                <td width="5%">&#160;</td>
+								<td width="20%" style="padding-left:20px;font-size:12px"><b>NO.TELEFON : </b></td>
+								<td width="40%" style="border-bottom:1px solid black;font-size:12px"><span t-esc="get_payroll_admin.get('telephone')"/></td>
+                                <td width="5%">&#160;</td>
+							</tr>
+							<tr>
+                                <td width="5%">&#160;</td>
+								<td width="20%">&#160;</td>
+								<td width="40%">&#160;</td>
+                                <td width="5%">&#160;</td>
+                                <td width="30%">&#160;</td>
+							</tr>
+						</table>
+
+						<t t-foreach="get_name" t-as="name">
+							<t t-if="name.get('name')">
+								<p style="page-break-before:always;"/>
+							</t>
+
+							<table width="100%" t-if="name.get('name')" style="border-spacing:0;border-left:1px solid black;border-right:1px solid black;border-top:1px solid black;">
+								<tr>
+									<td width="20%" align="center"><img src="/my_pf_report/static/src/img/EPF_(Malaysia)_Logo.png" height="100" width="100"/></td>
+									<td width="70%" style="text-align:center;font-size:26px;">
+										<b>KUMPULAN WANG SIMPANAN PEKERJA</b><br/>
+                                        <font style="font-size:14px;">
+                                        <b style="text-align:center;">PERATURAN-PERATURAN DAN KAEDAH-KAEDAH KWSP 1991 KAEDAH 11(1)</b></font><br/>
+									</td>
+									<td width="10%" style="font-size:18px;text-align:center;">
+										<span>KWSP 6</span>
+									</td>
+								</tr>
+							</table>
+
+							<table width="100%" t-if="name.get('name')" style="border-spacing:0;border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black;">
+								<tr>
+									<td width="13%" align="right" style="font-size:12px;padding-right:10px">
+										<span>Nama Majikan
+										</span><br/>
+										<span>Alamat</span>
+									</td>
+									<td width="67%">
+										<table width="100%" style="border-spacing:0;border:1px solid black">
+											<tr>
+												<td width="25%" style="text-align:center;border-bottom:1px solid black;border-right:1px solid black;font-size:12px">No Rujukan Majikan</td>
+												<td width="25%" style="text-align:center;border-bottom:1px solid black;border-right:1px solid black;font-size:12px">Bulan Caruman</td>
+												<td width="25%" style="text-align:center;border-bottom:1px solid black;border-right:1px solid black;font-size:12px">Amaun Caruman</td>
+												<td width="25%" style="text-align:center;border-bottom:1px solid black;font-size:12px">No Rujukan<br/>Borang A</td>
+											</tr>
+											<tr>
+												<td width="25%" style="text-align:center;border-bottom:1px solid black;border-right:1px solid black;font-size:12px"><span t-esc="res_company.company_registry"/></td>
+												<td width="25%" style="text-align:center;border-bottom:1px solid black;border-right:1px solid black;font-size:12px"><span t-esc="get_monthyear"/></td>
+												<td width="25%" style="text-align:center;border-bottom:1px solid black;border-right:1px solid black;font-size:12px">RM
+													<span t-esc="get_totalrm1"/></td>
+												<td width="25%" style="border-bottom:1px solid black;">&#160;</td>
+											</tr>
+											<tr>
+												<td width="100%" colspan="4" style="padding-left:20px;font-size:12px"><b>Jumlah caruman untuk bulan di atas (untuk photongan gaji bulanan may 2017 hendaklah dibayar kepada KWSP/Agen Kutipan KWSP sdak lewat daripada 31-10-2017</b></td>
+											</tr>
+											<tr>
+												<td width="25%" style="padding-left:20px;font-size:12px"><input class="input" type="checkbox" id="oe_import_tracking"/>&#160;&#160;Wang Tunai</td>
+												<td width="25%" style="font-size:12px"><input class="input" type="checkbox" id="oe_import_tracking"/>&#160;Cek/Kiriman Wang/Wang Pos/Draf</td>
+												<td width="50%" colspan="2" style="border-bottom:1px solid black">&#160;</td>
+											</tr>
+											<tr>
+												<td width="25%">&#160;</td>
+												<td width="25%">&#160;</td>
+												<td width="25%">&#160;</td>
+												<td width="25%">&#160;</td>
+											</tr>
+											<tr>
+												<td width="25%" style="border-top:1px solid black">&#160;</td>
+												<td width="25%" style="border-top:1px solid black">&#160;</td>
+												<td width="50%" style="border-top:1px solid black;font-size:12px" colspan="2">Tarikh Di Cetak :
+													<span t-esc="get_date"/></td>
+											</tr>
+											<tr>
+												<td width="25%">&#160;</td>
+												<td width="25%">&#160;</td>
+												<td width="50%" colspan="2" style="font-size:12px">Bil Pekerja :
+													<span t-esc="name.get('employee')"/></td>
+											</tr>
+											<tr>
+												<td width="25%">&#160;</td>
+												<td width="25%">&#160;</td>
+												<td width="50%" colspan="2">&#160;</td>
+											</tr>
+											<tr>
+												<td width="25%">&#160;</td>
+												<td width="25%">&#160;</td>
+												<td width="50%" colspan="2">&#160;</td>
+											</tr>
+											<tr>
+												<td width="25%">&#160;</td>
+												<td width="25%">&#160;</td>
+												<td width="50%" colspan="2">&#160;</td>
+											</tr>
+											<tr>
+												<td width="25%">&#160;</td>
+												<td width="25%">&#160;</td>
+												<td width="50%" colspan="2">&#160;</td>
+											</tr>
+										</table>
+									</td>
+									<td width="20%" style="text-align:center;"><br/>
+                                        <div style="text-align:center;font-size:30px;">
+                                            <font style="font-size:30px;"><b>BORANG</b></font><br/>
+                                            <font style="font-size:30px;"><b style="text-align:center;">A</b></font><br/>
+                                            <span style="font-size:15px;padding-top:10px;">Mukasurat : 1</span><br/>
+                                        </div>
+										<font style="font-size:10px;text-align:center;padding-top:10px;">
+											<center>
+												<div style="width:50pt; height:50pt; border: 1pt solid black; border-collapse:separate; border-radius:100pt; margin-left:20pt"></div>
+											</center><br/>Cop Agen Kutipan</font>
+									</td>
+								</tr>
+							</table>
+							<br/>
+
+							<table width="100%" t-if="name.get('name')" style="border-spacing:0;">
+								<tr>
+									<td width="5%" style="border-right:1px solid black;border-left:1px solid black;border-top:1px solid black;border-bottom:1px solid black;text-align:center;font-size:12px">
+										<b>BIL</b>
+									</td>
+									<td width="10%" style="border-right:1px solid black;border-top:1px solid black;border-bottom:1px solid black;text-align:center;font-size:12px">
+										<b>NO. AHLI<br/>
+											KWSP</b>
+									</td>
+									<td width="5%" style="border-right:1px solid black;border-top:1px solid black;border-bottom:1px solid black;text-align:center;font-size:12px">
+										<b>NK</b>
+									</td>
+									<td width="10%" style="border-right:1px solid black;border-top:1px solid black;border-bottom:1px solid black;text-align:center;font-size:12px">
+										<b>NO KAD
+											<br/>PENGENALAN</b>
+									</td>
+									<td width="30%" style="border-right:1px solid black;border-top:1px solid black;border-bottom:1px solid black;text-align:center;font-size:12px">
+										<b>NAMA AHLI</b>
+									</td>
+									<td width="20%" style="border-right:1px solid black;border-top:1px solid black;border-bottom:1px solid black;text-align:center;font-size:12px">
+										<b>UPAH (RM)</b>
+									</td>
+									<td colspan="2" width="20%" style="border-right:1px solid black;border-top:1px solid black;border-bottom:1px solid black;text-align:center;font-size:12px">
+										<b>CARUMAN (RM)
+											<br/>MAJIKAN PEKERJA</b>
+									</td>
+								</tr>
+								<tr>
+                                    <td width="80%" align="center" colspan="6" style="border-bottom:1px solid black;font-size:10px">Jumlah yang dibawa dari mukasurat dahulu (jika ada)</td>
+									<td width="10%" style="border-left:1px solid black;border-bottom:1px solid black;border-right:1px solid black;font-size:10px;text-align:right;padding-right:5px">0.0</td>
+									<td width="10%" style="border-bottom:1px solid black;border-right:1px solid black;font-size:10px;text-align:right;padding-right:5px">0.0</td>
+								</tr>
+								<t t-foreach="get_name" t-as="name">
+									<tr t-foreach="name.get('records')" t-as="obj" style="page-break-inside: avoid;">
+										<td width="5%" style="border-top:1px solid black;border-right:1px solid black;border-left:1px solid black;border-bottom:1px solid black;text-align:center;font-size:10px"><span t-esc="obj['seq']"/></td>
+										<td width="10%" style="border-top:1px solid black;border-bottom:1px solid black;border-right:1px solid black;font-size:10px;padding-left:5px"><span t-esc="obj['ahli']"/></td>
+										<td width="5%" style="border-top:1px solid black;border-bottom:1px solid black;border-right:1px solid black;font-size:10px">&#160;</td>
+										<td width="10%" style="border-top:1px solid black;border-bottom:1px solid black;border-right:1px solid black;font-size:10px;padding-left:5px"><span t-esc="obj['identification_no']"/></td>
+										<td width="30%" style="border-top:1px solid black;border-bottom:1px solid black;border-right:1px solid black;font-size:10px;padding-left:5px"><span t-esc="obj['name']"/></td>
+										<td width="20%" style="border-top:1px solid black;border-bottom:1px solid black;border-right:1px solid black;font-size:10px;text-align:right;padding-right:5px"><span t-esc="obj['net']"/></td>
+										<td width="10%" style="border-top:1px solid black;border-bottom:1px solid black;border-right:1px solid black;font-size:10px;text-align:right;padding-right:5px"><span t-esc="obj['epfy']"/></td>
+										<td width="10%" style="border-top:1px solid black;border-bottom:1px solid black;border-right:1px solid black;font-size:10px;text-align:right;padding-right:5px"><span t-esc="obj['epfe']"/></td>
+									</tr>
+								</t>
+								<tr t-foreach="get_name" t-as="page_record" style="page-break-inside: avoid;">
+									<td width="5%" style="border-top:1px solid black;border-bottom:1px solid black;border-left:1px solid black;font-size:10px">&#160;</td>
+									<td width="10%" style="border-top:1px solid black;border-bottom:1px solid black;font-size:10px">&#160;</td>
+									<td width="5%" style="border-top:1px solid black;border-bottom:1px solid black;font-size:10px">&#160;</td>
+									<td width="10%" style="border-top:1px solid black;border-bottom:1px solid black;font-size:10px">&#160;</td>
+									<td width="30%" style="border-top:1px solid black;border-bottom:1px solid black;font-size:10px">&#160;</td>
+									<td width="20%" style="border-top:1px solid black;border-bottom:1px solid black;font-size:10px">&#160;</td>
+									<td width="10%" style="border-top:1px solid black;border-left:1px solid black;border-bottom:1px solid black;border-right:1px solid black;font-size:10px;text-align:right;padding-right:5px">
+										<b><span t-esc="page_record.get('total_after_1')"/></b>
+									</td>
+									<td width="10%" style="border-top:1px solid black;border-bottom:1px solid black;border-right:1px solid black;font-size:10px;text-align:right;padding-right:5px">
+										<b><span t-esc="page_record.get('total_after_2')"/></b>
+									</td>
+								</tr>
+							</table>
+						</t>
+						<table width="100%" style="border-spacing:0;">
+							<tr>
+								<td width="5%">&#160;</td>
+								<td width="10%">&#160;</td>
+								<td width="5%">&#160;</td>
+								<td width="10%">&#160;</td>
+								<td width="30%">&#160;</td>
+								<td width="20%" style="text-align:center;border-left:1px solid black;border-bottom:1px solid black;border-right:1px solid black;border-top:1px solid black;font-size:10px">
+									<b>JUMLAH (RM)</b>
+								</td>
+								<td colspan="2" width="20%" style="text-align:center;border-bottom:1px solid black;border-right:1px solid black;border-top:1px solid black;font-size:10px">
+									<b><span t-esc="get_totalrm1"/></b>
+								</td>
+							</tr>
+						</table><br/>
+						<table width="100%" style="border-spacing:0;font-size:12px;page-break-inside: avoid;">
+							<tr>
+								<td width="20%" style="font-size:10px">
+									<b>Tandatangan Wakil</b>
+								</td>
+								<td width="19%">&#160;</td>
+								<td width="1%">&#160;</td>
+								<td width="30%" style="border-left:1px solid black;border-right:1px solid black;border-top:1px solid black">&#160;</td>
+								<td width="30%" style="font-size:10px;padding-left:10px">CATATAN</td>
+							</tr>
+							<tr>
+								<td width="20%" style="font-size:10px">
+									<b>Majikan</b>
+								</td>
+								<td width="19%" style="border-bottom:1px solid black;padding-right:10px;font-size:10px"><span t-esc="res_company.name"/></td>
+								<td width="1%">&#160;</td>
+								<td width="30%" style="border-left:1px solid black;border-right:1px solid black">&#160;</td>
+								<td width="30%" style="font-size:10px;padding-left:10px">1. Nombor Majikan mesti ditulis di belakang cek.</td>
+							</tr>
+							<tr>
+								<td width="20%" style="font-size:10px">
+									<b>Nama</b>
+								</td>
+								<td width="19%" style="border-bottom:1px solid black;padding-right:10px;font-size:10px"><span t-esc="get_payroll_admin.get('name')"/></td>
+								<td width="1%">&#160;</td>
+								<td width="30%" style="border-left:1px solid black;border-right:1px solid black">&#160;</td>
+								<td width="30%" style="font-size:10px;padding-left:10px">2. Jumlah bayaran mesti sama dengan jumlah di Borang A.</td>
+							</tr>
+							<tr>
+								<td width="20%" style="font-size:10px">
+									<b>No. Kad</b>
+								</td>
+								<td width="19%" style="border-bottom:1px solid black;padding-right:10px;font-size:10px"><span t-esc="get_payroll_admin.get('identification_no')"/></td>
+								<td width="1%">&#160;</td>
+								<td width="30%" style="border-left:1px solid black;border-right:1px solid black">&#160;</td>
+								<td width="30%" style="font-size:10px;padding-left:10px">3. Potong maklumat ahli yang telah berhenti kerja.</td>
+							</tr>
+							<tr>
+								<td width="20%" style="font-size:10px">
+									<b>Pengenalan</b>
+								</td>
+								<td width="19%" style="border-bottom:1px solid black;padding-right:10px;font-size:10px">&#160;</td>
+								<td width="1%">&#160;</td>
+								<td width="30%" style="border-left:1px solid black;border-right:1px solid black">&#160;</td>
+								<td width="30%" style="font-size:10px;padding-left:10px">4. Jika ada butir-butir pekerja yang tidak disenaraikan, sila catatkan semua butirnya dan masukkan pekerja baru dalam ruangan kosong (jika ada).</td>
+							</tr>
+							<tr>
+								<td width="20%" style="font-size:10px">
+									<b>Jawatan</b>
+								</td>
+								<td width="19%" style="border-bottom:1px solid black;padding-right:10px;font-size:10px"><span t-esc="get_payroll_admin.get('position')"/></td>
+								<td width="1%">&#160;</td>
+								<td width="30%" style="border-left:1px solid black;border-right:1px solid black">&#160;</td>
+								<td width="30%" style="font-size:10px;padding-left:10px">5. Ruang ketiga (NK) hanya diisi oleh KWSP sahaja.</td>
+							</tr>
+							<tr>
+								<td width="20%" style="font-size:10px">
+									<b>No. Tel /Bimbit</b>
+								</td>
+								<td width="19%" style="border-bottom:1px solid black;padding-right:10px;font-size:10px"><span t-esc="get_payroll_admin.get('telephone')"/></td>
+								<td width="1%">&#160;</td>
+								<td width="30%" style="border-left:1px solid black;border-right:1px solid black">&#160;</td>
+								<td width="30%" style="font-size:10px;padding-left:10px">6. Bulan caruman bersamaan Bulan Upah + 1</td>
+							</tr>
+							<tr>
+								<td width="20%" style="font-size:10px">
+									<b>E-Mel</b>
+								</td>
+								<td width="19%" style="border-bottom:1px solid black;padding-right:10px;font-size:10px"><span t-esc="get_payroll_admin.get('email')"/></td>
+								<td width="1%">&#160;</td>
+								<td width="30%" style="border-left:1px solid black;border-right:1px solid black">&#160;</td>
+								<td width="30%" style="font-size:10px;padding-left:10px">7. Upah termasuklah gaji pokok, komisyen, bonus, elaun dan bayaran yang dikenakan caruman KWSP.</td>
+							</tr>
+							<tr>
+								<td width="20%" style="font-size:10px">
+									<b>Tarikh</b>
+								</td>
+								<td width="19%" style="border-bottom:1px solid black;padding-right:10px;font-size:10px"><span t-esc="datetime.datetime.today().strftime('%d-%m-%Y')"/></td>
+								<td width="1%">&#160;</td>
+								<td width="30%" style="border-left:1px solid black;border-right:1px solid black;border-bottom:1px solid black;text-align:center;font-size:14px">Cop Rasmi Majikan</td>
+								<td width="30%" style="font-size:10px;padding-left:10px">8. Sila rujuk panduan mengisi Borang A di buku Panduan Majikan.</td>
+							</tr>
+						</table><br/>
+						<table width="100%" style="font-size:12px;page-break-inside: avoid;">
+							<tr>
+								<td width="100%" style="font-size:10px">
+									<b>PERINGATAN:</b>&#160;&#160;PERINGATAN: Berdasarkan Akta KWSP 1991, kesilapan membekalkan maklumat ahli boleh menyebabkan tuan dikenakan caj atau tindakan undang-undang.
+								</td>
+							</tr>
+						</table>
+					</div>
+				</t>
+			</t>
+		</t>
+	</template>
+</odoo>

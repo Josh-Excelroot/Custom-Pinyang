@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_payment_followup,access_payment_followup,model_payment_followup,base.group_user,1,1,1,1
+access_payment_followup_line,access_payment_followup_line,model_payment_followup_line,base.group_user,1,1,1,1
+access_partner_payment_followup,access_partner_payment_followup,model_partner_payment_followup,base.group_user,1,1,1,1
+access_payment_automatic,access_payment_automatic,model_payment_automatic,base.group_user,1,1,1,1

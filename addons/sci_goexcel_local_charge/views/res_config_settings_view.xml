@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_local_charge" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.local.charge</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="4"/>
+        <field name="inherit_id" ref="sci_goexcel_charge_base.res_config_settings_view_form_inherit_base_charge"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='charge_management_setting_container']" position="inside">
+                <div class="col-12 col-lg-6 o_setting_box" >
+                    <div class="o_setting_left_pane">
+                        <field name="use_local_charge"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="use_local_charge"/>
+                        <div class="text-muted">
+                            Enable Local Charge Service
+                        </div>
+                        <!--
+                        <div attrs="{'invisible': [('use_local_charge','=',False)]}">
+                            <label for="product_thc" class="o_light_label"/><br/>
+                            <field name="product_thc" class="oe_inline" attrs="{'required': [('use_local_charge','!=', False)]}"/>
+                        </div>
+                        <div attrs="{'invisible': [('use_local_charge','=',False)]}">
+                            <label for="product_doc_fee" class="o_light_label"/><br/>
+                            <field name="product_doc_fee" class="oe_inline" attrs="{'required': [('use_local_charge','!=', False)]}"/>
+                        </div>
+                        <div attrs="{'invisible': [('use_local_charge','=',False)]}">
+                            <label for="product_seal_fee" class="o_light_label"/><br/>
+                            <field name="product_seal_fee" class="oe_inline" attrs="{'required': [('use_local_charge','!=', False)]}"/>
+                        </div>
+                        <div attrs="{'invisible': [('use_local_charge','=',False)]}">
+                            <label for="product_edi" class="o_light_label"/><br/>
+                            <field name="product_edi" class="oe_inline" attrs="{'required': [('use_local_charge','!=', False)]}"/>
+                        </div>
+                        <div attrs="{'invisible': [('use_local_charge','=',False)]}">
+                            <label for="product_telex_release_charge" class="o_light_label"/><br/>
+                            <field name="product_telex_release_charge" class="oe_inline" attrs="{'required': [('use_local_charge','!=', False)]}"/>
+                        </div>
+                        <div attrs="{'invisible': [('use_local_charge','=',False)]}">
+                            <label for="product_obl" class="o_light_label"/><br/>
+                            <field name="product_obl" class="oe_inline" attrs="{'required': [('use_local_charge','!=', False)]}"/>
+                        </div>
+                        <div attrs="{'invisible': [('use_local_charge','=',False)]}">
+                            <label for="product_communication" class="o_light_label"/><br/>
+                            <field name="product_communication" class="oe_inline" attrs="{'required': [('use_local_charge','!=', False)]}"/>
+                        </div>
+                        -->
+
+                        <div attrs="{'invisible': [('use_local_charge','=',False)]}">
+                            <label for="local_charge_approval_user_ids" class="o_light_label"/><br/>
+                            <field name="local_charge_approval_user_ids" widget="many2many_tags" class="oe_inline" attrs="{'required': [('use_local_charge','!=', False)]}"/>
+                        </div>
+
+                        <div attrs="{'invisible': [('use_local_charge','=',False)]}">
+                            <label for="local_charge_notification_user_ids" class="o_light_label"/><br/>
+                            <field name="local_charge_notification_user_ids" widget="many2many_tags" class="oe_inline" attrs="{'required': [('use_local_charge','!=', False)]}"/>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crm_commodity,access_crm_commodity,model_crm_commodity,base.group_user,1,1,1,1
+access_crm_service,access_crm_service,model_crm_service,base.group_user,1,1,1,1
+access_crm_container_line,access_crm_container_line,model_crm_container_line,base.group_user,1,1,1,1

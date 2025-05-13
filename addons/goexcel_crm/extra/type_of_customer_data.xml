@@ -1,0 +1,59 @@
+<odoo>
+    <data noupdate="0">
+        <record id="type_of_cus_001" model="type.of.partner">
+            <field name="name">less than one year</field>
+            <field name="active">True</field>
+            <field name="full_name">less than one year</field>
+        </record>
+        <record id="type_of_cus_002" model="type.of.partner">
+            <field name="name">Existing customer > 1 year</field>
+            <field name="active">True</field>
+            <field name="full_name">Existing customer > 1 year</field>
+        </record>
+        <record id="type_of_cus_003" model="type.of.partner">
+            <field name="name">Lost customer</field>
+            <field name="active">True</field>
+            <field name="full_name">Lost customer</field>
+        </record>
+        <record id="type_of_cus_004" model="type.of.partner">
+            <field name="name">Disqualified</field>
+            <field name="active">True</field>
+            <field name="full_name">Disqualified</field>
+        </record>
+        <record id="type_of_cus_005" model="type.of.partner">
+            <field name="name"> Shell direct</field>
+            <field name="active">True</field>
+            <field name="full_name"> Shell direct</field>
+        </record>
+        <record id="type_of_cus_006" model="type.of.partner">
+            <field name="name">Other Shell distributor</field>
+            <field name="active">True</field>
+            <field name="full_name">Other Shell distributor</field>
+        </record>
+        <record id="type_of_cus_007" model="type.of.partner">
+            <field name="name">Speedway</field>
+            <field name="active">True</field>
+            <field name="full_name">Speedway</field>
+        </record>
+        <record id="type_of_cus_008" model="type.of.partner">
+            <field name="name">Bunga Raya</field>
+            <field name="active">True</field>
+            <field name="full_name">Bunga Raya</field>
+        </record>
+        <record id="type_of_cus_009" model="type.of.partner">
+            <field name="name">Not interested</field>
+            <field name="active">True</field>
+            <field name="full_name">Not interested</field>
+        </record>
+        <record id="type_of_cus_0010" model="type.of.partner">
+            <field name="name">Client</field>
+            <field name="active">True</field>
+            <field name="full_name">Client</field>
+        </record>
+        <record id="type_of_cus_011" model="type.of.partner">
+            <field name="name">Partner</field>
+            <field name="active">True</field>
+            <field name="full_name">Partner</field>
+        </record>
+    </data>
+</odoo>

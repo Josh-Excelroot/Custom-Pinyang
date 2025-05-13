@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="partner_unblock_form_view" model="ir.ui.view">
+        <field name="name">unblock.credit.request.wiz.form</field>
+        <field name="model">unblock.credit.request.wiz</field>
+        <field name="arch" type="xml">
+            <form string="Credit Update">
+                <h3>You cannot confirm Order due to the Credit Issue!!!</h3>
+                <div>Fill in Your Reason for Approval and click on 'Request Credit Update' button to Request Credit Approval</div>
+                <field name="remark"/>
+                <footer>
+                    <button class="btn-primary" name="action_make_request" string="Request Credit Update" type="object"/>
+                    <button class="btn-secondary" name="action_cancel" special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="partner_unblock_action" model="ir.actions.act_window">
+        <field name="name">Credit Update</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">unblock.credit.request.wiz</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="partner_unblock_form_view"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

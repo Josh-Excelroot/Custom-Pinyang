@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!--<record id="hr_rule_eis" model="hr.salary.rule">
+            <field name="name">Basic Salary</field>
+            <field name="sequence" eval="1"/>
+            <field name="code">BASIC</field>
+            <field name="category_id" ref="hr_payroll.BASIC"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.wage</field>
+        </record>
+
+        <record id="hr_rule_taxable" model="hr.salary.rule">
+            <field name="name">Gross</field>
+            <field name="sequence" eval="100"/>
+            <field name="code">GROSS</field>
+            <field name="category_id" ref="hr_payroll.GROSS"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.BASIC + categories.ALW</field>
+        </record>
+
+        <record id="hr_rule_net" model="hr.salary.rule">
+            <field name="name">Net Salary</field>
+            <field name="sequence" eval="200"/>
+            <field name="code">NET</field>
+            <field name="category_id" ref="hr_payroll.NET"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.BASIC + categories.ALW + categories.DED</field>
+            <field name="register_id" ref="contrib_register_employees"/>
+        </record>-->
+
+        <!-- Salary Structure -->
+
+        <!-- <record id="structure_base" model="hr.payroll.structure">
+            <field name="code">MYS</field>
+            <field name="name">MY Salary Base Structure</field>
+            <field eval="[(6, 0, [ref('l10n_my_payroll.hr_salary_rule_hrdf')])]" name="rule_ids"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="parent_id" ref="hr_payroll.structure_base"/>
+        </record> -->
+
+        <record id="structure_all_in_one" model="hr.payroll.structure">
+            <field name="code">AIO</field>
+            <field name="name">All In One Structure</field>
+            <field eval="[(6, 0, [ref('l10n_my_payroll.hr_salary_rule_epfy_normal'),
+                                  ref('l10n_my_payroll.hr_salary_rule_overtime0'),
+                                  ref('l10n_my_payroll.hr_allowance_rental'),
+                                  ref('l10n_my_payroll.hr_allowance_insurance'),
+                                  ref('l10n_my_payroll.hr_allowance_fuel'),
+                                  ref('l10n_my_payroll.hr_allowance_car'),
+                                  ref('l10n_my_payroll.hr_salary_rule_hrdf'), ref('l10n_my_payroll.hr_salary_rule_BIK'),
+                                  ref('l10n_my_payroll.hr_salary_rule_otherdeductions0'),
+                                  ref('l10n_my_payroll.hr_salary_rule_vola'),
+                                  ref('l10n_my_payroll.hr_salary_rule_unpaidleave0'),
+                                  ref('l10n_my_payroll.hr_salary_rule_paidleave0'),
+                                  ref('l10n_my_payroll.hr_salary_rule_epfe_without_add'), ref('l10n_my_payroll.hr_salary_rule_allowance0'),
+                                  ref('l10n_my_payroll.hr_salary_rule_ZAKAT'), ref('l10n_my_payroll.hr_salary_rule_category_dir_fees'),
+                                  ref('l10n_my_payroll.hr_salary_rule_bonus0'), ref('l10n_my_payroll.hr_salary_rule_bonus1'),
+                                  ref('l10n_my_payroll.hr_salary_rule_commission0'),
+                                  ref('l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0'), ref('l10n_my_payroll.hr_salary_rule_backpay0'),
+                                  ref('l10n_my_payroll.hr_salary_rule_adjustmentsaddition0'), ref('l10n_my_payroll.hr_salary_rule_pcbcp0'),
+                                  ref('l10n_my_payroll.hr_salary_rule_netbeforemtd0'), ref('l10n_my_payroll.hr_salary_rule_expense'),
+                                  ref('l10n_my_payroll.hr_salary_rule_pcb_tax_income'), ref('l10n_my_payroll.hr_salary_rule_pcb_current_month'),
+                                  ref('l10n_my_payroll.hr_salary_rule_pcb_tax_income_add'), ref('l10n_my_payroll.hr_salary_rule_pcb_current_month_Total_PCB'),
+                                  ref('l10n_my_payroll.hr_salary_rule_arrears_and_others_per_mnth'),
+                                  ref('hr_attendances_overtime.hr_salary_rule_overtime'),
+                                  ref('hr_attendances_overtime.hr_salary_rule_absent'),
+                                  ref('hr_attendances_overtime.hr_salary_rule_timedifferent'),
+                                  ref('l10n_my_payroll.hr_allowance_rental'),
+                                  ref('l10n_my_payroll.hr_allowance_insurance'),
+                                  ref('l10n_my_payroll.hr_allowance_fuel'),
+                                  ref('l10n_my_payroll.hr_allowance_car'),
+                                  ref('hr_attendances_overtime.hr_salary_rule_latein')])]"
+                   name="rule_ids"/>
+            <field name="parent_id" ref="hr_payroll.structure_base"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="structure_part_timer_salary" model="hr.payroll.structure">
+            <field name="code">PTS</field>
+            <field name="name">Part Timer Salary Structure</field>
+            <field eval="[(6, 0, [ref('l10n_my_payroll.hr_salary_rule_part_timer')])]" name="rule_ids"/>
+            <field name="parent_id" ref="hr_payroll.structure_base"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="old_age_salary_structure" model="hr.payroll.structure">
+            <field name="code">SESS</field>
+            <field name="name">Senior Employment Salary Structure</field>
+            <field eval="[(6, 0, [ref('l10n_my_payroll.hr_salary_rule_epfy_normal'),
+                                  ref('l10n_my_payroll.hr_salary_rule_overtime0'),
+                                  ref('l10n_my_payroll.hr_allowance_rental'),
+                                  ref('l10n_my_payroll.hr_allowance_insurance'),
+                                  ref('l10n_my_payroll.hr_allowance_fuel'),
+                                  ref('l10n_my_payroll.hr_allowance_car'),
+                                  ref('l10n_my_payroll.hr_salary_rule_hrdf'), ref('l10n_my_payroll.hr_salary_rule_BIK'),
+                                  ref('l10n_my_payroll.hr_salary_rule_otherdeductions0'),
+                                  ref('l10n_my_payroll.hr_salary_rule_vola'),
+                                  ref('l10n_my_payroll.hr_salary_rule_unpaidleave0'),
+                                  ref('l10n_my_payroll.hr_salary_rule_paidleave0'),
+                                  ref('l10n_my_payroll.hr_salary_rule_allowance0'),
+                                  ref('l10n_my_payroll.hr_salary_rule_ZAKAT'), ref('l10n_my_payroll.hr_salary_rule_category_dir_fees'),
+                                  ref('l10n_my_payroll.hr_salary_rule_bonus0'), ref('l10n_my_payroll.hr_salary_rule_bonus1'),
+                                  ref('l10n_my_payroll.hr_salary_rule_commission0'),
+                                  ref('l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0'), ref('l10n_my_payroll.hr_salary_rule_backpay0'),
+                                  ref('l10n_my_payroll.hr_salary_rule_adjustmentsaddition0'), ref('l10n_my_payroll.hr_salary_rule_pcbcp0'),
+                                  ref('l10n_my_payroll.hr_salary_rule_netbeforemtd0'), ref('l10n_my_payroll.hr_salary_rule_expense'),
+                                  ref('l10n_my_payroll.hr_salary_rule_pcb_tax_income'), ref('l10n_my_payroll.hr_salary_rule_pcb_current_month'),
+                                  ref('l10n_my_payroll.hr_salary_rule_pcb_tax_income_add'), ref('l10n_my_payroll.hr_salary_rule_pcb_current_month_Total_PCB'),
+                                  ref('l10n_my_payroll.hr_salary_rule_arrears_and_others_per_mnth'),
+                                  ref('hr_attendances_overtime.hr_salary_rule_overtime'),
+                                  ref('hr_attendances_overtime.hr_salary_rule_absent'),
+                                  ref('hr_attendances_overtime.hr_salary_rule_timedifferent'),
+                                  ref('hr_attendances_overtime.hr_salary_rule_latein')])]"
+                   name="rule_ids"/>
+            <field name="parent_id" ref="hr_payroll.structure_base"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <!--        &lt;!&ndash; Decimal Precision &ndash;&gt;
+
+                <record forcecreate="True" id="decimal_payroll" model="decimal.precision">
+                    <field name="name">Payroll</field>
+                    <field name="digits">2</field>
+                </record>
+
+                <record forcecreate="True" id="decimal_payroll_rate" model="decimal.precision">
+                    <field name="name">Payroll Rate</field>
+                    <field name="digits">4</field>
+                </record>-->
+
+
+    </data>
+</odoo>

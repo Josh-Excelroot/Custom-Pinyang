@@ -1,0 +1,39 @@
+<odoo>
+	<record model="ir.ui.view" id="view_form_booking_cost_profit_single_vendor_v2">
+		<field name="name">Booking Cost Profit</field>
+		<field name="model">freight.booking</field>
+		<field name="inherit_id" ref="sci_goexcel_freight_2.view_form_booking_2"/>
+        <field name="type">form</field>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='cost_profit_ids']/tree" position="replace">
+				<tree editable="bottom">
+					<field name="sequence" widget="handle"/>
+					<field name="product_id"/>
+					<field name="product_name"/>
+					<field name="profit_qty"/>
+					<field name="list_price"/>
+					<field name="profit_amount"/>
+					<field name="profit_currency"/>
+					<field name="profit_currency_rate"/>
+					<field name="sale_total" sum="Total Sale"/>
+					<field name="cost_qty"/>
+					<field name="cost_price"/>
+					<field name="cost_amount"/>
+					<field name="vendor_id" domain="[('supplier','=',True)]"/>
+					<field name="vendor_bill_id" readonly="1"/>
+					<field name="vendor_bill_ids" readonly="1"/>
+					<field name="cost_currency"/>
+					<field name="cost_currency_rate"/>
+					<field name="cost_total" sum="Total Cost"/>
+					<field name="profit_total" sum="Total Profit"/>
+					<field name="added_to_invoice" attrs="{'readonly':[('invoiced_readonly', '=', True)]}"/>
+					<field name="invoice_paid" readonly="1"/>
+					<field name="invoiced_readonly" invisible="1"/>
+					<field name="invoiced" attrs="{'readonly':[('invoiced_readonly', '=', True)]}"/>
+					<field name="paid" readonly="1"/>
+				</tree>
+			</xpath>
+		</field>
+	</record>
+
+</odoo>

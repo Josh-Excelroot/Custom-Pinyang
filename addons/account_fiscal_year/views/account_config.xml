@@ -1,0 +1,58 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="fiscal_year_res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="account.res_config_settings_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[@data-key='account']" position="inside">
+                    <h2>Update Fiscal Year/Period to Old Records</h2>
+
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-6 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"></div>
+                            <div class="o_setting_right_pane">
+                                <button name="update_old_records" type="object" string="Update Old Records" class="btn-primary" />
+                            </div>
+                        </div>
+                        <!-- <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="enable_approval" />
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="enable_approval" string="Enable Approval work Flow" />
+                                <div class="text-muted">
+                                    Enable Approval work Flow
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="restrict_for_close_period" />
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="restrict_for_close_period" string="Restrict record creation for Closed Fiscal Period or Closed Fiscal Year" />
+                                <div class="text-muted">
+                                    Restrict record creation for Closed Fiscal Period or Closed Fiscal Year
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="period_type" string="Period Type" />
+                                <field name="period_type" />
+                                <div class="text-muted">
+                                    Period time Duration ex. monthly, 3 monthly, 1 yearly
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+     
+    </data>
+</odoo>

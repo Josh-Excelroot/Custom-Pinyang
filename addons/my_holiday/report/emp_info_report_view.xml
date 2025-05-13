@@ -1,0 +1,923 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <report id="employee_personal_info_report"
+            string="Employee's Information"
+            model="hr.employee"
+            report_type="qweb-pdf"
+            name="my_holiday.employee_information_report"
+            groups="hr.group_hr_manager"/>
+
+    <record id="employee_information_report_paperformat"
+            model="report.paperformat">
+        <field name="name">Employee Information</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">50</field>
+        <field name="margin_bottom">30</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">45</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="employee_personal_info_report" model="ir.actions.report">
+        <field name="paperformat_id" ref="employee_information_report_paperformat"/>
+    </record>
+
+    <template id="employee_information_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <style>
+                            .padding {
+                                padding: 3px 3px 3px 20px;
+                            }
+                            .padding_border {
+                                border: 15px solid white;
+                            }
+                            .padding_border_sub {
+                                border: 20px solid white;
+                                margin-top: -15px;
+                            }
+                            .header {
+                                font-size: 18px;
+                                border-spacing: 0;
+                                font-weight: bold;
+                                margin-top: -15px;
+                            }
+                            .sub_header_1 {
+                                font-size: 14px;
+                                font-weight: bold;
+                                padding-left: 20px;
+                            }
+                            .sub_header_2 {
+                                font-size: 14px;
+                                font-weight: bold;
+                            }
+                        </style>
+                        <table width="100%" class="padding_border">
+                            <tr>
+                                <th style="text-align: center;background-color: #98bdf2;">
+                                    <h4>
+                                        <b>Employee Name :
+                                            <span t-field="o.name"/></b>
+                                    </h4>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="font-size:15px;" class="padding">
+                                    <br/>
+                                    <span>
+                                        <b>Department :</b>
+                                    </span>
+                                    <span t-field="o.department_id and o.department_id.name"/>
+                                    <br/>
+                                    <span>
+                                        <b>Direct Manager :</b>
+                                    </span>
+                                    <span t-field="o.parent_id and o.parent_id.name"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" class="padding_border_sub">
+                            <tr>
+                                <td class="header" colspan="3" style="text-align: center;background-color: #98bdf2;">
+                                    <h4>
+                                        <b>Personal Information</b>
+                                    </h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="sub_header_1" width="40%" style="color:#0d43a8;font-size:18px;">
+                                    <br/>
+                                    <span>
+                                        <b>Social IDs</b>
+                                    </span>
+                                </td>
+                                <td class="sub_header_1" width="10%">
+                                    <span></span>
+                                </td>
+                                <td class="sub_header_1" width="50%" style="color:#0d43a8;font-size:18px;">
+                                    <br/>
+                                    <span>
+                                        <b>Status</b>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <br/>
+                                    <strong>
+                                        <span>Identification :
+                                        </span>
+                                    </strong>
+                                    <span t-field="o.identification_id"/>
+                                </td>
+                                <td class="padding">
+                                    <span></span>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <br/>
+                                    <strong>
+                                        <span>Gender :</span>
+                                    </strong>
+                                    <span t-field="o.gender"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <strong>
+                                        <span>Passport No :</span>
+                                    </strong>
+                                    <span t-field="o.passport_id"/>
+                                </td>
+                                <td class="padding">
+                                    <span></span>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <strong>
+                                        <span>Marital Status :
+                                        </span>
+                                    </strong>
+                                    <span t-field="o.marital"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td/>
+                                <td class="padding">
+                                    <span></span>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <strong>
+                                        <span>Nationality :</span>
+                                    </strong>
+                                    <span t-field="o.emp_country"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td/>
+                                <td class="padding">
+                                    <span></span>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <strong>
+                                        <span>Date of Birth :</span>
+                                    </strong>
+                                    <span t-if="o.birthday">
+                                        <span t-field="o.birthday" t-options='{"format": "d-MM-Y"}'/>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td/>
+                                <td class="padding">
+                                    <span></span>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <strong>
+                                        <span>Place of Birth :</span>
+                                    </strong>
+                                    <span t-field="o.place_of_birth"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td/>
+                                <td class="padding">
+                                    <span></span>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <strong>
+                                        <span>Age :</span>
+                                    </strong>
+                                    <span t-field="o.age"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="50%">
+                                    <span></span>
+                                </td>
+                                <td width="10%">
+                                    <span></span>
+                                </td>
+                                <td width="50%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="50%" class="sub_header_1" style="font-size:18px;color:#0d43a8;">
+                                    <br/>
+                                    <span>
+                                        <b>Contact Information</b>
+                                    </span>
+                                </td>
+                                <td class="sub_header_1" width="10%">
+                                    <span></span>
+                                </td>
+                                <td class="sub_header_1" width="50%" style="font-size:18px;color:#0d43a8;">
+                                    <br/>
+                                    <span>
+                                        <b>Other Information</b>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="padding" style="font-size:15px;">
+                                    <br/>
+                                    <strong>
+                                        <span>Home Address :
+                                        </span>
+                                    </strong>
+                                    <span t-field="o.address_home_id"/>
+                                </td>
+                                <td></td>
+                                <td class="padding" style="font-size:15px;">
+                                    <br/>
+                                    <strong>
+                                        <span>Dialect :
+                                        </span>
+                                    </strong>
+                                    <span t-field="o.dialect"/>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="padding" style="font-size:15px;">
+                                    <strong>
+                                        <span>Country :
+                                        </span>
+                                    </strong>
+                                    <span t-field="o.country_id and o.country_id.name"/>
+                                </td>
+                                <td></td>
+                                <td class="padding" style="font-size:15px;">
+                                    <strong>
+                                        <span>Driving Licence:Class :
+                                        </span>
+                                    </strong>
+                                    <span t-field="o.driving_licence"/>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="padding" style="font-size:15px;">
+                                    <strong>
+                                        <span>State :
+                                        </span>
+                                    </strong>
+                                    <span t-field="o.emp_state_id and o.emp_state_id.name"/>
+                                </td>
+                                <td></td>
+                                <td class="padding" style="font-size:15px;">
+                                    <strong>
+                                        <span>Type of IDs :
+                                        </span>
+                                    </strong>
+                                    <span t-field="o.employee_type_id.name"/>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="padding" style="font-size:15px;">
+                                    <strong>
+                                        <span>City :
+                                        </span>
+                                    </strong>
+                                    <span t-field="o.emp_city_id and o.emp_city_id.name"/>
+                                </td>
+                                <td></td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <strong>
+                                        <span>Bank Account Number :
+                                        </span>
+                                    </strong>
+                                    <t t-if="o.bank_account_id">
+                                        <span t-esc="o.bank_account_id and o.bank_account_id.acc_number"/>
+                                    </t>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="padding" style="font-size:15px;">
+                                    <strong>
+                                        <span>Phone :
+                                        </span>
+                                    </strong>
+                                    <span t-field="o.work_phone"/>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td class="padding" style="font-size:15px;">
+                                    <strong>
+                                        <span>Mobile :
+                                        </span>
+                                    </strong>
+                                    <span t-field="o.mobile_phone"/>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="padding" style="font-size:15px;">
+                                    <strong>
+                                        <span>E-mail :
+                                        </span>
+                                    </strong>
+                                    <span t-field="o.work_email"/>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </table>
+
+                        <table width="100%" class="padding_border_sub" style="page-break-inside: avoid;">
+                            <tr>
+                                <td class="header" colspan="3" style="text-align: center;background-color: #98bdf2;">
+                                    <h4>
+                                        <b>Educational Information</b>
+                                    </h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="sub_header_2" style="font-size:18px;color:#0d43a8;" colspan="3">
+                                    <br/>
+                                    <span>Computer Knowledge and Skills</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="padding" style="font-size:15px;" width="40%">
+                                    <br/>
+                                    <strong>
+                                        <span>Computer Program Knowledge:</span>
+                                    </strong>
+                                    <span t-esc="o.comp_prog_knw"/>
+                                </td>
+                                <td class="padding" style="font-size:15px;" width="20%">
+                                    <span></span>
+                                </td>
+                                <td class="padding" style="font-size:15px;" width="40%">
+                                    <br/>
+                                    <strong>
+                                        <span>Typing:</span>
+                                    </strong>
+                                    <span t-esc="o.typing"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="padding" style="font-size:15px;" width="40%">
+                                    <strong>
+                                        <span>Shorthand:</span>
+                                    </strong>
+                                    <span t-esc="o.shorthand"/>
+                                </td>
+                                <td class="padding" style="font-size:15px;" width="20%">
+                                    <span></span>
+                                </td>
+                                <td class="padding" style="font-size:15px;" width="40%">
+                                    <strong>
+                                        <span>Other Knowledge and Skill:</span>
+                                    </strong>
+                                    <span t-esc="o.other_know"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="padding" style="font-size:15px;" width="40%">
+                                    <strong>
+                                        <span>Courses Taken:</span>
+                                    </strong>
+                                    <span t-esc="o.course"/>
+                                </td>
+                                <td class="padding" style="font-size:15px;" width="20%">
+                                    <span></span>
+                                </td>
+                                <td class="padding" style="font-size:15px;" width="40%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table width="100%" class="padding_border_sub" style="page-break-inside: avoid;">
+                            <tr>
+                                <td class="header" colspan="3" style="text-align: center;background-color: #98bdf2;">
+                                    <h4>
+                                        <b>Job</b>
+                                    </h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="padding" style="font-size:15px;text-align: left;" widhth="40%">
+                                    <br/>
+                                    <strong>
+                                        <span>Job :
+                                        </span>
+                                    </strong>
+                                    <span t-field="o.job_id and o.job_id.name"/>
+                                </td>
+                                <td widhth="20%" style="font-size:15px;text-align: left;border-top:1px solid #e3e5e8;"></td>
+                                <td class="padding" style="font-size:15px;text-align: left;border-top:1px solid #e3e5e8;" widhth="40%">
+                                    <br/>
+                                    <strong>
+                                        <span>Join Date :
+                                        </span>
+                                    </strong>
+                                    <span t-if="o.join_date">
+                                        <span t-field="o.join_date" t-options='{"format": "d-MM-Y"}'/>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr style="font-size:15px;text-align: left;">
+                                <td class="padding">
+                                    <strong>
+                                        <span>Employment Status :
+                                        </span>
+                                    </strong>
+                                    <span t-field="o.emp_status"/>
+                                </td>
+                                <td widhth="20%"></td>
+                                <td class="padding">
+                                    <span t-if="o.emp_status == 'in_notice'">
+                                        <strong>
+                                            <span>Remaining Days :
+                                            </span>
+                                        </strong>
+                                        <span t-field="o.rem_days"/>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr style="font-size:15px;text-align: left;">
+                                <td class="padding">
+                                    <strong>
+                                        <span>Confirm Date :
+                                        </span>
+                                    </strong>
+                                    <span t-if="o.confirm_date">
+                                        <span t-field="o.confirm_date" t-options='{"format": "d-MM-Y"}'/>
+                                    </span>
+                                </td>
+                            </tr>
+                            <td widhth="20%"></td>
+                            <td widhth="40%"></td>
+                        </table>
+                        <table width="100%" class="padding_border_sub" t-if="o.history_ids" style="page-break-inside: avoid;">
+                            <tr>
+                                <td class="sub_header_2" colspan="6" style="font-size:18px;color:#0d43a8;text-align:center;">
+                                    <span>
+                                        History of Employee
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="padding" style="font-size:15px;" width="25%">
+                                    <br/>
+                                    <strong>
+                                        <span>Job</span>
+                                    </strong>
+                                </td>
+                                <td class="padding" style="font-size:15px;" width="15%">
+                                    <br/>
+                                    <strong>
+                                        <span>Employment Status
+                                        </span>
+                                    </strong>
+                                </td>
+                                <td class="padding" style="font-size:15px;" width="15%">
+                                    <br/>
+                                    <strong>
+                                        <span>Join Date</span>
+                                    </strong>
+                                </td>
+                                <td class="padding" style="font-size:15px;" width="15%">
+                                    <br/>
+                                    <strong>
+                                        <span>Date of Confirmation
+                                        </span>
+                                    </strong>
+                                </td>
+                                <td class="padding" style="font-size:15px;" width="10%">
+                                    <br/>
+                                    <strong>
+                                        <span>Date Changed</span>
+                                    </strong>
+                                </td>
+                                <td class="padding" style="font-size:15px;" width="20%">
+                                    <br/>
+                                    <strong>
+                                        <span>Changed By</span>
+                                    </strong>
+                                </td>
+                            </tr>
+                            <tr t-foreach="o.history_ids" t-as="emp_hist" class="table-striped">
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <t t-if="emp_hist.job_id">
+                                        <span t-esc="emp_hist.job_id and emp_hist.job_id.name"/>
+                                    </t>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <span t-esc="emp_hist.emp_status"/>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <span t-if="emp_hist.join_date">
+                                        <span t-field="emp_hist.join_date" t-options='{"format": "d-MM-Y"}'/>
+                                    </span>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <span t-if="emp_hist.confirm_date">
+                                        <span t-field="emp_hist.confirm_date" t-options='{"format": "d-MM-Y"}'/>
+                                    </span>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <span t-if="emp_hist.date_changed">
+                                        <span t-field="emp_hist.date_changed" t-options='{"format": "d-MM-Y"}'/>
+                                    </span>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <span t-if="emp_hist.user_id">
+                                        <span t-esc="emp_hist.user_id and emp_hist.user_id.name"/>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table width="100%" class="padding_border_sub" t-if="o.immigration_ids" style="page-break-inside: avoid;">
+                            <tr>
+                                <td class="header" style="text-align: center;background-color: #98bdf2;" colspan="7">
+                                    <h4>
+                                        <b>Immigration</b>
+                                    </h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <br/>
+                                    <strong>
+                                        <span>Documents</span>
+                                    </strong>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <br/>
+                                    <strong>
+                                        <span>Number</span>
+                                    </strong>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <br/>
+                                    <strong>
+                                        <span>Issue Date</span>
+                                    </strong>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <br/>
+                                    <strong>
+                                        <span>Expiry Date</span>
+                                    </strong>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <br/>
+                                    <strong>
+                                        <span>Eligible Status</span>
+                                    </strong>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <br/>
+                                    <strong>
+                                        <span>Eligible Review Date</span>
+                                    </strong>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <br/>
+                                    <strong>
+                                        <span>Issue By</span>
+                                    </strong>
+                                </td>
+                            </tr>
+                            <tr t-foreach="o.immigration_ids" t-as="emp_immg">
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <span t-esc="emp_immg.documents"/>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <span t-esc="emp_immg.number"/>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <span t-if="emp_immg.issue_date">
+                                        <span t-field="emp_immg.issue_date" t-options='{"format": "d-MM-Y"}'/>
+                                    </span>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <span t-if="emp_immg.exp_date">
+                                        <span t-field="emp_immg.exp_date" t-options='{"format": "d-MM-Y"}'/>
+                                    </span>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <span t-if="emp_immg.eligible_status">
+                                        <span t-esc="emp_immg.eligible_status"/>
+                                    </span>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <span t-if="emp_immg.eligible_review_date">
+                                        <span t-field="emp_immg.eligible_review_date" t-options='{"format": "d-MM-Y"}'/>
+                                    </span>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <t t-if="emp_immg.issue_by">
+                                        <span t-esc="emp_immg.issue_by and emp_immg.issue_by.name"/>
+                                    </t>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table width="100%" class="padding_border_sub" t-if="o.training_ids" style="page-break-inside: avoid;">
+                            <tr>
+                                <td class="header" style="text-align: center;background-color: #98bdf2;" colspan="3">
+                                    <h4>
+                                        <b>Training Workshop</b>
+                                    </h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="padding" style="font-size:15px;text-align: left;" width="40%">
+                                    <br/>
+                                    <strong>
+                                        <span>Title of TRAINING/WORKSHOP</span>
+                                    </strong>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;" width="40%">
+                                    <br/>
+                                    <strong>
+                                        <span>Institution</span>
+                                    </strong>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;" width="20%">
+                                    <br/>
+                                    <strong>
+                                        <span>Date</span>
+                                    </strong>
+                                </td>
+                            </tr>
+                            <tr t-foreach="o.training_ids" t-as="emp_training">
+                                <td class="padding" style="font-size:15px;text-align: left;" width="40%">
+                                    <span t-esc="emp_training.tr_title"/>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;" width="40%">
+                                    <span t-esc="emp_training.tr_institution"/>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;" width="20%">
+                                    <span t-if="emp_training.tr_date">
+                                        <span t-field="emp_training.tr_date" t-options='{"format": "d-MM-Y"}'/>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table width="100%" class="padding_border_sub" t-if="o.employee_leave_ids" style="page-break-inside: avoid;">
+                            <tr>
+                                <th class="header" colspan="4" style="text-align: center;background-color: #98bdf2;">
+                                    <h4>
+                                        <b>Leave History</b>
+                                    </h4>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="padding" style="font-size:15px;text-align: left;" width="25%">
+                                    <br/>
+                                    <strong>
+                                        <span>Start Date</span>
+                                    </strong>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;" width="25%">
+                                    <br/>
+                                    <strong>
+                                        <span>End Date</span>
+                                    </strong>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;" width="25%">
+                                    <br/>
+                                    <strong>
+                                        <span>Number of Days</span>
+                                    </strong>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;" width="25%">
+                                    <br/>
+                                    <strong>
+                                        <span>State</span>
+                                    </strong>
+                                </td>
+                            </tr>
+                            <tr t-foreach="o.employee_leave_ids" t-as="emp_leave">
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <span t-if="emp_leave.date_from">
+                                        <span t-field="emp_leave.date_from" t-options='{"format": "d-MM-Y"}'/>
+                                    </span>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <span t-if="emp_leave.date_to">
+                                        <span t-field="emp_leave.date_to" t-options='{"format": "d-MM-Y"}'/>
+                                    </span>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <span t-if="emp_leave.number_of_days">
+                                        <span t-esc="emp_leave.number_of_days"/>
+                                    </span>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <span t-esc="emp_leave.state"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table width="100%" class="padding_border_sub" style="page-break-inside: avoid;">
+                            <tr>
+                                <td class="header" colspan="2" style="text-align: center;background-color: #98bdf2;">
+                                    <h4>
+                                        <b>Extra Information</b>
+                                    </h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="sub_header" style="text-align: left;color:#0d43a8;font-size:18px;" colspan="2">
+                                    <br/>
+                                    <strong>
+                                        <span>Health Condition</span>
+                                    </strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:15px;text-justify: inter-word;text-align: justify;" colspan="2">
+                                    <br/>
+                                    <strong>
+                                        <p style="text-indent: 15px;">∙ Are you suffering from any physical disability or illness that requires you to be medication for a prolonged period?
+                                        </p>
+                                    </strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="padding" style="font-size:15px;text-align: left;" width="50%">
+                                    <b>Yes :</b>
+                                    <span t-esc="o.physical_stability"/>
+                                    <br/>
+                                    <b>No :</b>
+                                    <span t-esc="o.physical_stability_no"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table width="100%" class="padding_border_sub" style="page-break-inside: avoid;">
+                            <tr>
+                                <td class="sub_header" style="text-align: left;color:#0d43a8;font-size:18px;" colspan="2">
+                                    <br/>
+                                    <strong>
+                                        <span>Important Information</span>
+                                    </strong>
+                                </td>
+                            </tr>
+                            <br/>
+                            <tr>
+                                <td style="font-size:15px;text-align: left;" colspan="2">
+                                    <br/>
+                                    <strong>
+                                        <p style="text-indent: 15px;">∙ Have you ever been convicted in a court of law in any country?
+                                        </p>
+                                    </strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="padding" style="font-size:15px;text-align: left;" width="50%">
+                                    <b>Yes :</b>
+                                    <span t-esc="o.court_b"/>
+                                    <br/>
+                                    <b>No :</b>
+                                    <span t-esc="o.court_no"/>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-size:15px;text-align: left;" colspan="2">
+                                    <strong>
+                                        <p style="text-indent: 15px;">∙ Have you ever been dismissed or suspended from employement?
+                                        </p>
+                                    </strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="padding" style="font-size:15px;text-align: left;" width="50%">
+                                    <b>Yes :</b>
+                                    <span t-esc="o.dismissed_b"/>
+                                    <br/>
+                                    <b>No :</b>
+                                    <span t-esc="o.dismissed_no"/>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-size:15px;text-align: left;" colspan="2">
+                                    <strong>
+                                        <p style="text-indent: 15px;">∙ Have you ever been declared a bankrupt?</p>
+                                    </strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="padding" style="font-size:15px;text-align: left;" width="50%">
+                                    <b>Yes :</b>
+                                    <span t-esc="o.bankrupt_b"/>
+                                    <br/>
+                                    <b>No :</b>
+                                    <span t-esc="o.bankrupt_no"/>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-size:15px;text-align: left;" colspan="2">
+                                    <strong>
+                                        <p style="text-indent: 15px;">∙ About Yourself :</p>
+                                    </strong>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="padding" style="font-size:15px;text-align: left;" width="50%" colspan="2">
+                                    <p style="text-indent: 30px;">
+                                        <span t-esc="o.about"/>
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table width="100%" class="padding_border_sub" t-if="o.bank_account_id" style="page-break-inside: avoid;">
+                            <tr>
+                                <th class="header" colspan="4" style="text-align: center;background-color: #98bdf2;">
+                                    <h4>
+                                        <b>Bank Details</b>
+                                    </h4>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="padding" style="font-size:15px;text-align: left;" width="40%">
+                                    <br/>
+                                    <strong>
+                                        <span>Name of Bank:
+                                        </span>
+                                    </strong>
+                                    <t t-if="o.bank_account_id">
+                                        <span t-esc="o.bank_account_id and o.bank_account_id.bank_id and o.bank_account_id.bank_id.name"/>
+                                    </t>
+                                </td>
+                                <td class="padding" width="20%">
+                                    <span></span>
+                                </td>
+                                <td class="padding" style="font-size:15px;text-align: left;" width="40%">
+                                    <br/>
+                                    <strong>
+                                        <span>Bank Code:
+                                        </span>
+                                    </strong>
+                                    <t t-if="o.bank_account_id">
+                                        <span t-esc="o.bank_account_id and o.bank_account_id.bank_id and o.bank_account_id.bank_id.bic"/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="padding" style="font-size:15px;text-align: left;" width="40%">
+                                    <strong>
+                                        <span>Bank Account Number:
+                                        </span>
+                                    </strong>
+                                    <t t-if="o.bank_account_id">
+                                        <span t-esc="o.bank_account_id and o.bank_account_id.acc_number"/>
+                                    </t>
+                                </td>
+                                <td class="padding" width="20%">
+                                    <span></span>
+                                </td>
+                                <td class="padding" width="40%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" class="padding_border_sub" style="page-break-inside: avoid;" t-if="o.notes">
+                            <tr>
+                                <th class="header" colspan="4" style="text-align: center;background-color: #98bdf2;">
+                                    <h4>
+                                        <b>Notes</b>
+                                    </h4>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="padding" style="font-size:15px;text-align: left;">
+                                    <br/>
+                                    <span t-esc="o.notes"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

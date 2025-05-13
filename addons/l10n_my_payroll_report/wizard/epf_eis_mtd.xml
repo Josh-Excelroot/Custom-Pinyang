@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="menu_eps_eis_mtd_view" model="ir.ui.view">
+        <field name="name">EpfSocsoEisMtd View</field>
+        <field name="model">epf.socso.eis.mtd.download</field>
+        <field name="arch" type="xml">
+            <form string="Download To CSV">
+                <group>
+                    <group>
+                        <field name="type" widget="radio" required="1" options="{'vertical': true}"/>
+                    </group>
+                    <group>
+                        <field name="date_start"  required="1"/>
+                        <field name="end_date"  required="1"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="download_csv_file" string="Download CSV" type="object" colspan="2" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel" colspan="2"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_menu_eps_eis_mtd" model="ir.actions.act_window">
+        <field name="name">EPF / SOCSO / PCB(MTD) Download</field>
+        <field name="res_model">epf.socso.eis.mtd.download</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="bank_master_report_out_file" model="ir.ui.view">
+        <field name="name">binary.master.report.out.file</field>
+        <field name="model">master.report.out</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <group cospan="2" col="2">
+                    <h4>Click On Link To Download xlsx File: &#160;<field name="filedata" filename="filename" nolabel="1"/></h4>
+                </group>
+                <separator string="" colspan="4"/>
+                <footer>
+                    <button special="cancel" string="Cancel" colspan="2"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

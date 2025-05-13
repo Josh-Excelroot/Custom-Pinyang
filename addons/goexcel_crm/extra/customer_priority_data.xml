@@ -1,0 +1,35 @@
+<odoo>
+    <data noupdate="0">
+        <record id="customer_priority_001" model="customer.priority">
+            <field name="name">Quality</field>
+            <field name="active">True</field>
+            <field name="full_name">Quality</field>
+        </record>
+        <record id="customer_priority_002" model="customer.priority">
+            <field name="name">Service</field>
+            <field name="active">True</field>
+            <field name="full_name">Service</field>
+        </record>
+        <record id="customer_priority_003" model="customer.priority">
+            <field name="name">Reputation</field>
+            <field name="active">True</field>
+            <field name="full_name">Reputation</field>
+        </record>
+        <record id="customer_priority_004" model="customer.priority">
+            <field name="name">Relationship</field>
+            <field name="active">True</field>
+            <field name="full_name">Relationship</field>
+        </record>
+        <record id="customer_priority_005" model="customer.priority">
+            <field name="name">Price</field>
+            <field name="active">True</field>
+            <field name="full_name">Price</field>
+        </record>
+        <record id="customer_priority_006" model="customer.priority">
+            <field name="name">Credit term</field>
+            <field name="active">True</field>
+            <field name="full_name">Credit term</field>
+        </record>
+
+    </data>
+</odoo>

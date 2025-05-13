@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="restrict_booking_invoice_create" model="ir.ui.view">
+            <field name="name">restrict.booking.invoice.create</field>
+            <field name="model">freight.booking</field>
+            <field name="inherit_id" ref="sci_goexcel_freight.view_form_booking"/>
+            <field name="groups_id"
+                   eval="[(4,ref('restrict_product_partner.user_restrict_create_invoice')),(4,ref('restrict_product_partner.user_restrict_edit_invoice'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_invoice']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_create_vendor_bill']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

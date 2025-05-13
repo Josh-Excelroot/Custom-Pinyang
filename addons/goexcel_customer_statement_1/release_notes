@@ -1,0 +1,173 @@
+Version 12.0.2 - 12.0.3 - 27 Jul 2021 - Kinjal
+===================================
+FIXED
+
+    a) In the customer SOA, first sort by Date, then sort by Invoice # (second column) ascendingly.
+    b) If the payment (customer or vendor) is made, don’t need to show the multiple lines (different invoices), but combined in 1 line is enough.
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.0.3 - 12.0.4 - 17 aug 2021 - Kinjal
+===================================
+FIXED
+
+    a) In the customer SOA, first sort by Date, then sort by Invoice # (second column) ascendingly.
+    b) If the payment (customer or vendor) is made, don’t need to show the multiple lines (different invoices), but combined in 1 line is enough.
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+
+Version 12.0.4 - 12.0.5 - Not by Kinjal
+===================================
+
+
+Version 12.0.5 - 12.0.6 - 13 Sep - Kinjal
+===================================
+FIXED
+
+    a) Report Error notype and int
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+
+Version 12.0.6 - 12.0.7 - Not by Kinjal
+===================================
+
+Version 12.0.7 - 12.0.8 - 16 Sep - Kinjal
+===================================
+FIXED
+
+    a) SOA issue (Aging group by) is not correct
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+
+
+
+Version 12.3.0.1 - 13 Jan - Kinjal
+===================================
+FIXED
+
+    a) For Open Invoice create with different cuurency 
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+
+Version 12.3.0.1 - 12.3.11- 17 Jan - Kinjal
+===================================
+FIXED
+
+    a) For Open Invoice create with different cuurency - for Aging 
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+
+"version": "12.3.1.3",-Shivam
+ADD. 
+add all search method sudo()
+
+
+Version 12.3.1.4 - 12.3.1.5- 2 March'22 - Kinjal
+===================================
+FIXED
+
+    a) Solved issue partne record does not exist and also change code in pdf_print_preview module
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+
+Version 12.3.1.6 - 12.3.1.7 - 8 March'22 - Kinjal
+===================================
+FIXED
+
+    a) Solved All/Open Aging Issue and One line debit credit issue
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.3.1.8 - 12.3.1.9 - 17 March'22 - Kinjal
+===================================
+FIXED
+
+    a) Solved Open Aging Issue
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.3.1.9 - 12.3.1.10 - 21 March'22 - Kinjal
+===================================
+FIXED
+
+    a) Solved Aging Issue - For ALL Invoice
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.3.1.10 - 12.4.0.0 - 21 March'22 - Kinjal
+===================================
+FIXED
+
+    a) Solved Aging Issue - For Open Invoice -> for Opening Entries Currency issue
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+
+Version 12.4.0.0 - 12.4.0.1 - 2 April '22 - Shivam
+===================================
+FIXED
+
+    a) update module given my Mr.tek
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.4.0.1 - 12.4.0.2 - 12 April '22 - Kinjal
+===================================
+FIXED
+
+    a) Fixed Open And all Report same as partner Ageing
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.4.0.2 - 12.4.0.3 - 15 April '22 - Kinjal
+===================================
+FIXED
+
+    a) multicompany issue for header and soa_note
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+
+Version 12.4.0.3 - 12.4.0.4 - 29 April '22 - Kinjal
+===================================
+IMPROVE
+
+    a) Add Show Payment Term field in Configuration for term print in Statemetn Report  
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+Version 12.4.0.7 - 14 Dec '22 - Canon
+===================================
+IMPROVE
+
+    a) Add multi currencies for "All" options - multi-pages
+------------------------------------------------------------
+Done
+------------------------------------------------------------
+Version 12.4.0.7 - 30 Apr '23 - TS
+===================================
+IMPROVE
+
+    a) Add Ageing Group for configuration
+------------------------------------------------------------
+Done
+------------------------------------------------------------

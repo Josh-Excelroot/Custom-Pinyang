@@ -1,0 +1,61 @@
+// Sticky Header & Footer in List View
+$top : 0;
+@mixin after($num) {
+  &:nth-child(n+#{$num + 1}) {
+  
+    @content
+   }
+}
+.o_pivot {
+   
+        overflow-x: initial;
+        overflow : unset;
+
+        table {
+            // th & td are here for compatibility with chrome
+				
+			
+		>thead {
+		  		  
+			>tr {
+				
+				@include after(0)
+				  {
+					  >th{
+					    
+					    position: sticky;
+					    top: #{$top}px;
+						z-index: 1;
+						background-color: $o-list-footer-bg-color;
+					    $top : $top+25;
+					    }
+				  }
+				  
+				  
+				/*	&:first-child {
+									>th{
+					
+										position: sticky;
+										top: 0;
+										z-index: 1;
+					background-color: $o-list-footer-bg-color;
+									}
+					}
+					&:last-child {
+									>th{
+					
+										position: sticky;
+										top: 25px;
+										z-index: 1;
+					background-color: $o-list-footer-bg-color;
+									}
+					}
+					*/
+			}
+			
+		}
+
+  
+    }
+   
+}

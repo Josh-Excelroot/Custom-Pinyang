@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="1">
+         <record id="visit_outcome__not_interested" model="visit.outcome">
+             <field name="name">Not Interested</field>
+             <field name="is_unsucessfull">True</field>
+         </record>
+
+        <record id="visit_outcome__interested" model="visit.outcome">
+            <field name="name">Interested</field>
+            <field name="is_unsucessfull">False</field>
+        </record>
+
+        <record id="visit_outcome__come_back_later" model="visit.outcome">
+            <field name="name">Come Back Later</field>
+            <field name="is_unsucessfull">False</field>
+        </record>
+
+        <record id="visit_outcome__no_answer" model="visit.outcome">
+            <field name="name">No Answer</field>
+            <field name="is_unsucessfull">False</field>
+        </record>
+
+        <record id="visit_outcome__need_follow_up" model="visit.outcome">
+            <field name="name">Need Follow up</field>
+            <field name="is_unsucessfull">False</field>
+        </record>
+    </data>
+
+</odoo>

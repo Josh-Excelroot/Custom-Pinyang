@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="invoice_form" model="ir.ui.view">
+            <field name="name">account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='other_info']/group//group[2]" position="inside">
+                    <field invisible="1" name="customer_debit_note"/>
+                </xpath>
+                <xpath expr="sheet/h1" position="replace">
+                    <h1 class="mt0">
+                        <div attrs="{'invisible': [('sequence_number_next_prefix','!=',False)]}">
+                            <label attrs="{'invisible': ['|','|',('customer_debit_note','!=',False),('state','not in',('draft',)), ('type','!=','out_invoice')]}" for="number" string="Draft Invoice"/>
+                            <label attrs="{'invisible': ['|','|',('customer_debit_note','=',False),('state','not in',('draft',)), ('type','!=','out_invoice')]}" for="number" string="Draft Debit Note"/>
+                            <label attrs="{'invisible': ['|',('state','not in',('draft',)), ('type','!=','out_refund')]}" for="number" string="Draft Credit Note"/>
+                            <field attrs="{'invisible': [('state','in',('draft',))]}" class="oe_inline" name="number" readonly="1"/>
+                        </div>
+                        <div attrs="{'invisible': [('sequence_number_next_prefix','=',False)]}">
+                            <label for="sequence_number_next_prefix" string="Invoice Number:"/>
+                            <br/>
+                            <field class="oe_inline" name="sequence_number_next_prefix"/>
+                            <field class="oe_inline" name="sequence_number_next"/>
+                        </div>
+                    </h1>
+                </xpath>
+            </field>
+        </record>
+        <record id="bill_form" model="ir.ui.view">
+            <field name="name">account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='other_info']/group//group[2]" position="inside">
+                    <field invisible="1" name="customer_debit_note"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="invoice_search_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.search</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <filter domain="[('customer_debit_note','=',False),('debit_invoice_id','=',False)]" name="debit_note" string="Without Debit Notes"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="action_invoice_debit_note" model="ir.actions.act_window">
+            <field name="name">Customer Debit Note</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain">[('type','=','out_invoice'),('journal_id.type','=','sale'),'|',('customer_debit_note','=',1),('debit_invoice_id','!=',False)]</field>
+            <field name="context">{'type':'out_invoice', 'journal_type': 'sale', 'default_customer_debit_note': True}</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create a customer invoice
+          </p>
+                <p>Create invoices, register payments and keep track of the discussions with your customers.
+          </p>
+            </field>
+        </record>
+        <record id="action_invoice_debit_note_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="account.invoice_tree_with_onboarding"/>
+            <field name="act_window_id" ref="action_invoice_debit_note"/>
+        </record>
+        <record id="action_invoice_debit_note_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account.invoice_form"/>
+            <field name="act_window_id" ref="action_invoice_debit_note"/>
+        </record>
+        <menuitem action="action_invoice_debit_note" id="menu_action_customer_debitnote" parent="account.menu_finance_receivables" sequence="10"/>
+        <record id="action_vendor_invoice_debit_note" model="ir.actions.act_window">
+            <field name="name">Vendor Debit Note</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain">[('type','=','in_invoice'),('journal_id.type','=','purchase'),'|',('customer_debit_note','=',1),('debit_invoice_id','!=',False)]</field>
+            <field name="context">{'type':'in_invoice', 'journal_type': 'purchase', 'default_customer_debit_note': True}</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create a vendor debit note
+          </p>
+                <p>Create invoices, register payments and keep track of the discussions with your customers.
+          </p>
+            </field>
+        </record>
+        <menuitem action="action_vendor_invoice_debit_note" id="menu_action_vendor_debitnote" parent="account.menu_finance_payables" sequence="10"/>
+    </data>
+</odoo>

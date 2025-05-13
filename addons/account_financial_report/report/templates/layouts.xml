@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="account_financial_report.internal_layout">
+
+        <div class="article">
+            <link href="/account_financial_report/static/src/css/report.css" rel="stylesheet"/>
+          <t t-raw="0" />
+        </div>
+
+        <div class="footer">
+            <div class="row">
+                <div class="col-6 custom_footer">
+                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                </div>
+                <div class="col-6 text-right custom_footer">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><span class="page"/></li>
+                        <li class="list-inline-item">/</li>
+                        <li class="list-inline-item"><span class="topage"/></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="account_financial_report.internal_layout_sst">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+         <div class="header">
+            <div class="row">
+                <div class="col-3 mb4">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;" alt="Logo"/>
+                </div>
+                <div class="col-9 text-right" style="margin-top:22px;" t-field="company.report_header" name="moto"/>
+                <div t-field="company.partner_id"
+                        t-options='{"widget": "contact", "fields": ["name"], "no_marker": true}'
+                    />
+            </div>
+            <div t-if="company.logo or company.report_header" class="row zero_min_height">
+                <div class="col-12">
+                    <div style="border-bottom: 1px solid black;"/>
+                </div>
+            </div>
+<!--            <div class="row">-->
+<!--                <div class="col-6" name="company_address">-->
+<!--                    <div t-field="company.partner_id"-->
+<!--                        t-options='{"widget": "contact", "fields": ["name"], "no_marker": true}'-->
+<!--                    />-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>     
+        <div class="article">
+            <link href="/account_financial_report/static/src/css/report.css" rel="stylesheet"/>
+          <t t-raw="0" />
+        </div>
+
+        <div class="footer">
+            <div class="row">
+                <div class="col-6 custom_footer">
+<!--                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>-->
+                </div>
+                <div class="col-6 text-right custom_footer">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><span class="page"/></li>
+                        <li class="list-inline-item">/</li>
+                        <li class="list-inline-item"><span class="topage"/></li>
+                    </ul>
+                </div>
+            </div>
+        </div> 
+    </template>
+
+</odoo>

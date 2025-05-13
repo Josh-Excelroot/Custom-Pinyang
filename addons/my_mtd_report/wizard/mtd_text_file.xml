@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <!-- PCB TEXT FILE WIZARD VIEW -->
+    <record id="mtd_txt_file_wiz" model="ir.ui.view">
+        <field name="name">hr.mtd.txt.file.wiz</field>
+        <field name="model">mtd.txt.file.wizard</field>
+        <field name="arch" type="xml">
+            <form string="View PCB txt File">
+                <group col="4" colspan="2">
+                    <field name="date_start" required="1"/>
+                    <field name="date_stop" required="1"/>
+                </group>
+                <separator string="Employees" colspan="4"/>
+                <field name="employee_ids" required="1" colspan="4" nolabel="1" options="{'no_create': True}">
+                    <tree string="Employees">
+                        <field name="name"/>
+                        <field name="department_id"/>
+                        <field name="work_email"/>
+                    </tree>
+                </field>
+                <footer>
+                    <button name="download_mtd_txt_file" string="Print" type="object" colspan="2" class="oe_highlight"/>
+                    or
+                    <button special="cancel" string="Cancel" colspan="2"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_mtd_txt_file_print" model="ir.actions.act_window">
+        <field name="name">PCB Text File</field>
+        <field name="res_model">mtd.txt.file.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_mtd_text_binary_wizard" name="PCB Text File" action="action_mtd_txt_file_print" parent="my_mtd_report.mtd_report_main"/>
+
+    <!-- PCB BINARY TEXT FILE WIZARD VIEW -->
+
+    <record id="mtd_text_binary_wizard_file" model="ir.ui.view">
+        <field name="name">mtd.text.binary.wizard.file</field>
+        <field name="model">mtd.text.binary.wizard</field>
+        <field name="arch" type="xml">
+            <form string="View PCB Text File">
+                <group cospan="2" col="2">
+                    <field name="name" invisible="1"/>
+                    <h4>
+                        Click On Link To Download Text File: &#160;
+                        <field name="rst_file" filename="name" nolabel="1"/>
+                    </h4>
+                </group>
+                <footer>
+                    <button special="cancel" string="Cancel" colspan="2"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

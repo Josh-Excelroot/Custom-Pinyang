@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paperformat_twb" model="report.paperformat">
+        <field name="name">TWB A4</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">35</field>
+        <field name="margin_bottom">28</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">30</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <template id="report_twb_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+<!--                    <t t-if="not company">-->
+<!--                        &lt;!&ndash; Multicompany &ndash;&gt;-->
+<!--                        <t t-if="company_id">-->
+<!--                            <t t-set="company" t-value="company_id"/>-->
+<!--                        </t>-->
+<!--                        <t t-elif="o and 'company_id' in o">-->
+<!--                            <t t-set="company" t-value="o.company_id.sudo()"/>-->
+<!--                        </t>-->
+<!--                        <t t-else="else">-->
+<!--                            <t t-set="company" t-value="res_company"/>-->
+<!--                        </t>-->
+<!--                    </t>-->
+                    <div class="page">
+                        <style>
+                            table {
+                                border-collapse: collapse;
+                                width: 100%;
+                            }
+                            td {
+                                border: 1px solid #000;
+                                padding: 8px;
+                                vertical-align: top;
+                            }
+                            .header-cell {
+                                font-size: 24px;
+                                font-weight: bold;
+                                border: none !important;
+                            }
+                            .section-header {
+                                background-color: #f5f5f5;
+                                font-weight: bold;
+                            }
+                            .details-table td {
+                                border: 1px solid #000;
+                            }
+                            .details-table td:first-child {
+                                width: 200px;
+                            }
+                            .no-border {
+                                border: none !important;
+                            }
+                            .info-text {
+                                margin: 15px 0;
+                            }
+                            div.section-header + div {
+                                padding: 8px;
+                                margin-bottom: 16px;
+                                min-height: 20px;
+                            }
+                        </style>
+                        <div class="text-center">
+                            <h3 style="text-transform:uppercase"><span t-field="res_company.partner_id.name"/></h3>
+                            <hr style="border-top: 2px solid black;"/>
+                        </div>
+                        <table >
+                            <tr>
+                                <td style="font-size: 24px; font-weight: bold;">TRUCK WAY BILL</td>
+                                <td style="font-size: 24px; font-weight: bold; text-align: left;">
+                                    Truck Way Bill No.: <span t-esc="o.bol_no or ''"/><br/>
+                                    Issue Date.: <span t-field="o.date_of_issue" t-options='{"widget": "date","format": "dd MMM yyyy"}'/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%; vertical-align: top;">
+                                    <div class="section-header">AGENT</div>
+                                    <div style="padding: 8px; font-weight: bold" t-esc="res_company.partner_id.name"/>
+
+                                    <div class="section-header">SHIPPER</div>
+                                    <div style="padding: 8px;">
+                                        <t t-if="o.shipper">
+                                            <span t-field="o.shipper"/>
+                                        </t>
+                                    </div>
+
+                                    <div class="section-header">CONSIGNEE</div>
+                                    <div style="padding: 8px;">
+                                        <t t-if="o.consignee">
+                                            <span t-field="o.consignee"/>
+                                        </t>
+                                    </div>
+                                </td>
+
+                                <td style="width: 60%; vertical-align: top; padding:0">
+                                    <table style="width: 100%; border-collapse: collapse;">
+                                        <tr>
+                                            <td style="border:0px">
+                                                <div class="section-header">SHIPMENT DETAILS</div>
+                                                <table class="table table-borderless">
+                                                    <tr>
+                                                        <td>Origin</td>
+                                                        <td>: <span t-field="o.port_of_loading_input"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Destination</td>
+                                                        <td>: <span t-field="o.port_of_discharge_input"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Mode</td>
+                                                        <td>: <span t-field="o.service_type"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Transfer Border Date</td>
+                                                        <td>: <span t-field="o.date_laden_on_board" t-options='{"widget": "date","format": "dd - MMM - yy"}'/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Truck No</td>
+                                                        <td>: <span t-field="o.carrier_booking_no"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Container No</td>
+                                                        <td>: <t t-if="o.cargo_line_ids and o.cargo_line_ids[0].container_no"><span t-field="o.cargo_line_ids[0].container_no"/></t></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Term</td>
+                                                        <td>: <span t-field="o.term"/></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border-left:none; border-right:none; border-bottom:none">
+                                               <div class="info-text">
+                                                   VIA:<t t-if="o.routing_instruction"><span t-field="o.routing_instruction"/></t><br/>
+                                                   Seal No.: <br/>
+                                                   *** PART OF CONTAINER <span t-field="o.carrier_booking_no"/>
+                                               </div>
+                                           </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border-left:none; border-right:none; border-bottom:none">
+                                               <div class="info-text">
+                                                   <strong>Shipper's Invoice</strong><br/>
+                                                   Invoice No: <span t-field="o.invoice_no"/>
+                                               </div>
+                                           </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <hr width="100%" style="border: 2px solid black; margin-bottom: 10px"/>
+
+                        <table>
+                            <thead>
+                                <tr style="background-color: #f2f2f2;">
+                                    <th class="text-center">Description of Goods</th>
+                                    <th class="text-center">Quantity</th>
+                                    <th class="text-center">Gross Weight (KGS)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.cargo_line_ids" t-as="line" t-esc-options='{"strip": True}'>
+                                    <tr>
+                                        <td style="width: 35%">
+                                            <span t-field="line.container_product_name"/>
+                                        </td>
+                                        <td style="width: 35%">
+                                            <span t-esc="line.packages_no_value"/> <span t-field="line.packages_no_uom"/>
+                                        </td>
+                                        <td style="width: 30%">
+                                            <t t-esc="'%.2f' % line.exp_gross_weight"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <table>
+                            <tr>
+                                <td style="width: 50%;">
+                                    <div class="section-header">ACKNOWLEDGEMENT</div>
+                                    <div class="section-content">
+                                        Shipper certifies that the particulars on the face hereof are correct and agree to the conditions on the reverse hereof.<br/><br/>
+                                        Name<br/>
+                                        Date<br/>
+                                        Time
+                                    </div>
+                                </td>
+                                <td style="width: 50%; padding: 0;">
+                                    <table style="width: 100%; border-collapse: collapse; ">
+                                        <tr>
+                                            <td style="border:0px">
+                                                <div class="section-header">CONSIGNEE</div>
+                                                <div style="padding-top: 20px;">
+                                                    <div>__________________________<br/>
+                                                        Received good condition as the above mentioned good.</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style=" text-align: center; border-left:none; border-right:none; border-bottom:none">
+                                                <div>Authorized Signature</div>
+                                                <div>As Carrier</div>
+                                                <div>.............................................</div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+    <report
+        id="action_report_twb"
+        string="Truck Way Bill"
+        model="freight.bol"
+        report_type="qweb-pdf"
+        name="sci_goexcel_freight_2.report_twb_document"
+        file="sci_goexcel_freight_2.report_twb_document"
+        paperformat="paperformat_twb"
+    />
+</odoo>

@@ -1,0 +1,45 @@
+Version 12.0.4.0.0 - 16 October 2023 | Kenny Ricardo
+==========================================
+BUG
+- dependency parameter in manifest doesn't have  "sale_term" causing failure in installation
+
+
+Version 12.0.3.0.2 - 30 October 2024 | Yulia
+Bug fixed:
+- Add sale term for delivery order transportation
+- fix report_sq xml bug
+- fix logic unit price at sale_quotation_inherit.py
+
+Version 12.0.3.0.3- 7 November 2024 | Yulia
+Bug Fixed:
+- Fixed hidden invoice
+
+Version 12.0.3.0.4 - 11 November 2024 | Yulia
+Add feature:
+- new field at sales quotation (cost_price, cost_currency)
+- new logic profit at sales quotation
+- new fields at sales quotation page (cost_exc_rat)
+
+
+Version 12.0.3.0.6- 19 November 2024| Yulia
+Add feature:
+- fixed unit price quotation
+
+Version 12.0.3.0.7- 4 December 2024 | Yulia
+Add feature:
+- fixed missing line item invoice
+
+Version 12.0.3.0.8- 6 December 2024 | Yulia
+Add feature:
+- add remarks to invoice reports
+
+Version 12.0.3.0.9- 12 December 2024 | Yulia
+Add feature:
+- remove remarks
+- add cargo filter at invoice
+- make container size and no visible at lcl tree booking
+
+Version 12.0.3.0.10- 17 March 2025 | Yulia
+Add feature:
+- TWB
+- invoiced booking report

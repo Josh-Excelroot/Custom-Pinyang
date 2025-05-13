@@ -1,0 +1,664 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- <record id="view_partner_simple_form_bps" model="ir.ui.view"><field name="name">res.partner.simplified.form</field><field name="model">res.partner</field><field name="inherit_id" ref="base.view_partner_simple_form"/><field name="arch" type="xml"><xpath expr="//field[@name='parent_id']" position="attributes"><attribute name="attrs">{}</attribute></xpath></field></record>-->
+        <record id="res_partner_view_inherited_goexcel_crm_form" model="ir.ui.view">
+            <field name="name">res.partner.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='parent_id']" position="attributes">
+                    <attribute name="attrs">{}</attribute>
+                    <!-- <attribute name="domain">[('is_company', '=', True), ('parent_id', '!=', id)]</attribute>-->
+                </xpath>
+                <xpath expr="//field[@name='phone']" position="after">
+                    <field name="phone2" placeholder="Phone 2" widget="phone"/>
+                    <field name="phone3" placeholder="Phone 3" widget="phone"/>
+                </xpath>
+                <xpath expr="//field[@name='category_id']" position="after">
+                    <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="company_registry"/>
+                    <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="status"/>
+                    <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="is_multibrand"/>
+                </xpath>
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="lost_reason_id" placeholder="Lost Reason"/>
+                    <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="lost_date" placeholder="Lost Date"/>
+                    <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="churn_review" placeholder="Churn Review" string="Churn Review"/>
+                    <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="churn_review_date" placeholder="Churn Review Date"/>
+                    <field attrs="{'invisible':[('company_type', '!=', 'person')]}" name="department_id" string="Department"/>
+                    <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="pain_point" placeholder="Pain Point"/>
+                    <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="pain_challanges" placeholder="Pain Challenges"/>
+                    <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="contact_goal" placeholder="Goal"/>
+                    <field attrs="{'invisible':[('company_type', '!=', 'person')]}" name="contact_dob" placeholder="Date of Birth"/>
+                    <field attrs="{'invisible':[('company_type', '!=', 'person')]}" name="contact_gender" options="{'horizontal': true}" widget="radio"/>
+                    <field attrs="{'invisible':[('company_type', '!=', 'person')]}" name="contact_personality"/>
+                    <field attrs="{'invisible':[('company_type', '!=', 'person')]}" name="contact_speak" placeholder="How to Speak" string="How to Speak"/>
+                    <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="contact_solution_pain" placeholder="Pain Solution"/>
+                </xpath>
+                <!-- <xpath expr="//notebook/page/field[@name='child_ids']/form/sheet/group/group/label[@for='street']" position="before">
+                    <field attrs="{'invisible':[('type', '!=', 'related_company')]}" domain="[('company_type', '=', 'company')]" name="related_compnay_id"/>
+                </xpath> -->
+                <!-- for group 2 -->
+                <xpath expr="//notebook/page/field[@name='child_ids']/form/sheet/group/group[2]/field[@name='name']" position="replace">
+                <field name="name" string="Contact Name" attrs="{'required' : [('type', 'in', ('contact', 'related_company'))]}"/>
+                </xpath>
+                <xpath expr="//page[@name='internal_notes']" position="attributes">
+                    <attribute name="string">Remark</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='internal_notes']/field[@name='comment']" position="after">
+                    <field name="remark_note"/>
+                </xpath>
+                <xpath expr="//page[@name='internal_notes']" position="before">
+                    <xpath expr="//page[@name='sales_purchases']" position="move"/>
+                    <xpath expr="//page[@name='accounting']" position="move"/>
+                    <page name="cust_profile" string="Customer Profile">
+                        <group>
+                            <group>
+                                <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="type_cust_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Customer type"/>
+                                <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="type_of_sector_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Sector"/>
+                                <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="type_of_industry_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Industry"/>
+                                <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="type_of_purchase_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Purchase Type"/>
+                                <field name="industry_remark"/>
+                            </group>
+                            <group>
+                                <field name="facebook_url" placeholder="Facebook URL"/>
+                                <field name="instagram_url" placeholder="Instagram URL"/>
+                                <field name="twitter_url" placeholder="Twitter URL"/>
+                                <field name="linkedin_url" placeholder="Linkedin URL"/>
+                                <field name="cust_so_pattern" placeholder="Sale Order Pattern"/>
+                                <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="cust_priority_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Priority"/>
+                            </group>
+                            <group>
+                                <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="cust_growth_rate" placeholder="Growth Rate"/>
+                                <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="reason_growth_rate" placeholder="Growth Rate Reason"/>
+                                <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="after_sale_expectaion" placeholder="Sale Expectation"/>
+                                <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="competitor_remark" placeholder="Competitir Remark"/>
+                                <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="remark" placeholder="Remark"/>
+                            </group>
+                            <group>
+                                <field name="p_of_contact"/>
+                                <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="strength" placeholder="Strength"/>
+                                <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="weakness" placeholder="Weakness"/>
+                                <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="opportunity_id" placeholder="Opportunity"/>
+                                <field attrs="{'invisible':[('company_type', '=', 'person')]}" name="threat" placeholder="Threat"/>
+                            </group>
+                        </group>
+                        <field context="{'default_partner_id':active_id}" name="visiting_hr_ids">
+                            <tree editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field invisible="1" name="partner_id"/>
+                                <field name="from_day"/>
+                                <field name="to_day"/>
+                                <field domain="[('parent_id','=', partner_id)]" name="contact_person_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                                <field name="open_time"/>
+                                <field name="close_time"/>
+                                <field name="active"/>
+                                <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page name="cust_profile_extra" string="Customer Detail">
+                        <group attrs="{'invisible':[('company_type', '=', 'person')]}">
+                            <field mode="tree,kanban,form" name="custmer_brand_ids">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field invisible="1" name="partner_id"/>
+                                    <field name="brand_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Brand" required="1"/>
+                                    <field name="product_id" placeholder="SKU"/>
+                                    <field name="product_uom_id" placeholder="Liter"/>
+                                    <field name="vol_ltr_usag" placeholder="Liter Usage/Month"/>
+                                    <field name="write_date"/>
+                                    <field invisible="1" name="company_id"/>
+                                </tree>
+                                <kanban class="o_kanban_mobile">
+                                    <field name="brand_id"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div t-attf-class="oe_kanban_global_click">
+                                                <div>
+                                                    <strong class="o_kanban_record_title">
+                                                        <t t-esc="record.brand_id.value"/>
+                                                    </strong>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                                <form>
+                                    <field name="brand_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Brand"/>
+                                    <field name="product_id" placeholder="SKU Inventory"/>
+                                    <field name="product_uom_id" placeholder="Liter"/>
+                                    <field name="vol_ltr_usag" placeholder="Liter Usage/Mpnth"/>
+                                    <field name="write_date" readonly="1"/>
+                                </form>
+                            </field>
+                        </group>
+                        <group attrs="{'invisible':[('company_type', '=', 'person')]}">
+                            <field mode="tree,kanban,form" name="competitor_brand_ids">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field invisible="1" name="partner_id"/>
+                                    <field name="brand_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Brand" required="1"/>
+                                    <field name="remark"/>
+                                    <field name="product_group_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Inventory Group"/>
+                                    <field name="inventory_vol"/>
+                                    <field name="vol_mnt_date" placeholder="Month/Date"/>
+                                    <field name="write_date" readonly="1"/>
+                                    <field invisible="1" name="company_id"/>
+                                </tree>
+                                <kanban class="o_kanban_mobile">
+                                    <field name="brand_id"/>
+                                    <field name="remark"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div t-attf-class="oe_kanban_global_click">
+                                                <div>
+                                                    <strong class="o_kanban_record_title">Brand:
+                                                        <t t-esc="record.brand_id.value"/></strong>
+                                                </div>
+                                                <div t-if="record.remark.value">Remark:
+                                                    <t t-esc="record.remark.value"/></div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                                <form>
+                                    <field name="brand_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Brand"/>
+                                    <field name="remark"/>
+                                    <field name="product_group_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                                    <field name="vol_mnt_date"/>
+                                    <field name="inventory_vol"/>
+                                    <field name="write_date" readonly="1"/>
+                                </form>
+                            </field>
+                        </group>
+                        <group>
+                            <group attrs="{'invisible':[('company_type', '=', 'person')]}">
+                                <field mode="tree,kanban,form" name="upsale_product_ids">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="product_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Product" required="1"/>
+                                        <field invisible="1" name="company_id"/>
+                                    </tree>
+                                    <kanban class="o_kanban_mobile">
+                                        <field name="product_id"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div t-attf-class="oe_kanban_global_click">
+                                                    <div>
+                                                        <strong class="o_kanban_record_title">Product:
+                                                            <t t-esc="record.product_id.value"/></strong>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                    <form>
+                                        <field name="product_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Product" required="1"/>
+                                    </form>
+                                </field>
+                            </group>
+                            <group attrs="{'invisible':[('company_type', '=', 'person')]}">
+                                <field mode="tree,kanban,form" name="cros_sele_product_ids">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="product_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Product" required="1"/>
+                                        <field invisible="1" name="company_id"/>
+                                    </tree>
+                                    <kanban class="o_kanban_mobile">
+                                        <field name="product_id"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div t-attf-class="oe_kanban_global_click">
+                                                    <div>
+                                                        <strong class="o_kanban_record_title">Product:
+                                                            <t t-esc="record.product_id.value"/></strong>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                    <form>
+                                        <field name="product_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Product" required="1"/>
+                                    </form>
+                                </field>
+                            </group>
+                            <group attrs="{'invisible':[('company_type', '=', 'person')]}">
+                                <field mode="tree,kanban,form" name="payment_mode_ids">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="payment_mode_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Payment Method" required="1"/>
+                                        <field invisible="1" name="company_id"/>
+                                    </tree>
+                                    <kanban class="o_kanban_mobile">
+                                        <field name="payment_mode_id"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div t-attf-class="oe_kanban_global_click">
+                                                    <div>
+                                                        <strong class="o_kanban_record_title">
+                                                            <t t-esc="record.payment_mode_id.value"/>
+                                                        </strong>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                    <form>
+                                        <field name="payment_mode_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Payment Mode"/>
+                                    </form>
+                                </field>
+                            </group>
+                            <group>
+                                <field mode="tree,kanban,form" name="religious_festival_ids">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="religious_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Festival" required="1"/>
+                                        <field invisible="1" name="company_id"/>
+                                    </tree>
+                                    <kanban class="o_kanban_mobile">
+                                        <field name="religious_id"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div t-attf-class="oe_kanban_global_click">
+                                                    <div>
+                                                        <strong class="o_kanban_record_title">
+                                                            <t t-esc="record.religious_id.value"/>
+                                                        </strong>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                    <form>
+                                        <field name="religious_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Festival" required="1"/>
+                                    </form>
+                                </field>
+                            </group>
+                            <group attrs="{'invisible':[('company_type', '=', 'person')]}">
+                                <field mode="tree,kanban,form" name="communication_method_ids">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="com_method_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Communication Method" required="1"/>
+                                        <field invisible="1" name="company_id"/>
+                                    </tree>
+                                    <kanban class="o_kanban_mobile">
+                                        <field name="com_method_id"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div t-attf-class="oe_kanban_global_click">
+                                                    <div>
+                                                        <strong class="o_kanban_record_title">
+                                                            <t t-esc="record.com_method_id.value"/>
+                                                        </strong>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                    <form>
+                                        <field name="com_method_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Communication Method"/>
+                                    </form>
+                                </field>
+                            </group>
+                            <group>
+                                <field mode="tree,kanban,form" name="invoice_method_ids">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="method_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Invoice Method" required="1"/>
+                                        <field invisible="1" name="company_id"/>
+                                    </tree>
+                                    <kanban class="o_kanban_mobile">
+                                        <field name="method_id"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div t-attf-class="oe_kanban_global_click">
+                                                    <div>
+                                                        <strong class="o_kanban_record_title">
+                                                            <t t-esc="record.method_id.value"/>
+                                                        </strong>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                    <form>
+                                        <field name="method_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Invoice Method" required="1"/>
+                                    </form>
+                                </field>
+                            </group>
+                            <group attrs="{'invisible':[('company_type', '=', 'person')]}">
+                                <field mode="tree,kanban,form" name="best_fitted_item_ids">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="product_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Product" required="1"/>
+                                        <field invisible="1" name="company_id"/>
+                                    </tree>
+                                    <kanban class="o_kanban_mobile">
+                                        <field name="product_id"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div t-attf-class="oe_kanban_global_click">
+                                                    <div>
+                                                        <strong class="o_kanban_record_title">
+                                                            <t t-esc="record.product_id.value"/>
+                                                        </strong>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                    <form>
+                                        <field name="product_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Product" required="1"/>
+                                    </form>
+                                </field>
+                            </group>
+                            <group attrs="{'invisible':[('company_type', '=', 'person')]}">
+                                <field mode="tree,kanban,form" name="pain_analysis_ids">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="pain_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Pain Identification" required="1"/>
+                                        <field name="description"/>
+                                        <field invisible="1" name="company_id"/>
+                                    </tree>
+                                    <kanban class="o_kanban_mobile">
+                                        <field name="pain_id"/>
+                                        <field name="description"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div t-attf-class="oe_kanban_global_click">
+                                                    <div>
+                                                        <strong class="o_kanban_record_title">
+                                                            <t t-esc="record.pain_id.value"/>
+                                                        </strong>
+                                                        <div t-if="record.description.value">Description:
+                                                            <t t-esc="record.description.value"/></div>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                    <form>
+                                        <group>
+                                            <field name="pain_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Pain Identification" required="1"/>
+                                            <field name="description"/>
+                                        </group>
+                                    </form>
+                                </field>
+                            </group>
+                            <group>
+                                <field mode="tree,kanban,form" name="needs_analysis_ids">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="need_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Needs" required="1"/>
+                                        <field invisible="1" name="company_id"/>
+                                        <field name="description"/>
+                                    </tree>
+                                    <kanban class="o_kanban_mobile">
+                                        <field name="need_id"/>
+                                        <field name="description"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div t-attf-class="oe_kanban_global_click">
+                                                    <div>
+                                                        <strong class="o_kanban_record_title">
+                                                            <t t-esc="record.need_id.value"/>
+                                                        </strong>
+                                                        <div t-if="record.description.value">Description:
+                                                            <t t-esc="record.description.value"/></div>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                    <form>
+                                        <field name="need_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Needs" required="1"/>
+                                        <field name="description"/>
+                                    </form>
+                                </field>
+                            </group>
+                            <group>
+                                <field mode="tree,kanban,form" name="challenges_analysis_ids">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="challenge_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Challenge" required="1"/>
+                                        <field invisible="1" name="company_id"/>
+                                        <field name="description"/>
+                                    </tree>
+                                    <kanban class="o_kanban_mobile">
+                                        <field name="challenge_id"/>
+                                        <field name="description"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div t-attf-class="oe_kanban_global_click">
+                                                    <div>
+                                                        <strong class="o_kanban_record_title">
+                                                            <t t-esc="record.challenge_id.value"/>
+                                                        </strong>
+                                                        <div t-if="record.description.value">Description:
+                                                            <t t-esc="record.description.value"/></div>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                    <form>
+                                        <field name="challenge_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Challenge" required="1"/>
+                                        <field name="description"/>
+                                    </form>
+                                </field>
+                            </group>
+                            <group attrs="{'invisible':[('company_type', '=', 'person')]}">
+                                <field mode="tree,kanban,form" name="order_style_ids">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="style_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Order Style" required="1"/>
+                                        <field invisible="1" name="company_id"/>
+                                    </tree>
+                                    <kanban class="o_kanban_mobile">
+                                        <field name="style_id"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div t-attf-class="oe_kanban_global_click">
+                                                    <div>
+                                                        <strong class="o_kanban_record_title">
+                                                            <t t-esc="record.style_id.value"/>
+                                                        </strong>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                    <form>
+                                        <field name="style_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" placeholder="Select Order Style" required="1"/>
+                                    </form>
+                                </field>
+                            </group>
+                            <group>
+                                <field mode="tree,kanban,form" name="value_solution_ids">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name" required="1"/>
+                                        <field name="solution"/>
+                                        <field invisible="1" name="company_id"/>
+                                    </tree>
+                                    <kanban class="o_kanban_mobile">
+                                        <field name="name"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div t-attf-class="oe_kanban_global_click">
+                                                    <div>
+                                                        <strong class="o_kanban_record_title">
+                                                            <t t-esc="record.name.value"/>
+                                                        </strong>
+                                                    </div>
+                                                    <div t-if="record.solution.value">Solution:
+                                                        <t t-esc="record.solution.value"/></div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                    <form>
+                                        <group>
+                                            <field name="name" required="1"/>
+                                            <field name="solution"/>
+                                        </group>
+                                    </form>
+                                </field>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//page[@name='internal_notes']" position="after">
+                  <!--  <xpath expr="//page[@name='sales_purchases']" position="move"/>
+                    <xpath expr="//page[@name='accounting']" position="move"/>-->
+
+                    <page attrs="{'invisible':[('company_type', '=', 'person')]}" context="{'default_partner_id':active_id, 'partner_id': active_id}" name="cust_tech_plan" string="Technical Plan">
+                        <field mode="tree, form" name="tech_plan_detail_ids">
+                            <tree editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="name"/>
+                                <field name="technical_plan" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" string="Plan"/>
+                                <field name="date"/>
+                                <field name="remark"/>
+                                <field name="owner_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                                <field domain="[('parent_id', '=', partner_id)]" name="contact_person_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                                <field invisible="1" name="partner_id"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="name" string="#"/>
+                                    <field name="technical_plan" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" string="Plan"/>
+                                    <field name="date"/>
+                                    <field name="remark"/>
+                                    <field name="owner_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                                    <field domain="[('parent_id', '=', partner_id)]" name="contact_person_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                                    <field name="partner_id" readonly="1"/>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                    <page name="contact_personality" string="Buyer Relationship">
+                        <field context="{'default_partner_id':active_id}" name="personality_contact_ids">
+                            <tree editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field invisible="1" name="partner_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                                <field domain="[('parent_id', '=', partner_id), ('type', '!=', 'related_company')]" name="contact_1_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                                <field name="relationship"/>
+                                <field domain="[('parent_id', '=', partner_id)]" name="contact_2_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                                <field name="buyer_relationship_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                                <field name="decision_per"/>
+                                <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                            </tree>
+                            <form>
+                                <sheet>
+                                    <group>
+                                        <field invisible="1" name="partner_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                                        <group>
+                                            <field domain="[('parent_id', '=', partner_id)]" name="contact_1_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                                            <field name="relationship"/>
+                                        </group>
+                                        <group>
+                                            <field domain="[('parent_id', '=', partner_id)]" name="contact_2_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                                            <field name="occupation"/>
+                                            <field name="decision_per"/>
+                                            <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                                        </group>
+                                    </group>
+                                </sheet>
+                            </form>
+                        </field>
+                    </page>
+                    <page attrs="{'invisible':[('company_type', '=', 'person')]}" name="customer_operating" string="Company Operating Hours">
+                        <field context="{'default_partner_id':active_id}" name="operating_hours_ids">
+                            <tree editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field invisible="1" name="partner_id"/>
+                                <field name="from_day"/>
+                                <field name="to_day"/>
+                                <field name="open_time"/>
+                                <field name="close_time"/>
+                                <field name="active"/>
+                                <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page name="cust_machine_detail" string="Machine Detail">
+                        <field context="{'default_partner_id':active_id}" mode="tree" name="cust_machine_ids">
+                            <tree editable="bottom">
+                                <field context="{'type_of_sector_id': parent.type_of_sector_id, 'type_of_industry_id': parent.type_of_industry_id}" name="machine_id"/>
+                                <field name="qty"/>
+                                <field name="product_group_id"/>
+                                <field name="product_category_id"/>
+                                <field name="product_ids" widget="many2many_tags"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page name="customer_history" string="SalesPerson History">
+                        <field mode="tree" name="history_ids" widget="section_and_note_one2many" readonly="1">
+                            <tree>
+                                <field name="user_id"/>
+                                <field name="from_date"/>
+                                <field name="to_date"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//notebook/page/field[@name='child_ids']/kanban/templates" position="replace">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <t t-set="color" t-value="kanban_color(record.color.raw_value)"/>
+                            <div t-att-class="color + (record.title.raw_value == 1 ? ' oe_kanban_color_alert' : '') + ' oe_kanban_global_click'">
+                                <div class="o_kanban_image">
+                                    <img alt="" t-att-src="kanban_image('res.partner', 'image_small', record.id.raw_value)" t-if="record.image_small.raw_value"/>
+                                    <t t-if="!record.image_small.raw_value">
+                                        <img alt="Delivery" t-att-src="_s + &quot;/base/static/img/truck.png&quot;" t-if="record.type.raw_value === 'delivery'"/>
+                                        <img alt="Invoice" t-att-src="_s + &quot;/base/static/img/money.png&quot;" t-if="record.type.raw_value === 'invoice'"/>
+                                        <t t-if="record.type.raw_value !== 'invoice' &amp;&amp; record.type.raw_value !== 'delivery'">
+                                            <img alt="Logo" t-att-src="_s + &quot;/base/static/img/company_image.png&quot;" t-if="record.is_company.raw_value === true"/>
+                                            <img alt="Avatar" t-att-src="_s + &quot;/base/static/img/avatar.png&quot;" t-if="record.is_company.raw_value === false"/>
+                                        </t>
+                                    </t>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <div t-if="record.type.raw_value">Contact Type: 
+                                        <field name="type"/></div>
+                                    <field name="name"/>
+                                    <div t-if="record.function.raw_value">
+                                        <field name="function"/>
+                                    </div>
+                                    <div t-if="record.email.raw_value">
+                                        <field name="email" widget="email"/>
+                                    </div>
+                                    <div t-if="record.type.raw_value != 'contact'">
+                                        <div>
+                                            <field name="zip"/>
+                                            <field name="city"/>
+                                        </div>
+                                        <field name="state_id" t-if="record.state_id.raw_value"/>
+                                        <field name="country_id"/>
+                                    </div>
+                                    <div t-if="record.phone.raw_value">Phone: 
+                                        <field name="phone"/></div>
+                                    <div t-if="record.mobile.raw_value">Mobile: 
+                                        <field name="mobile"/></div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </xpath>
+            </field>
+        </record>
+        <record id="res_partner_view_inherited_goexcel_crm_search" model="ir.ui.view">
+            <field name="name">res.partner.inherit.search</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='phone']" position="replace">
+                    <field filter_domain="['|','|','|',('phone','ilike',self),('phone2','ilike',self),('phone3','ilike',self),('mobile','=',self)]" name="phone"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

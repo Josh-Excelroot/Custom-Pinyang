@@ -1,0 +1,21 @@
+<odoo>
+	 <!-- Invoice Form -->
+	<record model="ir.ui.view" id="view_account_invoice_view_ocean_freight_rate">
+		<field name="name">Freight Booking</field>
+		<field name="model">account.invoice</field>
+        <field name="type">form</field>
+		<field name="priority" eval="1"/>
+		<field name="inherit_id" ref="account.invoice_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='carrier']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='port_of_loading']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='port_of_discharge']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+		</field>
+	</record>
+</odoo>

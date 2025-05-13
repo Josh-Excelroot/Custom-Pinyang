@@ -1,0 +1,19 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_stage_form_won_stage" model="ir.ui.view">
+            <field name="name">goexcel_crm_freight.crm_stage_view</field>
+            <field name="model">crm.stage</field>
+            <field name="inherit_id" ref="crm.crm_stage_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/group/group[2]" position="after">
+                    <group>
+                        <field name="is_won_stage"/>
+                        <field name="won_true" invisible="1"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>

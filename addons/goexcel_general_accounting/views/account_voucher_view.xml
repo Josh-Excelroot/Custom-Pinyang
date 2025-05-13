@@ -1,0 +1,48 @@
+<odoo>
+    <!-- Inherited the vendor bill view and add freight booking id -->
+	<record model="ir.ui.view" id="view_account_voucher_sales_generic">
+		<field name="name">Purchase Receipt Generic</field>
+		<field name="model">account.voucher</field>
+        <field name="type">form</field>
+		<field name="priority" eval="1"/>
+		<field name="inherit_id" ref="account_voucher.view_purchase_receipt_form"/>
+		<field name="arch" type="xml">
+            <xpath expr="//field[@name='line_ids']/tree/field[@name='product_id']"
+                   position="before">
+                <field name="sequence" widget="handle" />
+            </xpath>
+			<xpath expr="//field[@name='partner_id']"
+				   position="attributes">
+				<attribute name="options">{'no_create': True, 'no_create_edit':True}</attribute>
+			</xpath>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_account_voucher_generic">
+		<field name="name">Sales Receipt Generic</field>
+		<field name="model">account.voucher</field>
+		<field name="type">form</field>
+		<field name="priority" eval="1"/>
+		<field name="inherit_id" ref="account_voucher.view_sale_receipt_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='line_ids']/tree/field[@name='product_id']"
+				   position="before">
+				<field name="sequence" widget="handle" />
+			</xpath>
+			<xpath expr="//field[@name='partner_id']"
+				   position="attributes">
+				<attribute name="options">{'no_create': True, 'no_create_edit':True}</attribute>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="account_voucher.action_purchase_receipt" model="ir.actions.act_window">
+		<field name="domain">[('voucher_type','=','purchase')]</field>
+	<!--	<field name="context">{'default_voucher_type': 'purchase', 'voucher_type': 'purchase'}</field>-->
+	</record>
+
+	<record id="account_voucher.action_sale_receipt" model="ir.actions.act_window">
+		<field name="domain">[('voucher_type','=','sale')]</field>
+	</record>
+
+</odoo>

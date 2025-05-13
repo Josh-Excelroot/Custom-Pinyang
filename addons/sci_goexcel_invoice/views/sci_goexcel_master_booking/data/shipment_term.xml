@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="shipment.term" id="shipment_term">
+            <field name="name">CYCY</field>
+            <field name="code">CYCY</field>
+            <field name="sequence">1</field>
+        </record>
+        <record model="shipment.term" id="shipment_term2">
+            <field name="name">CYFO</field>
+            <field name="code">CYFO</field>
+
+            <field name="sequence">2</field>
+        </record>
+        <record model="shipment.term" id="shipment_term3">
+            <field name="name">FICY</field>
+            <field name="code">FICY</field>
+
+            <field name="sequence">3</field>
+        </record>
+        <record model="shipment.term" id="shipment_term4">
+            <field name="name">FIFO</field>
+            <field name="code">FIFO</field>
+
+            <field name="sequence">4</field>
+        </record>
+
+    </data>
+</odoo>
+

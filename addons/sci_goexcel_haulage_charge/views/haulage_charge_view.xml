@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id='view_tree_haulage_charge' model='ir.ui.view'>
+        <field name="name">Haulage Charge List</field>
+        <field name="model">freight.haulage.charge</field>
+        <field name="arch" type="xml">
+			<tree string='Haulage Charge'>
+				<field name="name"/>
+                <field name="carrier" invisible="1"/>
+                <field name="port_of_loading"/>
+                <field name="currency"/>
+                <field name="haulage_rates"/>
+                <field name="road_tolls"/>
+                <field name="faf"/>
+                <field name="depot_gate_charges"/>
+                <field name="total"/>
+                <field name="one_ton"/>
+                <field name="three_ton"/>
+                <field name="three_ton_20"/>
+                <field name="five_ton"/>
+                <field name="valid_from"/>
+                <field name="valid_to"/>
+                <field name="state"/>
+			</tree>
+		</field>
+	</record>
+
+    <record id="view_form_haulage_charge" model="ir.ui.view">
+        <field name="name">Haulage Charge Form</field>
+        <field name="model">freight.haulage.charge</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_approve" type="object" string="Approve" class="oe_highlight"
+                            attrs="{'invisible': ['|', ('approve_reject_haulage_charge','=', False), ('state','!=','approve')]}"/>
+                    <button name="action_reject" type="object" string="Reject" class="oe_highlight"
+                            attrs="{'invisible': ['|', ('approve_reject_haulage_charge','=', False), ('state','!=','approve')]}"/>
+                    <button name="action_approval" type="object" string="Send to Approval" class="oe_highlight"
+                            attrs="{'invisible': [('state','!=','draft')]}"/>
+                    <button name="action_update_faf_percent" type="object" string="Update FAF(%)" class="oe_highlight"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group string="General Information">
+                        <field name="name"/>
+                        <field name="approve_reject_haulage_charge" invisible="1"/>
+                        <field name="carrier" invisible="1"/>
+                        <field name="port_of_loading"/>
+                        <field name="currency"/>
+                        <field name="valid_from"/>
+                        <field name="valid_to"/>
+                        <field name="approve_by" readonly="1" force_save="1"/>
+                        <field name="approve_date_time" readonly="1" force_save="1"/>
+                    </group>
+                    <group string="Charge" >
+                        <field name="currency"/>
+                        <field name="haulage_rates"/>
+                        <field name="road_tolls"/>
+                        <field name="is_faf_percent" />
+                        <field name="faf_percent" attrs="{'invisible': [('is_faf_percent', '=', False)]}"/>
+                        <field name="faf"/>
+                        <field name="depot_gate_charges"/>
+                        <field name="total"/>
+                        <field name="one_ton"/>
+                        <field name="three_ton"/>
+                        <field name="three_ton_20"/>
+                        <field name="five_ton"/>
+                    </group>
+                    <notebook>
+                        <page string="Vendor Rate">
+                            <field name="haulage_charge_line_ids" mode="tree">
+                                <tree editable="bottom">
+                                    <field name="vendor_id" widget="many2many_tags" domain="[('supplier','=',True), ('type','not in',['invoice','delivery'])]"/>
+                                    <field name="rebate_rate"/>
+                                    <field name="cost_after_rebate"/>
+                                    <field name="cost_rate"/>
+                                    <field name="valid_from"/>
+                                    <field name="valid_to"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_search_haulage_charge" model="ir.ui.view">
+        <field name="name">Haulage Charge Filter</field>
+        <field name="model">freight.haulage.charge</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <act_window id="action_configure_haulage_charge"
+        name="Haulage Charge"
+        res_model="freight.haulage.charge"
+        view_mode="tree,form"
+    />
+
+    <menuitem id="menu_freight_configure_haulage_charge"
+              name="Haulage Charge"
+              parent="sci_goexcel_freight.menu_freight_configure"
+              action="action_configure_haulage_charge" />
+</odoo>

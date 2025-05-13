@@ -1,0 +1,2044 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="SummarySectionFr">
+        <div class="row py-data-summary" t-if="initial_balance or current_balance or ending_balance">
+            <div class="col-8"/>
+            <div class="col-4">
+                <table>
+                    <tr>
+                        <td>Initial Cash Balance</td>
+                        <td>
+                            <t t-raw="initial_balance"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Current Cash Balance</td>
+                        <td>
+                            <t t-raw="current_balance"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Net Cash Balance</td>
+                        <td>
+                            <t t-raw="ending_balance"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </t>
+    <t t-name="DataSectionFr">
+        <div>
+            <table cellspacing="0" class="system-data-table-fr" id="data-lines" width="100%">
+                <thead class="py-btn-primary" style="position:sticky;top:0;">
+                    <tr>
+                        <th colspan="1"/>
+                        <t t-if="filter_data['debit_credit'] == 1">
+                            <th class="amt-head" colspan="1">
+                                <span>Debit</span>
+                            </th>
+                            <th class="amt-head" colspan="1">
+                                <span>Credit</span>
+                            </th>
+                        </t>
+                        <t t-if="filter_data['enable_filter']">
+                            <th class="amt-head" colspan="1">
+                                <!-- Rajeel | 27/03/2023 | Start -->
+                                <p class="mb-0">
+                                <t t-esc="filter_data['comparison_context']['date_from_formatted']"/>
+                                    -
+                                    <t t-esc="filter_data['comparison_context']['date_to_formatted']"/>
+                                </p>
+                                <p>
+                                    <t t-esc="filter_data['label_filter']"/>
+                                </p>
+                                <!-- Rajeel End -->
+                            </th>
+                            <!-- Margin % in P&L and BS (CR-9 Additional #A3) | Rajeel | 20/03/2023 - Start -->
+                            <t t-if="filter_data['show_percent_margin']">
+                                <th class="amt-head" colspan="1">
+                                    <span>Marg %</span>
+                                </th>
+                            </t>
+                            <!-- Rajeel | End-->
+                        </t>
+                        <t t-if="filter_data['group_by'] != 'no_grouping'">
+
+                        <!-- Bilal 28/10/22 Added the Dates -->
+                            <t t-as="month_list" t-foreach="filter_data['month_list']">
+                                <th class="amt-head" colspan="1">
+                                    <span t-raw="month_list"/>
+                                </th>
+                                <t t-if="filter_data['show_percent_margin']">
+                                    <th class="amt-head" colspan="1">
+                                        <span>Marg %</span>
+                                    </th>
+                                </t>
+                                <t t-if="filter_data['month_list'][0] != month_list and filter_data['show_percent_performance']">
+                                    <th class="amt-head" colspan="1">
+                                        <span>Perf %</span>
+                                    </th>
+                                </t>
+                            </t>
+                            <t t-if="filter_data['report_type'] != 'balance_sheet' and ! filter_data['show_percent_margin']">
+                                <th class="amt-head" colspan="1">
+                                    <p>Total YTD</p>
+                                </th>
+                            </t>
+                            <!--
+                            <t t-if="filter_data['JAN']">
+                                <th class="amt-head" colspan="1">Jan</th>
+                            </t>
+                            <t t-if="filter_data['FEB']">
+                                <th class="amt-head" colspan="1">Feb</th>
+                            </t>
+                            <t t-if="filter_data['MAR']">
+                                <th class="amt-head" colspan="1">March</th>
+                            </t>
+                            <t t-if="filter_data['APR']">
+                                <th class="amt-head" colspan="1">April</th>
+                            </t>
+                            <t t-if="filter_data['MAY']">
+                                <th class="amt-head" colspan="1">May</th>
+                            </t>
+                            <t t-if="filter_data['JUN']">
+                                <th class="amt-head" colspan="1">June</th>
+                            </t>
+                            <t t-if="filter_data['JUL']">
+                                <th class="amt-head" colspan="1">July</th>
+                            </t>
+                            <t t-if="filter_data['AUG']">
+                                <th class="amt-head" colspan="1">Aug</th>
+                            </t>
+                            <t t-if="filter_data['SEP']">
+                                <th class="amt-head" colspan="1">Sep</th>
+                            </t>
+                            <t t-if="filter_data['OCT']">
+                                <th class="amt-head" colspan="1">Oct</th>
+                            </t>
+                            <t t-if="filter_data['NOV']">
+                                <th class="amt-head" colspan="1">Nov</th>
+                            </t>
+                            <t t-if="filter_data['DEC']">
+                                <th class="amt-head" colspan="1">Dec</th>
+                            </t>
+                            -->
+                        </t>
+                        <t t-if="filter_data['group_by'] == 'no_grouping'">
+                            <th class="amt-head" colspan="1">
+                                <!-- Rajeel | 27/03/2023 | Start -->
+                                <p class="mb-0">
+                                <t t-esc="filter_data['date_from_formatted']"/>
+                                    -
+                                    <t t-esc="filter_data['date_to_formatted']"/>
+                                </p>
+                                <p>Balance</p>
+                                <!-- Rajeel End -->
+                            </th>
+
+                            <t t-if="filter_data['show_percent_performance']">
+                                <th class="amt-head" colspan="1">
+                                    <span>Perf %</span>
+                                </th>
+                            </t>
+                            <!-- Margin % in P&L and BS (CR-9 Additional #A3) | Rajeel | 20/03/2023 - Start -->
+                            <t t-if="filter_data['show_percent_margin']">
+                                <th class="amt-head" colspan="1">
+                                    <span>Marg %</span>
+                                </th>
+                            </t>
+                            <!-- Rajeel | End-->
+                        </t>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-as="a" t-foreach="account_data">
+                        <t t-if="a['level'] &lt; 4">
+                            <t t-set="style" t-value="'font-weight:bold;'"/>
+                        </t>
+                        <t t-if="a['level'] &gt; 3">
+                            <t t-set="style" t-value="'font-weight:normal;border:none;'"/>
+                        </t>
+                        <t t-if="a['level'] == 0">
+                            <t t-set="style_td" t-value="style + 'border-bottom:2px solid #666666;visibility:hidden;'"/>
+                        </t>
+                        <t t-if="a['level'] == 1">
+                            <t t-set="style" t-value="style + 'background-color:#dee2e6 !important'"/>
+                            <t t-set="style_td" t-value="style + 'border-bottom:double #666666;padding-top: 15px;'"/>
+                        </t>
+                        <t t-if="a['level'] != 0 and a['level'] != 1">
+                            <t t-set="style_td" t-value="style + 'border-bottom:1px solid #e2e2e2;'"/>
+                        </t>
+                        <t t-if="a['level'] in [0,1]">
+                            <tr class="fa"/>
+                        </t>
+                        <!--Expandable/Collapsible Balance Sheet and Profit & Loss Reports | Rajeel | 12/04/23-->
+                        <tr t-att-style="style" t-attf-class="{{a['row_classes']}}" >
+<!--                            <i class="fa fa-caret-right collapsed" data-toggle="collapse" t-attf-data-target=".a{{a['self_id']}}" t-att-data-self-id="a['self_id']"/>-->
+                            <td t-att-style="style_td" >
+                                <div >
+                                    <t t-if="a['has_children'] &amp;&amp; !a['has_grand_children']">
+                                        <t t-if="a['display_detail']=='detail_with_hierarchy'">
+                                        <i t-attf-class="fa fa-caret-down opened collapser" aria-expanded="true"
+                                           data-toggle="collapse" t-attf-data-target=".a{{a['self_id']}}"
+                                           t-att-data-self-id="a['self_id']"/>
+                                        </t>
+                                        <t t-else="">
+                                        <i t-attf-class="fa fa-caret-right closed collapser" aria-expanded="false"
+                                           data-toggle="collapse" t-attf-data-target=".a{{a['self_id']}}"
+                                           t-att-data-self-id="a['self_id']"/>
+                                        </t>
+                                    </t>
+                                    <!-- END -->
+                                    <t t-else="">
+                                        <span>&amp;nbsp;</span>
+                                        <span>&amp;nbsp;</span>
+                                        <span>&amp;nbsp;</span>
+                                    </t>
+<!--                                    </t>-->
+<!--                                    <t t-elif="a['display_detail_corr']=='no_detail'">-->
+<!--                                        <i class="fa fa-caret-right closed collapser to" aria-expanded="False" data-toggle="collapse" t-attf-data-target=".a{{a['self_id']}}" t-att-data-self-id="a['self_id']"/>-->
+<!--                                    </t>-->
+                                    <t t-as="i" t-foreach="a['list_len']">
+                                        <span>&amp;nbsp;</span>
+                                        <span>&amp;nbsp;</span>
+                                    </t>
+                                    <!--<t t-if="a['type'] == 'report' and (a['account_type'] == 'account_type')">-->
+                                    <!--<i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"></i>-->
+                                    <!--</t>-->
+                                    <a data-toggle="dropdown" href="#">
+                                        <span data-id="17">
+                                            <span t-att-style="style" t-esc="a['name']"/>
+                                        </span>
+                                        <!--<t t-if="a['account']">-->
+                                        <!--<i class="fa fa-caret-right" role="img" aria-label="Unfolded" title="Unfolded"></i>-->
+                                        <!--</t>-->
+                                    </a>
+                                    <span data-id="17"/>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <t t-if="a['account']">
+                                            <li role="presentation">
+                                                <a action="open_document" class="view-source" role="menuitem" t-att-data-account-id="a['account']" tabindex="-1">View General Ledger
+</a>
+                                            </li>
+                                        </t>
+                                    </ul>
+                                </div>
+                            </td>
+                            <t t-if="filter_data['debit_credit'] == 1">
+                                <td class="amt" t-att-style="style_td">
+                                    <span t-raw="a['debit']"/>
+                                </td>
+                                <td class="amt" t-att-style="style_td">
+                                    <span t-raw="a['credit']"/>
+                                </td>
+                            </t>
+                            <t t-if="filter_data['enable_filter']">
+                                <td class="amt" t-att-style="style_td">
+                                    <span t-raw="a['balance_cmp']"/>
+                                </td>
+                                <!-- Margin % in P&L and BS (CR-9 Additional #A3) | Rajeel | 20/03/2023 - Start -->
+                                <t t-if="filter_data['show_percent_margin']">
+                                    <td class="amt" t-att-style="style_td">
+                                        <span t-esc="a['balance_cmp_margin']"/>
+                                    </td>
+                                </t>
+                                <!-- Rajeel | End-->
+                            </t>
+                            <!-- Canon - Start -->
+                            <t t-if="filter_data['group_by'] != 'no_grouping'">
+                                <t t-as="month_list" t-foreach="filter_data['month_list']">
+                                    <td class="amt" t-att-style="style_td">
+                                        <span t-raw="a[month_list]"/>
+                                    </td>
+                                    <t t-if="filter_data['show_percent_margin']">
+                                        <td class="amt" t-att-style="style_td">
+                                            <span t-esc="a['balance_margin_month'][month_list]"/>
+                                        </td>
+                                    </t>
+                                    <t t-if="filter_data['month_list'][0] != month_list and filter_data['show_percent_performance']">
+                                        <td class="amt" t-att-style="style_td">
+                                            <span t-esc="a['performance_percent'][month_list]"/>
+                                        </td>
+                                    </t>
+                                </t>
+                                <t t-if="filter_data['report_type'] != 'balance_sheet' and ! filter_data['show_percent_margin']">
+                                    <td class="amt" t-att-style="style_td">
+                                        <span t-raw="a['balance']"/>
+                                    </td>
+                                </t>
+                                <!--
+                                <t t-if="filter_data['JAN']">
+                                    <td class="amt" t-att-style="style_td">
+                                        <span t-raw="a['JAN']"/>
+                                    </td>
+                                </t>
+                                <t t-if="filter_data['FEB']">
+                                    <td class="amt" t-att-style="style_td">
+                                        <span t-raw="a['FEB']"/>
+                                    </td>
+                                </t>
+                                <t t-if="filter_data['MAR']">
+                                    <td class="amt" t-att-style="style_td">
+                                        <span t-raw="a['MAR']"/>
+                                    </td>
+                                </t>
+                                <t t-if="filter_data['APR']">
+                                    <td class="amt" t-att-style="style_td">
+                                        <span t-raw="a['APR']"/>
+                                    </td>
+                                </t>
+                                <t t-if="filter_data['MAY']">
+                                    <td class="amt" t-att-style="style_td">
+                                        <span t-raw="a['MAY']"/>
+                                    </td>
+                                </t>
+                                <t t-if="filter_data['JUN']">
+                                    <td class="amt" t-att-style="style_td">
+                                        <span t-raw="a['JUN']"/>
+                                    </td>
+                                </t>
+                                <t t-if="filter_data['JUL']">
+                                    <td class="amt" t-att-style="style_td">
+                                        <span t-raw="a['JUL']"/>
+                                    </td>
+                                </t>
+                                <t t-if="filter_data['AUG']">
+                                    <td class="amt" t-att-style="style_td">
+                                        <span t-raw="a['AUG']"/>
+                                    </td>
+                                </t>
+                                <t t-if="filter_data['SEP']">
+                                    <td class="amt" t-att-style="style_td">
+                                        <span t-raw="a['SEP']"/>
+                                    </td>
+                                </t>
+                                <t t-if="filter_data['OCT']">
+                                    <td class="amt" t-att-style="style_td">
+                                        <span t-raw="a['OCT']"/>
+                                    </td>
+                                </t>
+                                <t t-if="filter_data['NOV']">
+                                    <td class="amt" t-att-style="style_td">
+                                        <span t-raw="a['NOV']"/>
+                                    </td>
+                                </t>
+                                <t t-if="filter_data['DEC']">
+                                    <td class="amt" t-att-style="style_td">
+                                        <span t-raw="a['DEC']"/>
+                                    </td>
+                                </t>
+                                -->
+                            </t>
+
+                            <t t-if="filter_data['group_by'] == 'no_grouping'">
+                                <td class="amt" t-att-style="style_td">
+                                    <span t-raw="a['balance']"/>
+                                </td>
+                                <t t-if="filter_data['show_percent_performance']">
+                                    <td class="amt" t-att-style="style_td" >
+                                        <span t-esc="a['performance_percent']"/>
+                                    </td>
+                                </t>
+
+                                <!-- Margin % in P&L and BS (CR-9 Additional #A3) | Rajeel | 20/03/2023 - Start -->
+                                <t t-if="filter_data['show_percent_margin']">
+                                    <td class="amt" t-att-style="style_td" >
+                                        <span t-esc="a['balance_margin']"/>
+                                    </td>
+                                </t>
+                                <!-- Rajeel | End-->
+                            </t>
+                            <!-- Canon - End -->
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+    <t t-name="FilterSectionFr">
+        <div class="py-control-div">
+            <ol class="py-breadcrumb">
+                <li>
+                    <t t-esc="filter_data['account_report_id'][1]"/>
+                </li>
+            </ol>
+        </div>
+        <div class="py-control-div">
+            <div class="py-cntrl-left">
+                <div class="py-ctrl-buttons">
+                    <button action="print_pdf" class="btn py-btn-primary" id="pdf" style="position: relative;" type="button">Print (Pdf)</button>
+                    <button action="print_pdf_portrait" class="btn py-btn-primary" id="pdf_portrait" style="position: relative;" type="button">Print Portrait (Pdf)</button>
+                    <button action="print_xlsx" class="btn py-btn-primary" id="xlsx" style="position: relative;" type="button">Export (XLSX)</button>
+                </div>
+            </div>
+            <div class="py_cntrl_right">
+                <div class="py-search-buttons">
+                    <button action="open_settings" class="btn btn-secondary border-0" id="open_settings" style="position: relative;" type="button"><i class="fa fa-gears"/></button>
+                    <button action="view_filters" class="btn btn-secondary" id="view_current_filters" style="position: relative;" type="button">View Filters</button>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="DynamicFrMain">
+        <div class="py-main-container">
+            <div class="py-filter-container">
+                <div class="py-control-panel"/>
+            </div>
+            <div class="py-data-container"/>
+        </div>
+    </t>
+    <t t-name="SubSection">
+        <div class="py-mline-table-div">
+            <table class="py-mline-data-table display compact table-bordered" style="font-size:10px">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>JRNL</th>
+                        <th>Partner</th>
+                        <!--<th>Description</th>-->
+                        <th>Move</th>
+                        <!--<th>Entry Label</th>-->
+                        <th>Analytic Account</th>
+                        <th>Analytic Tag</th>
+                        <th class="amt-head">Debit</th>
+                        <th class="amt-head">Credit</th>
+                        <th class="amt-head">Balance</th>
+<!--                        <th class="amt-head">Currency</th>-->
+                        <th class="amt-head">Amount Currency</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-as="account_line" t-foreach="account_data">
+                        <t t-set="style" t-value="''"/>
+                        <t t-if="account_line.move_name == 'Initial Balance'">
+                            <t t-set="style" t-value="'font-style: italic;'"/>
+                        </t>
+                        <t t-if="account_line.move_name == 'Ending Balance'">
+                            <t t-set="style" t-value="'font-style: italic;'"/>
+                        </t>
+                        <tr>
+                            <td>
+                                <t t-if="account_line.ldate">
+                                    <div class="dropdown">
+                                        <a data-toggle="dropdown" href="#">
+                                            <span data-id="17">
+                                                <t t-esc="account_line.ldate"/>
+                                            </span>
+                                            <i aria-label="Unfolded" class="fa fa-caret-down" role="img" title="Unfolded"/>
+                                        </a>
+                                        <span data-id="17"/>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <t t-if="account_line.move_name">
+                                                <li role="presentation">
+                                                    <a action="open_document" class="view-source" role="menuitem" t-att-data-move-id="account_line.move_id" tabindex="-1">View Source move
+</a>
+                                                </li>
+                                            </t>
+                                        </ul>
+                                    </div>
+                                </t>
+                            </td>
+                            <td>
+                                <t t-esc="account_line.lcode"/>
+                            </td>
+                            <td>
+                                <t t-esc="account_line.partner_name"/>
+                            </td>
+                            <!--<td>
+                                <t t-esc="account_line.description"/>
+                            </td>-->
+                            <td t-att-style="style">
+                                <t t-esc="account_line.move_name"/>
+                            </td>
+                            <!--<td t-att-style="style">
+                                <t t-esc="account_line.lname"/>
+                            </td>-->
+                            <td t-att-style="style">
+                                <t t-esc="account_line.analytic_account"/>
+                            </td>
+                            <td t-att-style="style">
+                                <t t-esc="account_line.analytic_tag"/>
+                            </td>
+                            <td class="amt" t-att-style="style">
+                                <t t-raw="account_line.debit"/>
+                            </td>
+                            <td class="amt" t-att-style="style">
+                                <t t-raw="account_line.credit"/>
+                            </td>
+                            <td class="amt" t-att-style="style">
+                                <t t-raw="account_line.balance"/>
+                            </td>
+                            <td class="amt" t-att-style="style">
+                                <t t-raw="account_line.amount_currency"/>
+                            </td>
+                            <!--<td class="amt" t-att-style="style">
+                                <t t-raw="account_line['currency_name']"/>
+                            </td>-->
+                            <!--<td class="amt" t-att-style="style">
+                                <t t-if="account_line['currency_symbol'] != account_line['company_currency_symbol']">
+                                    <t t-if="account_line['currency_position'] == 'before'">
+                                        <span t-esc="account_line['currency_symbol']"/>
+                                        <span t-esc="account_line['amount_currency']"/>
+                                    </t>
+                                    <t t-if="account_line['currency_position'] == 'after'">
+                                        <span t-esc="account_line['amount_currency']"/>
+                                        <span t-esc="account_line['currency_symbol']"/>
+                                    </t>
+                                </t>
+                            </td>-->
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+    <t t-name="DataSection">
+        <div>
+            <table cellspacing="0" class="system-data-table" id="data-lines" width="100%">
+                <thead>
+                    <tr>
+                        <th colspan="6">Account</th>
+                        <th class="amt-head">Initial</th>
+                        <th class="amt-head">Debit</th>
+                        <th class="amt-head">Credit</th>
+                        <th class="amt-head">Balance</th>
+<!--                        <th class="amt-head">Currency</th>-->
+                        <th class="amt-head">Amount Currency</th>
+                        <th class="amt-head"/>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-as="account" t-foreach="Object.keys(account_data).sort()">
+                        <t t-set="common_id" t-value=""/>
+                        <tr class="py-mline" data-toggle="collapse" t-att-data-account-id="account_data[account]['id']" t-attf-data-target=".a{{account_data[account]['id']}}">
+                            <td colspan="6">
+                                <i aria-label="Unfolded" class="fa fa-caret-down" role="img" title="Unfolded"/>
+                                <span>
+                                    <t t-esc="account_data[account]['code']"/>-
+                                    <t t-esc="account_data[account]['name']"/></span>
+                            </td>
+                            <td class="amt">
+                                <t t-raw="account_data[account]['initial_balance']"/>
+                            </td>
+                            <td class="amt">
+                                <t t-raw="account_data[account]['debit']"/>
+                            </td>
+                            <td class="amt">
+                                <t t-raw="account_data[account]['credit']"/>
+                            </td>
+                            <td class="amt">
+                                <t t-raw="account_data[account]['balance']"/>
+                            </td>
+                            <!--<td class="amt">
+                                <t t-raw="account_data[account]['currency_name']"/>
+                            </td>-->
+                            <td class="amt">
+                                <t t-raw="account_data[account]['amount_currency']"/>
+                            </td>
+                            <td class="amt"/>
+                            <t t-set="common_id" t-value="'a'+account_data[account]['id']"/>
+                        </tr>
+                        <tr t-attf-class="collapse a{{account_data[account]['id']}}">
+                            <td colspan="12">
+                                <ul class="py-mline-ul">
+                                    <t t-if="!account_data[account]['single_page']">
+                                        <t t-as="i" t-foreach="account_data[account]['pages']">
+                                            <li>
+                                                <a class="py-mline-page" t-att-data-account-id="account_data[account]['id']" t-att-data-count="account_data[account]['count']" t-att-data-page-number="i">
+                                                    <t t-esc="i"/>
+                                                </a>
+                                            </li>
+                                        </t>
+                                    </t>
+                                </ul>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+    <t t-name="FilterSection">
+        <div class="py-control-div">
+            <ol class="py-breadcrumb">
+                <li>General Ledger</li>
+            </ol>
+        </div>
+        <div class="py-control-div">
+            <div class="py-cntrl-left">
+                <div class="py-ctrl-buttons">
+                    <button action="print_pdf" class="btn py-btn-primary" id="pdf" style="position: relative;" type="button">Print (Pdf)</button>
+                    <button action="print_xlsx" class="btn py-btn-primary" id="xlsx" style="position: relative;" type="button">Export (XLSX)</button>
+                </div>
+            </div>
+            <div class="py_cntrl_right">
+                <div class="py-search-buttons">
+                    <button action="view_filters" class="btn btn-secondary" id="view_current_filters" style="position: relative;" type="button">View Filters</button>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="DynamicGlMain">
+        <div class="py-main-container">
+            <div class="py-filter-container">
+                <div class="py-control-panel"/>
+            </div>
+            <div class="py-data-container">
+                <div class="py-data-container-orig"/>
+                <div id="loader">
+                    <div id="top"/>
+                    <div id="bottom"/>
+                    <div id="line"/>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="DataSectionAnl">
+        <div>
+        <!-- Rajeel | Analytic Report | 29/03/2023 -->
+            <table cellspacing="0" class="system-data-table" id="data-lines" width="100%">
+                <thead>
+                    <tr><th colspan="1" class="p-1">Analytic Tag</th></tr>
+                    <tr>
+                        <th colspan="6"/>
+                        <th>Reference</th>
+                        <th>Partner</th>
+                        <th class="amt-head">Sales</th>
+                        <th class="amt-head">Cost</th>
+                        <th class="amt-head">Profit</th>
+                        <th class="amt-head"/>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-as="account" t-foreach="account_data">
+                        <t t-set="common_id" t-value=""/>
+                        <tr data-toggle="collapse" class="py-mline" t-attf-data-target=".a{{account['id']}}">
+                            <td t-raw="account['name']" class="pb-2 pt-2" colspan="6"/>
+                            <td colspan="2">
+                                <t t-if="account['lines'].length > 0">
+                                    <i aria-label="Unfolded" class="fa fa-caret-right pl-3" role="img" title="Unfolded"/>
+                                </t>
+                            </td>
+                            <td colspan="4"><span>Total Profit: </span><span t-raw="account['balance']"/></td>
+                        </tr>
+                        <t t-as="item" t-foreach="account['lines']">
+                            <tr t-attf-class="py-mline a{{account['id']}} show">
+                            <td colspan="6">
+                                <div class="dropdown">
+                                    <a data-toggle="dropdown" href="#">
+                                        <span data-id="17">
+                                            <t t-esc="item['name']"/>
+                                        </span>
+                                        <i aria-label="Unfolded" class="fa fa-caret-down" role="img" title="Unfolded"/>
+                                    </a>
+                                    <span data-id="17"/>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li role="presentation">
+                                            <a action="open_document" class="view-source" role="menuitem"
+                                               t-att-data-move-id="item['id']" tabindex="-1">View Source move
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td>
+                                <t t-raw="item['reference']"/>
+                            </td>
+                            <td>
+                                <t t-raw="item['partner']"/>
+                            </td>
+                            <td class="amt">
+                                <t t-raw="item['credit']"/>
+                            </td>
+                            <td class="amt">
+                                <t t-raw="item['debit']"/>
+                            </td>
+                            <td class="amt">
+                                <t t-raw="item['balance']"/>
+                            </td>
+                            <td class="amt"/>
+                            <t t-set="common_id" t-value="'a'+item['id']"/>
+                            </tr>
+                        </t>
+                    </t>
+                    <tr class="py-mline">
+                        <td colspan="8"/>
+                        <td/>
+                        <td>Total</td>
+                        <td class="amt">
+                            <t t-raw="final_balance"/>
+                        </td>
+                        <td class="amt"/>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Rajeel | END -->
+        </div>
+    </t>
+    <t t-name="FilterSectionAnl">
+        <div class="py-control-div">
+            <ol class="py-breadcrumb">
+                <li>Analytic Report</li>
+            </ol>
+        </div>
+        <div class="py-control-div">
+            <div class="py-cntrl-left">
+                <div class="py-ctrl-buttons">
+                    <button action="print_pdf" class="btn py-btn-primary" id="pdf" style="position: relative;" type="button">Print (Pdf)</button>
+                    <button action="print_xlsx" class="btn py-btn-primary" id="xlsx" style="position: relative;" type="button">Export (XLSX)</button>
+                </div>
+            </div>
+            <div class="py_cntrl_right">
+                <div class="py-search-buttons">
+                    <button action="view_filters" class="btn btn-secondary" id="view_current_filters" style="position: relative;" type="button">View Filters</button>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="DynamicAnlMain">
+        <div class="py-main-container">
+            <div class="py-filter-container">
+                <div class="py-control-panel"/>
+            </div>
+            <div class="py-data-container">
+                <div class="py-data-container-orig"/>
+                <div id="loader">
+                    <div id="top"/>
+                    <div id="bottom"/>
+                    <div id="line"/>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="SubSectionPa">
+        <div class="py-mline-table-div">
+            <table class="py-mline-data-table display compact">
+                <thead>
+                    <tr>
+                        <th>Entry Label</th>
+                        <th>Reference</th>
+                        <th>Date</th>
+                        <th>Due Date</th>
+                        <th>Payment Term</th>
+                        <th>Aging</th>
+                        <th>Journal</th>
+                        <th>Account</th>
+                        <t t-as="period" t-foreach="period_list">
+                            <th class="amt-head">
+                                <t t-esc="period"/>
+                            </th>
+                        </t>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-if="account_data">
+                        <t t-as="account_line" t-foreach="account_data">
+                            <tr>
+                                <t t-if="account_line.move_name">
+                                    <td>
+                                        <div class="dropdown">
+                                            <a data-toggle="dropdown" href="#">
+                                                <span data-id="17">
+                                                    <t t-esc="account_line.move_name"/>
+                                                </span>
+                                                <i aria-label="Unfolded" class="fa fa-caret-down" role="img" title="Unfolded"/>
+                                            </a>
+                                            <span data-id="17"/>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <t t-if="account_line.move_name">
+                                                    <li role="presentation">
+                                                        <a action="open_document" class="view-source" role="menuitem" t-att-data-move-id="account_line.move_id" tabindex="-1">View Source move
+</a>
+                                                    </li>
+                                                </t>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </t>
+                                <td>
+                                    <t t-esc="account_line.reference"/>
+                                </td>
+                                <td>
+                                    <t t-esc="account_line.date"/>
+                                </td>
+                                <td>
+                                    <t t-esc="account_line.date_maturity"/>
+                                </td>
+                                <td class="text-center">
+                                    <t t-esc="account_line.payment_term"/>
+                                </td>
+                                <td >
+                                    <t t-esc="account_line.date_invoice"/>
+                                </td>
+                                <td>
+                                    <t t-esc="account_line.journal_name"/>
+                                </td>
+                                <td>
+                                    <t t-esc="account_line.account_name"/>
+                                </td>
+                                <td class="amt">
+                                    <t t-raw="account_line.range_0"/>
+                                </td>
+                                <td class="amt">
+                                    <t t-raw="account_line.range_1"/>
+                                </td>
+                                <td class="amt">
+                                    <t t-raw="account_line.range_2"/>
+                                </td>
+                                <td class="amt">
+                                    <t t-raw="account_line.range_3"/>
+                                </td>
+                                <td class="amt">
+                                    <t t-raw="account_line.range_4"/>
+                                </td>
+                                <td class="amt">
+                                    <t t-raw="account_line.range_5"/>
+                                </td>
+                                <td class="amt">
+                                    <t t-raw="account_line.range_6"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+    <t t-name="DataSectionPa">
+        <div>
+            <div class="row">
+                <div class="col-1"/>
+                <div class="col-4 h4">As on date: <t t-esc="filter_data.as_on_date"/></div>
+                <div class="col-4 h4">Ageing by: <t t-esc="filter_data.ageing_by"/></div>
+            </div>
+            <style>
+                .system-data-table-age .py-mline-data-table tbody > tr td:nth-child(3) {
+                    width: unset;
+                }
+            </style>
+            <table cellspacing="0" class="system-data-table-age" id="data-lines" width="100%">
+                <thead>
+                    <tr>
+                        <th colspan="4">Account</th>
+                        <t t-as="period" t-foreach="period_list">
+                            <th class="amt-head">
+                                <t t-esc="period"/>
+                            </th>
+                        </t>
+                        <th class="amt-head">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-as="p" t-foreach="partner_list">
+                        <t t-as="partner" t-foreach="ageing_data">
+                            <t t-if="p == ageing_data[partner]['partner_name'] or p == 'Total' and partner == 'Total'">
+                                <t t-if="partner != 'Total'">
+                                    <t t-set="common_id" t-value=""/>
+                                    <tr class="py-mline" data-toggle="collapse" t-att-data-partner-id="partner" t-attf-data-target=".a{{partner}}">
+                                        <td colspan="4">
+                                            <i aria-label="Unfolded" class="fa fa-caret-right" role="img" title="Unfolded"/>
+                                            <span>
+                                                <t t-esc="ageing_data[partner]['partner_name']"/>
+                                            </span>
+                                        </td>
+                                        <t t-as="period" t-foreach="period_list">
+                                            <td class="amt">
+                                                <t t-raw="ageing_data[partner][period]"/>
+                                            </td>
+                                        </t>
+                                        <td class="amt">
+                                            <t t-raw="ageing_data[partner]['total']"/>
+                                        </td>
+                                        <t t-set="common_id" t-value="'a'+partner"/>
+                                    </tr>
+                                    <tr t-attf-class="collapse a{{partner}}">
+                                        <td colspan="12">
+                                            <ul class="py-mline-ul">
+                                                <t t-if="!ageing_data[partner]['single_page']">
+                                                    <t t-as="i" t-foreach="ageing_data[partner]['pages']">
+                                                        <li>
+                                                            <a class="py-mline-page" t-att-data-count="ageing_data[partner]['count']" t-att-data-page-number="i" t-att-data-partner-id="partner">
+                                                                <t t-esc="i"/>
+                                                            </a>
+                                                        </li>
+                                                    </t>
+                                                </t>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <t t-else="">
+                                    <tr class="py-total-line">
+                                        <td align="left" colspan="4">
+                                            <span>Total</span>
+                                        </td>
+                                        <t t-as="period" t-foreach="period_list">
+                                            <td class="amt">
+                                                <t t-raw="ageing_data[partner][period]"/>
+                                            </td>
+                                        </t>
+                                        <td class="amt">
+                                            <t t-raw="ageing_data[partner]['total']"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </t>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+    <t t-name="FilterSectionPa">
+        <div class="py-control-div">
+            <ol class="py-breadcrumb">
+                <li>Partner Ageing</li>
+            </ol>
+        </div>
+        <div class="py-control-div">
+            <div class="py-cntrl-left">
+                <div class="py-ctrl-buttons">
+                    <button action="print_pdf" class="btn py-btn-primary" id="pdf" style="position: relative;" type="button">Print (Pdf)</button>
+                    <button action="print_xlsx" class="btn py-btn-primary" id="xlsx" style="position: relative;" type="button">Export (XLSX)</button>
+                </div>
+            </div>
+            <div class="py_cntrl_right">
+                <div class="py-search-buttons">
+                    <button action="view_filters" class="btn btn-secondary" id="view_current_filters" style="position: relative;" type="button">View Filters</button>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="DynamicPaMain">
+        <div class="py-main-container">
+            <div class="py-filter-container">
+                <div class="py-control-panel"/>
+            </div>
+            <div class="py-data-container">
+                <div class="py-data-container-orig"/>
+                <div id="loader">
+                    <div id="top"/>
+                    <div id="bottom"/>
+                    <div id="line"/>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="SubSectionPp">
+        <div class="py-mline-table-div">
+            <table class="py-mline-data-table display compact">
+                <thead>
+                    <tr>
+                        <th/>
+                        <th>Date</th>
+                        <th>Reference</th>
+                        <th>Description</th>
+                        <th>Analytic Account</th>
+                        <th>Analytic Tags</th>
+                        <th class="amt-head">Doc Amount</th>
+                        <th class="amt-head">Knock-off Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-as="account_line" t-foreach="account_data">
+                        <t t-set="style" t-value="''"/>
+                        <tr>
+                            <td/>
+                            <td>
+                                <t t-if="account_line.date">
+                                    <div class="dropdown">
+                                        <a data-toggle="dropdown" href="#">
+                                            <span data-id="17">
+                                                <t t-esc="account_line.date"/>
+                                            </span>
+                                            <i aria-label="Unfolded" class="fa fa-caret-down" role="img" title="Unfolded"/>
+                                        </a>
+                                        <span data-id="17"/>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <t t-if="account_line.ref">
+                                                <li role="presentation">
+                                                    <a action="open_document" class="view-source" role="menuitem" t-att-data-move-id="account_line.move_id" tabindex="-1">View Source move
+</a>
+                                                </li>
+                                            </t>
+                                        </ul>
+                                    </div>
+                                </t>
+                            </td>
+                            <td>
+                                <t t-esc="account_line.ref"/>
+                            </td>
+                            <td>
+                                <t t-esc="account_line.description"/>
+                            </td>
+                            <td>
+                                <t t-esc="account_line.analytic_account_id.name"/>
+                            </td>
+                            <td>
+                                <t t-esc="account_line.analytic_tag_ids"/>
+                            </td>
+                            <td class="amt" t-att-style="style">
+                                <t t-raw="account_line.doc_amount"/>
+                            </td>
+                            <td class="amt" t-att-style="style">
+                                <t t-raw="account_line.knock_off_amount"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+    <t t-name="DataSectionPp">
+        <div>
+            <table cellspacing="0" class="system-data-table" id="data-lines" width="100%">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Number</th>
+                        <th>Partner</th>
+                        <th>Journal</th>
+                        <th>Journal Entry</th>
+                        <th>Reconciled?</th>
+                        <th class="amt-head">Amount</th>
+                        <th class="amt-head">Unreconciled Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-as="account" t-foreach="account_data">
+                        <t t-set="common_id" t-value=""/>
+                        <tr class="py-mline" data-toggle="collapse" t-att-data-account-id="account['payid']" t-att-data-internal-type="account['internal_type']" t-attf-data-target=".a{{account['payid']}}">
+                            <td>
+                                <i aria-label="Unfolded" class="fa fa-caret-down" role="img" title="Unfolded"/>
+                                <span>
+                                    <t t-esc="account['payment_date']"/>
+                                </span>
+                            </td>
+                            <td>
+                                <span>
+                                    <t t-esc="account['lname']"/>
+                                </span>
+                            </td>
+                            <td>
+                                <span>
+                                    <t t-esc="account['partner_name']"/>
+                                </span>
+                            </td>
+                            <td>
+                                <span>
+                                    <t t-esc="account['journal_code']"/>
+                                </span>
+                            </td>
+                            <td>
+                                <span>
+                                    <t t-esc="account['journal_entry']"/>
+                                </span>
+                            </td>
+                            <td>
+                                <t t-if="account['reco_state']">
+                                    <span>✔</span>
+                                </t>
+                                <t t-else="account['reco_state']">
+                                    <span>✘</span>
+                                </t>
+                            </td>
+                            <td class="amt">
+                                <t t-raw="account['amount_currency']"/>
+                            </td>
+                            <td class="amt">
+                                <t t-raw="account['amount_unreconciled']"/>
+                            </td>
+                            <t t-set="common_id" t-value="'a'+account['payid']"/>
+                        </tr>
+                        <tr t-attf-class="collapse a{{account['payid']}}">
+                            <td colspan="10">
+                                <ul class="py-mline-ul"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+    <t t-name="FilterSectionPp">
+        <div class="py-control-div">
+            <ol class="py-breadcrumb">
+                <li>Partner Payments</li>
+            </ol>
+        </div>
+        <div class="py-control-div">
+            <div class="py-cntrl-left">
+                <div class="py-ctrl-buttons">
+                    <button action="print_pdf" class="btn py-btn-primary" id="pdf" style="position: relative;" type="button">Print (Pdf)</button>
+                    <button action="print_xlsx" class="btn py-btn-primary" id="xlsx" style="position: relative;" type="button">Export (XLSX)</button>
+                </div>
+            </div>
+            <div class="py_cntrl_right">
+                <div class="py-search-buttons">
+                    <button action="view_filters" class="btn btn-secondary" id="view_current_filters" style="position: relative;" type="button">View Filters</button>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="DynamicPpMain">
+        <div class="py-main-container">
+            <div class="py-filter-container">
+                <div class="py-control-panel"/>
+            </div>
+            <div class="py-data-container">
+                <div class="py-data-container-orig"/>
+                <div id="loader">
+                    <div id="top"/>
+                    <div id="bottom"/>
+                    <div id="line"/>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="SubSectionPi">
+        <div class="py-mline-table-div">
+            <table class="py-mline-data-table display compact">
+                <thead>
+                    <tr>
+                        <th/>
+                        <th>Date</th>
+                        <th>Reference</th>
+                        <th>Description</th>
+                        <th>Analytic Account</th>
+                        <th>Analytic Tags</th>
+                        <th class="amt-head">Doc Amount</th>
+                        <th class="amt-head">Knock-off Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-as="account_line" t-foreach="account_data">
+                        <t t-set="style" t-value="''"/>
+                        <tr>
+                            <td/>
+                            <td>
+                                <t t-if="account_line.date">
+                                    <div class="dropdown">
+                                        <a data-toggle="dropdown" href="#">
+                                            <span data-id="17">
+                                                <t t-esc="account_line.date"/>
+                                            </span>
+                                            <i aria-label="Unfolded" class="fa fa-caret-down" role="img" title="Unfolded"/>
+                                        </a>
+                                        <span data-id="17"/>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <t t-if="account_line.ref">
+                                                <li role="presentation">
+                                                    <a action="open_document" class="view-source" role="menuitem" t-att-data-move-id="account_line.move_id" tabindex="-1">View Source move
+</a>
+                                                </li>
+                                            </t>
+                                        </ul>
+                                    </div>
+                                </t>
+                            </td>
+                            <td>
+                                <t t-esc="account_line.ref"/>
+                            </td>
+                            <td>
+                                <t t-esc="account_line.description"/>
+                            </td>
+                            <td>
+                                <t t-esc="account_line.analytic_account_id.name"/>
+                            </td>
+                            <td>
+                                <t t-esc="account_line.analytic_tag_ids"/>
+                            </td>
+                            <td class="amt" t-att-style="style">
+                                <t t-raw="account_line.doc_amount"/>
+                            </td>
+                            <td class="amt" t-att-style="style">
+                                <t t-raw="account_line.knock_off_amount"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+    <t t-name="DataSectionPi">
+        <div>
+            <table cellspacing="0" class="system-data-table" id="data-lines" width="100%">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Number</th>
+                        <th>Partner</th>
+                        <th>Journal</th>
+                        <th>Journal Entry</th>
+                        <th>Reconciled?</th>
+                        <th class="amt-head">Original Amount</th>
+                        <th class="amt-head">Company Curr.</th>
+                        <th class="amt-head">Reconciled Amount</th>
+                        <th class="amt-head">Company Curr.</th>
+                        <th class="amt-head">Unreconciled Amount</th>
+                        <th class="amt-head">Company Curr.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-as="account" t-foreach="account_data">
+                        <t t-set="common_id" t-value=""/>
+                        <tr class="py-mline" data-toggle="collapse" t-att-data-account-id="account['invid']" t-attf-data-target=".a{{account['invid']}}">
+                            <td>
+                                <i aria-label="Unfolded" class="fa fa-caret-down" role="img" title="Unfolded"/>
+                                <span>
+                                    <t t-esc="account['date_invoice']"/>
+                                </span>
+                            </td>
+                            <td>
+                                <span>
+                                    <t t-esc="account['lname']"/>
+                                </span>
+                            </td>
+                            <td>
+                                <span>
+                                    <t t-esc="account['partner_name']"/>
+                                </span>
+                            </td>
+                            <td>
+                                <span>
+                                    <t t-esc="account['journal_code']"/>
+                                </span>
+                            </td>
+                            <td>
+                                <span>
+                                    <t t-esc="account['journal_entry']"/>
+                                </span>
+                            </td>
+                            <td>
+                                <t t-if="account['reco_state']">
+                                    <span>✔</span>
+                                </t>
+                                <t t-else="account['reco_state']">
+                                    <span>✘</span>
+                                </t>
+                            </td>
+                            <td class="amt">
+                                <t t-raw="account['amount_currency']"/>
+                            </td>
+                            <td class="amt">
+                                <t t-raw="account['amount_company_currency']"/>
+                            </td>
+                            <td class="amt">
+                                <t t-raw="account['amount_reconciled']"/>
+                            </td>
+                            <td class="amt">
+                                <t t-raw="account['amount_reconciled_company_currency']"/>
+                            </td>
+                            <td class="amt">
+                                <t t-raw="account['amount_unreconciled']"/>
+                            </td>
+                            <td class="amt">
+                                <t t-raw="account['amount_unreconciled_company_currency']"/>
+                            </td>
+                            <t t-set="common_id" t-value="'a'+account['invid']"/>
+                        </tr>
+                        <tr t-attf-class="collapse a{{account['invid']}}">
+                            <td colspan="10">
+                                <ul class="py-mline-ul"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+    <t t-name="FilterSectionPi">
+        <div class="py-control-div">
+            <ol class="py-breadcrumb">
+                <li>Partner Invoices</li>
+            </ol>
+        </div>
+        <div class="py-control-div">
+            <div class="py-cntrl-left">
+                <div class="py-ctrl-buttons">
+                    <button action="print_pdf" class="btn py-btn-primary" id="pdf" style="position: relative;" type="button">Print (Pdf)</button>
+                    <button action="print_xlsx" class="btn py-btn-primary" id="xlsx" style="position: relative;" type="button">Export (XLSX)</button>
+                </div>
+            </div>
+            <div class="py_cntrl_right">
+                <div class="py-search-buttons">
+                    <button action="view_filters" class="btn btn-secondary" id="view_current_filters" style="position: relative;" type="button">View Filters</button>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="DynamicPiMain">
+        <div class="py-main-container">
+            <div class="py-filter-container">
+                <div class="py-control-panel"/>
+            </div>
+            <div class="py-data-container">
+                <div class="py-data-container-orig"/>
+                <div id="loader">
+                    <div id="top"/>
+                    <div id="bottom"/>
+                    <div id="line"/>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="SubSectionPl">
+        <div class="py-mline-table-div">
+            <table class="py-mline-data-table display compact">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>JRNL</th>
+                        <th>Account</th>
+                        <th>Description</th>
+                        <th>Move</th>
+                        <th>Entry Label</th>
+                        <th>Analytic Account</th>
+                        <th>Analytic Tag</th>
+                        <th class="amt-head">Debit</th>
+                        <th class="amt-head">Credit</th>
+                        <th class="amt-head">Balance</th>
+                        <th class="amt-head">Amount Currency</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-as="account_line" t-foreach="account_data">
+                        <t t-set="style" t-value="''"/>
+                        <t t-if="account_line.move_name == 'Initial Balance'">
+                            <t t-set="style" t-value="'font-style: italic;'"/>
+                        </t>
+                        <t t-if="account_line.move_name == 'Ending Balance'">
+                            <t t-set="style" t-value="'font-style: italic;'"/>
+                        </t>
+                        <tr>
+                            <td>
+                                <t t-if="account_line.ldate">
+                                    <div class="dropdown">
+                                        <a data-toggle="dropdown" href="#">
+                                            <span data-id="17">
+                                                <t t-esc="account_line.ldate"/>
+                                            </span>
+                                            <i aria-label="Unfolded" class="fa fa-caret-down" role="img" title="Unfolded"/>
+                                        </a>
+                                        <span data-id="17"/>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <t t-if="account_line.move_name">
+                                                <li role="presentation">
+                                                    <a action="open_document" class="view-source" role="menuitem" t-att-data-move-id="account_line.move_id" tabindex="-1">View Source move</a>
+                                                </li>
+                                            </t>
+                                        </ul>
+                                    </div>
+                                </t>
+                            </td>
+                            <td>
+                                <t t-esc="account_line.lcode"/>
+                            </td>
+                            <td>
+                                <t t-esc="account_line.account_name"/>
+                            </td>
+                            <td>
+                                <t t-esc="account_line.description"/>
+                            </td>
+                            <td t-att-style="style">
+                                <t t-esc="account_line.move_name"/>
+                            </td>
+                            <td t-att-style="style">
+                                <t t-esc="account_line.lname"/>
+                            </td>
+                            <td t-att-style="style">
+                                <t t-esc="account_line.analytic_account"/>
+                            </td>
+                            <td t-att-style="style">
+                                <t t-esc="account_line.analytic_tag"/>
+                            </td>
+                            <td class="amt" t-att-style="style">
+                                <t t-raw="account_line.debit"/>
+                            </td>
+                            <td class="amt" t-att-style="style">
+                                <t t-raw="account_line.credit"/>
+                            </td>
+                            <td class="amt" t-att-style="style">
+                                <t t-raw="account_line.balance"/>
+                            </td>
+                            <td class="amt" t-att-style="style">
+                                <t t-raw="account_line.amount_currency"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+    <t t-name="DataSectionPl">
+        <div>
+            <table cellspacing="0" class="system-data-table" id="data-lines" width="100%">
+                <thead>
+                    <tr>
+                        <th colspan="6">Partner</th>
+                        <th class="amt-head">Debit</th>
+                        <th class="amt-head">Credit</th>
+                        <th class="amt-head">Balance</th>
+                        <th class="amt-head">Amount Currency</th>
+                        <th class="amt-head"/>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-as="account" t-foreach="account_data">
+                        <t t-set="common_id" t-value=""/>
+                        <tr class="py-mline" data-toggle="collapse" t-att-data-account-id="account_data[account]['id']" t-attf-data-target=".a{{account_data[account]['id']}}">
+                            <td colspan="6">
+                                <i aria-label="Unfolded" class="fa fa-caret-down" role="img" title="Unfolded"/>
+                                <span>
+                                    <t t-esc="account_data[account]['name']"/>
+                                </span>
+                            </td>
+                            <td class="amt">
+                                <t t-raw="account_data[account]['debit']"/>
+                            </td>
+                            <td class="amt">
+                                <t t-raw="account_data[account]['credit']"/>
+                            </td>
+                            <td class="amt">
+                                <t t-raw="account_data[account]['balance']"/>
+                            </td>
+                            <td class="amt">
+                                <t t-raw="account_data[account]['amount_currency']"/>
+                            </td>
+                            <td class="amt"/>
+                            <t t-set="common_id" t-value="'a'+account_data[account]['id']"/>
+                        </tr>
+                        <tr t-attf-class="collapse a{{account_data[account]['id']}}">
+                            <td colspan="10">
+                                <ul class="py-mline-ul">
+                                    <t t-if="!account_data[account]['single_page']">
+                                        <t t-as="i" t-foreach="account_data[account]['pages']">
+                                            <li>
+                                                <a class="py-mline-page" t-att-data-account-id="account_data[account]['id']" t-att-data-count="account_data[account]['count']" t-att-data-page-number="i">
+                                                    <t t-esc="i"/>
+                                                </a>
+                                            </li>
+                                        </t>
+                                    </t>
+                                </ul>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+    <t t-name="FilterSectionPl">
+        <div class="py-control-div">
+            <ol class="py-breadcrumb">
+                <li>Partner Ledger</li>
+            </ol>
+        </div>
+        <div class="py-control-div">
+            <div class="py-cntrl-left">
+                <div class="py-ctrl-buttons">
+                    <button action="print_pdf" class="btn py-btn-primary" id="pdf" style="position: relative;" type="button">Print (Pdf)</button>
+                    <button action="print_pdf_portrait" class="btn py-btn-primary" id="pdf_portrait" style="position: relative;" type="button">Print Portrait (Pdf)</button>
+                    <button action="print_xlsx" class="btn py-btn-primary" id="xlsx" style="position: relative;" type="button">Export (XLSX)</button>
+                </div>
+            </div>
+            <div class="py_cntrl_right">
+                <div class="py-search-buttons">
+                    <button action="view_filters" class="btn btn-secondary" id="view_current_filters" style="position: relative;" type="button">View Filters</button>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="DynamicPlMain">
+        <div class="py-main-container">
+            <div class="py-filter-container">
+                <div class="py-control-panel"/>
+            </div>
+            <div class="py-data-container">
+                <div class="py-data-container-orig"/>
+                <div id="loader">
+                    <div id="top"/>
+                    <div id="bottom"/>
+                    <div id="line"/>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="DataSectionTb">
+        <div>
+            <table cellspacing="0" class="system-data-table-tb" id="data-lines" width="100%">
+                <thead>
+                    <tr>
+                        <th colspan="1"/>
+                        <t t-if="filter_data['only_include_ending_balance'] == 0">
+                            <th colspan="3">
+                                <span>Initial Balance</span>
+                            </th>
+                            <th colspan="3">
+                                <span>
+                                    <t t-esc="filter_data['date_from']"/> to
+                                    <t t-esc="filter_data['date_to']"/></span>
+                            </th>
+                        </t>
+                        <th colspan="3">
+                            <span>Ending Balance</span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Account</th>
+                        <t t-if="filter_data['only_include_ending_balance'] == 0">
+                            <t t-if="filter_data['debit_credit'] == 1">
+                                <th class="amt-head">Debit</th>
+                                <th class="amt-head">Credit</th>
+                            </t>
+                            <t t-else="">
+                                <th class="amt-head"/>
+                                <th class="amt-head"/>
+                            </t>
+                            <th class="amt-head">Balance</th>
+                            <t t-if="filter_data['debit_credit'] == 1">
+                                <th class="amt-head">Debit</th>
+                                <th class="amt-head">Credit</th>
+                            </t>
+                            <t t-else="">
+                                <th class="amt-head"/>
+                                <th class="amt-head"/>
+                            </t>
+                            <th class="amt-head">Balance</th>
+                        </t>
+                        <t t-if="filter_data['debit_credit'] == 1">
+                            <th class="amt-head">Debit</th>
+                            <th class="amt-head">Credit</th>
+                        </t>
+                        <t t-else="">
+                            <th class="amt-head"/>
+                            <th class="amt-head"/>
+                        </t>
+                        <th class="amt-head">Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-if="!filter_data['show_hierarchy']">
+                        <t t-as="account" t-foreach="account_data_sorted_keys">
+                            <tr class="py-mline" data-toggle="collapse" t-attf-data-id=".a{{account_data[account]['id']}}">
+                                <td class="bld">
+                                    <div class="dropdown">
+                                        <a data-toggle="dropdown" href="#">
+                                            <span data-id="17">
+                                                <t t-esc="account_data[account]['code']"/>-
+
+                                                <t t-esc="account_data[account]['name']"/></span>
+                                            <i aria-label="Unfolded" class="fa fa-caret-down" role="img" title="Unfolded"/>
+                                        </a>
+                                        <span data-id="17"/>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <t t-if="account_data[account]['id']">
+                                                <li role="presentation">
+                                                    <a action="open_document" class="view-source" role="menuitem" t-att-data-account-id="account_data[account]['id']" tabindex="-1">View General Ledger
+</a>
+                                                </li>
+                                            </t>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <t t-if="filter_data['only_include_ending_balance'] == 0">
+                                <t t-if="filter_data['debit_credit'] == 1">
+                                    <td class="amt">
+                                        <t t-raw="account_data[account]['initial_debit']"/>
+                                    </td>
+                                    <td class="amt">
+                                        <t t-raw="account_data[account]['initial_credit']"/>
+                                    </td>
+                                </t>
+                                <t t-else="">
+                                    <td class="amt"/>
+                                    <td class="amt"/>
+                                </t>
+                                <td class="amt bld">
+                                    <t t-raw="account_data[account]['initial_balance']"/>
+                                </td>
+                                <t t-if="filter_data['debit_credit'] == 1">
+                                    <td class="amt">
+                                        <t t-raw="account_data[account]['debit']"/>
+                                    </td>
+                                    <td class="amt">
+                                        <t t-raw="account_data[account]['credit']"/>
+                                    </td>
+                                </t>
+                                <t t-else="">
+                                    <td class="amt"/>
+                                    <td class="amt"/>
+                                </t>
+                                <td class="amt bld">
+                                    <t t-raw="account_data[account]['balance']"/>
+                                </td>
+                                </t>
+                                <t t-if="filter_data['debit_credit'] == 1">
+                                    <td class="amt">
+                                        <t t-raw="account_data[account]['ending_debit']"/>
+                                    </td>
+                                    <td class="amt">
+                                        <t t-raw="account_data[account]['ending_credit']"/>
+                                    </td>
+                                </t>
+                                <t t-else="">
+                                    <td class="amt"/>
+                                    <td class="amt"/>
+                                </t>
+                                <td class="amt bld">
+                                    <t t-raw="account_data[account]['ending_balance']"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </t>
+                    <t t-if="filter_data['show_hierarchy']">
+                        <t t-as="account" t-foreach="account_data_sorted_keys">
+                            <t t-if="account['len'] == 1">
+                                <t t-set="style" t-value="'border: 0px; border-bottom: 2px solid #aaa'"/>
+                            </t>
+                            <t t-if="account['len'] == 2">
+                                <t t-set="style" t-value="'border: 0px; border-bottom: 1px solid #bbb'"/>
+                            </t>
+                            <t t-if="account['len'] == 3">
+                                <t t-set="style" t-value="'border: 0px !important;'"/>
+                            </t>
+                            <t t-if="account['len'] == 4">
+                                <t t-set="style" t-value="'border: 0px !important'"/>
+                            </t>
+                            <tr class="py-mline" t-att-style="style">
+                                <td class="bld">
+                                    <div class="dropdown">
+                                        <a data-toggle="dropdown" href="#">
+                                            <span data-id="17">
+                                                <t t-as="i" t-foreach="account['indent_list']">
+                                                    <span>&amp;nbsp;</span>
+                                                    <span>&amp;nbsp;</span>
+                                                </t>
+                                                <t t-if="account['dummy']">
+                                                    <t t-esc="account['code']"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-esc="account['code']"/>-
+
+                                                    <t t-esc="account['name']"/></t>
+                                            </span>
+                                            <t t-if="!account['dummy']">
+                                                <i aria-label="Unfolded" class="fa fa-caret-down" role="img" title="Unfolded"/>
+                                            </t>
+                                        </a>
+                                        <span data-id="17"/>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <t t-if="account['id']">
+                                                <li role="presentation">
+                                                    <a action="open_document" class="view-source" role="menuitem" t-att-data-account-id="account['id']" tabindex="-1">View General Ledger
+</a>
+                                                </li>
+                                            </t>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <t t-if="filter_data['only_include_ending_balance'] == 0">
+                                <t t-if="filter_data['debit_credit'] == 1">
+                                    <td class="amt">
+                                        <t t-raw="account['initial_debit']"/>
+                                    </td>
+                                    <td class="amt">
+                                        <t t-raw="account['initial_credit']"/>
+                                    </td>
+                                </t>
+                                <t t-else="">
+                                    <td class="amt"/>
+                                    <td class="amt"/>
+                                </t>
+                                <td class="amt bld">
+                                    <t t-raw="account['initial_balance']"/>
+                                </td>
+                                <t t-if="filter_data['debit_credit'] == 1">
+                                    <td class="amt">
+                                        <t t-raw="account['debit']"/>
+                                    </td>
+                                    <td class="amt">
+                                        <t t-raw="account['credit']"/>
+                                    </td>
+                                </t>
+                                <t t-else="">
+                                    <td class="amt"/>
+                                    <td class="amt"/>
+                                </t>
+                                <td class="amt bld">
+                                    <t t-raw="account['balance']"/>
+                                </td>
+                                </t>
+                                <t t-if="filter_data['debit_credit'] == 1">
+                                    <td class="amt">
+                                        <t t-raw="account['ending_debit']"/>
+                                    </td>
+                                    <td class="amt">
+                                        <t t-raw="account['ending_credit']"/>
+                                    </td>
+                                </t>
+                                <t t-else="">
+                                    <td class="amt"/>
+                                    <td class="amt"/>
+                                </t>
+                                <td class="amt bld">
+                                    <t t-raw="account['ending_balance']"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </t>
+                    <t t-if="filter_data['strict_range']">
+                        <t t-as="account" t-foreach="retained">
+                            <tr class="py-mline" data-toggle="collapse" t-attf-data-id=".a{{retained[account]['id']}}">
+                                <td class="bld">
+                                    <t t-esc="retained[account]['name']"/>
+                                </td>
+                                <t t-if="filter_data['only_include_ending_balance'] == 0">
+                                <t t-if="filter_data['debit_credit'] == 1">
+                                    <td class="amt">
+                                        <t t-raw="retained[account]['initial_debit']"/>
+                                    </td>
+                                    <td class="amt">
+                                        <t t-raw="retained[account]['initial_credit']"/>
+                                    </td>
+                                </t>
+                                <t t-else="">
+                                    <td class="amt"/>
+                                    <td class="amt"/>
+                                </t>
+                                <td class="amt bld">
+                                    <t t-raw="retained[account]['initial_balance']"/>
+                                </td>
+                                <t t-if="filter_data['debit_credit'] == 1">
+                                    <td class="amt">
+                                        <t t-raw="retained[account]['debit']"/>
+                                    </td>
+                                    <td class="amt">
+                                        <t t-raw="retained[account]['credit']"/>
+                                    </td>
+                                </t>
+                                <t t-else="">
+                                    <td class="amt"/>
+                                    <td class="amt"/>
+                                </t>
+                                <td class="amt bld">
+                                    <t t-raw="retained[account]['balance']"/>
+                                </td>
+                                </t>
+                                <t t-if="filter_data['debit_credit'] == 1">
+                                    <td class="amt">
+                                        <t t-raw="retained[account]['ending_debit']"/>
+                                    </td>
+                                    <td class="amt">
+                                        <t t-raw="retained[account]['ending_credit']"/>
+                                    </td>
+                                </t>
+                                <t t-else="">
+                                    <td class="amt"/>
+                                    <td class="amt"/>
+                                </t>
+                                <td class="amt bld">
+                                    <t t-raw="retained[account]['ending_balance']"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </t>
+                    <t t-as="account" t-foreach="subtotal">
+                        <tr class="py-mline" data-toggle="collapse" t-attf-data-id=".a{{subtotal[account]['id']}}">
+                            <td class="bld">
+                                <t t-esc="subtotal[account]['name']"/>
+                            </td>
+                            <t t-if="filter_data['only_include_ending_balance'] == 0">
+                            <t t-if="filter_data['debit_credit'] == 1">
+                                <td class="amt">
+                                    <t t-raw="subtotal[account]['initial_debit']"/>
+                                </td>
+                                <td class="amt">
+                                    <t t-raw="subtotal[account]['initial_credit']"/>
+                                </td>
+                            </t>
+                            <t t-else="">
+                                <td class="amt"/>
+                                <td class="amt"/>
+                            </t>
+                            <td class="amt bld">
+                                <t t-raw="subtotal[account]['initial_balance']"/>
+                            </td>
+                            <t t-if="filter_data['debit_credit'] == 1">
+                                <td class="amt">
+                                    <t t-raw="subtotal[account]['debit']"/>
+                                </td>
+                                <td class="amt">
+                                    <t t-raw="subtotal[account]['credit']"/>
+                                </td>
+                            </t>
+                            <t t-else="">
+                                <td class="amt"/>
+                                <td class="amt"/>
+                            </t>
+                            <td class="amt bld">
+                                <t t-raw="subtotal[account]['balance']"/>
+                            </td>
+                            </t>
+                            <t t-if="filter_data['debit_credit'] == 1">
+                                <td class="amt">
+                                    <t t-raw="subtotal[account]['ending_debit']"/>
+                                </td>
+                                <td class="amt">
+                                    <t t-raw="subtotal[account]['ending_credit']"/>
+                                </td>
+                            </t>
+                            <t t-else="">
+                                <td class="amt"/>
+                                <td class="amt"/>
+                            </t>
+                            <td class="amt bld">
+                                <t t-raw="subtotal[account]['ending_balance']"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+    <t t-name="FilterSectionTb">
+        <div class="py-control-div">
+            <ol class="py-breadcrumb">
+                <li>Trial Balance</li>
+            </ol>
+        </div>
+        <div class="py-control-div">
+            <div class="py-cntrl-left">
+                <div class="py-ctrl-buttons">
+                    <button action="print_pdf" class="btn py-btn-primary" id="pdf" style="position: relative;" type="button">Print (Pdf)</button>
+                    <button action="print_pdf_portrait" class="btn py-btn-primary" id="pdf_portrait" style="position: relative;" type="button">Print Portrait (Pdf)</button>
+                    <button action="print_xlsx" class="btn py-btn-primary" id="xlsx" style="position: relative;" type="button">Export (XLSX)</button>
+                </div>
+            </div>
+            <div class="py_cntrl_right">
+                <div class="py-search-buttons">
+                    <button action="view_filters" class="btn btn-secondary" id="view_current_filters" style="position: relative;" type="button">View Filters</button>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="DynamicTbMain">
+        <div class="py-main-container">
+            <div class="py-filter-container">
+                <div class="py-control-panel"/>
+            </div>
+            <div class="py-data-container"/>
+        </div>
+    </t>
+
+    <t t-name="DataSectionUnfr">
+        <div>
+            <table cellspacing="0" class="system-data-table" id="data-lines" width="100%">
+                <thead>
+                    <tr>
+                        <th>Accounts to adjust</th>
+                        <th class="amt-head">Accounting date</th>
+                        <th class="amt-head">Balance in foreign currency</th>
+                        <th class="amt-head">Balance at operation rate</th>
+                        <th class="amt-head">Balance at current rate</th>
+                        <th class="amt-head">Adjustment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-as="c" t-foreach="Data">
+                        <t t-set="currency" t-value="Data[c]"/>
+                        <tr class="py-mline" style="background-color: #e0dbdb; font-size: 14px">
+                            <td>
+                                <!--<i aria-label="Unfolded" class="fa fa-caret-down" role="img" title="Unfolded"/>-->
+                                <span><t t-esc="currency['currency_display']"/></span>
+                            </td>
+                            <td class="amt"><t t-raw="currency['date']"/></td>
+                            <td class="amt"><t t-raw="currency['report_amount_currency']"/></td>
+                            <td class="amt"><t t-raw="currency['report_balance']"/></td>
+                            <td class="amt"><t t-raw="currency['report_amount_currency_current']"/></td>
+                            <td class="amt"><t t-raw="currency['report_adjustment']"/></td>
+                        </tr>
+
+                        <t t-as="a" t-foreach="currency['lines']">
+                            <t t-set="account" t-value="currency['lines'][a]"/>
+                            <tr class="py-mline" style="font-size: 13px"
+                                data-toggle="collapse" t-att-data-account-id="a" t-attf-data-target=".c{{c}}a{{a}}">
+                                <td>
+                                    <i aria-label="Unfolded" class="fa fa-caret-down" role="img" title="Unfolded"/>
+                                    <span><t t-esc="account['account_name']"/></span>
+                                </td>
+                                <td class="amt"><t t-raw="account['date']"/></td>
+                                <td class="amt"><t t-raw="account['report_amount_currency']"/></td>
+                                <td class="amt"><t t-raw="account['report_balance']"/></td>
+                                <td class="amt"><t t-raw="account['report_amount_currency_current']"/></td>
+                                <td class="amt"><t t-raw="account['report_adjustment']"/></td>
+                            </tr>
+
+                            <t t-as="line" t-foreach="account['lines']">
+                                <tr t-attf-class="py-mline collapse c{{c}}a{{a}}" style="background-color: white;">
+                                    <td class="pl-5">
+                                        <div class="dropdown">
+                                            <a data-toggle="dropdown" href="#">
+                                                <span><t t-esc="line['move_name']"/></span>
+                                                <i aria-label="Unfolded" class="fa fa-caret-down" role="img" title="Unfolded"/>
+                                            </a>
+                                            <span data-id="17"/>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li role="presentation">
+                                                    <a action="open_document" class="view-source" role="menuitem" t-att-data-move-id="line['id']" tabindex="-1">View Source move</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td class="amt"><t t-raw="line['date']"/></td>
+                                    <td class="amt"><t t-raw="line['report_amount_currency']"/></td>
+                                    <td class="amt"><t t-raw="line['report_balance']"/></td>
+                                    <td class="amt"><t t-raw="line['report_amount_currency_current']"/></td>
+                                    <td class="amt"><t t-raw="line['report_adjustment']"/></td>
+                                </tr>
+                            </t>
+                        </t>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+    <t t-name="FilterSectionUnfr">
+        <div class="py-control-div">
+            <ol class="py-breadcrumb">
+                <li>Unrealized Forex Gain/Loss</li>
+            </ol>
+        </div>
+        <div class="py-control-div">
+            <div class="py-cntrl-left">
+                <div class="py-ctrl-buttons">
+                    <button action="print_pdf" class="btn py-btn-primary" id="pdf" style="position: relative;" type="button">Print (Pdf)</button>
+                    <button action="print_xlsx" class="btn py-btn-primary" id="xlsx" style="position: relative;" type="button">Export (XLSX)</button>
+                    <button action="adjustment_entry" class="btn py-btn-primary" id="adjustment_entry" style="position: relative;" type="button">ADJUSTMENT ENTRY</button>
+                </div>
+            </div>
+            <div class="py_cntrl_right">
+                <div class="py-search-buttons">
+                    <button action="view_filters" class="btn btn-secondary" id="view_current_filters" style="position: relative;" type="button">View Filters</button>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="DynamicUnfrMain">
+        <div class="py-main-container">
+            <div class="py-filter-container">
+                <div class="py-control-panel"/>
+            </div>
+            <div class="py-data-container">
+                <div class="py-data-container-orig"/>
+                <div id="loader">
+                    <div id="top"/>
+                    <div id="bottom"/>
+                    <div id="line"/>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="DataSectionAsset">
+        <div>
+            <table cellspacing="0" class="system-data-table" id="data-lines" width="100%">
+                <thead>
+                    <tr>
+                        <th colspan="7"/>
+                        <th class="amt-head text-center border" colspan="2">Amortization</th>
+                        <th class="amt-head text-center border" colspan="3">Cost</th>
+                        <th class="amt-head border">Charged Out</th>
+                    </tr>
+                    <tr>
+                        <th class="amt-head">Reference</th>
+                        <th class="amt-head" style="width:80px;">Date</th>
+                        <th class="amt-head">Description</th>
+                        <th class="amt-head">Vendor Name</th>
+                        <th class="amt-head">Paid Amount</th>
+                        <th class="amt-head" style="width:80px;">Start Date</th>
+                        <th class="amt-head" style="width:80px;">End Date</th>
+                        <th class="amt-head">Period</th>
+                        <th class="amt-head">Monthly</th>
+                        <th class="amt-head">Balance b/f</th>
+                        <th class="amt-head">Addition</th>
+                        <th class="amt-head">Total</th>
+                        <th class="amt-head">Total</th>
+                        <th class="amt-head">Balance c/f</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-as="line" t-foreach="Data">
+                        <tr t-attf-class="py-mline">
+                            <td class="pl-5">
+                                <div class="dropdown">
+                                    <a data-toggle="dropdown" href="#">
+                                        <span><t t-esc="line['reference']"/></span>
+                                        <i aria-label="Unfolded" class="fa fa-caret-down" role="img" title="Unfolded"/>
+                                    </a>
+                                    <span data-id="17"/>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li role="presentation">
+                                            <a action="open_document" class="view-source" role="menuitem" t-att-data-asset-id="line['asset_id']" tabindex="-1">View Asset</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td class="amt"><t t-raw="line['date']"/></td>
+                            <td class="amt"><t t-raw="line['description']"/></td>
+                            <td class="amt"><t t-raw="line['vendor_name']"/></td>
+                            <td class="amt"><t t-raw="line['paid_amount']"/></td>
+                            <td class="amt"><t t-raw="line['start_date']"/></td>
+                            <td class="amt"><t t-raw="line['end_date']"/></td>
+                            <td class="amt"><t t-raw="line['amortization_period']"/></td>
+                            <td class="amt"><t t-raw="line['monthly_amortization']"/></td>
+                            <td class="amt"><t t-raw="line['balance_b_f']"/></td>
+                            <td class="amt"><t t-raw="line['addition']"/></td>
+                            <td class="amt"><t t-raw="line['cost_total']"/></td>
+                            <td class="amt"><t t-raw="line['charged_out_total']"/></td>
+                            <td class="amt"><t t-raw="line['balance_c_f']"/></td>
+
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+    <t t-name="FilterSectionAsset">
+        <div class="py-control-div">
+            <ol class="py-breadcrumb">
+                <li>Asset Report</li>
+            </ol>
+        </div>
+        <div class="py-control-div">
+            <div class="py-cntrl-left">
+                <div class="py-ctrl-buttons">
+                    <!--<button action="print_pdf" class="btn py-btn-primary" id="pdf" style="position: relative;" type="button">Print (Pdf)</button>-->
+                    <button action="print_xlsx" class="btn py-btn-primary" id="xlsx" style="position: relative;" type="button">Export (XLSX)</button>
+                </div>
+            </div>
+            <div class="py_cntrl_right">
+                <div class="py-search-buttons">
+                    <button action="view_filters" class="btn btn-secondary" id="view_current_filters" style="position: relative;" type="button">View Filters</button>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="DynamicAssetMain">
+        <div class="py-main-container">
+            <div class="py-filter-container">
+                <div class="py-control-panel"/>
+            </div>
+            <div class="py-data-container">
+                <div class="py-data-container-orig"/>
+                <div id="loader">
+                    <div id="top"/>
+                    <div id="bottom"/>
+                    <div id="line"/>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

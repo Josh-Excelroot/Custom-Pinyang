@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="email_template_rft_status" model="mail.template">
+            <field name="name">RFT Status: Send by email</field>
+            <field name="model_id" ref="sci_goexcel_transport.model_transport_rft"/>
+            <field name="email_from"></field>
+            <field name="email_to">${object.get_email_ids_of_notification_parties()|safe}</field>
+            <field name="subject">RFT Status Notify (${object.rft_no or ''}) </field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear Sir/Madam,
+                        <br/>
+                        <br/>
+                        This RFT Job is in New Stage
+                        <br/>
+
+                    </p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <record id="email_template_rft_status_job_assigned" model="mail.template">
+            <field name="name">RFT Status: Send by email</field>
+            <field name="model_id" ref="sci_goexcel_transport.model_transport_rft"/>
+            <field name="email_from"></field>
+            <field name="email_to">${object.get_email_ids_of_notification_parties()|safe}</field>
+            <field name="subject">RFT Status Notify (${object.rft_no or ''}) </field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear Sir/Madam,
+                        <br/>
+                        <br/>
+                        This RFT Job is in Job Assigned Stage
+                        <br/>
+
+                    </p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <record id="email_template_rft_status_job_completed" model="mail.template">
+            <field name="name">RFT Status: Send by email</field>
+            <field name="model_id" ref="sci_goexcel_transport.model_transport_rft"/>
+            <field name="email_from"></field>
+            <field name="email_to">${object.get_email_ids_of_notification_parties()|safe}</field>
+            <field name="subject">RFT Status Notify (${object.rft_no or ''}) </field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear Sir/Madam,
+                        <br/>
+                        <br/>
+                        This RFT Job is in Job Completed Stage
+                        <br/>
+
+                    </p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <record id="email_template_rft_status_invoicing" model="mail.template">
+            <field name="name">RFT Status: Send by email</field>
+            <field name="model_id" ref="sci_goexcel_transport.model_transport_rft"/>
+            <field name="email_from"></field>
+            <field name="email_to">${object.get_email_ids_of_notification_parties()|safe}</field>
+            <field name="subject">RFT Status Notify (${object.rft_no or ''}) </field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear Sir/Madam,
+                        <br/>
+                        <br/>
+                        This RFT Job is in Invoicing Completed Stage
+                        <br/>
+
+                    </p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <record id="email_template_rft_status_pod" model="mail.template">
+            <field name="name">RFT Status: Send by email</field>
+            <field name="model_id" ref="sci_goexcel_transport.model_transport_rft"/>
+            <field name="email_from"></field>
+            <field name="email_to">${object.get_email_ids_of_notification_parties()|safe}</field>
+            <field name="subject">RFT Status Notify (${object.rft_no or ''}) </field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear Sir/Madam,
+                        <br/>
+                        <br/>
+                        This RFT Job is in POD Attached Stage
+                        <br/>
+
+                    </p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <record id="email_template_rft_status_cancel" model="mail.template">
+            <field name="name">RFT Status: Send by email</field>
+            <field name="model_id" ref="sci_goexcel_transport.model_transport_rft"/>
+            <field name="email_from"></field>
+            <field name="email_to">${object.get_email_ids_of_notification_parties()|safe}</field>
+            <field name="subject">RFT Status Notify (${object.rft_no or ''}) </field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear Sir/Madam,
+                        <br/>
+                        <br/>
+                        This RFT Job is in Cancel Stage
+                        <br/>
+
+                    </p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

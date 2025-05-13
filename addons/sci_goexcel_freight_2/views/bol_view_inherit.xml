@@ -1,0 +1,301 @@
+<odoo>
+     <record model="ir.ui.view" id="view_form_freight_bol_2">
+         <field name="name">freight.bol.2</field>
+         <field name="model">freight.bol</field>
+         <field name="inherit_id" ref="sci_goexcel_freight.view_form_bol"/>
+         <field name="arch" type="xml">
+
+
+<!--             ///////////////////////////-->
+
+              <xpath expr="//field[@name='bol_no']" position="after">
+                        <field name="awb_no" attrs="{'invisible': [('service_type', 'not in', 'air')]}"/>
+                    </xpath>
+
+               <xpath expr="//field[@name='bol_no']" position="attributes">
+
+                    <attribute name="attrs">{'invisible': [('service_type', 'not in', 'ocean')]}</attribute>
+                    </xpath>
+
+
+                <xpath expr="//group[@name='bl_information']//field[@name='bol_no']" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                </xpath>
+
+
+
+<!--    Yulia 07102024 get latest bol_view from ion global place to sci_goexcel_freight         -->
+           <xpath expr="//group[@name='shipment_information']" position="attributes">
+               <attribute name="attrs">{'invisible': [('service_type', 'not in', 'ocean')]}</attribute>
+           </xpath>
+
+           <xpath expr="//group[@name='shipment_information']/group[1]/field[@name='feeder_voyage']" position="after">
+                <field name="terminal"/>
+                <field name="vessel_id"/>
+           </xpath>
+
+            <xpath expr="//notebook" position="before">
+                <group attrs="{'invisible': [('service_type', 'not in', 'land')]}">
+                    <group string="Land Transport Information">
+                        <field name="invoice_no"/>
+                    </group>
+                </group>
+
+                <group attrs="{'invisible': [('service_type', 'not in', 'air')]}">
+                    <group string="AWB Information">
+                        <field name="consignee_id"/>
+                        <field name="consignee"/>
+                        <field name="consignee_account_number"/>
+                        <field name="agen_iata_code"/>
+                        <field name="request_flight_date"/>
+                        <field name="reference_number"/>
+                        <field name="optional_shipping_information"/>
+                        <field name="Currency"/>
+                        <field name="chgs_code"/>
+                        <field name="account_of_insurance"/>
+
+
+                    </group>
+                    <group>
+                        <field name="carrier"  string="Issued By"/>
+                        <field name="air_agent" string="Carrier Agent"/>
+                        <field name="air_agent_address"/>
+                        <field name="wt_ppd"/>
+                        <field name="wt_coll"/>
+                        <field name="other_ppd"/>
+                        <field name="other_coll"/>
+                        <field name="declared_value_for_carriage"/>
+                        <field name="declared_value_for_custom"/>
+                        <field name="sci"/>
+
+
+                    </group>
+                </group>
+
+
+                <group string="Airway Shipment Info"  attrs="{'invisible': [('service_type', 'not in', 'air')]}" >
+                    <group>
+                        <field name="airport_departure"/>
+                    </group>
+                    <group>
+                        <field name="airport_destination"/>
+                    </group>
+                </group>
+
+                <group col="4" colspan="6" string=""  attrs="{'invisible': [('service_type', 'not in', 'air')]}">
+                    <field name="first_carrier_to" />
+                    <field name="first_carrier_flight_no" />
+<!--                    <field name="first_carrier_etd"/>-->
+<!--                    <field name="first_carrier_eta"/>-->
+                    <field name="second_carrier_to" />
+                    <field name="second_carrier_flight_no" />
+<!--                    <field name="second_carrier_etd"/>-->
+<!--                    <field name="second_carrier_eta"/>-->
+                    <field name="third_carrier_to" />
+                    <field name="third_carrier_flight_no" />
+<!--                    <field name="third_carrier_etd"/>-->
+<!--                    <field name="third_carrier_eta"/>-->
+                </group>
+
+
+            </xpath>
+<!--             ///////////////////////////-->
+             <xpath expr="//header" position="inside">
+                 <button name="action_send_booking_confirmation"
+                         type="object" class="oe_highlight"
+                         string="Send Booking Conf."/>
+             </xpath>
+             <xpath expr="//button[@name='action_send_booking_confirmation']" position="after">
+                 <button name="action_send_booking_confirmation_si"
+                         type="object"
+                         string="Send Bkg Conf./SI"
+                         class="oe_highlight" attrs="{'invisible': ['|', ('direction', '!=', 'export'), ('service_type', 'not in', 'ocean')]}"/>
+             </xpath>
+             <xpath expr="//button[@name='action_send_bl']" position="after">
+                 <button name="action_send_bl_xls"
+                         type="object"
+                         string="Send BOL Xls"
+                         class="oe_highlight" attrs="{'invisible': ['|', ('direction', '!=', 'export'), ('service_type', 'not in', 'ocean')]}"/>
+             </xpath>
+             <xpath expr="//field[@name='unstuff_at']" position="attributes">
+                 <attribute name="invisible">1</attribute>
+             </xpath>
+             <xpath expr="//field[@name='delivery_contact']" position="attributes">
+                 <attribute name="invisible">1</attribute>
+             </xpath>
+              <xpath expr="//field[@name='point_country_origin']" position="attributes">
+                 <attribute name="invisible">1</attribute>
+             </xpath>
+             <xpath expr="//page[@name='freight_charges']" position="attributes">
+                 <attribute name="attrs">{'invisible': ('direction', '=', 'import')}</attribute>
+             </xpath>
+             <xpath expr="//field[@name='bol_no']" position="attributes">
+                 <attribute name="string">HBL No.</attribute>
+             </xpath>
+             <xpath expr="//field[@name='shipper']" position="before">
+                 <field name="shipper_id" options="{'no_create': True, 'no_create_edit':True}"/>
+             </xpath>
+             <xpath expr="//field[@name='consignee']" position="before">
+                 <field name="consignee_id" options="{'no_create': True, 'no_create_edit':True}"/>
+             </xpath>
+             <xpath expr="//field[@name='bol_no']" position="after">
+                 <field name="sn_no"/>
+             </xpath>
+             <xpath expr="//tree[@name='manifest_tree']" position="replace">
+                 <tree name="manifest_tree">
+                     <field name="sequence" widget="handle"/>
+                     <field name="marks" />
+                     <field name="container_no"/>
+                     <field name="seal_no"/>
+                     <field name="container_product_id"/>
+                     <field name="container_category_id" invisible="1"/>
+                     <field name="container_product_name" />
+                     <field name="packages_no_value"/>
+                     <field name="packages_no_uom"/>
+                     <field name="exp_net_weight"/>
+                     <field name="exp_gross_weight" sum="total weight"/>
+                     <field name="dim_length" attrs="{'column_invisible': [('parent.service_type', 'in', 'ocean')]}"/>
+                     <field name="dim_width" attrs="{'column_invisible': [('parent.service_type', 'in', 'ocean')]}"/>
+                     <field name="dim_height" attrs="{'column_invisible': [('parent.service_type', 'in', 'ocean')]}"/>
+                     <field name="exp_vol" sum="total volume" />
+                 </tree>
+             </xpath>
+             <xpath expr="//field[@name='invoice_paid_status']" position="after">
+                 <field name="bl_status"/>
+                 <field name="freight_type"/>
+             </xpath>
+             <xpath expr="//button[@name='action_send_bl']" position="replace">
+                 <button name="action_send_bl"
+                         type="object"
+                         string="Send BL"
+                         class="oe_highlight"
+                         attrs="{'invisible': [('direction', 'in', 'import')]}"/>
+             </xpath>
+             <xpath expr="//button[@name='action_create_si']" position="replace">
+                 <button name="action_create_si"
+                         type="object"
+                         string="Create SI"
+                         class="oe_highlight"
+                         attrs="{'invisible': [('direction', 'in', 'import')]}"/>
+             </xpath>
+             <xpath expr="//field[@name='doc_form_no']" position="replace">
+                 <field name="doc_form_no"
+                        attrs="{'invisible': [('direction', 'in', 'import')]}"/>
+             </xpath>
+             <xpath expr="//field[@name='service_contract_no']" position="replace">
+                 <field name="service_contract_no"
+                        attrs="{'invisible': [('direction', 'in', 'import')]}"/>
+             </xpath>
+             <xpath expr="//field[@name='date_laden_on_board']" position="replace">
+                 <field name="date_laden_on_board"
+                        attrs="{'invisible': [('direction', 'in', 'import')]}"/>
+             </xpath>
+             <xpath expr="//field[@name='place_of_issue']" position="replace">
+                 <field name="place_of_issue"
+                        attrs="{'invisible': [('direction', 'in', 'import')]}"/>
+             </xpath>
+             <xpath expr="//field[@name='fa_reference']" position="replace">
+                 <field name="fa_reference"
+                        attrs="{'invisible': [('direction', 'in', 'import')]}"/>
+             </xpath>
+             <xpath expr="//field[@name='shipper_load']" position="replace">
+                 <field name="shipper_load"
+                        attrs="{'invisible': [('direction', 'in', 'import')]}"/>
+             </xpath>
+             <xpath expr="//page[@name='cost_profit_page']" position="attributes">
+                 <attribute name="groups">account.group_account_user</attribute>
+             </xpath>
+			 <xpath expr="//field[@name='manifest_no']" position="after">
+                 <field name="unstuff_date"/>
+             </xpath>
+             <xpath expr="//field[@name='routing_instruction']" position="before">
+                 <field name="oversea_agent" options="{'no_create': True, 'no_create_edit':True}"/>
+             </xpath>
+              <!-- #Canon -->
+             <xpath expr="//field[@name='date_of_issue']" position="replace">
+                 <field name="date_of_issue" attrs="{'invisible': [('direction', 'not in', 'export')]}"/>
+             </xpath>
+             <xpath expr="//field[@name='export_reference']" position="replace">
+                 <field name="export_reference" attrs="{'invisible': [('direction', 'not in', 'export')]}"/>
+             </xpath>
+             <!-- #Canon End-->
+             <xpath expr="//field[@name='port_of_discharge_eta']" position="after">
+                 <field name="shipment_close_date_time"/>
+                 <field name="port_of_tranship_input"/>
+                 <field name="port_of_tranship_eta"/>
+             </xpath>
+             <!-- #TS add color -->
+             <xpath expr="//field[@name='commodity1']" position="after">
+                <field name="sq_reference" domain="[('partner_id','=',customer_name), ('validity_date','&gt;', (context_today()).strftime('%%Y-%%m-%%d') )]"/>
+             </xpath>
+             <xpath expr="//tree[@name='cost_profit_tree']/field[@name='cost_qty']" position="attributes">
+                 <attribute name="options">{
+                     "bg_color": "#babcbe: True",
+                     "fg_color": "white: True"
+                     }</attribute>
+             </xpath>
+             <xpath expr="//tree[@name='cost_profit_tree']/field[@name='cost_price']" position="attributes">
+                 <attribute name="options">{
+                     "bg_color": "#babcbe: True",
+                     "fg_color": "white: True"
+                     }</attribute>
+             </xpath>
+             <xpath expr="//tree[@name='cost_profit_tree']/field[@name='cost_amount']" position="attributes">
+                 <attribute name="options">{
+                     "bg_color": "#babcbe: True",
+                     "fg_color": "white: True"
+                     }</attribute>
+             </xpath>
+             <xpath expr="//tree[@name='cost_profit_tree']/field[@name='vendor_id']" position="attributes">
+                 <attribute name="options">{
+                     "bg_color": "#babcbe: True",
+                     "fg_color": "white: True"
+                     }</attribute>
+             </xpath>
+             <xpath expr="//tree[@name='cost_profit_tree']/field[@name='vendor_bill_ids']" position="attributes">
+                 <attribute name="options">{
+                     "bg_color": "#babcbe: True",
+                     "fg_color": "white: True"
+                     }</attribute>
+             </xpath>
+             <xpath expr="//tree[@name='cost_profit_tree']/field[@name='cost_currency']" position="attributes">
+                 <attribute name="options">{
+                     "bg_color": "#babcbe: True",
+                     "fg_color": "white: True"
+                     }</attribute>
+             </xpath>
+             <xpath expr="//tree[@name='cost_profit_tree']/field[@name='cost_currency_rate']" position="attributes">
+                 <attribute name="options">{
+                     "bg_color": "#babcbe: True",
+                     "fg_color": "white: True"
+                     }</attribute>
+             </xpath>
+             <xpath expr="//tree[@name='cost_profit_tree']/field[@name='cost_total']" position="attributes">
+                 <attribute name="options">{
+                     "bg_color": "#babcbe: True",
+                     "fg_color": "white: True"
+                     }</attribute>
+             </xpath>
+             <xpath expr="//field[@name='cost_profit_ids']/tree//field[@name='sale_total']" position="after">
+                 <field name="tax_id"
+                        widget="many2many_tags"
+                        options="{'no_create': True}"
+                        context="{'search_view_ref': 'account.account_tax_view_search'}"
+                        domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"/>
+
+             </xpath>
+             <xpath expr="//field[@name='customer_name']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit':True}</attribute>
+             </xpath>
+             <xpath expr="//field[@name='contact_name']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit':True}</attribute>
+             </xpath>
+             <xpath expr="//field[@name='carrier_c']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit':True}</attribute>
+             </xpath>
+
+         </field>
+    </record>
+
+
+</odoo>

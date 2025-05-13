@@ -1,0 +1,27 @@
+id,code,name,input_id/id
+__export__.hr_rule_input_9,IOTHERADD,Other Additions,hr_salary_rule_otheradditions0
+__export__.hr_rule_input_10,INPUTBACKPAY,Back Pay,hr_salary_rule_backpay0
+__export__.hr_rule_input_11,IALLOWANCE,Allowance,hr_salary_rule_allowance0
+__export__.hr_rule_input_12,ICOMM,Commission,hr_salary_rule_commission0
+__export__.hr_rule_input_13,INPUTOT,Overtime (1.5),hr_salary_rule_overtime0
+__export__.hr_rule_input_14,INPUTOTHDED,Other Deductions,hr_salary_rule_otherdeductions0
+__export__.hr_rule_input_15,IUPL,Unpaid Leave,hr_salary_rule_unpaidleave0
+__export__.hr_rule_input_16,IADJADD,Adjustments,hr_salary_rule_adjustmentsaddition0
+__export__.hr_rule_input_18,IBONUS,Bonus,hr_salary_rule_bonus0
+__export__.hr_rule_input_19,INPUTCP38,PCB - CP38,hr_salary_rule_pcbcp0
+__export__.hr_rule_input_20,INPUTOTPH,Overtime - Public Holiday,hr_salary_rule_overtimepublicholiday0
+__export__.hr_rule_input_21,IOTHDEDBASIC,Other Deductions (Basic),hr_salary_rule_otherdeductionsbasic0
+__export__.hr_rule_input_22,LHDNDED01,LHDN - Medical expenses for own parents, special need and parent care,hr_salary_rule_pcbapproveddeductions0
+__export__.hr_rule_input_23,LHDNDED02,LHDN - Basic supporting equipment for disabled self, spouse, child or parent,hr_salary_rule_pcbapproveddeductions0
+__export__.hr_rule_input_24,LHDNDED03,LHDN -  Education fees,hr_salary_rule_pcbapproveddeductions0
+__export__.hr_rule_input_25,LHDNDED04,LHDN - Medical expenses on serious diseases for self, spouse or child,hr_salary_rule_pcbapproveddeductions0
+__export__.hr_rule_input_26,LHDNDED05,LHDN - Complete medical examination for self, spouse or child,hr_salary_rule_pcbapproveddeductions0
+__export__.hr_rule_input_27,LHDNDED06,LHDN - Purchase of books/magazines/journals/similar publications (except newspaper and banned reading material) for self, spouse or child,hr_salary_rule_pcbapproveddeductions0
+__export__.hr_rule_input_28,LHDNDED07,LHDN - Purchase of personal computer for individual,hr_salary_rule_pcbapproveddeductions0
+__export__.hr_rule_input_29,LHDNDED08,LHDN- Net deposit in Skim Simpanan Pendidikan Nasional (SSPN),hr_salary_rule_pcbapproveddeductions0
+__export__.hr_rule_input_30,LHDNDED09,LHDN - Purchase of sports equipment for any sport activity as defined under the Sports Development Act 1997,hr_salary_rule_pcbapproveddeductions0
+__export__.hr_rule_input_31,LHDNDED10,LHDN - Payment of alimony to former wife,hr_salary_rule_pcbapproveddeductions0
+__export__.hr_rule_input_32,LHDNDED11,LHDN - Life insurance and provident fund,hr_salary_rule_pcbapproveddeductions0
+__export__.hr_rule_input_33,LHDNDED12,LHDN - Education and medical insurance premium,hr_salary_rule_pcbapproveddeductions0
+__export__.hr_rule_input_34,LHDNDED13,LHDN - Deferred annuity premium or contribution to private returement scheme,hr_salary_rule_pcbapproveddeductions0
+__export__.hr_rule_input_35,LHDNDED14,LHDN - Interest on Housing Loan,hr_salary_rule_pcbapproveddeductions0

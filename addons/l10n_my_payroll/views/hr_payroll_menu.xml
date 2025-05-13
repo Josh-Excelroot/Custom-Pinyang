@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+   #------------------------------------------------------
+            Payroll Configuration Menus
+   #------------------------------------------------------
+
+        <menuitem
+            id="hr_payroll.menu_hr_payroll_structure_view"
+            action="hr_payroll.action_view_hr_payroll_structure_list_form"
+            parent="hr_payroll.menu_hr_payroll_configuration"
+            sequence="2"
+            groups="l10n_my_payroll.group_hr_payroll_admin"
+        />
+
+        <menuitem
+            id="hr_payroll.menu_hr_salary_rule_category"
+            action="hr_payroll.action_hr_salary_rule_category"
+            parent="hr_payroll.menu_hr_payroll_configuration"
+            sequence="11"
+            groups="l10n_my_payroll.group_hr_payroll_admin"
+        />
+
+        <menuitem id="hr_payroll.menu_action_hr_salary_rule_form"
+            action="hr_payroll.action_salary_rule_form"
+            parent="hr_payroll.menu_hr_payroll_configuration"
+            groups="l10n_my_payroll.group_hr_payroll_admin"
+            sequence="12"/>
+
+        <menuitem
+            id="hr_payroll.menu_action_hr_contribution_register_form"
+            action="hr_payroll.action_contribution_register_form"
+            parent="hr_payroll.menu_hr_payroll_configuration"
+            sequence="14"
+            groups="l10n_my_payroll.group_hr_payroll_admin"
+        />
+
+        <menuitem id="hr_payroll.menu_hr_payroll_configuration"
+        name="Configuration"
+        parent="hr_payroll.menu_hr_payroll_root"
+        sequence="100"
+        groups="-hr_payroll.group_hr_payroll_manager,l10n_my_payroll.group_hr_payroll_admin"/>
+
+   #--------------------------
+            HR Menus
+   #--------------------------
+
+        <menuitem id="hr_payroll.menu_hr_payroll_root"
+            name="Payroll"
+            sequence="45"
+            groups="base.group_system,base.group_erp_manager,-hr.group_hr_manager,-l10n_my_payroll.group_hr_payroll_admin,l10n_my_payroll.group_payroll_user"
+            web_icon="hr_payroll,static/description/icon.png"/>
+
+        <menuitem id="hr_payroll.menu_department_tree"
+            action="hr_payroll.action_view_hr_payslip_form"
+            sequence="1"
+            parent="hr_payroll.menu_hr_payroll_root"
+            groups="hr_payroll.group_hr_payroll_user,hr_payroll.group_hr_payroll_manager,l10n_my_payroll.group_payroll_user,l10n_my_payroll.group_hr_payroll_admin"/>
+
+        <menuitem id="hr_payroll.menu_hr_payslip_run"
+            action="hr_payroll.action_hr_payslip_run_tree"
+            groups="l10n_my_payroll.group_hr_payroll_admin,hr_payroll.group_hr_payroll_manager"
+            parent="hr_payroll.menu_hr_payroll_root"/>
+
+        <menuitem id="hr_contract.hr_menu_contract"
+            name="Contracts"
+            action="hr_contract.action_hr_contract"
+            parent="hr_payroll.menu_hr_payroll_root"
+            sequence="9"
+            groups="-hr_contract.group_hr_contract_manager,hr_payroll.group_hr_payroll_manager,l10n_my_payroll.group_hr_payroll_admin"/>
+
+        <menuitem id="menu_report_payroll"
+            name="Reports"
+            parent="hr_payroll.menu_hr_payroll_root"
+            groups="l10n_my_payroll.group_hr_payroll_admin,hr_payroll.group_hr_payroll_manager"
+            sequence="15"/>
+</odoo>

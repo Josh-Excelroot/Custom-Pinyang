@@ -1,0 +1,2 @@
+in addons/hr_attendance/security/ir.model.access.csv change id "access_hr_attendance_system_user" to only enable read (write, update, delete set as 0)
+access_hr_attendance_system_user,hr.attendance.system.user,model_hr_attendance,base.group_user,1,0,0,0

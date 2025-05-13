@@ -1,0 +1,448 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <!-- Mail template are declared in a NOUPDATE block
+         so users can freely customize/delete them -->
+    <data noupdate="1">
+        <!--Email template -->
+        <record id="email_sq_state_reminder" model="mail.template">
+            <field name="name">SQ: Simple Reminder</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="email_from">${object.company_id.email_formatted |safe}</field>
+            <field name="partner_to">${object.user_id.partner_id.id | safe}</field>
+            <field name="subject">${object.company_id.name} SQ (Ref ${object.number or 'n/a'})</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear 
+                    % if object.user_id:
+                        (${object.user_id.partner_id.name})
+                    % endif
+                    <br /><br />
+                    You have the following  <strong>${object.number}</strong> that will be expired on  <strong>${object.so_expire_date}</strong> . Kindly take action to follow up or Mark it as Lost."  
+                    from ${object.company_id.name}.
+                    <br /><br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.user_id.partner_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <record id="email_set_lost_reason" model="mail.template">
+            <field name="name">SQ: Lost Reason</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="email_from">${object.company_id.email_formatted |safe}</field>
+            <field name="partner_to">${object.team_id.user_id.partner_id.id | safe}</field>
+            <field name="subject">${object.company_id.name} SQ (Ref ${object.number or 'n/a'})</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear 
+                    % if object.team_id.user_id:
+                        (${object.team_id.user_id.partner_id.name})
+                    % endif
+                    <br /><br />
+                    SQ <strong>${object.number}</strong> has been marked as lost by <strong>${object.user_id.name}</strong>.
+                    <br/>
+                    Please review and comment.
+
+                    from ${object.company_id.name}.
+                    <br /><br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.user_id.partner_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+
+        <!-- for partner credit and payment term update -->
+        <record id="email_credit_limit_approval" model="mail.template">
+            <field name="name">Credit Limit Approval</field>
+            <field name="model_id" ref="goexcel_sale.model_partner_credit_approval"/>
+            <field name="email_from">${object.company_id.email_formatted |safe}</field>
+            <!-- <field name="partner_to">${object.team_id.user_id.partner_id.id | safe}</field> -->
+            <field name="subject">${object.company_id.name} :(Ref ${object.name or 'n/a'})</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear 
+                    <br/>
+                    There is a request for credit approval by <strong>${object.requested_by_id.name}</strong>  for Customer <strong>${object.partner_id.name}</strong>
+                    
+
+                    <br />
+                    % if object.old_credit_term_id:
+                        Old Credit Term: ${object.old_credit_term_id.name}
+                    % endif
+                    % if not object.old_credit_term_id:
+                        Old Credit Term: -
+                    % endif
+                    <br/>
+                    New Credit Term: ${object.new_credit_term_id.name}
+                    <br/>
+                    Old Credit Limit: ${object.old_credit_limit}
+                    <br/>
+                    New Credit Limit: ${object.new_credit_limit}
+                    <br/>
+                    % if object.current_is_overdue_block:
+                        <strong>Request for Overdue Unblock</strong>
+                    % endif
+                    <br/>
+                    <br />
+                   
+                 <a href="${object.env['ir.config_parameter'].sudo().get_param('web.base.url')}/web#id=${object.id}&amp;action=${ctx['action_id']}&amp;model=partner.credit.approval&amp;view_type=form&amp;menu_id=${ctx['menu_id']}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px;">Click to Approve/Reject</a>
+                    <br/>
+                    from ${object.company_id.name}.
+                    <br /><br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <record id="email_credit_limit_reject" model="mail.template">
+            <field name="name">Credit Limit Rejected</field>
+            <field name="model_id" ref="goexcel_sale.model_partner_credit_approval"/>
+            <field name="email_from">${object.company_id.email_formatted |safe}</field>
+            <!-- <field name="partner_to">${object.team_id.user_id.partner_id.id | safe}</field> -->
+            <field name="subject">${object.company_id.name} :(Ref ${object.name or 'n/a'}) Rejected</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear ${object.requested_by_id.name},
+                    <br/>
+                    There is a request for credit Rejected by <strong>${object.approved_by_id.name}</strong>  for Customer <strong>${object.partner_id.name}</strong>
+                    
+                    <br />
+                    % if object.old_credit_term_id:
+                        Old Credit Term: ${object.old_credit_term_id.name}
+                    % endif
+
+                    % if not object.old_credit_term_id:
+                        Old Credit Term: -
+                    % endif
+                    <br/>
+                    New Credit Term: ${object.new_credit_term_id.name}
+                    <br/>
+                    Old Credit Limit: ${object.old_credit_limit}
+                    <br/>
+                    New Credit Limit: ${object.new_credit_limit}
+                    <br/>
+                    % if object.current_is_overdue_block:
+                        <strong>Request for Overdue Unblock Rejected </strong>
+                    % endif
+                    <br/>
+                    <br/>
+                 <a href="${object.env['ir.config_parameter'].sudo().get_param('web.base.url')}/web#id=${object.id}&amp;action=${ctx['action_id']}&amp;model=partner.credit.approval&amp;view_type=form&amp;menu_id=${ctx['menu_id']}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px;">Click to View</a>
+                    <br/>
+                    from ${object.company_id.name}.
+                    <br /><br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <record id="email_credit_limit_approved" model="mail.template">
+            <field name="name">Credit Limit approved</field>
+            <field name="model_id" ref="goexcel_sale.model_partner_credit_approval"/>
+            <field name="email_from">${object.company_id.email_formatted |safe}</field>
+            <!-- <field name="partner_to">${object.team_id.user_id.partner_id.id | safe}</field> -->
+            <field name="subject">${object.company_id.name} :(Ref ${object.name or 'n/a'}) Approved</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear ${object.requested_by_id.name},
+                    <br/>
+                    There is a request for credit Approved by <strong>${object.approved_by_id.name}</strong>  for Customer <strong>${object.partner_id.name}</strong>
+                    
+                    <br />
+                    % if object.old_credit_term_id:
+                        Old Credit Term: ${object.old_credit_term_id.name}
+                    % endif
+
+                    % if not object.old_credit_term_id:
+                        Old Credit Term: -
+                    % endif
+                    <br/>
+                    New Credit Term: ${object.new_credit_term_id.name}
+                    <br/>
+                    Old Credit Limit: ${object.old_credit_limit}
+                    <br/>
+                    New Credit Limit: ${object.new_credit_limit}
+                    <br/>
+                    % if object.unblock_is_overdue_block:
+                        <strong>Request for Overdue Unblock Approved </strong>
+                    % endif
+                    <br/>
+                    <br />
+                   
+                 <a href="${object.env['ir.config_parameter'].sudo().get_param('web.base.url')}/web#id=${object.id}&amp;action=${ctx['action_id']}&amp;model=partner.credit.approval&amp;view_type=form&amp;menu_id=${ctx['menu_id']}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px;">Click to View</a>
+                    <br/>
+                    from ${object.company_id.name}.
+                    <br /><br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <!-- for sale order partner credit limit -->
+        <record id="email_credit_limit_approval_sale_order" model="mail.template">
+            <field name="name">Credit Limit Approval for sale order</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="email_from">${object.company_id.email_formatted |safe}</field>
+            <field name="subject">${object.company_id.name} :(Ref ${object.name or 'n/a'}) Credit Limit Approval for sale Quotation</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear 
+                    <br/>
+                    There is a request for credit limit approval for Sales Quotation <strong>${object.name}</strong> by <strong>${object.user_id.name}</strong>  for customer <strong>${object.partner_id.name}</strong>
+                    <br />
+                   
+                 <a href="${object.env['ir.config_parameter'].sudo().get_param('web.base.url')}/web#id=${object.id}&amp;action=${ctx['action_id']}&amp;model=sale.order&amp;view_type=form&amp;menu_id=${ctx['menu_id']}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px;">Click to Approve / Reject</a>
+                    <br/>
+                    from ${object.company_id.name}.
+                    <br /><br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <record id="email_credit_limit_reject_sale_order" model="mail.template">
+            <field name="name">Credit Limit Rejected for sale order</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="email_from">${object.company_id.email_formatted |safe}</field>
+            <!-- <field name="partner_to">${object.team_id.user_id.partner_id.id | safe}</field> -->
+            <field name="subject">${object.company_id.name} :(Ref ${object.name or 'n/a'}) Rejected for Credit Limit</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear ${object.user_id.name},
+                    <br/>
+                    There is a request for Credit limit for Sales Quotation <strong>${object.name}</strong>  Rejected by <strong>${object.rejected_by_id.name}</strong>  for customer <strong>${object.partner_id.name}</strong>
+                    <br />
+                 <a href="${object.env['ir.config_parameter'].sudo().get_param('web.base.url')}/web#id=${object.id}&amp;action=${ctx['action_id']}&amp;model=sale.order&amp;view_type=form&amp;menu_id=${ctx['menu_id']}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px;">Click to View</a>
+                    <br/>
+                    from ${object.company_id.name}.
+                    <br /><br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.user_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <record id="email_credit_limit_approved_sale_order" model="mail.template">
+            <field name="name">Credit Limit approved for sale order</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="email_from">${object.company_id.email_formatted |safe}</field>
+            <!-- <field name="partner_to">${object.team_id.user_id.partner_id.id | safe}</field> -->
+            <field name="subject">${object.company_id.name} :(Ref ${object.name or 'n/a'}) Approved for Credit Limit</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear ${object.user_id.name},
+                    <br/>
+                     <br/>
+                    There is a request for Credit limit for Sales Quotation <strong>${object.name}</strong>  Approved by <strong>${object.approved_by_id.name}</strong>  for customer <strong>${object.partner_id.name}</strong>
+                    <br />
+                    
+                     <a href="${object.env['ir.config_parameter'].sudo().get_param('web.base.url')}/web#id=${object.id}&amp;action=${ctx['action_id']}&amp;model=sale.order&amp;view_type=form&amp;menu_id=${ctx['menu_id']}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px;">Click to View</a>
+                    <br/>
+                    from ${object.company_id.name}.
+                    <br /><br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.user_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <!-- sales order max discount approval -->
+        <record id="email_max_discount_approval_sale_order" model="mail.template">
+            <field name="name">Max Discount Approval for sale order</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="email_from">${object.company_id.email_formatted |safe}</field>
+            <field name="subject">${object.company_id.name} :(Ref ${object.name or 'n/a'}) Max Discount Approval for sale Quotation</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear 
+                    <br/>
+                    There is a request for Discount approval for Sales Quotation <strong>${object.name}</strong> by <strong>${object.user_id.name}</strong>  for customer <strong>${object.partner_id.name}</strong>
+                    <br />
+                   
+                 <a href="${object.env['ir.config_parameter'].sudo().get_param('web.base.url')}/web#id=${object.id}&amp;action=${ctx['action_id']}&amp;model=sale.order&amp;view_type=form&amp;menu_id=${ctx['menu_id']}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px;">Click to Approve / Reject</a>
+                    <br/>
+                    from ${object.company_id.name}.
+                    <br /><br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <record id="email_max_discount_reject_sale_order" model="mail.template">
+            <field name="name">Max Discount Rejected for sale order</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="email_from">${object.company_id.email_formatted |safe}</field>
+            <field name="subject">${object.company_id.name} :(Ref ${object.name or 'n/a'}) Rejected For Discount</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear ${object.user_id.name},
+                    <br/>
+                    There is a request for Discount for Sales Quotation <strong>${object.name}</strong>  Rejected by <strong>${object.rejected_by_id.name}</strong>  for customer <strong>${object.partner_id.name}</strong>
+                    <br />
+                 <a href="${object.env['ir.config_parameter'].sudo().get_param('web.base.url')}/web#id=${object.id}&amp;action=${ctx['action_id']}&amp;model=sale.order&amp;view_type=form&amp;menu_id=${ctx['menu_id']}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px;">Click to View</a>
+                    <br/>
+                    from ${object.company_id.name}.
+                    <br /><br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.user_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <record id="email_max_discount_approved_sale_order" model="mail.template">
+            <field name="name">Max Discount approved for sale order</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="email_from">${object.company_id.email_formatted |safe}</field>
+            <field name="subject">${object.company_id.name} :(Ref ${object.name or 'n/a'}) Approved for Discount</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear ${object.user_id.name},
+                    <br/>
+                     <br/>
+                    There is a request for Discount for Sales Quotation <strong>${object.name}</strong>  Approved by <strong>${object.approved_by_id.name}</strong>  for customer <strong>${object.partner_id.name}</strong>
+                    <br />
+                    
+                     <a href="${object.env['ir.config_parameter'].sudo().get_param('web.base.url')}/web#id=${object.id}&amp;action=${ctx['action_id']}&amp;model=sale.order&amp;view_type=form&amp;menu_id=${ctx['menu_id']}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px;">Click to View</a>
+                    <br/>
+                    from ${object.company_id.name}.
+                    <br /><br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.user_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+
+         <!-- sales order payment term and pricelist approval -->
+        <record id="email_payment_term_pricelist_approval_sale_order" model="mail.template">
+            <field name="name">Payment term/price list Approval for sale order</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="email_from">${object.company_id.email_formatted |safe}</field>
+            <field name="subject">${object.company_id.name} :(Ref ${object.name or 'n/a'}) Payment term/Price list Approval for sale Quotation</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear 
+                    <br/>
+                    There is a request for Payment term/Price list approval for Sales Quotation <strong>${object.name}</strong> by <strong>${object.user_id.name}</strong>  for customer <strong>${object.partner_id.name}</strong>
+                    <br />
+                   
+                 <a href="${object.env['ir.config_parameter'].sudo().get_param('web.base.url')}/web#id=${object.id}&amp;action=${ctx['action_id']}&amp;model=sale.order&amp;view_type=form&amp;menu_id=${ctx['menu_id']}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px;">Click to Approve / Reject</a>
+                    <br/>
+                    from ${object.company_id.name}.
+                    <br /><br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <record id="email_payment_term_pricelist_reject_sale_order" model="mail.template">
+            <field name="name">Payment term/price list Rejected for sale order</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="email_from">${object.company_id.email_formatted |safe}</field>
+            <field name="subject">${object.company_id.name} :(Ref ${object.name or 'n/a'}) Rejected For Payment term/Price list</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear ${object.user_id.name},
+                    <br/>
+                    There is a request for Payment term/Price list for Sales Quotation <strong>${object.name}</strong>  Rejected by <strong>${object.rejected_by_id.name}</strong>  for customer <strong>${object.partner_id.name}</strong>
+                    <br />
+                 <a href="${object.env['ir.config_parameter'].sudo().get_param('web.base.url')}/web#id=${object.id}&amp;action=${ctx['action_id']}&amp;model=sale.order&amp;view_type=form&amp;menu_id=${ctx['menu_id']}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px;">Click to View</a>
+                    <br/>
+                    from ${object.company_id.name}.
+                    <br /><br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.user_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <record id="email_payment_term_pricelist_approved_sale_order" model="mail.template">
+            <field name="name">Payment term/price list approved for sale order</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="email_from">${object.company_id.email_formatted |safe}</field>
+            <field name="subject">${object.company_id.name} :(Ref ${object.name or 'n/a'}) Approved for Payment term/Price list</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear ${object.user_id.name},
+                    <br/>
+                     <br/>
+                    There is a request for Payment term/Price list for Sales Quotation <strong>${object.name}</strong>  Approved by <strong>${object.approved_by_id.name}</strong>  for customer <strong>${object.partner_id.name}</strong>
+                    <br />
+                    
+                     <a href="${object.env['ir.config_parameter'].sudo().get_param('web.base.url')}/web#id=${object.id}&amp;action=${ctx['action_id']}&amp;model=sale.order&amp;view_type=form&amp;menu_id=${ctx['menu_id']}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px;">Click to View</a>
+                    <br/>
+                    from ${object.company_id.name}.
+                    <br /><br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.user_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+       
+
+    </data>
+</odoo>

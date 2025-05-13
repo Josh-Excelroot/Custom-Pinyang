@@ -1,0 +1,266 @@
+<odoo>
+    <template id="l10n_my_payroll_report.ppt_hr_payroll_summary_receipt">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <style>
+                            .border {
+                                border: 1px solid black;
+                                border-collapse: collapse;
+                            }
+
+                            .padding {
+                                padding: 3px;
+                            }
+                        </style>
+                        <table width="100%">
+                            <t t-foreach="get_groupname" t-as="group">
+                                <tr>
+                                    <td style="text-align:center;font-size:18px;color:blue;">
+                                        <b>
+                                            <span t-esc="group.get('user')"/>
+                                        </b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center;font-size:18px;color:blue;">
+                                        <b>Payroll Summary Report</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>&#160;</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:left;color:blue;padding-left:40px">
+                                        <b>
+                                            Period :
+                                            <span t-esc="group.get('start_date')"/>
+                                            TO
+                                            <span t-esc="group.get('end_date')"/>
+                                        </b>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+                        <br/>
+                        <table width="100%">
+                            <tr>
+                                <td width="10%">&#160;</td>
+                                <td width="6%">&#160;</td>
+                                <td width="6%">&#160;</td>
+                                <td width="6%">&#160;</td>
+                                <td width="6%">&#160;</td>
+                                <td width="6%">&#160;</td>
+                                <td width="6%">&#160;</td>
+                                <td width="6%">&#160;</td>
+                                <td width="6%">&#160;</td>
+                                <td width="6%">&#160;</td>
+                                <td width="6%">&#160;</td>
+                                <td width="6%">&#160;</td>
+                                <td width="6%">&#160;</td>
+                                <td width="6%">&#160;</td>
+                                <td width="6%">&#160;</td>
+                                <td width="6%">&#160;</td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="10%" style="border-top:1px solid black; border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">Employee Name
+                                </td>
+                                <td width="6%" style="border-top:1px solid black;border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">Basic Wage</td>
+                                <td width="6%" style="border-top:1px solid black;border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">EPF Employer
+                                </td>
+                                <td width="6%" style="border-top:1px solid black;border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">SOCSO Employer
+                                </td>
+                                <td width="6%" style="border-top:1px solid black;border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">EIS Employer
+                                </td>
+                                <td width="6%" style="border-top:1px solid black;border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">HRDF
+                                </td>
+                                <td width="6%" style="border-top:1px solid black;border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">Bonus/ Commi ssion
+                                </td>
+                                <td width="6%" style="border-top:1px solid black;border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">Expense/ Reimbursement
+                                </td>
+                                <td width="6%" style="border-top:1px solid black;border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">Allowance
+                                <td width="6%" style="border-top:1px solid black;border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">Overtime</td>
+                                </td>
+                                <td width="6%" style="border-top:1px solid black;border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">Total Payout</td>
+                                <td width="6%" style="border-top:1px solid black;border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">EPF Employee</td>
+                                <td width="6%" style="border-top:1px solid black;border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">SOCSO Employee</td>
+                                <td width="6%" style="border-top:1px solid black;border-left:1px solid black;border-bottom:1px solid black;padding-top:5px;text-align:center">EIS Employee</td>
+                                <td width="6%" style="border-top:1px solid black;border-left:1px solid black;border-bottom:1px solid black;border-right:1px solid black;padding-top:5px;text-align:center">PCB/ ZAKAT</td>
+                                <td width="6%" style="border-top:1px solid black;border-left:1px solid black;border-bottom:1px solid black;border-right:1px solid black;padding-top:5px;text-align:center">Net by/ Employee
+                                </td>
+                            </tr>
+                            <t t-set="grand_total_twage" t-value="0.0"/>
+                            <t t-set="grand_total_epfy" t-value="0.0"/>
+                            <t t-set="grand_total_scsy" t-value="0.0"/>
+                            <t t-set="grand_total_eisy" t-value="0.0"/>
+                            <t t-set="grand_total_hrdf" t-value="0.0"/>
+                            <t t-set="grand_total_exa" t-value="0.0"/>
+                            <t t-set="grand_total_exp" t-value="0.0"/>
+                            <t t-set="grand_total_oth_alw" t-value="0.0"/>
+                            <t t-set="grand_total_overtime" t-value="0.0"/>
+                            <t t-set="grand_total_totalpayout" t-value="0.0"/>
+                            <t t-set="grand_total_cpf" t-value="0.0"/>
+                            <t t-set="grand_total_pf" t-value="0.0"/>
+                            <t t-set="grand_total_eise" t-value="0.0"/>
+                            <t t-set="grand_total_pcb_jkt" t-value="0.0"/>
+                            <t t-set="grand_total_netpayemp" t-value="0.0"/>
+                            <t t-foreach="get_name" t-as="name">
+                                <t t-foreach="name.get('lines')" t-as="line" style="page-break-inside: avoid;">
+                                    <tr height="20px">
+                                        <td width="10%" style="text-align:center;border-left:1px solid black;border-bottom:1px solid black;">
+                                            <span t-esc="line.get('ename')"/>
+                                        </td>
+                                        <td width="6%" style="text-align:right;border-left:1px solid black;padding-right:5px;border-bottom:1px solid black;">
+                                            <!-- <span t-esc="'{0:,.2f}'.format(float('twage')"/> -->
+                                            <span t-esc="'{0:,.2f}'.format(float(line.get('twage')))"/>
+                                        </td>
+                                        <td width="6%" style="text-align:right;border-left:1px solid black;padding-right:5px;border-bottom:1px solid black;">
+                                            <span t-esc="'{0:,.2f}'.format(float(line.get('epfy')))"/>
+                                        </td>
+                                        <td width="6%" style="text-align:right;border-left:1px solid black;padding-right:5px;border-bottom:1px solid black;">
+                                            <span t-esc="'{0:,.2f}'.format(float(line.get('scsy')))"/>
+                                        </td>
+                                        <td width="6%" style="text-align:right;border-left:1px solid black;padding-right:5px;border-bottom:1px solid black;">
+                                            <span t-esc="'{0:,.2f}'.format(float(line.get('eisy')))"/>
+                                        </td>
+                                        <td width="6%" style="text-align:right;border-left:1px solid black;padding-right:5px;border-bottom:1px solid black;">
+                                            <span t-esc="'{0:,.2f}'.format(float(line.get('hrdf')))"/>
+                                        </td>
+                                        <td width="6%" style="text-align:right;border-left:1px solid black;padding-right:5px;border-bottom:1px solid black;">
+                                            <span t-esc="'{0:,.2f}'.format(float(line.get('exa')+line.get('comm')))"/>
+                                        </td>
+                                        <td width="6%" style="text-align:right;border-left:1px solid black;padding-right:5px;border-bottom:1px solid black;">
+                                            <span t-esc="'{0:,.2f}'.format(float(line.get('exp')))"/>
+                                        </td>
+                                        <td width="6%" style="text-align:right;border-left:1px solid black;padding-right:5px;border-bottom:1px solid black;">
+                                            <span t-esc="'{0:,.2f}'.format(float(line.get('oth_alw')))"/>
+                                        </td>
+                                        <td width="6%" style="text-align:right;border-left:1px solid black;padding-right:5px;border-bottom:1px solid black;">
+                                            <span t-esc="'{0:,.2f}'.format(float(line.get('overtime')))"/>
+                                        </td>
+                                        <td width="6%" style="text-align:right;border-left:1px solid black;padding-right:5px;border-bottom:1px solid black;">
+                                            <span t-esc="'{0:,.2f}'.format(float(line.get('total_pay')))"/>
+                                        </td>
+                                        <td width="6%" style="text-align:right;border-left:1px solid black;padding-right:5px;border-bottom:1px solid black;">
+                                            <span t-esc="'{0:,.2f}'.format(float(line.get('cpf')))"/>
+                                        </td>
+                                        <td width="6%" style="text-align:right;border-left:1px solid black;padding-right:5px;border-bottom:1px solid black;">
+                                            <span t-esc="'{0:,.2f}'.format(float(line.get('pf')))"/>
+                                        </td>
+                                        <td width="6%" style="text-align:right;border-left:1px solid black;padding-right:5px;border-bottom:1px solid black;">
+                                            <span t-esc="'{0:,.2f}'.format(float(line.get('eise')))"/>
+                                            <!-- <span "'{0:,.2f}'.format(float(line.get('eise')))"/> -->
+                                        </td>
+                                        <td width="6%" style="text-align:right;border-left:1px solid black;padding-right:5px;border-bottom:1px solid black;">
+                                            <span t-esc="'{0:,.2f}'.format(float(line.get('pcb')+line.get('zkt')))"/>
+                                        </td>
+                                        <td width="6%" style="text-align:right;border-left:1px solid black;border-right:1px solid black;padding-right:5px;border-bottom:1px solid black;">
+                                            <span t-esc="'{0:,.2f}'.format(float(line.get('net')))"/>
+                                        </td>
+                                    </tr>
+                                    <t t-set="grand_total_twage" t-value="grand_total_twage+line.get('twage')"/>
+                                    <t t-set="grand_total_epfy" t-value="grand_total_epfy+line.get('epfy')"/>
+                                    <t t-set="grand_total_scsy" t-value="grand_total_scsy+line.get('scsy')"/>
+                                    <t t-set="grand_total_eisy" t-value="grand_total_eisy+line.get('eisy')"/>
+                                    <t t-set="grand_total_hrdf" t-value="grand_total_hrdf+line.get('hrdf')"/>
+                                    <t t-set="grand_total_exa" t-value="grand_total_exa+line.get('exa')+line.get('comm')"/>
+                                    <t t-set="grand_total_exp" t-value="grand_total_exp+line.get('exp')"/>
+                                    <t t-set="grand_total_oth_alw" t-value="grand_total_oth_alw+line.get('oth_alw')"/>
+                                    <t t-set="grand_total_overtime" t-value="grand_total_overtime+line.get('overtime')"/>
+                                    <t t-set="grand_total_totalpayout" t-value="grand_total_totalpayout+line.get('total_pay')"/>
+                                    <t t-set="grand_total_cpf" t-value="grand_total_cpf+line.get('cpf')"/>
+                                    <t t-set="grand_total_pf" t-value="grand_total_pf+line.get('pf')"/>
+                                    <t t-set="grand_total_eise" t-value="grand_total_eise+line.get('eise')"/>
+                                    <t t-set="grand_total_pcb_jkt" t-value="grand_total_pcb_jkt+line.get('pcb')+ line.get('zkt')"/>
+                                    <t t-set="grand_total_netpayemp" t-value="grand_total_netpayemp+line.get('net')"/>
+                                </t>
+                            </t>
+                            <tr style="page-break-inside: avoid;">
+                                <td width="10%" style="font-size:14px;border-bottom:1px solid black;border-top:1px solid black;border-left:1px solid black;text-align:center">
+                                    <b>Grand Total</b>
+                                </td>
+                                <td width="6%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="'{0:,.2f}'.format(float(grand_total_twage))"/>
+                                    </b>
+                                </td>
+                                <td width="6%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="'{0:,.2f}'.format(float(grand_total_epfy))"/>
+                                    </b>
+                                </td>
+                                <td width="6%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="'{0:,.2f}'.format(float(grand_total_scsy))"/>
+                                    </b>
+                                </td>
+                                <td width="6%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="'{0:,.2f}'.format(float(grand_total_eisy))"/>
+                                    </b>
+                                </td>
+                                <td width="6%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="'{0:,.2f}'.format(float(grand_total_hrdf))"/>
+                                    </b>
+                                </td>
+                                <td width="6%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="'{0:,.2f}'.format(float(grand_total_exa))"/>
+                                    </b>
+                                </td>
+                                <td width="6%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="'{0:,.2f}'.format(float(grand_total_exp))"/>
+                                    </b>
+                                </td>
+                                <td width="6%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="'{0:,.2f}'.format(float(grand_total_oth_alw))"/>
+                                    </b>
+                                </td>
+                                <td width="6%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;border-right:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="'{0:,.2f}'.format(float(grand_total_overtime))"/>
+                                    </b>
+                                </td>
+                                <td width="6%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;border-right:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="'{0:,.2f}'.format(float(grand_total_totalpayout))"/>
+                                    </b>
+                                </td>
+                                <td width="6%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;border-right:1px solid black;padding-right:5px"><b>
+                                    <span t-esc="'{0:,.2f}'.format(float(grand_total_cpf))"/>
+                                    </b>
+                                </td>
+                                <td width="6%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;border-right:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="'{0:,.2f}'.format(float(grand_total_pf))"/>
+                                    </b>
+                                </td>
+                                <td width="6%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;border-right:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="'{0:,.2f}'.format(float(grand_total_eise))"/>
+                                    </b>
+                                </td>
+                                <td width="6%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;border-right:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="'{0:,.2f}'.format(float(grand_total_pcb_jkt))"/>
+                                    </b>
+                                </td>
+                                <td width="6%" style="border-bottom:1px solid black;border-top:1px solid black;text-align:right;border-left:1px solid black;border-right:1px solid black;padding-right:5px">
+                                    <b>
+                                        <span t-esc="'{0:,.2f}'.format(float(grand_total_netpayemp))"/>
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

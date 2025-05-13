@@ -1,0 +1,28 @@
+<odoo>
+	<!-- Product category Inherited -->
+	<record id="product_category_form_view_inherited" model="ir.ui.view">
+		<field name="name">product.category.form.inheried</field>
+		<field name="model">product.category</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="product.product_category_form_view"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='parent_id']" position="after">
+				<field name="cost_center_id"/>
+				<newline/>
+			</xpath>
+		</field>
+	</record>
+
+	<!-- Form view :Partner Bank -->
+	<record id="res_partner_bank_inherits" model="ir.ui.view">
+		<field name="name">hr.partner.bank.inherits</field>
+		<field name="model">res.partner.bank</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="base.view_partner_bank_form"/>
+		<field name="arch" type="xml">
+			<field name="bank_id" position="after">
+				<field name="branch_id"/>
+			</field>
+		</field>
+	</record>
+</odoo>

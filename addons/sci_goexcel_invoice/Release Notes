@@ -1,0 +1,4 @@
+Version 12.0.3.0.0 - 16 October 2023 | Kenny Ricardo
+==========================================
+BUG
+- dependency parameter in manifest doesn't have "google_drive_attachment" causing failure in installation

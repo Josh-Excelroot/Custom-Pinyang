@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_view_quotation" model="ir.actions.act_window">
+            <field name="name">Quotation</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="target">current</field>
+        </record>
+    </data>
+</odoo>

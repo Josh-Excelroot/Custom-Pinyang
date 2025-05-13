@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record model="ir.rule" id="expense_message_monitor_multi_company_rule">
+        <field name="name">expense message monitor multi-company</field>
+        <field name="model_id" ref="model_message_monitor_expense"/>
+        <field name="global" eval="True" />
+        <field name="domain_force">['|',('company_id','=',False),('company_id','=',user.company_id.id)]</field>
+    </record>
+</odoo>

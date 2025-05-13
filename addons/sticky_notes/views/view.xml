@@ -1,0 +1,13 @@
+<odoo>
+
+    <template id="assets_backend" name="for render assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/sticky_notes/static/src/js/form_render.js"/>
+            <script type="text/javascript" src="/sticky_notes/static/src/js/sidebar.js"/>
+            <link type="text/css" rel='stylesheet' href='/sticky_notes/static/src/css/style.css'/>
+        </xpath>
+    </template>
+
+</odoo>
+
+

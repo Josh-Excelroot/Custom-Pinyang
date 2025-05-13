@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<menuitem id="menu_account_netting" action="action_account_netting"  parent="account.menu_finance_entries" sequence="50"/>
+
+</odoo>

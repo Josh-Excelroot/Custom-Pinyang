@@ -1,0 +1,82 @@
+<odoo>
+    <data>
+        <record id="ins_partner_ageing_wizard" model="ir.ui.view">
+            <field name="name">ins.partner.ageing.view</field>
+            <field name="model">ins.partner.ageing</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="partner_type" invisible="1"/>
+                            <field name="ageing_by" widget="radio" options="{'horizontal': true}"/>
+                            <field name="type" widget="radio"/>
+                            <field name="as_on_date"/>
+                            <field name="display_accounts"/>
+                            <field name="currency_id"
+                                   options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="include_details"/>
+                            <field name="include_partner_ref"/>
+                            <field name="include_exch_rate_entries"/>
+                            <field name="include_unposted_entries"/>
+                            <field invisible="1" name="company_id"/>
+                        </group>
+                    </group>
+                    <group col="2">
+                        <field domain="[('parent_id','=', False), '|',('company_id','=',company_id), ('company_id','=',False)]"
+                               name="partner_ids"
+                               options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}"
+                               widget="many2many_tags"/>
+                        <field name="partner_category_ids"
+                               options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}"
+                               widget="many2many_tags"/>
+                        <field name="salesperson"/>
+                    </group>
+                    <group col="5">
+                        <field class="oe_inline" name="bucket_1" nolabel="1"/>
+                        <field class="oe_inline" name="bucket_2" nolabel="1"/>
+                        <field class="oe_inline" name="bucket_3" nolabel="1"/>
+                        <field class="oe_inline" name="bucket_4" nolabel="1"/>
+                        <field class="oe_inline" name="bucket_5" nolabel="1"/>
+                    </group>
+                    <footer>
+                        <button class="oe_highlight" name="action_pdf" string="PDF" type="object"/>
+                        <button class="oe_highlight" name="action_xlsx" string="XLSX" type="object"/>
+                        <button class="oe_highlight" name="action_view" string="VIEW" type="object"/>
+                        <button class="btn-default" special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_ins_partner_ageing_wizard" model="ir.actions.act_window">
+            <field name="name">Partner Ageing</field>
+            <field name="res_model">ins.partner.ageing</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="ins_partner_ageing_wizard"/>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="account_dynamic_reports.model_ins_partner_ageing"/>
+            <field name="binding_type">report</field>
+        </record>
+        <!--        <report-->
+        <!-- id="action_ins_partner_ageing_xlsx"-->
+        <!-- model="ins.partner.ageing"-->
+        <!-- string="Partner Ageing"-->
+        <!-- report_type="xlsx"-->
+        <!-- name="account_dynamic_reports.ins_partner_ageing_xlsx"-->
+        <!-- file="account_dynamic_reports.ins_partner_ageing_xlsx"-->
+        <!-- attachment_use="False"-->
+        <!-- print_report_name="'Ageing - %s' % (object.as_on_date)"-->
+        <!--        />-->
+        <record id="action_dynamic_allinone_pa_report" model="ir.actions.client">
+            <field name="name">Partner Ageing Report</field>
+            <field name="tag">dynamic.pa</field>
+        </record>
+        <menuitem action="action_ins_partner_ageing_wizard" groups="account.group_account_user" id="account_report_pa"
+                  name="Partner Ageing" parent="account_dynamic_reports.account_partner_report_parent_menu"
+                  sequence="40"/>
+        <!--        <menuitem id="account_report_pa_wiz" sequence="40" action="action_dynamic_allinone_pa_report"-->
+        <!-- name="Partner Ageing" parent="account_reports_ins_wiz" groups="account.group_account_user"/>-->
+    </data>
+</odoo>

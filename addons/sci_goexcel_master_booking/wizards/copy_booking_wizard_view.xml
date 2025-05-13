@@ -1,0 +1,33 @@
+<odoo>
+
+ 		<record id="copy_booking_wizard_form" model="ir.ui.view">
+            <field name="name">copy.booking.wizard.form</field>
+            <field name="model">copy.booking.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Booking ">
+                    <group class="oe_title">
+                        <field name="job_no"/>
+                        <!--<field name="carrier_booking_no"/>-->
+                    </group>
+                    <group class="oe_title">
+                         <field name="copy_booking_line_ids">
+                            <tree create="false" delete="false" editable="bottom">
+                                <field name="job_to_copy" readonly="1" force_save="1"/>
+                                <field name="carrier_booking_no" readonly="1" force_save="1"/>
+                                <field name="booking_date" readonly="1" force_save="1"/>
+                                <field name="vessel_name" readonly="1" force_save="1"/>
+                                <field name="voyage_no" readonly="1" force_save="1"/>
+                                <field name="port_of_loading" readonly="1" force_save="1"/>
+                                <field name="port_of_discharge" readonly="1" force_save="1"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        <button name="action_copy_to_job" string="Copy" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+</odoo>

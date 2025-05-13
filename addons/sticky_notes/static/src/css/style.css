@@ -1,0 +1,19 @@
+.sticky_note_hidden {
+    display: none !important;
+}
+.sticky_note_container {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.sticky_note {
+    margin: 4px;
+    width: 310px !important;
+    height: 120px !important;
+    overflow: auto;
+    padding: 5px;
+    background: #fbfcf7;
+    border: 1px solid #dee2e6;
+}

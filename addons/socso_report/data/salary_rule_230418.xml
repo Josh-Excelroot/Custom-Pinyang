@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="hr_salary_rule_scse0" model="hr.salary.rule">
+            <field name="code">SCSE</field>
+            <field eval="407" name="sequence" />
+            <field eval="1" name="appears_on_payslip" />
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="l10n_my_payroll.hr_contribution_register_scs" />
+            <field name="amount_select">code</field>
+            <field eval="1" name="active" />
+            <field name="name">SCS (Employee)</field>
+            <field name="condition_python">
+                Available variables:
+                ----------------------
+                payslip: object containing the payslips
+                employee: hr.employee object
+                contract: hr.contract object
+                rules: object containing the rules code (previously computed)
+                categories: object containing the computed salary rule categories (sum of
+                amount of all rules belonging to that category).
+                worked_days: object containing the computed worked days
+                inputs: object containing the computed inputs
+
+                Note: returned value have to be set in the variable 'result'
+
+                result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result=0.0
+if contract.employee_id.socso_category and contract.employee_id.socso_category=='b':
+    if contract.ded_employee_socso_id and contract.ded_employee_socso_id.socso_line_ids:
+        for con in contract.ded_employee_socso_id.socso_line_ids:
+            amount = categories.GROSS - categories.EXP + inputs.INPUTOT.amount + inputs.IALLOWANCE.amount + inputs.ICOMM.amount - categories.ADDT
+            if round(amount, 2) &gt;= con.range_from and round(amount, 2) &lt;= con.range_to:
+                result = con.employee_contribution
+            </field>
+            <field name="category_id" ref="l10n_my_payroll.hr_salary_rule_category_contributions_scs_employee" />
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_scsy0" model="hr.salary.rule">
+            <field name="code">SCSY</field>
+            <field eval="408" name="sequence" />
+            <field eval="1" name="appears_on_payslip" />
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="l10n_my_payroll.hr_contribution_register_scs" />
+            <field name="amount_select">code</field>
+            <field eval="1" name="active" />
+            <field name="name">SCS (Employer)</field>
+            <field name="condition_python">
+                # Available variables:
+                #----------------------
+                # payslip: object containing the payslips
+                # employee: hr.employee object
+                # contract: hr.contract object
+                # rules: object containing the rules code (previously computed)
+                # categories: object containing the computed salary rule categories
+                (sum of amount of all rules belonging to that category).
+                # worked_days: object containing the computed worked days
+                # inputs: object containing the computed inputs
+
+                # Note: returned value have to be set in the variable 'result'
+
+                result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = 0.0
+if contract.ded_employee_socso_id and contract.ded_employee_socso_id.socso_line_ids and contract.employee_id.socso_category and contract.employee_id.socso_category in ('b', 'c'):
+    for con in contract.ded_employee_socso_id.socso_line_ids:
+        amount =  categories.GROSS - categories.EXP - categories.ADDT
+        if round(amount, 2) &gt;= con.range_from and round(amount, 2) &lt;= con.range_to:
+            if contract.employee_id.socso_category =='b':
+                result = con.employer_contribution
+            elif contract.employee_id.socso_category =='c':
+                result = con.employer_only_contribution
+            </field>
+            <field name="category_id" ref="l10n_my_payroll.hr_salary_rule_category_contributions_scs_employer" />
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_eise0" model="hr.salary.rule">
+            <field name="code">EISE</field>
+            <field eval="409" name="sequence" />
+            <field eval="1" name="appears_on_payslip" />
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="l10n_my_payroll.hr_contribution_register_eis" />
+            <field name="amount_select">code</field>
+            <field eval="1" name="active" />
+            <field name="name">EIS (Employee)</field>
+            <field name="condition_python">
+                Available variables:
+                ----------------------
+                payslip: object containing the payslips
+                employee: hr.employee object
+                contract: hr.contract object
+                rules: object containing the rules code (previously computed)
+                categories: object containing the computed salary rule categories (sum of
+                amount of all rules belonging to that category).
+                worked_days: object containing the computed worked days
+                inputs: object containing the computed inputs
+
+                Note: returned value have to be set in the variable 'result'
+
+                result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = 0.0
+if contract.ded_employee_eis_id:
+    for con in contract.ded_employee_eis_id.eis_line_ids:
+        amount =  categories.GROSS - categories.EXP - categories.ADDT
+        if round(amount, 2) &gt;= con.range_from and round(amount, 2) &lt;= con.range_to:
+            result = con.employee_contribution
+            </field>
+            <field name="category_id" ref="l10n_my_payroll.hr_salary_rule_category_contributions_eis_employee" />
+            <field name="quantity">1.0</field>
+        </record>
+
+        <record id="hr_salary_rule_eis0" model="hr.salary.rule">
+            <field name="code">EISY</field>
+            <field eval="410" name="sequence" />
+            <field eval="1" name="appears_on_payslip" />
+            <field name="condition_range">contract.wage</field>
+            <field name="condition_select">none</field>
+            <field name="register_id" ref="l10n_my_payroll.hr_contribution_register_scs" />
+            <field name="amount_select">code</field>
+            <field eval="1" name="active" />
+            <field name="name">EIS (Employer)</field>
+            <field name="condition_python">
+                # Available variables:
+                #----------------------
+                # payslip: object containing the payslips
+                # employee: hr.employee object
+                # contract: hr.contract object
+                # rules: object containing the rules code (previously computed)
+                # categories: object containing the computed salary rule categories
+                (sum of amount of all rules belonging to that category).
+                # worked_days: object containing the computed worked days
+                # inputs: object containing the computed inputs
+
+                # Note: returned value have to be set in the variable 'result'
+
+                result = rules.NET &gt; categories.NET * 0.10</field>
+            <field name="amount_python_compute">result = 0.0
+if contract.ded_employee_eis_id:
+    for con in contract.ded_employee_eis_id.eis_line_ids:
+        amount =  categories.GROSS - categories.EXP - categories.ADDT
+        if round(amount, 2) &gt;= con.range_from and round(amount, 2) &lt;= con.range_to:
+            result = con.employer_contribution
+            </field>
+            <field name="category_id" ref="l10n_my_payroll.hr_salary_rule_category_contributions_eis_employer" />
+            <field name="quantity">1.0</field>
+        </record>
+
+        <!-- <record id="l10n_my_payroll.structure_base" model="hr.payroll.structure">
+            <field eval="[(6, 0, [ref('socso_report.hr_salary_rule_eise0'), ref('l10n_my_payroll.hr_salary_rule_hrdf'),
+                                  ref('socso_report.hr_salary_rule_eis0')])]" name="rule_ids"/>
+        </record> -->
+
+        <record id="l10n_my_payroll.structure_all_in_one" model="hr.payroll.structure">
+            <field eval="[(6, 0, [ref('l10n_my_payroll.hr_salary_rule_epfy_normal'), ref('l10n_my_payroll.hr_salary_rule_overtime0'),
+                                  ref('l10n_my_payroll.hr_allowance_rental'),
+                                  ref('l10n_my_payroll.hr_allowance_insurance'),
+                                  ref('l10n_my_payroll.hr_allowance_fuel'),
+                                  ref('l10n_my_payroll.hr_allowance_car'),
+                                  ref('l10n_my_payroll.hr_salary_rule_hrdf'),
+                                  ref('l10n_my_payroll.hr_salary_rule_BIK'),
+                                  ref('l10n_my_payroll.hr_salary_rule_epfe_without_add'),
+                                  ref('l10n_my_payroll.hr_salary_rule_vola'),
+                                  ref('socso_report.hr_salary_rule_scsy0'),
+                                  ref('socso_report.hr_salary_rule_scse0'),
+                                  ref('l10n_my_payroll.hr_salary_rule_unpaidleave0'),
+                                  ref('l10n_my_payroll.hr_salary_rule_otherdeductions0'), ref('socso_report.hr_salary_rule_eise0'),
+                                  ref('socso_report.hr_salary_rule_eis0'), ref('l10n_my_payroll.hr_salary_rule_allowance0'),
+                                  ref('l10n_my_payroll.hr_salary_rule_pcbapproveddeductions0'), ref('l10n_my_payroll.hr_salary_rule_backpay0'),
+                                  ref('l10n_my_payroll.hr_salary_rule_ZAKAT'), ref('l10n_my_payroll.hr_salary_rule_category_dir_fees'),
+                                  ref('l10n_my_payroll.hr_salary_rule_bonus0'), ref('l10n_my_payroll.hr_salary_rule_commission0'),
+                                  ref('l10n_my_payroll.hr_salary_rule_bonus1'),
+                                  ref('l10n_my_payroll.hr_salary_rule_adjustmentsaddition0'), ref('l10n_my_payroll.hr_salary_rule_pcbcp0'),
+                                  ref('l10n_my_payroll.hr_salary_rule_netbeforemtd0'), ref('l10n_my_payroll.hr_salary_rule_expense'),
+                                  ref('l10n_my_payroll.hr_salary_rule_pcb_tax_income'), ref('l10n_my_payroll.hr_salary_rule_pcb_current_month'),
+                                  ref('l10n_my_payroll.hr_salary_rule_pcb_tax_income_add'), ref('l10n_my_payroll.hr_salary_rule_pcb_current_month_Total_PCB'),
+                                  ref('l10n_my_payroll.hr_salary_rule_arrears_and_others_per_mnth'),
+                                  ref('hr_attendances_overtime.hr_salary_rule_overtime'),
+                                  ref('hr_attendances_overtime.hr_salary_rule_absent'),
+                                  ref('hr_attendances_overtime.hr_salary_rule_timedifferent'),
+                                  ref('hr_attendances_overtime.hr_salary_rule_latein')])]" name="rule_ids" />
+        </record>
+    </data>
+</odoo>

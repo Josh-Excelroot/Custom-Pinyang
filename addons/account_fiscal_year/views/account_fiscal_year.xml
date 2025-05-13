@@ -1,0 +1,138 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="account.action_account_fiscal_year_form" model="ir.ui.view">
+            <field name="name">account.fiscal.year.form.view</field>
+            <field name="model">account.fiscal.year</field>
+            <field name="arch" type="xml">
+                <form string="Fiscal Year">
+                    <header>
+                        <button name="create_period"  string="Create Periods" type="object" class="oe_highlight" attrs="{'invisible': [('period_created','=',True)]}"/>
+                        <!-- <button name="create_period3"  string="Create 3 Months Periods" type="object" class="oe_highlight" attrs="{'invisible': [('period_created','=',True)]}"/> -->
+                        <button name="close_fiscal_year_approve" states="waiting" string="Approve and Close Fiscal Year" type="object" class="oe_highlight" groups="account_fiscal_year.group_fiscal_year_closing" />
+                        <button name="re_open_fiscal_year" states="done" string="Re-Open Fiscal Year" confirm="Are you sure to Re-open this Fiscal Year ?" type="object" class="oe_highlight" />
+                        <button name="re_open_fiscal_year_approve" states="reopen" string="Approve and Re-Open Fiscal Year" type="object" class="oe_highlight" groups="account_fiscal_year.group_fiscal_year_re_open" />
+                        <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,done"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" placeholder="Year 2021"/>
+                                <field name="code" placeholder="Year Code"/>
+                                <field name="move_id" readonly="1" />
+                                <field name="period_created" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="date_from" placeholder="Start Date 01-04-2021"/>
+                                <field name="date_to" placeholder="End date 31-03-2022"/>
+                                <field groups="base.group_multi_company" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Periods">
+                                <field name="period_ids">
+                                    <tree>
+                                        <field name="name" />
+                                        <field name="code" />
+                                        <field name="date_from" />
+                                        <field name="date_to" />
+                                        <field name="special" />
+                                        <field groups="base.group_multi_company" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                                        <field name="state" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="fiscal_year_tree_view" model="ir.ui.view">
+            <field name="name">account.fiscal.year.tree.view</field>
+            <field name="model">account.fiscal.year</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="code" />
+                    <field name="date_from" />
+                    <field name="date_to" />
+                    <field groups="base.group_multi_company" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="fiscal_year_action">
+            <field name="name">Fiscal Year</field>
+            <field name="res_model">account.fiscal.year</field>
+            <field name="view_mode">tree,form</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_id" ref="account_fiscal_year.fiscal_year_tree_view"/>
+        </record>
+
+        <record id="fiscal_year_part_form_view" model="ir.ui.view">
+            <field name="name">account.period.part.form.view</field>
+            <field name="model">account.period.part</field>
+            <field name="arch" type="xml">
+                <form string="Periods">
+                    <header>
+                        <button name="close_period" states="draft" string="Close Period" confirm="Are you sure to close this period ?" type="object" class="oe_highlight" />
+                        <button name="reopen_period" states="done" string="Re-Open Period" confirm="Are you sure to Re-open this period ?" type="object" class="oe_highlight" />
+                        <button name="close_period_approve" states="waiting" string="Approve and Close this period" type="object" class="oe_highlight" groups="account_fiscal_year.group_fiscal_year_period_closing" />
+                        <button name="reopen_period_approve" states="reopen" string="Approve and Re-Open this period" type="object" class="oe_highlight" groups="account_fiscal_year.group_fiscal_year_period_re_open" />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done" nolabel="1" />
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="code" />
+                                <field name="fiscal_year_id" />
+                                <field groups="base.group_multi_company" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                            </group>
+                            <group>
+                                <field name="date_from" />
+                                <field name="date_to" />
+                                <field name="special" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="fiscal_year_part_tree_view" model="ir.ui.view">
+            <field name="name">account.period.part.tree.view</field>
+            <field name="model">account.period.part</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="code" />
+                    <field name="date_from" />
+                    <field name="date_to" />
+                    <field name="fiscal_year_id" />
+                    <field name="special" />
+                    <field groups="base.group_multi_company" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="fiscal_year_period_action">
+            <field name="name">Periods</field>
+            <field name="res_model">account.period.part</field>
+            <field name="view_mode">tree,form</field>
+
+            <field name="type">ir.actions.act_window</field>
+        </record>
+
+        <!-- <menuitem id="fiscal_year_main_menu" name="Periods" parent="account_fiscal_year.menu_date_range_accounting" sequence="12" />
+ -->
+        <menuitem id="fiscal_year_action_menu" name="Fiscal Year" parent="account_fiscal_year.menu_date_range_accounting" sequence="1" action="account_fiscal_year.fiscal_year_action" />
+
+        
+        
+        <menuitem id="fiscal_year_period_menu" name="Periods" parent="account_fiscal_year.menu_date_range_accounting" sequence="2" action="account_fiscal_year.fiscal_year_period_action" />
+    </data>
+</odoo>

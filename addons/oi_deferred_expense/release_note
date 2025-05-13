@@ -1,0 +1,9 @@
+Version 12.0.1.1.0 - 12.0.1.2.0 - 27 Dec 2021 - Kinjal
+===================================
+IMPROVED
+
+    - Add Asset Date field in Invoice Line
+    - Add Asset Boolean field in Invoice for Asset Date column hide/show
+------------------------------------------------------------
+Done
+------------------------------------------------------------

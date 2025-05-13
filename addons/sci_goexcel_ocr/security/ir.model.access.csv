@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ocr_table_mapping,OCR User,model_ocr_table_mapping,ocr_group,1,1,1,1
+access_ocr_table_mapping_line,OCR User,model_ocr_table_mapping_line,ocr_group,1,1,1,1
+access_ocr_partner_template,OCR User,model_ocr_partner_template,ocr_group,1,1,1,1
+access_message_monitor,OCR User,model_message_monitor,ocr_group,1,1,1,1

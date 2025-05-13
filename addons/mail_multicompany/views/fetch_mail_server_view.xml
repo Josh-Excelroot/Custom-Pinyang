@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_email_server_form_add_company">
+        <field name="model">fetchmail.server</field>
+        <field name="inherit_id" ref="fetchmail.view_email_server_form" />
+        <field name="arch" type="xml">
+            <field name="type" position="after">
+                <field
+                    name="company_id"
+                    groups="base.group_multi_company"
+                    options="{'no_create': True}"
+                />
+            </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="vview_email_server_tree_add_company">
+        <field name="model">fetchmail.server</field>
+        <field name="inherit_id" ref="fetchmail.view_email_server_tree" />
+        <field name="arch" type="xml">
+            <field name="object_id" position="after">
+                <field name="company_id" groups="base.group_multi_company" />
+            </field>
+        </field>
+    </record>
+</odoo>
+
+

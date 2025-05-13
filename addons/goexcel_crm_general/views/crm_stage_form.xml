@@ -1,0 +1,26 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_stage_form" model="ir.ui.view">
+            <field name="name">goexcel_crm_general.crm_stage_view</field>
+            <field name="model">crm.stage</field>
+            <field name="inherit_id" ref="crm.crm_stage_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="/form/group/group[2]" position="after">
+                    <group>
+                        <field name="stay_check_type" widget="radio" options="{'horizontal':true}"/>
+                        <field name="stay_check_time" string="Time (in UTC HH:MM)" attrs="{'invisible':[('stay_check_type','!=','time')]}"
+                               widget="float_time"/>
+                        <field name="stay_check_duration" string="Duration (in Hrs)" attrs="{'invisible':[('stay_check_type','!=','duration')]}"/>
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+        <record id="crm.menu_crm_lead_stage_act" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4,ref('base.group_user')),(4,ref('base.group_system'))]"/>
+        </record>
+    </data>
+
+</odoo>

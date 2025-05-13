@@ -1,0 +1,51 @@
+<odoo>
+    <record id="payment_receipt_view_form" model="ir.ui.view">
+        <field name="name">payment.receipt.form</field>
+        <field name="model">payment.receipt</field>
+        <field name="arch" type="xml">
+            <form string="Payments">
+                <sheet>
+                    <group>
+                        <field name="partner_id" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="payment_type" readonly="1"/>
+                        <field name="payment_receipt_status" readonly="1"/>
+                    </group>
+                    <group class="oe_title">
+                        <field name="payment_lines" nolabel="1">
+                            <tree create="false" default_order="payment_date" delete="0" editable="bottom" string="Customer Payments History">
+                                <field name="payment_date"/>
+                                <field name="add_to_receipt"/>
+                                <field name="name"/>
+                                <field name="journal_id"/>
+                                <field name="account_id"/>
+                                <field name="payment_method_id"/>
+                                <field name="payment_reference"/>
+                                <field name="partner_id"/>
+                                <field name="amount"/>
+                                <field name="state"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+                <footer>
+                    <button class="btn-primary" name="action_print_payment_receipt" string="Print Payment Receipt" type="object"/>
+                    <button class="btn-secondary" special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="res_partner_view_payment_receipt" model="ir.ui.view">
+        <field name="name">Partner</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field eval="10" name="priority"/>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='bank_ids']/tree[1]/field[@name='acc_number']" position="after">
+                <field name="swift_code"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

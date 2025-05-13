@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_refuse_leave_form" model="ir.ui.view">
+            <field name="name">refuse.leave.form</field>
+            <field name="model">refuse.leave</field>
+            <field name="arch" type="xml">
+                <form string="Refuse Leave Reason">
+                    <separator string="Reason"/>
+                    <group>
+                        <field name="reason" required="1" nolabel="1" height="800" width="550"/>
+                    </group>
+                    <footer>
+                        <button special="cancel" string="Cancel"/>
+                        or
+                        <button name="add_reason" type="object" string="Submit" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_refuse_leave_reason" model="ir.actions.act_window">
+            <field name="name">Refuse Reason</field>
+            <field name="res_model">refuse.leave</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

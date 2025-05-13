@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_journal_form_inherit_dedicate" model="ir.ui.view">
+        <field name="name">Add Dedicated Form Field</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+<!--            sequence_number_next-->
+<!--            <xpath expr="//field[@name='customer_payment_sequence_id']" position="before">-->
+<!--                <field name="refund_sequence" string="Sequence 2"/>-->
+<!--            </xpath>-->
+             <xpath expr="//field[@name='refund_sequence']" position="replace">
+                <field name="refund_sequence" attrs="{'invisible': [('type', 'not in', ['sale', 'purchase'])]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

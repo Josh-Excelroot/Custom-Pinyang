@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_order_form_inherit_picking">
+            <field name="name">view.sale.order.form.picking</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_unlock']" position="after">
+                    <button string="Create DO" type="action"
+                            name="%(sale_picking_manual.action_sale_picking)d" class="btn btn-primary"
+                            states="sale"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+    

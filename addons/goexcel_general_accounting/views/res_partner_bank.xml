@@ -1,0 +1,4 @@
+<odoo>
+    <menuitem id="menu_res_partner_bank_account" name="Partner Bank" parent="account.account_account_menu"
+			  action="base.action_res_partner_bank_account_form"/>
+</odoo>

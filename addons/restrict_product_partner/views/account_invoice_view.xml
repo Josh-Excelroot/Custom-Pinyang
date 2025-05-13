@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="user_restrict_create_invoice_view" model="ir.ui.view">
+        <field name="name">user.restrict.invoice.create</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="groups_id" eval="[(4,ref('restrict_product_partner.user_restrict_create_invoice'))]"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form" position="attributes">
+                <attribute name="create">false</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="user_restrict_edit_invoice_view" model="ir.ui.view">
+        <field name="name">user.restrict.invoice.edit</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="groups_id" eval="[(4,ref('restrict_product_partner.user_restrict_edit_invoice'))]"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form" position="attributes">
+                <attribute name="edit">false</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="user_restrict_create_invoice_list" model="ir.ui.view">
+        <field name="name">user.restrict.invoice.create.list</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_tree_with_onboarding"/>
+        <field name="groups_id" eval="[(4,ref('restrict_product_partner.user_restrict_create_invoice'))]"/>
+        <field name="arch" type="xml">
+            <xpath expr="/tree" position="attributes">
+                <attribute name="create">false</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="user_restrict_create_invoice_kanban" model="ir.ui.view">
+        <field name="name">user.restrict.invoice.create.kanban</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_kanban"/>
+        <field name="groups_id" eval="[(4,ref('restrict_product_partner.user_restrict_create_invoice'))]"/>
+        <field name="arch" type="xml">
+            <xpath expr="/kanban" position="attributes">
+                <attribute name="create">false</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!--		Ahmad Zaman - 18/01/24 - Restrict partner creation in invoice form-->
+    <record model="ir.ui.view" id="invoice_partner_create_restrict_form">
+        <field name="name">invoice.partner.create.restrict</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_create_edit': True, 'no_quick_create': True,
+                    'no_edit': True}
+                </attribute>
+            </xpath>
+
+        </field>
+    </record>
+    <!--    end-->
+</odoo>

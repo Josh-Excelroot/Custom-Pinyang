@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="sticky_note_view_form" model="ir.ui.view">
+        <field name="name">sticky.note.form</field>
+        <field name="model">sticky.note</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="color"/>
+                        <field name="share"/>
+                    </group>
+                    <notebook>
+                        <page string="Note">
+                            <field name="name"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

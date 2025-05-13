@@ -1,0 +1,19 @@
+Version 12.0.1
+===================================
+Improvement
+
+ a) Preview of the vendor invoice attachment / Linked to invoice/vendor bill/payment in the JE / Preview of these documents
+
+Version 12.0.1.1 | 18 Dec 23 | Kenny
+===================================
+Improvement
+
+a) invoice bill line, replace default description (name) format ("interna reference" + "product name") -> ("product name")
+
+
+Version 12.0.1.2 | 18 Dec 23 | Kenny
+===================================
+Improvement
+
+a) fix invoice report (company and client address) by adding report_invoice.xml
+

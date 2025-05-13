@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<odoo>
+   <data>
+      <record id="missed_attendance_template" model="mail.template">
+         <field name="name">Missed Attendance Template</field>
+         <field name="model_id" ref="goexcel_attendance.model_hr_attendance"/>
+         <field name="auto_delete" eval="True"/>
+         <field name="email_from">${('noreply@localhost')|safe}</field>
+         <field name="email_to">${ctx['manager'].work_email}</field>
+         <field name="subject"><![CDATA[Notification: Employees Under Your Supervision Missed Attendance Check-Out]]></field>
+         <field name="body_html"><![CDATA[
+         <p>Dear ${(ctx['manager'].name)},</p>
+
+         <p>We would like to inform you that the following employees under your supervision did not check out from the attendance system:</p>
+
+         <div style="margin-left: 20px;">
+            ${(ctx['employee_list']|safe)}
+         </div>
+
+         <p>Please remind them to check out properly to ensure accurate attendance records.</p>
+
+         <p>Regards,<br/>
+         ${(ctx['company'].name)} Automated System</p>
+      ]]></field>
+     </record>
+
+      <record id="attendance_sheet_generated_template" model="mail.template">
+         <field name="name">Attendance Sheet Generated Template</field>
+         <field name="model_id" ref="hr_attendances_overtime.model_hr_attendance_sheet"/>
+         <field name="auto_delete" eval="True"/>
+         <field name="email_from">${('noreply@localhost')|safe}</field>
+         <field name="email_to">${ctx['manager'].work_email}</field>
+         <field name="subject"><![CDATA[Employee(s) Attendance Report]]></field>
+         <field name="body_html"><![CDATA[
+         <p>Dear ${(ctx['manager'].name)},</p>
+
+         <p>We would like to inform you that the following employee(s) attendance report for ${(ctx['date_from'])} - ${(ctx['date_to'])} is ready:</p>
+
+         <div style="margin-left: 20px;">
+         ${(ctx['employee_list']|safe)}
+         </div>
+
+         <p>You can access the report by clicking the link above. Please make sure any adjustments are made before the report(s) are submitted.</p>
+
+         <p>Regards,<br/>
+         ${(ctx['company'].name)} Automated System</p>
+         ]]></field>
+      </record>
+
+      <record id="attendance_sheet_notify_hr_template" model="mail.template">
+         <field name="name">Attendance Sheet Notify HR Template</field>
+         <field name="model_id" ref="hr_attendances_overtime.model_hr_attendance_sheet"/>
+         <field name="auto_delete" eval="True"/>
+         <field name="email_from">${('noreply@localhost')|safe}</field>
+         <field name="email_to">${(ctx['email_string'])}</field>
+         <field name="subject"><![CDATA[Employee Attendance Report]]></field>
+         <field name="body_html"><![CDATA[
+         <p>Dear HR,</p>
+
+         <p>We would like to inform you that the attendance sheet for ${(ctx['employee_url']|safe)} has been approved by ${(ctx['manager'].name)}</p>
+
+         <p>You can access the report by clicking the link above. Please make sure any adjustments are made before the report(s) are approved.</p>
+
+         <p>Regards,<br/>
+         ${(ctx['company'].name)} Automated System</p>
+         ]]></field>
+      </record>
+   </data>
+</odoo>

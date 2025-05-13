@@ -1,0 +1,853 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data noupdate="1">
+        <record id="template_table_mapping_1" model="ocr.table.mapping">
+            <field name="name">PARTNER</field>
+            <field name="type">partner</field>
+            <field name="sequence">1</field>
+        </record>
+        <record id="template_table_mapping_2" model="ocr.table.mapping">
+            <field name="name">REFERENCE</field>
+            <field name="type">default</field>
+            <field name="sequence">2</field>
+        </record>
+        <record id="template_table_mapping_3" model="ocr.table.mapping">
+            <field name="name">BL NO</field>
+            <field name="type">default</field>
+            <field name="sequence">3</field>
+        </record>
+        <record id="template_table_mapping_4" model="ocr.table.mapping">
+            <field name="name">PORT OF LOADING</field>
+            <field name="type">pol</field>
+            <field name="sequence">4</field>
+        </record>
+        <record id="template_table_mapping_5" model="ocr.table.mapping">
+            <field name="name">DATE</field>
+            <field name="type">default</field>
+            <field name="sequence">5</field>
+        </record>
+        <record id="template_table_mapping_6" model="ocr.table.mapping">
+            <field name="name">DUE DATE</field>
+            <field name="type">default</field>
+            <field name="sequence">6</field>
+        </record>
+        <record id="template_table_mapping_7" model="ocr.table.mapping">
+            <field name="name">PAYMENT TERM</field>
+            <field name="type">payment_term</field>
+            <field name="sequence">7</field>
+        </record>
+        <record id="template_table_mapping_8" model="ocr.table.mapping">
+            <field name="name">CURRENCY</field>
+            <field name="type">currency</field>
+            <field name="sequence">8</field>
+        </record>
+        <record id="template_table_mapping_9" model="ocr.table.mapping">
+            <field name="name">EXCHANGE RATE</field>
+            <field name="type">default</field>
+            <field name="sequence">9</field>
+        </record>
+        <record id="template_table_mapping_10" model="ocr.table.mapping">
+            <field name="name">PRODUCT</field>
+            <field name="type">product</field>
+            <field name="sequence">10</field>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="template_table_mapping_1_1" model="ocr.table.mapping.line">
+            <field name="sequence">1</field>
+            <field name="line_id" eval="ref('template_table_mapping_1')"/>
+            <field name="category">PARTNER</field>
+            <field name="type">value</field>
+            <field name="name">Orient Overseas Container Line</field>
+            <field name="keyword">Orient Overseas Container Line</field>
+        </record>
+        <record id="template_table_mapping_1_2" model="ocr.table.mapping.line">
+            <field name="sequence">2</field>
+            <field name="line_id" eval="ref('template_table_mapping_1')"/>
+            <field name="category">PARTNER</field>
+            <field name="type">value</field>
+            <field name="name">ELITE INTERNATIONAL LOGISTIC (M) SDN. BHD.</field>
+            <field name="keyword">ELITE INTERNATIONAL LOGISTIC (M) SDN. BHD.</field>
+        </record>
+        <record id="template_table_mapping_1_3" model="ocr.table.mapping.line">
+            <field name="sequence">3</field>
+            <field name="line_id" eval="ref('template_table_mapping_1')"/>
+            <field name="category">PARTNER</field>
+            <field name="type">value</field>
+            <field name="name">SEALAND</field>
+            <field name="keyword">SEALAND</field>
+        </record>
+        <record id="template_table_mapping_1_4" model="ocr.table.mapping.line">
+            <field name="sequence">4</field>
+            <field name="line_id" eval="ref('template_table_mapping_1')"/>
+            <field name="category">PARTNER</field>
+            <field name="type">value</field>
+            <field name="name">YANG MING LINE (M) SDN BHD</field>
+            <field name="keyword">YANG MING LINE (M) SDN BHD</field>
+        </record>
+        <record id="template_table_mapping_1_5" model="ocr.table.mapping.line">
+            <field name="sequence">5</field>
+            <field name="line_id" eval="ref('template_table_mapping_1')"/>
+            <field name="category">PARTNER</field>
+            <field name="type">value</field>
+            <field name="name">CMA CGM Asia Shipping Pte. Ltd</field>
+            <field name="keyword">CMA CGM Asia Shipping Pte. Ltd</field>
+        </record>
+        <record id="template_table_mapping_1_6" model="ocr.table.mapping.line">
+            <field name="sequence">6</field>
+            <field name="line_id" eval="ref('template_table_mapping_1')"/>
+            <field name="category">PARTNER</field>
+            <field name="type">value</field>
+            <field name="name">COSCO SHIPPING Lines (Malaysia) Sdn. Bhd.</field>
+            <field name="keyword">COSCO SHIPPING Lines (Malaysia) Sdn. Bhd.</field>
+        </record>
+        <record id="template_table_mapping_1_7" model="ocr.table.mapping.line">
+            <field name="sequence">7</field>
+            <field name="line_id" eval="ref('template_table_mapping_1')"/>
+            <field name="category">PARTNER</field>
+            <field name="type">value</field>
+            <field name="name">WAN HAI LINES (M) SDN. BHD.</field>
+            <field name="keyword">WAN HAI LINES (M) SDN. BHD.</field>
+        </record>
+        <record id="template_table_mapping_1_8" model="ocr.table.mapping.line">
+            <field name="sequence">8</field>
+            <field name="line_id" eval="ref('template_table_mapping_1')"/>
+            <field name="category">PARTNER</field>
+            <field name="type">value</field>
+            <field name="name">MEDITERRANEAN SHIPPING COMPANY (M) SDN BHD</field>
+            <field name="keyword">MEDITERRANEAN SHIPPING COMPANY (M) SDN BHD</field>
+            <field name="currency" eval="ref('base.MYR')"/>
+        </record>
+        <record id="template_table_mapping_1_9" model="ocr.table.mapping.line">
+            <field name="sequence">9</field>
+            <field name="line_id" eval="ref('template_table_mapping_1')"/>
+            <field name="category">PARTNER</field>
+            <field name="type">value</field>
+            <field name="name">MEDITERRANEAN SHIPPING COMPANY S.A.</field>
+            <field name="keyword">MEDITERRANEAN SHIPPING COMPANY S.A.</field>
+            <field name="currency" eval="ref('base.USD')"/>
+        </record>
+        <record id="template_table_mapping_1_10" model="ocr.table.mapping.line">
+            <field name="sequence">10</field>
+            <field name="line_id" eval="ref('template_table_mapping_1')"/>
+            <field name="category">PARTNER</field>
+            <field name="type">value</field>
+            <field name="name">MEDITERRANEAN SHIPPING COMPANY S.A.</field>
+            <field name="keyword">MEDITERRANEAN SHIPPING COMPANY S.A.</field>
+            <field name="currency" eval="ref('base.IDR')"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="template_table_mapping_2_1" model="ocr.table.mapping.line">
+            <field name="sequence">1</field>
+            <field name="line_id" eval="ref('template_table_mapping_2')"/>
+            <field name="category">REFERENCE</field>
+            <field name="type">label</field>
+            <field name="name">Inv. No.</field>
+            <field name="keyword">Inv. No.</field>
+        </record>
+        <record id="template_table_mapping_2_2" model="ocr.table.mapping.line">
+            <field name="sequence">2</field>
+            <field name="line_id" eval="ref('template_table_mapping_2')"/>
+            <field name="category">REFERENCE</field>
+            <field name="type">label</field>
+            <field name="name">INVOICE NO.</field>
+            <field name="keyword">INVOICE NO.</field>
+        </record>
+        <record id="template_table_mapping_2_3" model="ocr.table.mapping.line">
+            <field name="sequence">3</field>
+            <field name="line_id" eval="ref('template_table_mapping_2')"/>
+            <field name="category">REFERENCE</field>
+            <field name="type">label</field>
+            <field name="name">INVOICE</field>
+            <field name="keyword">INVOICE</field>
+        </record>
+        <record id="template_table_mapping_2_4" model="ocr.table.mapping.line">
+            <field name="sequence">4</field>
+            <field name="line_id" eval="ref('template_table_mapping_2')"/>
+            <field name="category">REFERENCE</field>
+            <field name="type">label</field>
+            <field name="name">INVOICE NUMBER</field>
+            <field name="keyword">INVOICE NUMBER</field>
+        </record>
+        <record id="template_table_mapping_2_5" model="ocr.table.mapping.line">
+            <field name="sequence">5</field>
+            <field name="line_id" eval="ref('template_table_mapping_2')"/>
+            <field name="category">REFERENCE</field>
+            <field name="type">label</field>
+            <field name="name">BHL ASIA SDN BHD NO.</field>
+            <field name="keyword">BHL ASIA SDN BHD NO.</field>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="template_table_mapping_3_1" model="ocr.table.mapping.line">
+            <field name="sequence">1</field>
+            <field name="line_id" eval="ref('template_table_mapping_3')"/>
+            <field name="category">BL NO</field>
+            <field name="type">label</field>
+            <field name="name">BILL OF LADING NO.</field>
+            <field name="keyword">BILL OF LADING NO.</field>
+        </record>
+        <record id="template_table_mapping_3_2" model="ocr.table.mapping.line">
+            <field name="sequence">2</field>
+            <field name="line_id" eval="ref('template_table_mapping_3')"/>
+            <field name="category">BL NO</field>
+            <field name="type">label</field>
+            <field name="name">Bill of Lading</field>
+            <field name="keyword">Bill of Lading</field>
+        </record>
+        <record id="template_table_mapping_3_3" model="ocr.table.mapping.line">
+            <field name="sequence">3</field>
+            <field name="line_id" eval="ref('template_table_mapping_3')"/>
+            <field name="category">BL NO</field>
+            <field name="type">label</field>
+            <field name="name">B/L NO</field>
+            <field name="keyword">B/L NO</field>
+        </record>
+        <record id="template_table_mapping_3_4" model="ocr.table.mapping.line">
+            <field name="sequence">4</field>
+            <field name="line_id" eval="ref('template_table_mapping_3')"/>
+            <field name="category">BL NO</field>
+            <field name="type">label</field>
+            <field name="name">Bill of Lading Number</field>
+            <field name="keyword">Bill of Lading Number</field>
+        </record>
+        <record id="template_table_mapping_3_5" model="ocr.table.mapping.line">
+            <field name="sequence">5</field>
+            <field name="line_id" eval="ref('template_table_mapping_3')"/>
+            <field name="category">BL NO</field>
+            <field name="type">label</field>
+            <field name="name">B/L No.</field>
+            <field name="keyword">B/L No.</field>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="template_table_mapping_4_1" model="ocr.table.mapping.line">
+            <field name="sequence">1</field>
+            <field name="line_id" eval="ref('template_table_mapping_4')"/>
+            <field name="category">PORT OF LOADING</field>
+            <field name="type">label</field>
+            <field name="name">PORT OF LOADING</field>
+            <field name="keyword">PORT OF LOADING</field>
+        </record>
+        <record id="template_table_mapping_4_2" model="ocr.table.mapping.line">
+            <field name="sequence">2</field>
+            <field name="line_id" eval="ref('template_table_mapping_4')"/>
+            <field name="category">PORT OF LOADING</field>
+            <field name="type">label</field>
+            <field name="name">PORT OF LOAD</field>
+            <field name="keyword">PORT OF LOAD</field>
+        </record>
+        <record id="template_table_mapping_4_3" model="ocr.table.mapping.line">
+            <field name="sequence">3</field>
+            <field name="line_id" eval="ref('template_table_mapping_4')"/>
+            <field name="category">PORT OF LOADING</field>
+            <field name="type">label</field>
+            <field name="name">Load Port</field>
+            <field name="keyword">Load Port</field>
+        </record>
+        <record id="template_table_mapping_4_4" model="ocr.table.mapping.line">
+            <field name="sequence">4</field>
+            <field name="line_id" eval="ref('template_table_mapping_4')"/>
+            <field name="category">PORT OF LOADING</field>
+            <field name="type">value</field>
+            <field name="name">PENAN</field>
+            <field name="keyword">PENAN</field>
+        </record>
+        <record id="template_table_mapping_4_5" model="ocr.table.mapping.line">
+            <field name="sequence">5</field>
+            <field name="line_id" eval="ref('template_table_mapping_4')"/>
+            <field name="category">PORT OF LOADING</field>
+            <field name="type">value</field>
+            <field name="name">SHEKOU</field>
+            <field name="keyword">SHEKOU</field>
+        </record>
+        <record id="template_table_mapping_4_6" model="ocr.table.mapping.line">
+            <field name="sequence">6</field>
+            <field name="line_id" eval="ref('template_table_mapping_4')"/>
+            <field name="category">PORT OF LOADING</field>
+            <field name="type">value</field>
+            <field name="name">KLAN</field>
+            <field name="keyword">KLAN</field>
+        </record>
+        <record id="template_table_mapping_4_7" model="ocr.table.mapping.line">
+            <field name="sequence">7</field>
+            <field name="line_id" eval="ref('template_table_mapping_4')"/>
+            <field name="category">PORT OF LOADING</field>
+            <field name="type">value</field>
+            <field name="name">JIUJIANG</field>
+            <field name="keyword">JIUJIANG</field>
+        </record>
+        <record id="template_table_mapping_4_8" model="ocr.table.mapping.line">
+            <field name="sequence">8</field>
+            <field name="line_id" eval="ref('template_table_mapping_4')"/>
+            <field name="category">PORT OF LOADING</field>
+            <field name="type">value</field>
+            <field name="name">PENANG</field>
+            <field name="keyword">PENANG</field>
+        </record>
+        <record id="template_table_mapping_4_9" model="ocr.table.mapping.line">
+            <field name="sequence">9</field>
+            <field name="line_id" eval="ref('template_table_mapping_4')"/>
+            <field name="category">PORT OF LOADING</field>
+            <field name="type">label</field>
+            <field name="name">Origin Port</field>
+            <field name="keyword">Origin Port</field>
+        </record>
+        <record id="template_table_mapping_4_10" model="ocr.table.mapping.line">
+            <field name="sequence">10</field>
+            <field name="line_id" eval="ref('template_table_mapping_4')"/>
+            <field name="category">PORT OF LOADING</field>
+            <field name="type">label</field>
+            <field name="name">PORT LOAD</field>
+            <field name="keyword">PORT LOAD</field>
+        </record>
+        <record id="template_table_mapping_4_11" model="ocr.table.mapping.line">
+            <field name="sequence">11</field>
+            <field name="line_id" eval="ref('template_table_mapping_4')"/>
+            <field name="category">PORT OF LOADING</field>
+            <field name="type">label</field>
+            <field name="name">POL</field>
+            <field name="keyword">POL</field>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="template_table_mapping_5_1" model="ocr.table.mapping.line">
+            <field name="sequence">1</field>
+            <field name="line_id" eval="ref('template_table_mapping_5')"/>
+            <field name="category">DATE</field>
+            <field name="type">label</field>
+            <field name="name">Date</field>
+            <field name="keyword">Date</field>
+        </record>
+        <record id="template_table_mapping_5_2" model="ocr.table.mapping.line">
+            <field name="sequence">2</field>
+            <field name="line_id" eval="ref('template_table_mapping_5')"/>
+            <field name="category">DATE</field>
+            <field name="type">label</field>
+            <field name="name">ISSUE DATE</field>
+            <field name="keyword">ISSUE DATE</field>
+        </record>
+        <record id="template_table_mapping_5_3" model="ocr.table.mapping.line">
+            <field name="sequence">3</field>
+            <field name="line_id" eval="ref('template_table_mapping_5')"/>
+            <field name="category">DATE</field>
+            <field name="type">label</field>
+            <field name="name">ISSUEDATE</field>
+            <field name="keyword">ISSUEDATE</field>
+        </record>
+        <record id="template_table_mapping_5_4" model="ocr.table.mapping.line">
+            <field name="sequence">4</field>
+            <field name="line_id" eval="ref('template_table_mapping_5')"/>
+            <field name="category">DATE</field>
+            <field name="type">label</field>
+            <field name="name">Inv Date</field>
+            <field name="keyword">Inv Date</field>
+        </record>
+        <record id="template_table_mapping_5_5" model="ocr.table.mapping.line">
+            <field name="sequence">5</field>
+            <field name="line_id" eval="ref('template_table_mapping_5')"/>
+            <field name="category">DATE</field>
+            <field name="type">label</field>
+            <field name="name">INVOICE DATE</field>
+            <field name="keyword">INVOICE DATE</field>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="template_table_mapping_6_1" model="ocr.table.mapping.line">
+            <field name="sequence">1</field>
+            <field name="line_id" eval="ref('template_table_mapping_6')"/>
+            <field name="category">DUE DATE</field>
+            <field name="type">label</field>
+            <field name="name">DUE DATE</field>
+            <field name="keyword">DUE DATE</field>
+        </record>
+        <record id="template_table_mapping_6_2" model="ocr.table.mapping.line">
+            <field name="sequence">2</field>
+            <field name="line_id" eval="ref('template_table_mapping_6')"/>
+            <field name="category">DUE DATE</field>
+            <field name="type">label</field>
+            <field name="name">Payable by</field>
+            <field name="keyword">Payable by</field>
+        </record>
+        <record id="template_table_mapping_6_3" model="ocr.table.mapping.line">
+            <field name="sequence">3</field>
+            <field name="line_id" eval="ref('template_table_mapping_6')"/>
+            <field name="category">DUE DATE</field>
+            <field name="type">label</field>
+            <field name="name">Due Date</field>
+            <field name="keyword">Due Date</field>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="template_table_mapping_7_1" model="ocr.table.mapping.line">
+            <field name="sequence">1</field>
+            <field name="line_id" eval="ref('template_table_mapping_7')"/>
+            <field name="category">PAYMENT TERM</field>
+            <field name="type">label</field>
+            <field name="name">Terms</field>
+            <field name="keyword">Terms</field>
+        </record>
+        <record id="template_table_mapping_7_2" model="ocr.table.mapping.line">
+            <field name="sequence">2</field>
+            <field name="line_id" eval="ref('template_table_mapping_7')"/>
+            <field name="category">PAYMENT TERM</field>
+            <field name="type">label</field>
+            <field name="name">Term</field>
+            <field name="keyword">Term</field>
+        </record>
+        <record id="template_table_mapping_7_3" model="ocr.table.mapping.line">
+            <field name="sequence">3</field>
+            <field name="line_id" eval="ref('template_table_mapping_7')"/>
+            <field name="category">PAYMENT TERM</field>
+            <field name="type">value</field>
+            <field name="name">COD</field>
+            <field name="keyword">COD</field>
+        </record>
+        <record id="template_table_mapping_7_4" model="ocr.table.mapping.line">
+            <field name="sequence">4</field>
+            <field name="line_id" eval="ref('template_table_mapping_7')"/>
+            <field name="category">PAYMENT TERM</field>
+            <field name="type">value</field>
+            <field name="name">Cash On Delivery</field>
+            <field name="keyword">Cash On Delivery</field>
+        </record>
+        <record id="template_table_mapping_7_5" model="ocr.table.mapping.line">
+            <field name="sequence">5</field>
+            <field name="line_id" eval="ref('template_table_mapping_7')"/>
+            <field name="category">PAYMENT TERM</field>
+            <field name="type">value</field>
+            <field name="name">14 Days Net</field>
+            <field name="keyword">14 Days Net</field>
+        </record>
+        <record id="template_table_mapping_7_6" model="ocr.table.mapping.line">
+            <field name="sequence">6</field>
+            <field name="line_id" eval="ref('template_table_mapping_7')"/>
+            <field name="category">PAYMENT TERM</field>
+            <field name="type">label</field>
+            <field name="name">Credit Term</field>
+            <field name="keyword">Credit Term</field>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="template_table_mapping_8_1" model="ocr.table.mapping.line">
+            <field name="sequence">1</field>
+            <field name="line_id" eval="ref('template_table_mapping_8')"/>
+            <field name="category">CURRENCY</field>
+            <field name="type">label</field>
+            <field name="name">Currency</field>
+            <field name="keyword">Currency</field>
+        </record>
+        <record id="template_table_mapping_8_2" model="ocr.table.mapping.line">
+            <field name="sequence">2</field>
+            <field name="line_id" eval="ref('template_table_mapping_8')"/>
+            <field name="category">CURRENCY</field>
+            <field name="type">label</field>
+            <field name="name">Amount</field>
+            <field name="keyword">Amount</field>
+        </record>
+        <record id="template_table_mapping_8_3" model="ocr.table.mapping.line">
+            <field name="sequence">3</field>
+            <field name="line_id" eval="ref('template_table_mapping_8')"/>
+            <field name="category">CURRENCY</field>
+            <field name="type">value</field>
+            <field name="name">MYR</field>
+            <field name="keyword">MYR</field>
+        </record>
+        <record id="template_table_mapping_8_4" model="ocr.table.mapping.line">
+            <field name="sequence">4</field>
+            <field name="line_id" eval="ref('template_table_mapping_8')"/>
+            <field name="category">CURRENCY</field>
+            <field name="type">value</field>
+            <field name="name">USD</field>
+            <field name="keyword">USD</field>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="template_table_mapping_9_1" model="ocr.table.mapping.line">
+            <field name="sequence">1</field>
+            <field name="line_id" eval="ref('template_table_mapping_9')"/>
+            <field name="category">EXCHANGE RATE</field>
+            <field name="type">label</field>
+            <field name="name">Rate of Exchange</field>
+            <field name="keyword">Rate of Exchange</field>
+        </record>
+        <record id="template_table_mapping_9_2" model="ocr.table.mapping.line">
+            <field name="sequence">2</field>
+            <field name="line_id" eval="ref('template_table_mapping_9')"/>
+            <field name="category">EXCHANGE RATE</field>
+            <field name="type">label</field>
+            <field name="name">EXCHANGE RATE</field>
+            <field name="keyword">EXCHANGE RATE</field>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="template_table_mapping_10_1" model="ocr.table.mapping.line">
+            <field name="sequence">1</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">PORT STORAGE CHARGES</field>
+            <field name="keyword">PORT STORAGE CHARGES</field>
+        </record>
+        <record id="template_table_mapping_10_2" model="ocr.table.mapping.line">
+            <field name="sequence">2</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">BL FEES</field>
+            <field name="keyword">BL FEES</field>
+        </record>
+        <record id="template_table_mapping_10_3" model="ocr.table.mapping.line">
+            <field name="sequence">3</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">ORIG TRML HANDLG</field>
+            <field name="keyword">ORIG TRML HANDLG</field>
+        </record>
+        <record id="template_table_mapping_10_4" model="ocr.table.mapping.line">
+            <field name="sequence">4</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">EDI FEE</field>
+            <field name="keyword">EDI FEE</field>
+        </record>
+        <record id="template_table_mapping_10_5" model="ocr.table.mapping.line">
+            <field name="sequence">5</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">O/B DOC FEE</field>
+            <field name="keyword">O/B DOC FEE</field>
+        </record>
+        <record id="template_table_mapping_10_6" model="ocr.table.mapping.line">
+            <field name="sequence">6</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">HI SEC SEAL CHG</field>
+            <field name="keyword">HI SEC SEAL CHG</field>
+        </record>
+        <record id="template_table_mapping_10_7" model="ocr.table.mapping.line">
+            <field name="sequence">7</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">COMBINED CAF/BAF</field>
+            <field name="keyword">COMBINED CAF/BAF</field>
+        </record>
+        <record id="template_table_mapping_10_8" model="ocr.table.mapping.line">
+            <field name="sequence">8</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">OCEAN FREIGHT</field>
+            <field name="keyword">OCEAN FREIGHT</field>
+        </record>
+        <record id="template_table_mapping_10_9" model="ocr.table.mapping.line">
+            <field name="sequence">9</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">BASIC FREIGHT</field>
+            <field name="keyword">BASIC FREIGHT</field>
+        </record>
+        <record id="template_table_mapping_10_10" model="ocr.table.mapping.line">
+            <field name="sequence">10</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">Terminal hand ch origin</field>
+            <field name="keyword">Terminal hand ch origin</field>
+        </record>
+        <record id="template_table_mapping_10_11" model="ocr.table.mapping.line">
+            <field name="sequence">11</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">Export Declaration Surcharge</field>
+            <field name="keyword">Export Declaration Surcharge</field>
+        </record>
+        <record id="template_table_mapping_10_12" model="ocr.table.mapping.line">
+            <field name="sequence">12</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">Sealing service export</field>
+            <field name="keyword">Sealing service export</field>
+        </record>
+        <record id="template_table_mapping_10_13" model="ocr.table.mapping.line">
+            <field name="sequence">13</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">Low Sulphur Surcharge</field>
+            <field name="keyword">Low Sulphur Surcharge</field>
+        </record>
+        <record id="template_table_mapping_10_14" model="ocr.table.mapping.line">
+            <field name="sequence">14</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">Booking Amendment Fee</field>
+            <field name="keyword">Booking Amendment Fee</field>
+        </record>
+        <record id="template_table_mapping_10_15" model="ocr.table.mapping.line">
+            <field name="sequence">15</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">Bill of Lading Amendment Fee</field>
+            <field name="keyword">Bill of Lading Amendment Fee</field>
+        </record>
+        <record id="template_table_mapping_10_16" model="ocr.table.mapping.line">
+            <field name="sequence">16</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">Empty equip imbalance and handover charge</field>
+            <field name="keyword">Empty equip imbalance and handover charge</field>
+        </record>
+        <record id="template_table_mapping_10_17" model="ocr.table.mapping.line">
+            <field name="sequence">17</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">Communication Fee</field>
+            <field name="keyword">Communication Fee</field>
+        </record>
+        <record id="template_table_mapping_10_18" model="ocr.table.mapping.line">
+            <field name="sequence">18</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">Export Documentation Fee</field>
+            <field name="keyword">Export Documentation Fee</field>
+        </record>
+        <record id="template_table_mapping_10_19" model="ocr.table.mapping.line">
+            <field name="sequence">18</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">SEAFREIGHT</field>
+            <field name="keyword">SEAFREIGHT</field>
+        </record>
+        <record id="template_table_mapping_10_20" model="ocr.table.mapping.line">
+            <field name="sequence">18</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">GLOBAL FUEL SURCHARGE</field>
+            <field name="keyword">GLOBAL FUEL SURCHARGE</field>
+        </record>
+        <record id="template_table_mapping_10_21" model="ocr.table.mapping.line">
+            <field name="sequence">18</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">TERMINAL HANDLING CHARGE</field>
+            <field name="keyword">TERMINAL HANDLING CHARGE</field>
+        </record>
+        <record id="template_table_mapping_10_22" model="ocr.table.mapping.line">
+            <field name="sequence">18</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">SEAL FEE</field>
+            <field name="keyword">SEAL FEE</field>
+        </record>
+        <record id="template_table_mapping_10_23" model="ocr.table.mapping.line">
+            <field name="sequence">18</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">CONTAINER COMPLIANCE CHARGE</field>
+            <field name="keyword">CONTAINER COMPLIANCE CHARGE</field>
+        </record>
+        <record id="template_table_mapping_10_24" model="ocr.table.mapping.line">
+            <field name="sequence">18</field>
+            <field name="line_id" eval="ref('template_table_mapping_10')"/>
+            <field name="category">PRODUCT</field>
+            <field name="type">value</field>
+            <field name="name">BL FEE</field>
+            <field name="keyword">BL FEE</field>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="ocr_partner_template_1" model="ocr.partner.template">
+            <field name="name">Orient Overseas Container Line</field>
+            <field name="date_template_label" eval="ref('template_table_mapping_5_2')"/>
+            <field name="due_date_template_label" eval="ref('template_table_mapping_6_1')"/>
+            <field name="reference_template_label" eval="ref('template_table_mapping_2_2')"/>
+            <field name="bl_no_template_label" eval="ref('template_table_mapping_3_1')"/>
+            <field name="pol_template_label" eval="ref('template_table_mapping_4_1')"/>
+            <field name="date_format">DD MMM YYYY</field>
+            <field name="reference_pattern">412 2869418</field>
+            <field name="bl_no_pattern">2678281350 NEXT LINE LAST</field>
+            <field name="pol_pattern">PENANG NEXT LINE LAST</field>
+            <field name="product_section_start">VALUE RATE MYR</field>
+            <field name="product_section_end">AMOUNT DUE</field>
+            <field name="container_section_start">Container/s</field>
+            <field name="container_section_end">CHARGE DESCRIPTION</field>
+            <field name="line_item_pattern">QTY PFC NIL RTE TOTAL</field>
+        </record>
+
+        <record id="ocr_partner_template_2" model="ocr.partner.template">
+            <field name="name">YANG MING LINE (M) SDN BHD</field>
+            <field name="date_template_label" eval="ref('template_table_mapping_5_4')"/>
+            <field name="reference_template_label" eval="ref('template_table_mapping_2_5')"/>
+            <field name="bl_no_template_label" eval="ref('template_table_mapping_3_5')"/>
+            <field name="payment_term_template_label" eval="ref('template_table_mapping_7_6')"/>
+            <field name="currency_template_label" eval="ref('template_table_mapping_8_1')"/>
+            <field name="pol_template_label" eval="ref('template_table_mapping_4_9')"/>
+            <field name="date_format">DD/MM/YYYY</field>
+            <field name="reference_pattern">INV/2021/32511</field>
+            <field name="bl_no_pattern">I465082501</field>
+            <field name="pol_pattern">PENANG</field>
+            <field name="product_section_start">Freight Charges</field>
+            <field name="product_section_end">B/L No.</field>
+            <field name="container_section_start">Container Number</field>
+            <field name="container_section_end">Please</field>
+            <field name="line_item_pattern">QTYXNIL@CURUP TOTAL</field>
+            <field name="with_exchange_rate">true</field>
+            <field name="line_item_pattern_with_exchange_rate">QTY NIL UPI RTE TOTAL</field>
+            <field name="complex_line">true</field>
+            <field name="complex_line_pattern">QTYXNIL@UPI</field>
+        </record>
+
+        <record id="ocr_partner_template_3" model="ocr.partner.template">
+            <field name="name">CMA CGM Asia Shipping Pte. Ltd</field>
+            <field name="date_template_label" eval="ref('template_table_mapping_5_1')"/>
+            <field name="due_date_template_label" eval="ref('template_table_mapping_6_2')"/>
+            <field name="reference_template_label" eval="ref('template_table_mapping_2_3')"/>
+            <field name="bl_no_template_label" eval="ref('template_table_mapping_3_2')"/>
+            <field name="exchange_rate_template_label" eval="ref('template_table_mapping_9_1')"/>
+            <field name="pol_template_label" eval="ref('template_table_mapping_4_3')"/>
+            <field name="date_format">DD MMM YYYY</field>
+            <field name="reference_pattern">MYCEA051638 NEXT LINE LAST</field>
+            <field name="bl_no_pattern">2678281350</field>
+            <field name="exchange_rate_pattern">4.12 NEXT LINE</field>
+            <field name="pol_pattern">PENANG</field>
+            <field name="product_section_start">Charge Description</field>
+            <field name="product_section_end">Rate of Exchange</field>
+            <field name="container_section_start">Charge Description</field>
+            <field name="container_section_end">Rate of Exchange</field>
+            <field name="line_item_pattern">QTY UPI NIL TOTAL</field>
+        </record>
+
+        <record id="ocr_partner_template_4" model="ocr.partner.template">
+            <field name="name">COSCO SHIPPING Lines (Malaysia) Sdn. Bhd.</field>
+            <field name="date_template_label" eval="ref('template_table_mapping_5_3')"/>
+            <field name="reference_template_label" eval="ref('template_table_mapping_2_2')"/>
+            <field name="bl_no_template_label" eval="ref('template_table_mapping_3_1')"/>
+            <field name="pol_template_label" eval="ref('template_table_mapping_4_1')"/>
+            <field name="date_format">DD MMM YYYY</field>
+            <field name="reference_pattern">OFTE21032176</field>
+            <field name="bl_no_pattern">COAU7230396460 NEXT LINE LAST</field>
+            <field name="pol_pattern">PENANG NEXT LINE LAST</field>
+            <field name="product_section_start">CHARGE DESCRIPTION</field>
+            <field name="product_section_end">TOTAL AMOUNT</field>
+            <field name="container_section_start">Container/s</field>
+            <field name="container_section_end">CHARGE DESCRIPTION</field>
+            <field name="line_item_pattern">QTY PFC NIL RTE NIL TOTAL</field>
+        </record>
+
+        <record id="ocr_partner_template_5" model="ocr.partner.template">
+            <field name="name">WAN HAI LINES (M) SDN. BHD.</field>
+            <field name="date_template_label" eval="ref('template_table_mapping_5_1')"/>
+            <field name="reference_template_label" eval="ref('template_table_mapping_2_2')"/>
+            <field name="bl_no_template_label" eval="ref('template_table_mapping_3_3')"/>
+            <field name="exchange_rate_template_label" eval="ref('template_table_mapping_9_2')"/>
+            <field name="pol_template_label" eval="ref('template_table_mapping_4_10')"/>
+            <field name="date_format">DD/MM/YYYY</field>
+            <field name="reference_pattern">PED2111119619</field>
+            <field name="bl_no_pattern">046BA12791</field>
+            <field name="exchange_rate_pattern">4.12</field>
+            <field name="pol_pattern">PENANG</field>
+            <field name="product_section_start">PARTICULARS</field>
+            <field name="product_section_end">M.VES/VOY</field>
+            <field name="container_section_start">NIL</field>
+            <field name="container_section_end">NIL</field>
+            <field name="line_item_pattern">TOTAL UPI</field>
+        </record>
+
+        <record id="ocr_partner_template_6" model="ocr.partner.template">
+            <field name="name">SEALAND</field>
+            <field name="date_template_label" eval="ref('template_table_mapping_5_1')"/>
+            <field name="due_date_template_label" eval="ref('template_table_mapping_6_1')"/>
+            <field name="reference_template_label" eval="ref('template_table_mapping_2_4')"/>
+            <field name="bl_no_template_label" eval="ref('template_table_mapping_3_4')"/>
+            <field name="payment_term_template_label" eval="ref('template_table_mapping_7_1')"/>
+            <field name="pol_template_label" eval="ref('template_table_mapping_4_11')"/>
+            <field name="date_format">DD MMM YYYY</field>
+            <field name="reference_pattern">5773908400</field>
+            <field name="bl_no_pattern">213740291</field>
+            <field name="pol_pattern">PENANG</field>
+            <field name="multi_page_count">1</field>
+            <field name="product_section_start">Description of Charges</field>
+            <field name="product_section_end">Total Due</field>
+            <field name="container_section_start">Container No</field>
+            <field name="container_section_end">Maersk</field>
+            <field name="line_item_pattern">QTY UPI RTE TOTAL</field>
+        </record>
+
+        <record id="ocr_partner_template_7" model="ocr.partner.template">
+            <field name="name">ELITE</field>
+            <field name="date_template_label" eval="ref('template_table_mapping_5_5')"/>
+            <field name="reference_template_label" eval="ref('template_table_mapping_2_4')"/>
+            <field name="bl_no_template_label" eval="ref('template_table_mapping_3_3')"/>
+            <field name="payment_term_template_label" eval="ref('template_table_mapping_7_2')"/>
+            <field name="pol_template_label" eval="ref('template_table_mapping_4_2')"/>
+            <field name="date_format">DD-MMM-YYYY</field>
+            <field name="reference_pattern">1021107983 NEXT LINE FIRST</field>
+            <field name="bl_no_pattern">ONEYCANB58756601</field>
+            <field name="pol_pattern">PENANG NEXT LINE FIRST</field>
+            <field name="multi_page_count">1</field>
+            <field name="product_section_start">DESCRIPTION OF CHARGES</field>
+            <field name="product_section_end">ELITE REF</field>
+            <field name="line_item_pattern">RTE QTY NIL PFC TOTAL</field>
+        </record>
+        <record id="ocr_partner_template_8" model="ocr.partner.template">
+            <field name="name">MEDITERRANEAN SHIPPING COMPANY (M) SDN BHD</field>
+            <field name="density_value">320</field>
+            <field name="merge_line_item" eval="True"/>
+            <field name="multi_page_check" eval="True"/>
+            <field name="product_section_start">Charge</field>
+            <field name="product_section_end">Total in Word</field>
+            <field name="line_item_pattern">QTY NIL UPI PFC RTE TOTAL</field>
+        </record>
+        <record id="ocr_partner_template_9" model="ocr.partner.template">
+            <field name="name">MEDITERRANEAN SHIPPING COMPANY (IDR)</field>
+            <field name="date_template_label" eval="ref('template_table_mapping_5_1')"/>
+            <field name="date_format">DD-MMM-YYYY</field>
+            <field name="reference_template_label" eval="ref('template_table_mapping_2_2')"/>
+            <field name="reference_pattern">EMFO093582023BLN</field>
+            <field name="bl_no_pattern">MEDUJQ862248</field>
+            <field name="bl_no_template_label" eval="ref('template_table_mapping_3_5')"/>
+            <field name="merge_line_item" eval="True"/>
+            <field name="multi_page_check" eval="True"/>
+            <field name="product_section_start">Charge</field>
+            <field name="product_section_end">Total Amount</field>
+            <field name="line_item_pattern">QTY NIL TOTAL</field>
+        </record>
+        <record id="ocr_partner_template_10" model="ocr.partner.template">
+            <field name="name">MEDITERRANEAN SHIPPING COMPANY (USD)</field>
+            <field name="date_template_label" eval="ref('template_table_mapping_5_1')"/>
+            <field name="date_format">DD-MMM-YYYY</field>
+            <field name="reference_template_label" eval="ref('template_table_mapping_2_2')"/>
+            <field name="reference_pattern">EMFO093582023BLN</field>
+            <field name="bl_no_pattern">MEDUJQ862248</field>
+            <field name="bl_no_template_label" eval="ref('template_table_mapping_3_5')"/>
+            <field name="merge_line_item" eval="True"/>
+            <field name="multi_page_check" eval="True"/>
+            <field name="product_section_start">Charge</field>
+            <field name="product_section_end">Total Amount</field>
+            <field name="line_item_pattern">QTY NIL TOTAL</field>
+        </record>
+
+    </data>
+</odoo>

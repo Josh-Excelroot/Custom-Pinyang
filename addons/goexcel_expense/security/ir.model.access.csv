@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_expense_categoty,access_hr_expense_categoty,model_hr_expense_categoty,base.group_user,1,1,1,1
+access_message_monitor_expense,access_message_monitor_expense,model_message_monitor_expense,base.group_user,1,1,1,1
+access_ocr_table_mapping_expense,access_ocr_table_mapping_expense,model_ocr_table_mapping_expense,base.group_user,1,1,1,1
+access_ocr_table_mapping_line_expense,access_ocr_table_mapping_line_expense,model_ocr_table_mapping_line_expense,base.group_user,1,1,1,1

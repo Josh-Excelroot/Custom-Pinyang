@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crm_won_reason,access_crm_won_reason,model_crm_won_reason,base.group_user,1,1,1,1
+access_crm_industry,access_crm_industry,model_crm_industry,base.group_user,1,1,1,1
+access_crm.lead,access_crm.lead,model_crm_lead,base.group_user,1,1,1,1
+access_crm_stage_history,access_crm_stage_history,model_crm_stage_history,base.group_user,1,1,1,1

@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+    <record model="employee.socso" id="socso_categ_1">
+        <field name="name">SOCSO Category 1</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_1">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">0.00</field>
+        <field name="range_to">30.00</field>
+        <field name="employer_contribution">0.40</field>
+        <field name="employee_contribution">0.10</field>
+        <field name="employer_only_contribution">0.30</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_2">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">30.01</field>
+        <field name="range_to">50.00</field>
+        <field name="employer_contribution">0.70</field>
+        <field name="employee_contribution">0.20</field>
+        <field name="employer_only_contribution">0.50</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_3">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">50.01</field>
+        <field name="range_to">70.00</field>
+        <field name="employer_contribution">1.10</field>
+        <field name="employee_contribution">0.30</field>
+        <field name="employer_only_contribution">0.80</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_4">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">70.01</field>
+        <field name="range_to">100.00</field>
+        <field name="employer_contribution">1.50</field>
+        <field name="employee_contribution">0.40</field>
+        <field name="employer_only_contribution">1.10</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_5">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">100.01</field>
+        <field name="range_to">140.00</field>
+        <field name="employer_contribution">2.10</field>
+        <field name="employee_contribution">0.60</field>
+        <field name="employer_only_contribution">1.50</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_6">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">140.01</field>
+        <field name="range_to">200.00</field>
+        <field name="employer_contribution">2.95</field>
+        <field name="employee_contribution">0.85</field>
+        <field name="employer_only_contribution">2.10</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_7">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">200.01</field>
+        <field name="range_to">300.00</field>
+        <field name="employer_contribution">4.35</field>
+        <field name="employee_contribution">1.25</field>
+        <field name="employer_only_contribution">3.10</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_8">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">300.01</field>
+        <field name="range_to">400.00</field>
+        <field name="employer_contribution">6.15</field>
+        <field name="employee_contribution">1.75</field>
+        <field name="employer_only_contribution">4.40</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_9">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">400.01</field>
+        <field name="range_to">500.00</field>
+        <field name="employer_contribution">7.85</field>
+        <field name="employee_contribution">2.25</field>
+        <field name="employer_only_contribution">5.60</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_10">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">500.01</field>
+        <field name="range_to">600.00</field>
+        <field name="employer_contribution">9.65</field>
+        <field name="employee_contribution">2.75</field>
+        <field name="employer_only_contribution">6.90</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_11">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">600.01</field>
+        <field name="range_to">700.00</field>
+        <field name="employer_contribution">11.35</field>
+        <field name="employee_contribution">3.25</field>
+        <field name="employer_only_contribution">8.10</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_12">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">700.01</field>
+        <field name="range_to">800.00</field>
+        <field name="employer_contribution">13.15</field>
+        <field name="employee_contribution">3.75</field>
+        <field name="employer_only_contribution">9.40</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_13">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">800.01</field>
+        <field name="range_to">900.00</field>
+        <field name="employer_contribution">14.85</field>
+        <field name="employee_contribution">4.25</field>
+        <field name="employer_only_contribution">10.60</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_14">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">900.01</field>
+        <field name="range_to">1000.00</field>
+        <field name="employer_contribution">16.65</field>
+        <field name="employee_contribution">4.75</field>
+        <field name="employer_only_contribution">11.90</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_15">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">1000.01</field>
+        <field name="range_to">1100.00</field>
+        <field name="employer_contribution">18.35</field>
+        <field name="employee_contribution">5.25</field>
+        <field name="employer_only_contribution">13.10</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_16">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">1100.01</field>
+        <field name="range_to">1200.00</field>
+        <field name="employer_contribution">20.15</field>
+        <field name="employee_contribution">5.75</field>
+        <field name="employer_only_contribution">14.40</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_17">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">1200.01</field>
+        <field name="range_to">1300.00</field>
+        <field name="employer_contribution">21.85</field>
+        <field name="employee_contribution">6.25</field>
+        <field name="employer_only_contribution">15.60</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_18">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">1300.01</field>
+        <field name="range_to">1400.00</field>
+        <field name="employer_contribution">23.65</field>
+        <field name="employee_contribution">6.75</field>
+        <field name="employer_only_contribution">16.90</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_19">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">1400.01</field>
+        <field name="range_to">1500.00</field>
+        <field name="employer_contribution">25.35</field>
+        <field name="employee_contribution">7.25</field>
+        <field name="employer_only_contribution">18.10</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_20">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">1500.01</field>
+        <field name="range_to">1600.00</field>
+        <field name="employer_contribution">27.15</field>
+        <field name="employee_contribution">7.75</field>
+        <field name="employer_only_contribution">19.40</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_21">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">1600.01</field>
+        <field name="range_to">1700.00</field>
+        <field name="employer_contribution">28.85</field>
+        <field name="employee_contribution">8.25</field>
+        <field name="employer_only_contribution">20.60</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_22">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">1700.01</field>
+        <field name="range_to">1800.00</field>
+        <field name="employer_contribution">30.65</field>
+        <field name="employee_contribution">8.75</field>
+        <field name="employer_only_contribution">21.90</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_23">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">1800.01</field>
+        <field name="range_to">1900.00</field>
+        <field name="employer_contribution">32.35</field>
+        <field name="employee_contribution">9.25</field>
+        <field name="employer_only_contribution">23.10</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_24">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">1900.01</field>
+        <field name="range_to">2000.00</field>
+        <field name="employer_contribution">34.15</field>
+        <field name="employee_contribution">9.75</field>
+        <field name="employer_only_contribution">24.40</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_25">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">2000.01</field>
+        <field name="range_to">2100.00</field>
+        <field name="employer_contribution">35.85</field>
+        <field name="employee_contribution">10.25</field>
+        <field name="employer_only_contribution">25.60</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_26">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">2100.01</field>
+        <field name="range_to">2200.00</field>
+        <field name="employer_contribution">37.65</field>
+        <field name="employee_contribution">10.75</field>
+        <field name="employer_only_contribution">26.90</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_27">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">2200.01</field>
+        <field name="range_to">2300.00</field>
+        <field name="employer_contribution">39.35</field>
+        <field name="employee_contribution">11.25</field>
+        <field name="employer_only_contribution">28.10</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_28">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">2300.01</field>
+        <field name="range_to">2400.00</field>
+        <field name="employer_contribution">41.15</field>
+        <field name="employee_contribution">11.75</field>
+        <field name="employer_only_contribution">29.40</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_29">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">2400.01</field>
+        <field name="range_to">2500.00</field>
+        <field name="employer_contribution">42.85</field>
+        <field name="employee_contribution">12.25</field>
+        <field name="employer_only_contribution">30.60</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_30">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">2500.01</field>
+        <field name="range_to">2600.00</field>
+        <field name="employer_contribution">44.65</field>
+        <field name="employee_contribution">12.75</field>
+        <field name="employer_only_contribution">31.90</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_31">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">2600.01</field>
+        <field name="range_to">2700.00</field>
+        <field name="employer_contribution">46.35</field>
+        <field name="employee_contribution">13.25</field>
+        <field name="employer_only_contribution">33.10</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_32">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">2700.01</field>
+        <field name="range_to">2800.00</field>
+        <field name="employer_contribution">48.15</field>
+        <field name="employee_contribution">13.75</field>
+        <field name="employer_only_contribution">34.40</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_33">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">2800.01</field>
+        <field name="range_to">2900.00</field>
+        <field name="employer_contribution">49.85</field>
+        <field name="employee_contribution">14.25</field>
+        <field name="employer_only_contribution">35.60</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_34">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">2900.01</field>
+        <field name="range_to">3000.00</field>
+        <field name="employer_contribution">51.65</field>
+        <field name="employee_contribution">14.75</field>
+        <field name="employer_only_contribution">36.90</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_35">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">3000.01</field>
+        <field name="range_to">3100.00</field>
+        <field name="employer_contribution">53.35</field>
+        <field name="employee_contribution">15.25</field>
+        <field name="employer_only_contribution">38.10</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_36">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">3100.01</field>
+        <field name="range_to">3200.00</field>
+        <field name="employer_contribution">55.15</field>
+        <field name="employee_contribution">15.75</field>
+        <field name="employer_only_contribution">39.40</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_37">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">3200.01</field>
+        <field name="range_to">3300.00</field>
+        <field name="employer_contribution">56.85</field>
+        <field name="employee_contribution">16.25</field>
+        <field name="employer_only_contribution">40.60</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_38">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">3300.01</field>
+        <field name="range_to">3400.00</field>
+        <field name="employer_contribution">58.65</field>
+        <field name="employee_contribution">16.75</field>
+        <field name="employer_only_contribution">41.90</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_39">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">3400.01</field>
+        <field name="range_to">3500.00</field>
+        <field name="employer_contribution">60.35</field>
+        <field name="employee_contribution">17.25</field>
+        <field name="employer_only_contribution">43.10</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_40">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">3500.01</field>
+        <field name="range_to">3600.00</field>
+        <field name="employer_contribution">62.15</field>
+        <field name="employee_contribution">17.75</field>
+        <field name="employer_only_contribution">44.40</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_41">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">3600.01</field>
+        <field name="range_to">3700.00</field>
+        <field name="employer_contribution">63.85</field>
+        <field name="employee_contribution">18.25</field>
+        <field name="employer_only_contribution">45.60</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_42">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">3700.01</field>
+        <field name="range_to">3800.00</field>
+        <field name="employer_contribution">65.65</field>
+        <field name="employee_contribution">18.75</field>
+        <field name="employer_only_contribution">46.90</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_43">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">3800.01</field>
+        <field name="range_to">3900.00</field>
+        <field name="employer_contribution">67.35</field>
+        <field name="employee_contribution">19.25</field>
+        <field name="employer_only_contribution">48.10</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_44">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">3900.01</field>
+        <field name="range_to">4000.00</field>
+        <field name="employer_contribution">69.15</field>
+        <field name="employee_contribution">19.75</field>
+        <field name="employer_only_contribution">49.40</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_45">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">4000.01</field>
+        <field name="range_to">4100.00</field>
+        <field name="employer_contribution">70.85</field>
+        <field name="employee_contribution">20.25</field>
+        <field name="employer_only_contribution">50.60</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_46">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">4100.01</field>
+        <field name="range_to">4200.00</field>
+        <field name="employer_contribution">72.65</field>
+        <field name="employee_contribution">20.75</field>
+        <field name="employer_only_contribution">51.90</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_47">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">4200.01</field>
+        <field name="range_to">4300.00</field>
+        <field name="employer_contribution">74.35</field>
+        <field name="employee_contribution">21.25</field>
+        <field name="employer_only_contribution">53.10</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_48">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">4300.01</field>
+        <field name="range_to">4400.00</field>
+        <field name="employer_contribution">76.15</field>
+        <field name="employee_contribution">21.75</field>
+        <field name="employer_only_contribution">54.40</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_49">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">4400.01</field>
+        <field name="range_to">4500.00</field>
+        <field name="employer_contribution">77.85</field>
+        <field name="employee_contribution">22.25</field>
+        <field name="employer_only_contribution">55.60</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_50">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">4500.01</field>
+        <field name="range_to">4600.00</field>
+        <field name="employer_contribution">79.65</field>
+        <field name="employee_contribution">22.75</field>
+        <field name="employer_only_contribution">56.90</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_51">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">4600.01</field>
+        <field name="range_to">4700.00</field>
+        <field name="employer_contribution">81.35</field>
+        <field name="employee_contribution">23.25</field>
+        <field name="employer_only_contribution">58.10</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_52">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">4700.01</field>
+        <field name="range_to">4800.00</field>
+        <field name="employer_contribution">83.15</field>
+        <field name="employee_contribution">23.75</field>
+        <field name="employer_only_contribution">59.40</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_53">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">4800.01</field>
+        <field name="range_to">4900.00</field>
+        <field name="employer_contribution">84.85</field>
+        <field name="employee_contribution">24.25</field>
+        <field name="employer_only_contribution">60.60</field>
+    </record>
+
+
+    <record model="employee.socso.view" id="socso_line_54">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">4900.01</field>
+        <field name="range_to">5000.00</field>
+        <field name="employer_contribution">86.65</field>
+        <field name="employee_contribution">24.75</field>
+        <field name="employer_only_contribution">61.90</field>
+    </record>
+
+    <record model="employee.socso.view" id="socso_line_55">
+        <field name="con_catg_socso_id" ref="socso_categ_1" />
+        <field name="range_from">5000.01</field>
+        <field name="range_to">100000.00</field>
+        <field name="employer_contribution">86.65</field>
+        <field name="employee_contribution">24.75</field>
+        <field name="employer_only_contribution">61.90</field>
+    </record>
+
+</odoo>

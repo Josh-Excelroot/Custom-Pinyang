@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+
+        <record id="view_por_status_tree" model="ir.ui.view">
+            <field name="name">view.por.status.tree</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="invoice_open" />
+                 <!--   <field name="ship_partial" />-->
+                    <field name="ship_status"/>
+                    <field name="invoice_partial"/>
+                    <field name="invoice_status_new"/>
+                    
+                </field>
+            </field>
+        </record>
+        
+        
+        
+<!--        purchase search view-->
+
+        <record id="purchase_status_search_view" model="ir.ui.view">
+            <field name="name">purchase.status.search.view</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='order_date']" position="after">
+                    <filter name="invoice_open" string="Open Invoice" domain="[('invoice_open','=',True)]"/>
+                <!--    <filter name="ship_partial" string="Partial Delivered" domain="[('ship_partial','=',True)]"/>-->
+                    <filter name="ship_status"  string="Received"  domain="[('ship_status','=',True)]"/>
+                    <filter name="invoice_partial_pa" string="Partially Paid" domain="[('invoice_partial','=',True)]"/>
+                    <filter name="invoice_status_new"  string="Paid" domain="[('invoice_status_new','=',True)]"/>
+                </xpath>
+            </field>
+        </record>
+</odoo>
+

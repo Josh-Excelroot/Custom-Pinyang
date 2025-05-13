@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id='view_message_monitor' model='ir.ui.view'>
+        <field name="name">Message Monitor List</field>
+        <field name="model">message.monitor</field>
+        <field name="arch" type="xml">
+			<tree string='Message Monitor List'>
+				<field name="name"/>
+                <field name="type"/>
+                <field name="object_id"/>
+                <field name="stage"/>
+                <field name="has_attachment"/>
+			</tree>
+		</field>
+	</record>
+
+    <record id="view_form_message_monitor" model="ir.ui.view">
+        <field name="name">Message Monitor Form</field>
+        <field name="model">message.monitor</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="type"/>
+                        <field name="object_id"/>
+                        <field name="stage"/>
+                        <field name="has_attachment"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <act_window id="action_message_monitor"
+        name="Message Monitor"
+        res_model="message.monitor"
+        view_mode="tree,form"
+    />
+
+    <menuitem id="menu_message_monitor"
+              parent="menu_ocr_vendor_invoice"
+              action="action_message_monitor"/>
+
+    <data noupdate="1">
+       <record id="message_monitor" model="ir.cron">
+           <field name="name">Message Monitor</field>
+           <field name="model_id" ref="model_message_monitor"/>
+           <field name="state">code</field>
+           <field name="code">model.execute_invoice_ocr()</field>
+           <field name="user_id" ref="base.user_root"/>
+           <field name='interval_number'>1</field>
+           <field name='interval_type'>days</field>
+           <field name="numbercall">-1</field>
+           <field name="doall" eval="False"/>
+           <field name="active" eval="True"/>
+       </record>
+    </data>
+
+</odoo>

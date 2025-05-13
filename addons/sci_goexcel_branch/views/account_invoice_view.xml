@@ -1,0 +1,97 @@
+<odoo>
+	<record model="ir.ui.view" id="view_invoice_branch">
+		<field name="name">account.invoice.form.branch</field>
+		<field name="model">account.invoice</field>
+		<field name="inherit_id" ref="account.invoice_form"/>
+		<field name="type">form</field>
+		<field name="priority" eval="100"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='payment_term_id']" position="after">
+				<field name="branch"/>
+				<field name="running_id" invisible="1"/>
+			</xpath>
+		</field>
+	</record>
+
+
+	<record id='invoice_tree_with_onboarding_branch' model='ir.ui.view'>
+		<field name="name">invoice Tree Branch</field>
+		<field name="model">account.invoice</field>
+		<field name="type">tree</field>
+		<field name="priority" eval="10"/>
+		<field name="inherit_id" ref="account.invoice_tree_with_onboarding"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='state']" position="after">
+				<field name="branch"/>
+			</xpath>
+		</field>
+	</record>
+
+
+	<record id="view_account_invoice_filter_branch" model="ir.ui.view">
+		<field name="name">Invoice Search</field>
+		<field name="model">account.invoice</field>
+		<field name="inherit_id" ref="account.view_account_invoice_filter"/>
+		<field name="arch" type="xml">
+			<search>
+				<filter string="To Approve Invoice" name="to_approve_invoice" domain="[('state', '=', 'approve')]"/>
+			</search>
+		</field>
+	</record>
+
+	<!--vendor bill Form-->
+	<record model="ir.ui.view" id="view_invoice_vendor_form_branch">
+		<field name="name">account.invoice.form.vendor.branch</field>
+		<field name="model">account.invoice</field>
+		<field name="inherit_id" ref="account.invoice_supplier_form"/>
+		<field name="type">form</field>
+		<field name="priority" eval="100"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='reference']" position="after">
+				<field name="branch"/>
+			</xpath>
+		</field>
+	</record>
+
+
+	<record id='invoice_supplier_tree_branch' model='ir.ui.view'>
+		<field name="name">Vendor Bill Tree Branch</field>
+		<field name="model">account.invoice</field>
+		<field name="type">tree</field>
+		<field name="priority" eval="10"/>
+		<field name="inherit_id" ref="account.invoice_supplier_tree"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='state']" position="after">
+				<field name="branch"/>
+			</xpath>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_move_form_branch">
+		<field name="name">account.move.form.branch</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_move_form"/>
+		<field name="type">form</field>
+		<field name="priority" eval="100"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='ref']" position="after">
+				<field name="branch"/>
+				<field name="running_id" invisible="1"/>
+			</xpath>
+		</field>
+	</record>
+
+	<record id='view_move_tree_branch' model='ir.ui.view'>
+		<field name="name">Journal Tree Branch</field>
+		<field name="model">account.move</field>
+		<field name="type">tree</field>
+		<field name="priority" eval="10"/>
+		<field name="inherit_id" ref="account.view_move_tree"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='state']" position="after">
+				<field name="branch"/>
+			</xpath>
+		</field>
+	</record>
+
+</odoo>

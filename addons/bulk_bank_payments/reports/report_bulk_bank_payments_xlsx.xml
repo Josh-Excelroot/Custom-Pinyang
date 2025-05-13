@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report id="action_bulk_payment_report_xlsx"
+            string="Bulk Payment Report"
+            model="bulk.bank.payments"
+            report_type="xlsx"
+            name="bulk_bank_payments.report_bulk_bank_payments_xlsx"
+            menu="False"
+            print_report_name = "('Bulk Payment Report')"
+            file = "bulk_bank_payments.report_bulk_bank_payments_xlsx"
+    />
+</odoo>

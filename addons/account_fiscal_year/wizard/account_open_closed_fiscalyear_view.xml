@@ -1,0 +1,64 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="cancel_closing_entries_form_view" model="ir.ui.view">
+            <field name="name">cancel.closing.entries.form.view</field>
+            <field name="model">cancel.closing.entries</field>
+            <field name="arch" type="xml">
+                <form string="Cancel Closing Entries">
+                    <separator string="Cancel Fiscal Year Closing Entries" />
+                    This wizard will remove the end of year journal entries of selected fiscal year. Note that you can run this wizard many times for the same fiscal year.
+                    <group>
+                        <field name="fiscal_year_id" required="1" domain="[('company_id', '=', company_id)]" />
+                        <field groups="base.group_multi_company" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                    </group>
+                    <footer>
+                        <button string="Cancel Closing Entries" name="cancel_entry" type="object" class="oe_highlight" />
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="cancel_closing_entries_action">
+            <field name="name">Cancel Closing Entries</field>
+            <field name="res_model">cancel.closing.entries</field>
+            <field name="view_mode">form</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="cancel_closing_entries_action_menu" name="Cancel Closing Entries" parent="account_fiscal_year.end_period_main_menu" sequence="2" action="account_fiscal_year.cancel_closing_entries_action" />
+
+        <record id="closing_fiscal_year_form_view" model="ir.ui.view">
+            <field name="name">close.fiscal.year.form.view</field>
+            <field name="model">close.fiscal.year</field>
+            <field name="arch" type="xml">
+                <form string="Close a Fiscal Year">
+                    <group>
+                        <field name="fiscal_year_id" required="1" domain="[('company_id', '=', company_id)]"/>
+                        <field groups="base.group_multi_company" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                    </group>
+                    <footer>
+                        <button string="Close Fiscal Year" name="close_fiscal_year" type="object" class="oe_highlight" />
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="closing_fiscal_year_action">
+            <field name="name">Close a Fiscal Year</field>
+            <field name="res_model">close.fiscal.year</field>
+            <field name="view_mode">form</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="closing_fiscal_year_action_menu" name="Close a Fiscal Year" parent="account_fiscal_year.end_period_main_menu" sequence="3" action="account_fiscal_year.closing_fiscal_year_action" />
+
+        <!-- <menuitem id="closing_period_action_menu" name="Close a Period" parent="account_fiscal_year.end_period_main_menu" sequence="4" action="account_fiscal_year.fiscal_year_period_action" /> -->
+    </data>
+</odoo>

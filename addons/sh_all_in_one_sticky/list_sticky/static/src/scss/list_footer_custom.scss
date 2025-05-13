@@ -1,0 +1,15 @@
+// Sticky Header & Footer in List View
+.o_view_controller {
+    .table-responsive  {
+        overflow-x: initial;
+        .o_list_view {
+            tfoot, tfoot tr:nth-child(1) td {
+                position: sticky;
+                bottom: 0;
+            }
+            tfoot tr:nth-child(1) td {
+                 background-color: #fff;
+            }
+        }
+    }
+}

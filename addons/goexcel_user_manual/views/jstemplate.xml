@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="button_render_js" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script src="goexcel_user_manual/static/src/js/buttom_action_call.js" type="text/javascript"/>
+        </xpath>
+    </template>
+
+    <template id="assets_common_inherit" inherit_id="web.assets_common">
+        <xpath expr="." position="inside">
+            <script src="goexcel_user_manual/static/src/js/dialog.js" type="text/javascript"/>
+        </xpath>
+    </template>
+
+
+</odoo>

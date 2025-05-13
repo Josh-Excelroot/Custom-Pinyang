@@ -1,0 +1,25 @@
+<odoo>
+ 		<record id="si_upload_wizard" model="ir.ui.view">
+            <field name="name">si.upload.wizard</field>
+            <field name="model">si.upload.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Import">
+                    <group>
+                        <group>
+                            <field name="file_to_upload"/>
+                        </group>
+                        <!--<group>
+                            <field name="data" filename="export_filename"/>
+                        </group>-->
+                    </group>
+                    <footer>
+<!--                        <button name="export_manifest" string="Export" type="object" class="oe_highlight"-->
+<!--                                attrs="{'invisible':[('data','=','None')]}"/>-->
+                        <button name="import_si" string="Import" type="object" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+</odoo>

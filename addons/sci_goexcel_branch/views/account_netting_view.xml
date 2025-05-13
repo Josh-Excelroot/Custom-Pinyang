@@ -1,0 +1,35 @@
+<odoo>
+
+    <record id="view_account_netting_form_branch" model="ir.ui.view">
+        <field name="name">Account Contra Branch Form</field>
+        <field name="model">account.netting</field>
+        <field name="inherit_id" ref="oi_account_netting_merge.view_account_netting_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_id']" position="after">
+                <field name="branch"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id='view_account_netting_tree_branch' model='ir.ui.view'>
+        <field name="name">Account Contra Branch Form</field>
+        <field name="model">account.netting</field>
+        <field name="inherit_id" ref="oi_account_netting_merge.view_account_netting_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_state']" position="after">
+                <field name="branch"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_payment_account_netting_form_branch" model="ir.ui.view">
+        <field name="name">Payment from contra Branch Form</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="oi_account_netting_merge.view_account_payment_account_netting_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="branch" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.hr.attendance</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="81"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]//div[@data-key='hr_attendance']" position="inside">
+                <h2>HR Email Notification</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-12 col-lg-6 o_setting_box" title="Enable email notification to HR whenever attendance sheet is approved">
+                        <div class="o_setting_left_pane">
+                            <field name="is_notify_hr" readonly="0"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">Email Notification</span>
+                            <div class="text-muted">
+                                HR member will be emailed when attendance sheet is approved by manager(s)
+                            </div>
+                            <div class="row mt-2 ml-2" attrs="{'invisible': [('is_notify_hr', '=', False)]}">
+                                <field name="email_list_ids" readonly="0" widget="many2many_tags" options="{'no_create_edit':True,'no_open':True,'no_edit':True,'no_create':True}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

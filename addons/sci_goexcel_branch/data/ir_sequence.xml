@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="seq_vendor_deb_seq" model="ir.sequence">
+            <field name="name">Vendor debit notes sequence</field>
+            <field name="code">account.payment.customer.refund</field>
+            <field name="prefix">APDN%(y)s%(month)s</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_cust_deb_seq" model="ir.sequence">
+            <field name="name">Debit Note Sequence</field>
+            <field name="code"></field>
+            <field name="prefix">ARDN%(y)s%(month)s</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+<!--        &lt;!&ndash;JOHOR Internal Transfer &ndash;&gt;-->
+<!--&lt;!&ndash;        <record id="seq_internal_payment_transfer_branch_1" model="ir.sequence">&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="name">Internal Payment Transfers</field>&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="code"></field>&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="prefix">INTR%(y)s%(month)s</field>&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="padding">4</field>&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="use_date_range" eval="True"/>&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="range_reset">monthly</field>&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="branch" eval="1"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </record>&ndash;&gt;-->
+
+<!--        &lt;!&ndash;PENANG Internal Transfer &ndash;&gt;-->
+<!--&lt;!&ndash;        <record id="seq_internal_payment_transfer_branch_2" model="ir.sequence">&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="name">Internal Payment Transfers</field>&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="code"></field>&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="prefix">INTRP%(y)s%(month)s</field>&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="padding">4</field>&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="use_date_range" eval="True"/>&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="range_reset">monthly</field>&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="branch" eval="2"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </record>&ndash;&gt;-->
+
+<!--        &lt;!&ndash;KUANTAN Internal Transfer &ndash;&gt;-->
+<!--        <record id="seq_internal_payment_transfer_branch_3" model="ir.sequence">-->
+<!--            <field name="name">Internal Payment Transfers</field>-->
+<!--            <field name="code"></field>-->
+<!--            <field name="prefix">INTRK%(y)s%(month)s</field>-->
+<!--            <field name="padding">4</field>-->
+<!--            <field name="use_date_range" eval="True"/>-->
+<!--            <field name="range_reset">monthly</field>-->
+<!--            <field name="branch" eval="3"/>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash;SELANGOR Internal Transfer &ndash;&gt;-->
+<!--        <record id="seq_internal_payment_transfer_branch_4" model="ir.sequence">-->
+<!--            <field name="name">Internal Payment Transfers</field>-->
+<!--            <field name="code"></field>-->
+<!--            <field name="prefix">INTRB%(y)s%(month)s</field>-->
+<!--            <field name="padding">4</field>-->
+<!--            <field name="use_date_range" eval="True"/>-->
+<!--            <field name="range_reset">monthly</field>-->
+<!--            <field name="branch" eval="4"/>-->
+<!--        </record>-->
+
+
+<!--        &lt;!&ndash;JOHOR Contra&ndash;&gt;-->
+<!--        <record id="seq_contra_payment_branch_1" model="ir.sequence">-->
+<!--            <field name="name">Contra Johor</field>-->
+<!--            <field name="code"></field>-->
+<!--            <field name="prefix">CNTR%(y)s%(month)s</field>-->
+<!--            <field name="padding">4</field>-->
+<!--            <field name="use_date_range" eval="True"/>-->
+<!--            <field name="range_reset">monthly</field>-->
+<!--            <field name="branch" eval="1"/>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash;PENANG Contra&ndash;&gt;-->
+<!--        <record id="seq_contra_payment_branch_2" model="ir.sequence">-->
+<!--            <field name="name">Contra Penang</field>-->
+<!--            <field name="code"></field>-->
+<!--            <field name="prefix">CNTRP%(y)s%(month)s</field>-->
+<!--            <field name="padding">4</field>-->
+<!--            <field name="use_date_range" eval="True"/>-->
+<!--            <field name="range_reset">monthly</field>-->
+<!--            <field name="branch" eval="2"/>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash;KUANTAN Contra&ndash;&gt;-->
+<!--        <record id="seq_contra_payment_branch_3" model="ir.sequence">-->
+<!--            <field name="name">Contra Kuantan</field>-->
+<!--            <field name="code"></field>-->
+<!--            <field name="prefix">CNTRK%(y)s%(month)s</field>-->
+<!--            <field name="padding">4</field>-->
+<!--            <field name="use_date_range" eval="True"/>-->
+<!--            <field name="range_reset">monthly</field>-->
+<!--            <field name="branch" eval="3"/>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash;SELANGOR Contra&ndash;&gt;-->
+<!--        <record id="seq_contra_payment_branch_4" model="ir.sequence">-->
+<!--            <field name="name">Contra Selangor</field>-->
+<!--            <field name="code"></field>-->
+<!--            <field name="prefix">CNTRB%(y)s%(month)s</field>-->
+<!--            <field name="padding">4</field>-->
+<!--            <field name="use_date_range" eval="True"/>-->
+<!--            <field name="range_reset">monthly</field>-->
+<!--            <field name="branch" eval="4"/>-->
+<!--        </record>-->
+
+        
+    </data>
+</odoo>

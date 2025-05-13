@@ -1,0 +1,176 @@
+<t t-name="DataSectionFr">
+        <div>
+            <table cellspacing="0" class="system-data-table-fr" id="data-lines" width="100%">
+                <thead>
+                    <tr>
+                        <th colspan="1"/>
+                        <t t-if="filter_data['debit_credit'] == 1">
+                            <th class="amt-head" colspan="1">
+                                <span>Debit</span>
+                            </th>
+                            <th class="amt-head" colspan="1">
+                                <span>Credit</span>
+                            </th>
+                        </t>
+                        <t t-if="filter_data['enable_filter']">
+                            <th class="amt-head" colspan="1">
+                                <span>
+                                    <t t-esc="filter_data['label_filter']"/>
+                                </span>
+                            </th>
+                            <t t-if="filter_data['show_percent_margin']">
+                                <th class="amt-head" colspan="1">
+                                    <span>%</span>
+                                </th>
+                            </t>
+                        </t>
+                        <t t-if="filter_data['group_by'] == 'monthly'">
+
+                        <!-- Bilal 28/10/22 Added the Dates -->
+                            <t t-as="month_list" t-foreach="filter_data['month_list']">
+                                <th class="amt-head" colspan="1">
+                                    <span t-raw="month_list"/>
+                                </th>
+                            </t>
+                            <!--
+                            <t t-if="filter_data['JAN']">
+                                <th class="amt-head" colspan="1">Jan</th>
+                            </t>
+                            <t t-if="filter_data['FEB']">
+                                <th class="amt-head" colspan="1">Feb</th>
+                            </t>
+                            <t t-if="filter_data['MAR']">
+                                <th class="amt-head" colspan="1">March</th>
+                            </t>
+                            <t t-if="filter_data['APR']">
+                                <th class="amt-head" colspan="1">April</th>
+                            </t>
+                            <t t-if="filter_data['MAY']">
+                                <th class="amt-head" colspan="1">May</th>
+                            </t>
+                            <t t-if="filter_data['JUN']">
+                                <th class="amt-head" colspan="1">June</th>
+                            </t>
+                            <t t-if="filter_data['JUL']">
+                                <th class="amt-head" colspan="1">July</th>
+                            </t>
+                            <t t-if="filter_data['AUG']">
+                                <th class="amt-head" colspan="1">Aug</th>
+                            </t>
+                            <t t-if="filter_data['SEP']">
+                                <th class="amt-head" colspan="1">Sep</th>
+                            </t>
+                            <t t-if="filter_data['OCT']">
+                                <th class="amt-head" colspan="1">Oct</th>
+                            </t>
+                            <t t-if="filter_data['NOV']">
+                                <th class="amt-head" colspan="1">Nov</th>
+                            </t>
+                            <t t-if="filter_data['DEC']">
+                                <th class="amt-head" colspan="1">Dec</th>
+                            </t>
+                            -->
+                        </t>
+                        <t t-if="filter_data['group_by'] != 'monthly'">
+                            <th class="amt-head" colspan="1">
+                                <span>Balance</span>
+                            </th>
+                            <t t-if="filter_data['show_percent_margin']">
+                                <th class="amt-head" colspan="1">
+                                    <span>%</span>
+                                </th>
+                            </t>
+                        </t>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-as="a" t-foreach="account_data">
+                        <t t-if="a['level'] &lt; 4">
+                            <t t-set="style" t-value="'font-weight:bold;'"/>
+                        </t>
+                        <t t-if="a['level'] &gt; 3">
+                            <t t-set="style" t-value="'font-weight:normal;border:none;'"/>
+                        </t>
+                        <t t-if="a['level'] == 0">
+                            <t t-set="style_td" t-value="style + 'border-bottom:2px solid #666666;visibility:hidden;'"/>
+                        </t>
+                        <t t-if="a['level'] == 1">
+                            <t t-set="style_td" t-value="style + 'border-bottom:double #666666;padding-top: 30px;'"/>
+                        </t>
+                        <t t-if="a['level'] != 0 and a['level'] != 1">
+                            <t t-set="style_td" t-value="style + 'border-bottom:1px solid #e2e2e2;'"/>
+                        </t>
+                        <tr data-toggle="collapse" t-att-style="style" t-attf-class="py-mline row-toggle a{{a['parent']}}" t-attf-data-target=".a{{a['self_id']}}">
+                            <td t-att-style="style_td">
+                                <div class="dropdown">
+                                    <t t-as="i" t-foreach="a['list_len']">
+<!--                                        <i aria-label="Unfolded" class="fa fa-caret-right" role="img" title="Unfolded"></i>-->
+                                        <span>&amp;nbsp;</span>
+                                        <span>&amp;nbsp;</span>
+                                    </t>
+                                    <!--<t t-if="a['type'] == 'report' and (a['account_type'] == 'account_type')">-->
+                                    <!--<i class="fa fa-caret-down" role="img" aria-label="Unfolded" title="Unfolded"></i>-->
+                                    <!--</t>-->
+                                    <a data-toggle="dropdown" href="#">
+                                        <span data-id="17">
+                                            <span t-att-style="style" t-esc="a['name']"/>
+                                        </span>
+                                        <!--<t t-if="a['account']">-->
+                                        <!--<i class="fa fa-caret-right" role="img" aria-label="Unfolded" title="Unfolded"></i>-->
+                                        <!--</t>-->
+                                    </a>
+                                    <span data-id="17"/>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <t t-if="a['account']">
+                                            <li role="presentation">
+                                                <a action="open_document" class="view-source" role="menuitem" t-att-data-account-id="a['account']" tabindex="-1">View General Ledger
+</a>
+                                            </li>
+                                        </t>
+                                    </ul>
+                                </div>
+                            </td>
+                            <t t-if="filter_data['debit_credit'] == 1">
+                                <td class="amt" t-att-style="style_td">
+                                    <span t-raw="a['debit']"/>
+                                </td>
+                                <td class="amt" t-att-style="style_td">
+                                    <span t-raw="a['credit']"/>
+                                </td>
+                            </t>
+                            <t t-if="filter_data['enable_filter']">
+                                <td class="amt" t-att-style="style_td">
+                                    <span t-raw="a['balance_cmp']"/>
+                                </td>
+                                <t t-if="filter_data['show_percent_margin']">
+                                    <td class="amt" colspan="1">
+                                        <span t-esc="a['balance_cmp_margin']"/>
+                                    </td>
+                                </t>
+                            </t>
+                            <!-- Canon - Start -->
+                            <t t-if="filter_data['group_by'] == 'monthly'">
+                                <t t-as="month_list" t-foreach="filter_data['month_list']">
+                                    <td class="amt" t-att-style="style_td">
+                                        <span t-raw="a[month_list]"/>
+                                    </td>
+                                </t>
+                            </t>
+
+                            <t t-if="filter_data['group_by'] != 'monthly'">
+                                <td class="amt" t-att-style="style_td">
+                                    <span t-raw="a['balance']"/>
+                                </td>
+                                <t t-if="filter_data['show_percent_margin']">
+                                    <td class="amt" colspan="1">
+                                        <span t-esc="a['balance_margin']"/>
+                                    </td>
+                                </t>
+                            </t>
+                            <!-- Canon - End -->
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>

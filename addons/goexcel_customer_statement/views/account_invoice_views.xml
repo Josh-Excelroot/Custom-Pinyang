@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!-- Extend the form view for account.invoice -->
+        <record id="view_invoice_form_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <!-- Locate the 'origin' field and modify its attrs attribute -->
+                <xpath expr="//page[@name='other_info']/group/group/field[@name='origin']" position="attributes">
+                    <!-- Override the attrs attribute to remove or disable it -->
+                    <attribute name="attrs">{}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

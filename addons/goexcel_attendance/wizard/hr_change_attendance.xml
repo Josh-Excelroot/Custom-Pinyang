@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_change_attendance_view_form" model="ir.ui.view">
+        <field name="model">hr.change.attendance</field>
+        <field name="inherit_id" ref="hr_attendances_overtime.change_attendance_data_wizard_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='overtime']" position="before">
+                <field name="asignin" widget="float_time"/>
+                <field name="asignout" widget="float_time"/>
+            </xpath>
+            <xpath expr="//field[@name='reason']" position="attributes">
+                <attribute name="string">Note</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

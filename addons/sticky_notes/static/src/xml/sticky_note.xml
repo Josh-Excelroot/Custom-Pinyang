@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="StickyNotes">
+        <div class="sticky_note_container">
+            <t t-foreach="notes" t-as="note">
+                <div class="sticky_note"
+                     t-attf-style="border-left: 4px solid #{note.color};"
+                >
+                    <a href="#" t-att-id="note.id" class="edit_sticky_note pull-right">
+                        <i class="fa fa-thumb-tack"> </i>
+                    </a>
+                    <t t-raw="note.name"/>
+                </div>
+            </t>
+        </div>
+    </t>
+
+    <t t-name="StickyQuickLink">
+        <div id="sticky_note_sidebar" class="btn-group">
+            <button class="o_dropdown_toggler_btn btn btn-secondary"
+                    aria-expanded="false"
+            >
+                <i class="fa fa-thumb-tack"> </i>
+            </button>
+        </div>
+    </t>
+
+</templates>

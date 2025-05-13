@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="expense_category_form_view" model="ir.ui.view">
+            <field name="name">hr.expense.categoty.form</field>
+            <field name="model">hr.expense.categoty</field>
+            <field name="arch" type="xml">
+                <form string="Expense Category">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" placeholder="Expense Category Name" required="1"/>
+                            </group>
+                            <group>
+                                <field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="expense_category_tree_view" model="ir.ui.view">
+            <field name="name">hr.expense.categoty.tree</field>
+            <field name="model">hr.expense.categoty</field>
+            <field name="arch" type="xml">
+                <tree string="Expense Category">
+                    <field name="name"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_expense_category" model="ir.actions.act_window">
+            <field name="name">Expense Category</field>
+            <field name="res_model">hr.expense.categoty</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--<menuitem id="menu_hr_category" name="Expense Category" parent="hr_expense.menu_hr_expense_configuration"
+            action="action_expense_category" groups="hr_expense.group_hr_expense_manager" sequence="10"/>-->
+
+         <record id="hr_expense_view_form_cat" model="ir.ui.view">
+            <field name="name">hr.expense.inherit</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='employee_id']" position="attributes">
+                    <attribute name="groups"/>
+                </xpath>
+                <xpath expr="//field[@name='currency_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="diff_cur_active" invisible="1"/>
+                    <field name="foreigh_currency_id" />
+                    <field name="foregh_unit_price" attrs="{'invisible': [('diff_cur_active', '=', False)], 'required': [('diff_cur_active', '=', True)]}" widget="monetary" options="{'currency_field': 'foreigh_currency_id'}"/>
+<!--                    modified_lo-->
+<!--                    <field name="exchange_rate" attrs="{'invisible': [('diff_cur_active', '=', False)]}"/>-->
+                    <field name="exchange_rate"/>
+<!--                    modified_lo-->
+                </xpath>
+<!--                <xpath expr="//field[@name='unit_amount']" position="attributes">-->
+<!--                    <attribute name="attrs">{'invisible': [('diff_cur_active', '=', True)]}</attribute>-->
+<!--                </xpath>-->
+
+                <xpath expr="//field[@name='tax_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                 <xpath expr="//field[@name='reference']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_expenses_tree_cat" model="ir.ui.view">
+            <field name="name">hr.expense.inherit</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.view_expenses_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='employee_id']" position="after">
+                    <field name="diff_cur_active" invisible="1"/>
+                    <field name="foreigh_currency_id" />
+                    <field name="foregh_unit_price" widget="monetary" options="{'currency_field': 'foreigh_currency_id'}"/>
+                    <field name="exchange_rate"/>
+<!--                    <field name="quantity" readonly="1"/>-->
+                    <field name="unit_amount" widget="monetary" options="{'currency_field': 'custom_company_currency_id'}"/>
+                </xpath>
+                <xpath expr="//field[@name='currency_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+         <record id="view_hr_expense_sheet_form_cat" model="ir.ui.view">
+            <field name="name">hr.expense.sheet.inherit</field>
+            <field name="model">hr.expense.sheet</field>
+            <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+            <field name="arch" type="xml">
+                <!--        modified_lo-->
+                <xpath expr="//field[@name='expense_line_ids']" position="replace">
+                    <field name="expense_line_ids" nolabel="1" attrs="{'readonly': [('state', 'in', ('submit', 'approve', 'done', 'post'))]}" domain="[('state', '=', 'draft')]" options="{'reload_on_button': True}" context="{'form_view_ref' : 'hr_expense.hr_expense_view_form_without_header', 'expense_adding_line': True,'sheet_id':id}">
+                            <tree decoration-danger="is_refused">
+                                <field name="date"/>
+                                <field name="name"/>
+                                <field name="state" invisible="1"/>
+                                <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
+                                <field name="analytic_tag_ids" widget="many2many_tags" groups="analytic.group_analytic_tags"/>
+                                <field name="message_unread" invisible="1"/>
+                                <field name="attachment_number" string=" "/>
+                                <button name="action_get_attachment_view" string="View Attachments" type="object" icon="fa-paperclip"/>
+                                <field name="tax_ids" widget="many2many_tags" groups="account.group_account_user"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="total_amount"/>
+                                <field name="company_currency_id" invisible="1"/>
+                                <field name="total_amount_company" groups="base.group_multi_currency"/>
+                                <field name="is_refused" invisible="True"/>
+                           </tree>
+                        </field>
+                </xpath>
+
+                <xpath expr="/form/header/button[@name='action_submit_sheet']" position="after">
+
+<!--                        <field name="document" filename="document_filename"/>-->
+                    <button id="button_upload_document" states="draft" name="%(action_upload_document_expense_OCR)d" string="Upload Document For OCR" class="btn-primary" type="action"/>
+                </xpath>
+                <xpath expr="//field[@name='expense_line_ids']/tree/field[@name='name']" position="after">
+                    <field name="product_id"/>
+                <!--        modified_lo-->
+                    <field name="diff_cur_active" invisible="1"/>
+                    <field name="custom_company_currency_id" invisible="1"/>
+                    <field name="foregh_unit_price" attrs="{'invisible': [('diff_cur_active', '=', False)], 'required': [('diff_cur_active', '=', True)]}" widget="monetary" options="{'currency_field': 'foreigh_currency_id'}"/>
+                    <field name="foreigh_currency_id" />
+                    <field name="exchange_rate"/>
+                    <field name="quantity" readonly="1"/>
+                    <!--        modified_lo-->
+                    <field name="unit_amount" widget="monetary" options="{'currency_field': 'custom_company_currency_id'}"/>
+
+                    <!--        modified_lo-->
+                </xpath>
+<!--                modified lo-->
+                <xpath expr="//field[@name='expense_line_ids']/tree/field[@name='total_amount']" position="replace">
+                    <field name="total_amount" widget="monetary" options="{'currency_field': 'custom_company_currency_id'}"/>
+                </xpath>
+<!--                <xpath expr="//field[@name='expense_line_ids']/tree/field[@name='total_amount_company']" position="replace">-->
+<!--                    <field name="total_amount_company" widget="monetary" options="{'currency_field': 'custom_company_currency_id'}"/>-->
+<!--                </xpath>-->
+                <xpath expr="//field[@name='expense_line_ids']/tree/field[@name='total_amount_company']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+<!--                <xpath expr="//field[@name='expense_line_ids']/tree/field[@name='sale_order_id']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+<!--                modified lo-->
+<!--                <xpath expr="//field[@name='expense_line_ids']/tree/field[@name='total_amount']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+                 <xpath expr="//field[@name='expense_line_ids']/tree/field[@name='tax_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="string">Approval Manager</attribute>
+                </xpath>
+                <!--        modified_lo-->
+                <xpath expr="//form/sheet/group" position="inside">
+                    <group>
+                        <field name="start_date" required="1"/>
+                        <field name="end_date" required="1"/>
+                    </group>
+                </xpath>
+                <!--        modified_lo-->
+            </field>
+        </record>
+        <!-- hide -->
+
+        <menuitem id="hr_expense.menu_hr_expense_my_expenses_to_submit" sequence="1" parent="hr_expense.menu_hr_expense_my_expenses" action="hr_expense.hr_expense_actions_my_unsubmitted" active="False"/>
+        <!-- rename -->
+
+         <record id="hr_expense.action_hr_expense_sheet_my_all" model="ir.actions.act_window">
+            <field name="name">My Monthly Claim Form</field>
+            <field name="res_model">hr.expense.sheet</field>
+            <field name="view_mode">tree,kanban,form,pivot,graph,activity</field>
+            <field name="search_view_id" ref="hr_expense.view_hr_expense_sheet_filter"/>
+            <field name="domain">[('employee_id.user_id', '=', uid), ('state', '!=', 'cancel')]</field>
+            <field name="context">{'search_default_my_reports': 1}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new expense report
+              </p><p>
+                Once you have created your expense, submit it to your manager who will validate it.
+              </p>
+            </field>
+        </record>
+        <menuitem id="hr_expense.menu_hr_expense_sheet_my_reports" sequence="3" parent="hr_expense.menu_hr_expense_my_expenses" action="hr_expense.action_hr_expense_sheet_my_all" string="My Monthly Claim Form"/>
+    
+        <record id="action_hr_expense_monthly_claim" model="ir.actions.act_window">
+            <field name="name">Monthly Claim Form</field>
+            <field name="res_model">hr.expense.sheet</field>
+            <field name="view_mode">tree,kanban,form,pivot,graph,activity</field>
+            <field name="search_view_id" ref="hr_expense.view_hr_expense_sheet_filter"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create a new expense report</p>
+                <p>Once you have created your expense, submit it to your manager who will validate it.</p>
+            </field>
+        </record>
+        <menuitem id="menu_hr_expense_sheet_monthly_claim" sequence="4" parent="hr_expense.menu_hr_expense_my_expenses" action="goexcel_expense.action_hr_expense_monthly_claim" string="Monthly Claim Form"/>
+        <record model="ir.ui.menu" id="hr_expense.menu_hr_expense_my_expenses">
+            <field name="name">Expenses</field>
+        </record>
+
+        <record id="view_employee_form_inherit_expense_approver" model="ir.ui.view">
+            <field name="name">view.employee.form.inherit6</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_expense.hr_employee_view_form_inherit_expense" />
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='expense_manager_id']" position="attributes">
+                    <attribute name="string">Expense Approver</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+    <record id="hr_expense_form_view_inherit_expense" model="ir.ui.view">
+        <field name="name">hr.expense.form.inherit.expense</field>
+        <field name="model">hr.expense</field>
+        <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='quantity']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='sale_order_id']" position="after">
+                <field name="custom_company_currency_id" invisible="0"/>
+                <field name="diff_cur_active" invisible="1"/>
+            </xpath>
+
+<!--            <xpath expr="//field[@name='sale_order_id']" position="attributes">-->
+<!--                <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+            <xpath expr="//field[@name='unit_amount']" position="replace">
+                <field name="unit_amount" required="1" widget="monetary" options="{'currency_field': 'custom_company_currency_id'}"/>
+            </xpath>
+            <xpath expr="//field[@name='total_amount']" position="replace">
+                <field name="total_amount" widget="monetary" options="{'currency_field': 'custom_company_currency_id'}"/>
+            </xpath>
+<!--            <xpath expr="//field[@name='total_amount']" position="attributes">-->
+<!--                <attribute name="readonly">0</attribute>-->
+<!--                <attribute name="force_save">1</attribute>-->
+<!--            </xpath>-->
+            <xpath expr="//field[@name='exchange_rate']" position="attributes">
+                <attribute name="invisible">0</attribute>
+                <attribute name="readonly">0</attribute>-->
+                <attribute name="force_save">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_expense_tree_view_inherit_expense" model="ir.ui.view">
+        <field name="name">hr.expense.tree.inherit</field>
+        <field name="model">hr.expense.sheet</field>
+        <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="start_date"/>
+                <field name="end_date"/>
+            </xpath>
+        </field>
+    </record>
+        <!--        modified_lo-->
+    </data>
+</odoo>

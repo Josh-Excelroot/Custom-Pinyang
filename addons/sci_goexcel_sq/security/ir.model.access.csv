@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_container_lines,access.container.lines,model_container_lines,base.group_user,1,1,1,1
+portal_access_container_lines,portal_access.container.lines,model_container_lines,base.group_portal,1,1,1,0
+access_lcl_settings,access_lcl_settings,model_lcl_settings,base.group_user,1,1,1,1
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    	<record id="view_account_payment_form_credit_inherited" model="ir.ui.view">
+                <field name="name">view.account.payment.form.inherited</field>
+                <field name="model">account.payment</field>
+                <field name="inherit_id" ref="onepayment_against_multipleinvoices_mdpmdp89.view_account_payment_form_inherited"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//notebook/page[1]" position="attributes">
+                        <attribute name="name">invoices_credit</attribute>
+                        <attribute name="string">Invoices &amp; Credit Notes</attribute>
+                    </xpath>
+                    <xpath expr="//notebook//page//field[@name='payment_invoice_ids']" position="attributes">
+                        <attribute name="attrs">{'invisible': ['|', ('payment_type', 'not in', ['inbound', 'outbound']), ('partner_type', 'not in', ['customer', 'supplier'])], 'readonly': [('state', '!=', 'draft')]}</attribute>
+                    </xpath>
+                    <xpath expr="//notebook//page//field[@name='payment_invoice_ids']//field[@name='reconcile_amount']" position="after">
+                        <field name="credit_amount" sum="total"/>
+                        <field name="paid_credit_amount" invisible="1"/>
+                    </xpath>
+                    <xpath expr="//field[@name='payment_invoice_ids']" position="after">
+                        <separator string="Credit Notes"/>
+                        <field name="credit_invoice_ids" attrs="{'invisible': ['|', ('payment_type', 'not in', ['inbound', 'outbound']), ('partner_type', 'not in', ['customer', 'supplier'])], 'readonly': [('state', '!=', 'draft')]}">
+                            <tree editable="bottom" create="false" default_order="date_invoice">
+                                <field name="date_invoice"/>
+                                <field name="invoice_id" readonly="1" force_save="1"/>
+                                <field name="reference" string="Vendor Reference" attrs="{'column_invisible':[('parent.payment_type', '!=', 'outbound')]}"/>
+                                <field name='paid_amt' invisible="1"/>
+                                <field name="date_due"/>
+                                 <field name="amount_total" sum="Total Amount"/>
+                                <field name="residual" sum="Total Residual"/>
+                                <field name="fully_reconcile"/>
+                                <field name="reconcile_amount" attrs="{'readonly': [('payment_state', '!=', 'draft')]}" sum="Total Recon"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="payment_state" invisible="1"/>
+                            </tree>
+                        </field>
+                    </xpath>
+                </field>
+        </record>
+    </data>
+</odoo>

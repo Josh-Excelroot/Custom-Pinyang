@@ -1,0 +1,29 @@
+<odoo>
+    <data noupdate="0">
+        <record id="type_of_pur_001" model="type.of.purchase">
+            <field name="name">JIT</field>
+            <field name="active">True</field>
+            <field name="full_name">Just In Time</field>
+        </record>
+        <record id="type_of_pur_002" model="type.of.purchase">
+            <field name="name">Contract</field>
+            <field name="active">True</field>
+            <field name="full_name">Contract</field>
+        </record>
+        <record id="type_of_pur_003" model="type.of.purchase">
+            <field name="name">Tender</field>
+            <field name="active">True</field>
+            <field name="full_name">Tender</field>
+        </record>
+        <record id="type_of_pur_004" model="type.of.purchase">
+            <field name="name">Bulk</field>
+            <field name="active">True</field>
+            <field name="full_name">Bulk</field>
+        </record>
+        <record id="type_of_pur_005" model="type.of.purchase">
+            <field name="name">Monthly</field>
+            <field name="active">True</field>
+            <field name="full_name">Monthly</field>
+        </record>
+    </data>
+</odoo>

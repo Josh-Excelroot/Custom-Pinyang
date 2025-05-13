@@ -1,0 +1,1114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!-- Buyer journey -->
+	<record id="buying_journary_form_view" model="ir.ui.view">
+		<field name="name">buying.journary.form</field>
+		<field name="model">buying.journary</field>
+		<field name="arch" type="xml">
+			<form string="Buyer journey">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+							<field name="stage_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+							<field name="active"/>
+						</group>
+						<group>
+							<field name="description"/>
+							<field name="sale_journay_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="buying_journary_tree_view" model="ir.ui.view">
+		<field name="name">buying.journary.tree</field>
+		<field name="model">buying.journary</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="sequence" widget="handle"/>
+				<field name="name"/>
+				<field name="stage_id"/>
+				<field name="sale_journay_id"/>
+				<field name="description"/>
+				<field name="active"/>
+				<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_buying_journary" model="ir.actions.act_window">
+		<field name="name">Buyer journey</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">buying.journary</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_type">form</field>
+	</record>
+	<!-- Sale journey -->
+	<record id="sale_journary_form_view" model="ir.ui.view">
+		<field name="name">sale.journary.form</field>
+		<field name="model">sale.journary</field>
+		<field name="arch" type="xml">
+			<form string="Sale journey">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+							<field name="active"/>
+						</group>
+						<group>
+							<field name="description"/>
+							<field name="stage_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="sale_journary_tree_view" model="ir.ui.view">
+		<field name="name">sale.journary.tree</field>
+		<field name="model">sale.journary</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="sequence" widget="handle"/>
+				<field name="name"/>
+				<field name="stage_id"/>
+				<field name="description"/>
+				<field name="active"/>
+				<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_sale_journary" model="ir.actions.act_window">
+		<field name="name">Sale journey</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">sale.journary</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_type">form</field>
+	</record>
+	<!-- Communication Method -->
+	<record id="communication_method_form_view" model="ir.ui.view">
+		<field name="name">communication.method.form</field>
+		<field name="model">communication.method</field>
+		<field name="arch" type="xml">
+			<form string="Communication Method">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+							<field name="active"/>
+						</group>
+						<group>
+							<field name="description"/>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="communication_method_tree_view" model="ir.ui.view">
+		<field name="name">communication.method.tree</field>
+		<field name="model">communication.method</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="sequence" widget="handle"/>
+				<field name="name"/>
+				<field name="description"/>
+				<field name="active"/>
+				<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_communication_method" model="ir.actions.act_window">
+		<field name="name">Communication Method</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">communication.method</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_type">form</field>
+	</record>
+	<!-- communication method lines -->
+	<record id="communication_method_line_form_view" model="ir.ui.view">
+		<field name="name">communication.method.line.form</field>
+		<field name="model">communication.method.line</field>
+		<field name="arch" type="xml">
+			<form string="Communication Method">
+				<sheet>
+					<group>
+						<group>
+							<field name="partner_id" required="1"/>
+							<field name="com_method_id" required="1"/>
+						</group>
+						<group>
+							<field name="active"/>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="communication_method_line_tree_view" model="ir.ui.view">
+		<field name="name">communication.method.line.tree</field>
+		<field name="model">communication.method.line</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="partner_id" required="1"/>
+				<field name="com_method_id" required="1"/>
+				<field name="active"/>
+				<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_communication_method_line" model="ir.actions.act_window">
+		<field name="name">Communication Method</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">communication.method.line</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_type">form</field>
+	</record>
+	<!-- Customer Priority -->
+	<record id="customer_priority_form_view" model="ir.ui.view">
+		<field name="name">customer.priority.form</field>
+		<field name="model">customer.priority</field>
+		<field name="arch" type="xml">
+			<form string="Customer Priority">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+							<field name="active"/>
+						</group>
+						<group>
+							<field name="description"/>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="customer_priority_tree_view" model="ir.ui.view">
+		<field name="name">customer.priority.tree</field>
+		<field name="model">customer.priority</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="sequence" widget="handle"/>
+				<field name="name"/>
+				<field name="description"/>
+				<field name="active"/>
+				<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_customer_priority" model="ir.actions.act_window">
+		<field name="name">Customer Priority</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">customer.priority</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_type">form</field>
+	</record>
+	<!-- Industry -->
+	<record id="res_partner_industry_view_form_inh" model="ir.ui.view">
+		<field name="name">Industry</field>
+		<field name="model">res.partner.industry</field>
+		<field name="inherit_id" ref="base.res_partner_industry_view_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='active']" position="after">
+				<field name="sector_id"/>
+			</xpath>
+		</field>
+	</record>
+	<record id="res_partner_industry_view_tree_inh" model="ir.ui.view">
+		<field name="name">Industry</field>
+		<field name="model">res.partner.industry</field>
+		<field name="inherit_id" ref="base.res_partner_industry_view_tree"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='active']" position="before">
+				<field name="sector_id"/>
+			</xpath>
+		</field>
+	</record>
+	<!-- Customer sector -->
+	<record id="customer_sector_form_view" model="ir.ui.view">
+		<field name="name">customer.sector.form</field>
+		<field name="model">customer.sector</field>
+		<field name="arch" type="xml">
+			<form string="Customer sector">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+							<field name="active"/>
+						</group>
+						<group>
+							<field name="description"/>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+						<field name="industry_ids">
+							<tree editable="bottom">
+								<field name="sequence" widget="handle"/>
+								<field name="name"/>
+								<field name="full_name"/>
+							</tree>
+						</field>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="customer_sector_tree_view" model="ir.ui.view">
+		<field name="name">customer.sector.tree</field>
+		<field name="model">customer.sector</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="sequence" widget="handle"/>
+				<field name="name"/>
+				<field name="description"/>
+				<field name="active"/>
+				<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_type_of_sector" model="ir.actions.act_window">
+		<field name="name">Type Of Sector</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">customer.sector</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_type">form</field>
+	</record>
+	<!-- Customer Brand -->
+	<record id="customer_brand_form_view" model="ir.ui.view">
+		<field name="name">customer.brand.form</field>
+		<field name="model">customer.brand</field>
+		<field name="arch" type="xml">
+			<form string="Customer Brand">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+							<field name="active"/>
+						</group>
+						<group>
+							<field name="description"/>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+					<field invisible="1" name="customer_ids">
+						<tree>
+							<field name="sequence" widget="handle"/>
+							<field name="partner_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</tree>
+					</field>
+					<field invisible="1" name="competitor_brand_ids">
+						<tree>
+							<field name="sequence" widget="handle"/>
+							<field name="partner_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+							<field name="remark"/>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</tree>
+					</field>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="customer_brand_tree_view" model="ir.ui.view">
+		<field name="name">customer.brand.tree</field>
+		<field name="model">customer.brand</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="sequence" widget="handle"/>
+				<field name="name"/>
+				<field name="description"/>
+				<field name="active"/>
+				<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_customer_brand" model="ir.actions.act_window">
+		<field name="name">Customer Brand</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">customer.brand</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_type">form</field>
+	</record>
+	<!-- Religious Fetsival -->
+	<record id="religious_fetsival_form_view" model="ir.ui.view">
+		<field name="name">religious.fetsival.form</field>
+		<field name="model">religious.fetsival</field>
+		<field name="arch" type="xml">
+			<form string="Religious Fetsival">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+							<field name="active"/>
+						</group>
+						<group>
+							<field name="description"/>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="religious_fetsival_tree_view" model="ir.ui.view">
+		<field name="name">religious.fetsival.tree</field>
+		<field name="model">religious.fetsival</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="sequence" widget="handle"/>
+				<field name="name"/>
+				<field name="description"/>
+				<field name="active"/>
+				<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_religious_fetsival" model="ir.actions.act_window">
+		<field name="name">Religious Festival</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">religious.fetsival</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_type">form</field>
+	</record>
+	<!-- Order Style -->
+	<record id="order_style_form_view" model="ir.ui.view">
+		<field name="name">order.style.form</field>
+		<field name="model">order.style</field>
+		<field name="arch" type="xml">
+			<form string="Order Style">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+							<field name="active"/>
+						</group>
+						<group>
+							<field name="description"/>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="order_style_tree_view" model="ir.ui.view">
+		<field name="name">order.style.tree</field>
+		<field name="model">order.style</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="sequence" widget="handle"/>
+				<field name="name"/>
+				<field name="description"/>
+				<field name="active"/>
+				<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_order_style" model="ir.actions.act_window">
+		<field name="name">Order Style</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">order.style</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_type">form</field>
+	</record>
+	<!-- Invoice Method -->
+	<record id="invoice_method_form_view" model="ir.ui.view">
+		<field name="name">invoice.method.form</field>
+		<field name="model">invoice.method</field>
+		<field name="arch" type="xml">
+			<form string="Invoice Method">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+							<field name="active"/>
+						</group>
+						<group>
+							<field name="description"/>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="invoice_method_tree_view" model="ir.ui.view">
+		<field name="name">invoice.method.tree</field>
+		<field name="model">invoice.method</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="sequence" widget="handle"/>
+				<field name="name"/>
+				<field name="description"/>
+				<field name="active"/>
+				<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_invoice_method" model="ir.actions.act_window">
+		<field name="name">Invoice Method</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">invoice.method</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_type">form</field>
+	</record>
+	<!-- Payment Mode -->
+	<record id="payment_mode_form_view" model="ir.ui.view">
+		<field name="name">payment.mode.form</field>
+		<field name="model">payment.mode</field>
+		<field name="arch" type="xml">
+			<form string="Payment Mode">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+							<field name="active"/>
+						</group>
+						<group>
+							<field name="description"/>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="payment_mode_tree_view" model="ir.ui.view">
+		<field name="name">payment.mode.tree</field>
+		<field name="model">payment.mode</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="sequence" widget="handle"/>
+				<field name="name"/>
+				<field name="description"/>
+				<field name="active"/>
+				<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_payment_mode" model="ir.actions.act_window">
+		<field name="name">Type Of Customer</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">payment.mode</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_type">form</field>
+	</record>
+	<!-- Personality Contact -->
+	<record id="personality_contact_form_view" model="ir.ui.view">
+		<field name="name">personality.contact.form</field>
+		<field name="model">personality.contact</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<group>
+						<field name="partner_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						<group>
+							<field domain="[('parent_id', '=', partner_id)]" name="contact_1_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+							<field name="relationship"/>
+						</group>
+						<group>
+							<field domain="[('parent_id', '=', partner_id)]" name="contact_2_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+							<field name="buyer_relationship_id"/>
+							<field name="decision_per"/>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="personality_contact_tree_view" model="ir.ui.view">
+		<field name="name">personality.contact.tree</field>
+		<field name="model">personality.contact</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="sequence" widget="handle"/>
+				<field name="partner_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+				<field domain="[('parent_id', '=', partner_id)]" name="contact_1_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+				<field name="relationship"/>
+				<field domain="[('parent_id', '=', partner_id)]" name="contact_2_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+				<field name="buyer_relationship_id"/>
+				<field name="decision_per"/>
+				<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_personality_contact" model="ir.actions.act_window">
+		<field name="name">Personality Contact</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">personality.contact</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_type">form</field>
+	</record>
+	<record id="buyer_relation_form_view" model="ir.ui.view">
+		<field name="name">payment.buyer.relationship.form</field>
+		<field name="model">buyer.relationship</field>
+		<field name="arch" type="xml">
+			<form string="Buyer Relation">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+						</group>
+						<group>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="buyer_relation_tree_view" model="ir.ui.view">
+		<field name="name">buyer.relationship.tree</field>
+		<field name="model">buyer.relationship</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="sequence" widget="handle"/>
+				<field name="name"/>
+				<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_buyer_relation" model="ir.actions.act_window">
+		<field name="name">Buyer Relation</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">buyer.relationship</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_type">form</field>
+	</record>
+	<!-- Technical Plan -->
+	<record id="technical_plan_form_view" model="ir.ui.view">
+		<field name="name">technical.plan.form</field>
+		<field name="model">technical.plan</field>
+		<field name="arch" type="xml">
+			<form string="Technical Plan">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+							<field name="active"/>
+						</group>
+						<group>
+							<field name="description"/>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="technical_plan_tree_view" model="ir.ui.view">
+		<field name="name">technical.plan.tree</field>
+		<field name="model">technical.plan</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="sequence" widget="handle"/>
+				<field name="name"/>
+				<field name="description"/>
+				<field name="active"/>
+				<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_technical_plan" model="ir.actions.act_window">
+		<field name="name">Technical Plan</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">technical.plan</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_type">form</field>
+	</record>
+	<!-- Customer Technical Plan -->
+	<record id="technical_customer_plan_form_view" model="ir.ui.view">
+		<field name="name">technical.customer.plan.form</field>
+		<field name="model">technical.customer.plan</field>
+		<field name="arch" type="xml">
+			<form string="Customer Technical Plan">
+				<header>
+					<button class="btn-primary" name="action_to_approve" string="To Approve" type="object" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+					<button class="btn-primary" name="action_to_approved" string="Approve" type="object" attrs="{'invisible': ['|', ('state', '!=', 'to_approve'), ('is_approver', '=', False)]}"/>
+					<button class="btn-primary" name="action_done" string="Done" type="object" attrs="{'invisible': [('state', '!=', 'approved')]}"/>
+					<button class="btn-primary" name="action_reject" string="Reject" type="object" attrs="{'invisible': [('state', 'not in', ['to_approve'])]}"/>
+					<button class="btn-primary" name="action_to_draft" string="Reset To Draft" type="object" attrs="{'invisible': [('state', 'in', ['approved', 'to_approve', 'draft'])]}"/>
+					<button class="btn-primary" name="action_cancel" string="Cancel" type="object" attrs="{'invisible': [('state', 'not in', ['draft', 'cancel'])]}"/>
+					<button class="btn-primary" name="send_reminder" string="Send Mail" type="object" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+					<field name="state" widget="statusbar"/>
+				</header>
+				<sheet>
+					<div class="oe_title">
+						<lable class="oe_edit_only" for="name"/>
+						<h1>
+							<field default_focus="1" name="name" placeholder="Technical Plan No"/>
+						</h1>
+					</div>
+					<group>
+						<group>
+							<field name="technical_plan" required="1"/>
+							<field name="date" required="1"/>
+							<field name="volume_per_month"/>
+							<field name="remark"/>
+							<field name="involved_parties_ids" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" widget="many2many_tags"/>
+							<field attrs="{'invisible': [('approved_by', '=', False)]}" name="approved_by" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+							<field name="is_approver" invisible="1"/>
+						</group>
+						<group>
+							<field domain="[('customer', '=', True), ('type', '!=', 'related_company')]" name="partner_id" required="1"/>
+							<field domain="[('parent_id', '=', partner_id), ('type', '!=', 'related_company')]" name="contact_person_ids" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" widget="many2many_tags"/>
+							<field name="owner_id"/>
+							<field name="schedule_reminder" widget="date"/>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+							<field attrs="{'invisible': [('rejected_by', '=', False)]}" name="rejected_by" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+					<group>
+						<field name="purpose" placeholder="Why are you making this visit ?"/>
+						<field name="objective" placeholder="What result do you expect from this visit?"/>
+						<field name="premise" placeholder="What do you know about the customer?"/>
+						<field name="strategy" placeholder="How you will achive this ?"/>
+						<field name="anticipate" placeholder="What if/else"/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="technical_customer_plan_tree_view" model="ir.ui.view">
+		<field name="name">technical.customer.plan.tree</field>
+		<field name="model">technical.customer.plan</field>
+		<field name="arch" type="xml">
+			<tree string="Customer Technical Plan">
+				<field name="sequence" widget="handle"/>
+				<field name="name"/>
+				<field name="volume_per_month"/>
+				<field name="technical_plan"/>
+				<field name="owner_id"/>
+				<field domain="[('type', '!=', 'related_company')]" name="partner_id"/>
+				<field domain="[('parent_id', '=', partner_id), ('type', '!=', 'related_company')]" name="contact_person_ids" widget="many2many_tags"/>
+				<field name="involved_parties_ids" widget="many2many_tags"/>
+				<field name="remark"/>
+				<field name="date"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_technical_customer_plan" model="ir.actions.act_window">
+		<field name="name">Customer Technical Plan</field>
+		<field name="res_model">technical.customer.plan</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<!-- Type Of Customer -->
+	<record id="type_of_customer_form_view" model="ir.ui.view">
+		<field name="name">type.of.partner.form</field>
+		<field name="model">type.of.partner</field>
+		<field name="arch" type="xml">
+			<form string="Type Of Customer">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+							<field name="active"/>
+						</group>
+						<group>
+							<field name="description"/>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="type_of_customer_tree_view" model="ir.ui.view">
+		<field name="name">type.of.partner.tree</field>
+		<field name="model">type.of.partner</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="sequence" widget="handle"/>
+				<field name="name"/>
+				<field name="description"/>
+				<field name="active"/>
+				<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_type_of_customer" model="ir.actions.act_window">
+		<field name="name">Type Of Customer</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">type.of.partner</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_type">form</field>
+	</record>
+	<!-- Type Of Customer -->
+	<record id="type_of_purchase_form_view" model="ir.ui.view">
+		<field name="name">type.of.purchase.form</field>
+		<field name="model">type.of.purchase</field>
+		<field name="arch" type="xml">
+			<form string="Type Of Customer">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+							<field name="active"/>
+						</group>
+						<group>
+							<field name="description"/>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="type_of_purchase_tree_view" model="ir.ui.view">
+		<field name="name">type.of.purchase.tree</field>
+		<field name="model">type.of.purchase</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="sequence" widget="handle"/>
+				<field name="name"/>
+				<field name="description"/>
+				<field name="active"/>
+				<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_type_of_purchase" model="ir.actions.act_window">
+		<field name="name">Type Of Purchase</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">type.of.purchase</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_type">form</field>
+	</record>
+	<record id="salesperson_customer_history_form_view" model="ir.ui.view">
+		<field name="name">salesperson.customer.history.form</field>
+		<field name="model">salesperson.customer.history</field>
+		<field name="arch" type="xml">
+			<form string="Customer History">
+				<sheet>
+					<group>
+						<group>
+							<field domain="[('customer', '=', True)]" name="partner_id" required="1"/>
+							<field name="user_id" required="1"/>
+						</group>
+						<group>
+							<field name="from_date"/>
+							<field name="to_date"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="salesperson_customer_history_tree_view" model="ir.ui.view">
+		<field name="name">salesperson.customer.history.tree</field>
+		<field name="model">salesperson.customer.history</field>
+		<field name="arch" type="xml">
+			<tree string="Customer History">
+				<field name="partner_id"/>
+				<field name="user_id"/>
+				<field name="from_date"/>
+				<field name="to_date"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_product_product_data" model="ir.actions.act_window">
+		<field name="name">Customer History</field>
+		<field name="res_model">salesperson.customer.history</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<record id="product_group_form_view" model="ir.ui.view">
+		<field name="name">product.group.form</field>
+		<field name="model">product.group</field>
+		<field name="arch" type="xml">
+			<form string="Group Inventory">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+						</group>
+						<group>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="product_grade_form_view" model="ir.ui.view">
+		<field name="name">product.grade.form</field>
+		<field name="model">product.grade</field>
+		<field name="arch" type="xml">
+			<form string="Product Grade">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+						</group>
+						<group>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="product_brand_form_view" model="ir.ui.view">
+		<field name="name">product.brand.form</field>
+		<field name="model">product.brand</field>
+		<field name="arch" type="xml">
+			<form string="Product Brand">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+						</group>
+						<group>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="type_of_product_form_view" model="ir.ui.view">
+		<field name="name">type.of.product.form</field>
+		<field name="model">type.of.product</field>
+		<field name="arch" type="xml">
+			<form string="Product Brand">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" required="1"/>
+						</group>
+						<group>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="product_group_tree_view" model="ir.ui.view">
+		<field name="name">product.group.tree</field>
+		<field name="model">product.group</field>
+		<field name="arch" type="xml">
+			<tree string="Product Group">
+				<field name="name"/>
+				<field name="company_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="product_grade_tree_view" model="ir.ui.view">
+		<field name="name">product.grade.tree</field>
+		<field name="model">product.grade</field>
+		<field name="arch" type="xml">
+			<tree string="Product Brand">
+				<field name="name"/>
+				<field name="company_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="product_brand_tree_view" model="ir.ui.view">
+		<field name="name">product.brand.tree</field>
+		<field name="model">product.brand</field>
+		<field name="arch" type="xml">
+			<tree string="Product Grade">
+				<field name="name"/>
+				<field name="company_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="type_of_product_tree_view" model="ir.ui.view">
+		<field name="name">type.of.product.tree</field>
+		<field name="model">type.of.product</field>
+		<field name="arch" type="xml">
+			<tree string="Type of Product">
+				<field name="name"/>
+				<field name="company_id"/>
+			</tree>
+		</field>
+	</record>
+
+
+	<record id="action_product_group" model="ir.actions.act_window">
+		<field name="name">Product Group</field>
+		<field name="res_model">product.group</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<record id="action_product_grade" model="ir.actions.act_window">
+		<field name="name">Product Grade</field>
+		<field name="res_model">product.grade</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+
+	<record id="action_product_brand" model="ir.actions.act_window">
+		<field name="name">Product Brand</field>
+		<field name="res_model">product.brand</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<record id="action_type_of_product" model="ir.actions.act_window">
+		<field name="name">Type of Product</field>
+		<field name="res_model">type.of.product</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<record id="discovery_sheet_form_view" model="ir.ui.view">
+		<field name="name">discovery.sheet.form</field>
+		<field name="model">discovery.sheet</field>
+		<field name="arch" type="xml">
+			<form string="Discovery Sheet">
+				<sheet>
+					<group>
+						<field name="name"/>
+						<group>
+							<field name="sector_id"/>
+						</group>
+						<group>
+							<field name="industry_id"/>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+					<field mode="tree, kanban, form" name="product_line_ids">
+						<tree editable="bottom">
+							<field name="machine_id"/>
+							<field name="product_group_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+							<field name="product_category_id"  options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+							<field name="product_ids" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}" domain="[('categ_id', '=', product_category_id)]" widget="many2many_tags"/>
+						</tree>
+						<form>
+							<field name="machine_id"/>
+							<field name="product_group_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+							<field name="product_category_id"  options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>	
+							<field name="product_ids" domain="[('categ_id', '=', product_category_id)]" widget="many2many_tags"/>
+						</form>
+						<kanban class="o_kanban_mobile">
+							<field name="machine_id"/>
+							<field name="product_group_id"/>
+							<field name="product_category_id"/>
+							<field name="product_ids"/>
+							<templates>
+								<t t-name="kanban-box">
+									<div t-attf-class="oe_kanban_global_click">
+										<div>
+											<strong class="o_kanban_record_title">SKU:
+												<t t-esc="record.product_id.value"/></strong>
+										</div>
+										<div t-if="record.machine_id.value">Machine:
+											<t t-esc="record.machine_id.value"/></div>
+										<div t-if="record.product_group_id.value">Group:
+											<t t-esc="record.product_group_id.value"/></div>
+										<div t-if="record.product_category_id.value">Category:
+											<t t-esc="record.product_category_id.value"/></div>
+									</div>
+								</t>
+							</templates>
+						</kanban>
+					</field>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="discovery_sheet_tree_view" model="ir.ui.view">
+		<field name="name">discovery.sheet.tree</field>
+		<field name="model">discovery.sheet</field>
+		<field name="arch" type="xml">
+			<tree string="Discovery Sheet">
+				<field name="name"/>
+				<field name="sector_id"/>
+				<field name="industry_id"/>
+				<field invisible="1" name="company_id"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_discovery_sheet" model="ir.actions.act_window">
+		<field name="name">Discovery Sheet</field>
+		<field name="res_model">discovery.sheet</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<!-- for machine -->
+	<record id="machine_form_view" model="ir.ui.view">
+		<field name="name">machine.machine.form</field>
+		<field name="model">machine.machine</field>
+		<field name="arch" type="xml">
+			<form string="Machine">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" placeholder="Machine Name" required="1"/>
+						</group>
+						<group>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="machine_tree_view" model="ir.ui.view">
+		<field name="name">machine.machine.tree</field>
+		<field name="model">machine.machine</field>
+		<field name="arch" type="xml">
+			<tree string="Machine">
+				<field name="name"/>
+				<field name="company_id"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_machine" model="ir.actions.act_window">
+		<field name="name">Machine</field>
+		<field name="res_model">machine.machine</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<!-- for Department -->
+	<record id="department_form_view" model="ir.ui.view">
+		<field name="name">department.department.form</field>
+		<field name="model">department.department</field>
+		<field name="arch" type="xml">
+			<form string="department">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" placeholder="Department Name" required="1"/>
+						</group>
+						<group>
+							<field groups="base.group_multi_company" invisible="1" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="department_tree_view" model="ir.ui.view">
+		<field name="name">department.department.tree</field>
+		<field name="model">department.department</field>
+		<field name="arch" type="xml">
+			<tree string="department">
+				<field name="name"/>
+				<field name="company_id"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_department" model="ir.actions.act_window">
+		<field name="name">department</field>
+		<field name="res_model">department.department</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+</odoo>

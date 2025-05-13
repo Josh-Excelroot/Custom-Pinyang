@@ -1,0 +1,62 @@
+{
+    "name": "GoExcel Freight 2",
+    "version": "12.0.3.0.10",
+    "category": "Transport",
+    "license": 'LGPL-3',
+    "summary": """GoExcel Freight 2.""",
+    "author": "Excelroot Technology Sdn Bhd",
+    "depends": ['sci_goexcel_freight', 'sci_goexcel_invoice', 'sale_management', 'account', 'account_voucher',
+                'sci_goexcel_shipping_instruction', 'web_tree_dynamic_colored_field', 'sci_goexcel_telex_release','product','sale_management','sci_goexcel_freight_demo_data'],
+    'sequence': 1,
+    'application': True,
+    "data": [
+        'security/ir.model.access.csv',
+        'report/goexcel_freight_pivot_view.xml',
+        'views/booking_view.xml',
+        'views/account_invoice_view.xml',
+        'report/report_twb.xml',
+        'views/bol_view_inherit.xml',
+        'views/res_users_view.xml',
+        'views/cron.xml',
+        'views/sales_quotation_view.xml',
+        'views/sale_order_template_line_view.xml',
+        #'views/res_partner_bank.xml',
+        'views/shipping_instruction_view.xml',
+        'views/account_voucher_view.xml',
+        'views/res_config_settings_view.xml',
+        # Yulia 03022025 hide it to replace new report
+        'views/invoice_booking_report_view.xml',
+        'wizard/excel_upload.xml',
+        'wizard/multi_quotation.xml',
+        'wizard/invoice_wizard.xml',
+        "wizard/invoice_booking_report_wizard.xml",
+        # header
+        'report/report_external_layout_inherit.xml',
+        'report/bl_report_preprinted_inherit.xml',
+        'report/report_account_invoice_inherit.xml',
+        'report/report_booking_confirmation_inherit.xml',
+        'report/report_door_to_door_delivery_order.xml',
+        'report/report_payment_voucher_operation.xml',
+        'report/report_noa_inherit.xml',
+        'report/report_sq_inherit.xml',
+        'report/report_transport.xml',
+        'report/si_report_carrier_inherit.xml',
+        'report/bl_booking_confirmation_report.xml',
+        'report/si_xlc_report.xml',
+
+        'report/si_bol_xlc_report.xml',
+        'report/bol_xls_report.xml',
+        'report/bl_report_inherit.xml',
+        'report/report_notice_of_arrival_wo_rate.xml',
+        'data/bl_booking_confirmation_mail_template.xml',
+        'views/awd_repot.xml',
+
+        'views/delivery_service_view.xml',
+        'report/report_delivery_note.xml'
+
+
+
+    ],
+    "application": True,
+    "installable": True,
+}

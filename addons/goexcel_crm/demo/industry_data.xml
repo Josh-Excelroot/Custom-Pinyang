@@ -1,0 +1,149 @@
+<odoo>
+    <data noupdate="0">
+        <record id="001" model="res.partner.industry">
+            <field name="name">Furniture</field>
+            <field name="active">True</field>
+            <field name="full_name">Furniture</field>
+        </record>
+        <record id="002" model="res.partner.industry">
+            <field name="name">Glass</field>
+            <field name="active">True</field>
+            <field name="full_name">Glass</field>
+        </record>
+        <record id="003" model="res.partner.industry">
+            <field name="name">Plastic</field>
+            <field name="active">True</field>
+            <field name="full_name">Plastic</field>
+        </record>
+        <record id="004" model="res.partner.industry">
+            <field name="name">Brick</field>
+            <field name="active">True</field>
+            <field name="full_name">Brick</field>
+        </record>
+        <record id="005" model="res.partner.industry">
+            <field name="name">Cable</field>
+            <field name="active">True</field>
+            <field name="full_name">Cable</field>
+        </record>
+        <record id="006" model="res.partner.industry">
+            <field name="name">Crane</field>
+            <field name="active">True</field>
+            <field name="full_name">Crane</field>
+        </record>
+        <record id="007" model="res.partner.industry">
+            <field name="name">Developer</field>
+            <field name="active">True</field>
+            <field name="full_name">Developer</field>
+        </record>
+        <record id="008" model="res.partner.industry">
+            <field name="name">Deforestation</field>
+            <field name="active">True</field>
+            <field name="full_name">Deforestation</field>
+        </record>
+        <record id="009" model="res.partner.industry">
+            <field name="name">Earthwork</field>
+            <field name="active">True</field>
+            <field name="full_name">Earthwork</field>
+        </record>
+        <record id="010" model="res.partner.industry">
+            <field name="name">Electronic</field>
+            <field name="active">True</field>
+            <field name="full_name">Electronic</field>
+        </record>
+        <record id="011" model="res.partner.industry">
+            <field name="name">Fibre</field>
+            <field name="active">True</field>
+            <field name="full_name">Fibre</field>
+        </record>
+        <record id="012" model="res.partner.industry">
+            <field name="name">Fleet</field>
+            <field name="active">True</field>
+            <field name="full_name">Fleet</field>
+        </record>
+        <record id="013" model="res.partner.industry">
+            <field name="name">Food</field>
+            <field name="active">True</field>
+            <field name="full_name">Food</field>
+        </record>
+        <record id="014" model="res.partner.industry">
+            <field name="name">Fruits</field>
+            <field name="active">True</field>
+            <field name="full_name">Fruits</field>
+        </record>
+        <record id="015" model="res.partner.industry">
+            <field name="name">Ice</field>
+            <field name="active">True</field>
+            <field name="full_name">Ice</field>
+        </record>
+        <record id="016" model="res.partner.industry">
+            <field name="name">Others</field>
+            <field name="active">True</field>
+            <field name="full_name">Others</field>
+        </record>
+        <record id="017" model="res.partner.industry">
+            <field name="name">Pallet</field>
+            <field name="active">True</field>
+            <field name="full_name">Pallet</field>
+        </record>
+        <record id="018" model="res.partner.industry">
+            <field name="name">Palm Oil</field>
+            <field name="active">True</field>
+            <field name="full_name">Palm Oil</field>
+        </record>
+        <record id="019" model="res.partner.industry">
+            <field name="name">Paper</field>
+            <field name="active">True</field>
+            <field name="full_name">Paper</field>
+        </record>
+        <record id="020" model="res.partner.industry">
+            <field name="name">Plant</field>
+            <field name="active">True</field>
+            <field name="full_name">Plant</field>
+        </record>
+        <record id="021" model="res.partner.industry">
+            <field name="name">Premix</field>
+            <field name="active">True</field>
+            <field name="full_name">Premix</field>
+        </record>
+        <record id="022" model="res.partner.industry">
+            <field name="name">Road paving</field>
+            <field name="active">True</field>
+            <field name="full_name">Road paving</field>
+        </record>
+        <record id="023" model="res.partner.industry">
+            <field name="name">Rubber</field>
+            <field name="active">True</field>
+            <field name="full_name">Rubber</field>
+        </record>
+        <record id="024" model="res.partner.industry">
+            <field name="name">Sand mining</field>
+            <field name="active">True</field>
+            <field name="full_name">Sand mining</field>
+        </record>
+        <record id="025" model="res.partner.industry">
+            <field name="name">Screw</field>
+            <field name="active">True</field>
+            <field name="full_name">Screw</field>
+        </record>
+        <record id="026" model="res.partner.industry">
+            <field name="name">Recycle</field>
+            <field name="active">True</field>
+            <field name="full_name">Recycle</field>
+        </record>
+        <record id="027" model="res.partner.industry">
+            <field name="name">Steel</field>
+            <field name="active">True</field>
+            <field name="full_name">Steel</field>
+        </record>
+        <record id="028" model="res.partner.industry">
+            <field name="name">Textile</field>
+            <field name="active">True</field>
+            <field name="full_name">Textile</field>
+        </record>
+        <record id="029" model="res.partner.industry">
+            <field name="name">Timber</field>
+            <field name="active">True</field>
+            <field name="full_name">Timber</field>
+        </record>
+    </data>
+</odoo>

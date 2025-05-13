@@ -1,0 +1,34 @@
+<odoo>
+
+	<!-- Call action window to view freight rft -->
+	<record id="view_partner_transport_rft" model="ir.actions.act_window">
+		<field name="name">RFT History</field>
+		<field name="res_model">transport.rft</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form,kanban,calendar</field>
+		<field name="view_id" ref="sci_goexcel_transport.view_tree_transport_rft"/>
+		<field name="domain">[('billing_address', '=', active_id)]</field>
+	</record>
+
+
+	<!-- Inherited the res partner view and added smart button to call rft count form company view -->
+	<record model="ir.ui.view" id="res_partner_transport_rft_view">
+		<field name="name">Transport rft</field>
+		<field name="model">res.partner</field>
+		<field name="type">form</field>
+		<field name="priority" eval="1"/>
+		<field name="inherit_id" ref="base.view_partner_form"/>
+		<field name="arch" type="xml">
+			<button name="toggle_active" position="after">
+				<button class="oe_stat_button" type="action" name="%(sci_goexcel_transport_2.view_partner_transport_rft)d" icon="fa-truck"
+						attrs="{'invisible': [('is_company', '=', False)]}">
+					<field string="Transport rft" name="company_rft_count" widget="statinfo"/>
+					<!--attrs="{'invisible': [('type', '=', 'contact')]}"-->
+					<!-- for type 'contact', company and contact is the  same -->
+				</button>
+			</button>
+		</field>
+	</record>
+
+
+</odoo>

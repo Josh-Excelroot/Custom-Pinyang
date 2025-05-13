@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form_inherit_sq" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.sq</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="40"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <!--
+                <xpath expr="//div[hasclass('settings')]/div[hasclass('app_settings_block')]/div[@id='sale_config_online_confirmation_pay']" position="after">
+-->
+                <xpath expr="//div[@data-key='sale_management']" position="inside">
+                    <h2>Sales Quotation Approval</h2>
+                    <div class="row mt16 o_settings_container" name="sq_approval_setting_container">
+                        <div class="col-12 col-lg-6 o_setting_box" title="This Amount is check when any new Sales Quotation created.">
+                            <div class="o_setting_left_pane">
+                                <field name="sq_approval"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Sales Quotation Approval</span>
+                                <div class="text-muted">
+                                    Managers must approve Sales Quotation
+                                </div>
+                                <div class="content-group">
+                                    <div class="row mt16" attrs="{'invisible': [('sq_approval', '=', False)]}">
+                                        <label string="Sales Quotation Minimum Amount" for="sq_amount" class="col-lg-4 o_light_label"/>
+                                        <field name="sq_amount"/>
+                                        <label string="SQ Approvers" for="sq_approval_user_ids" class="col-lg-4 o_light_label"/>
+                                        <field name="sq_approval_user_ids" widget="many2many_tags" options="{'no_create_edit':True,'no_open':True,'no_edit':True,'no_create':True}"/>
+                                        <label string="SQ Approval Notification Recipients" for="sq_notification_user_ids" class="col-lg-4 o_light_label"/>
+                                        <field name="sq_notification_user_ids" widget="many2many_tags" options="{'no_create_edit':True,'no_open':True,'no_edit':True,'no_create':True}"/>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

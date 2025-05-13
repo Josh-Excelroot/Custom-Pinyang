@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paperformat_do" model="report.paperformat">
+        <field name="name">DO A4</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">35</field>
+        <field name="margin_bottom">28</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">30</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report id="action_delivery_note_report"
+        string="Delivery Note"
+        model="freight.booking"
+        report_type="qweb-pdf"
+        name="sci_goexcel_freight_2.report_delivery_note_document"
+        file="sci_goexcel_freight_2.report_delivery_note_document"
+        print_report_name="'Delivery Note - %s' % (object.service_type == 'land' and object.booking_no or '')"
+        paperformat="paperformat_do"
+    />
+
+    <template id="report_delivery_note_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+<!--                    <div class="header" style="border-bottom: none;">-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-3">-->
+<!--                                <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 60px;" alt="Logo"/>-->
+<!--                            </div>-->
+<!--                            <div class="col-9 text-left">-->
+<!--                                <div style="font-weight: bold; font-size: 16px;"><t t-esc="o.company_id.name"/></div>-->
+<!--                                <div style="font-size: 12px;"><t t-esc="o.company_id.street"/></div>-->
+<!--                                <div style="font-size: 12px;">Hunting Line: <t t-esc="o.company_id.phone"/></div>-->
+<!--                                <div style="font-size: 12px;">Email: <t t-esc="o.company_id.email"/></div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="article" style="margin-top: 20px;">-->
+                    <div class="page" style="font-size: 12px;">
+                        <!-- Header with logos -->
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="width: 33%; text-align: left;">
+                                        <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 45px;" alt="Logo"/>
+                                    </td>
+                                    <td style="width: 33%; text-align: center;">
+                                        <h3 style="margin: 0;">DELIVERY NOTE</h3>
+                                    </td>
+                                    <td style="width: 33%; text-align: right;">
+                                        <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 45px;" alt="Logo"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- Top Information Table -->
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="border: 1px solid black; padding: 4px; width: 33%;">
+                                    <strong>Transportation Bill:</strong><br/>
+                                    <span t-field="o.booking_no"/>
+                                </td>
+                                <td style="border: 1px solid black; padding: 4px; width: 33%;">
+                                    <strong>Type of Cargo Loading:</strong><br/>
+                                    <span t-field="o.land_cargo_type"/>
+                                </td>
+                                <td style="border: 1px solid black; padding: 4px; width: 33%;">
+                                    <strong>Job No.:</strong> <span t-field="o.booking_no"/><br/>
+                                    <strong>Date:</strong> <span t-field="o.booking_date_time" t-options='{"format": "dd-MM-yyyy"}'/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Address and Services Section -->
+                        <table class="table table-bordered" style="width: 100%; border-collapse: collapse; margin-top: -1px;">
+                            <tr>
+                                <td style="border: 1px solid black; padding: 4px; width: 50%; vertical-align: top; padding:0">
+                                    <table style="width: 100%; border: 0px">
+                                        <tr>
+                                            <td style="height: 120px;border: 0px;" >
+                                                <strong>Consignee Name and Address:</strong><br/>
+                                                <t t-if="o.consignee">
+                                                    <span t-field="o.consignee"/><br/>
+                                                </t>
+                                                <t t-if="o.consignee_address_input">
+                                                    <span t-field="o.consignee_address_input"/><br/>
+                                                </t>
+                                                <t t-if="o.consignee.phone">
+                                                    Tel: <span t-field="o.consignee.phone"/>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <tr >
+                                            <td style="height: 120px;border: 1px solid black; border-left:none; border-right:none; border-bottom:none">
+                                                <strong>Delivery Name and Address:</strong><br/>
+                                                <t t-if="o.delivery_to">
+                                                    <span t-field="o.delivery_to"/><br/>
+                                                </t>
+                                                <t t-if="o.delivery_to_address_input">
+                                                    <span t-field="o.delivery_to_address_input"/><br/>
+                                                </t>
+                                                <t t-if="o.delivery_to.phone">
+                                                    Tel: <span t-field="o.delivery_to.phone"/>
+                                                </t>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                </td>
+                                <td style="border: 1px solid black; padding: 4px; width: 50%; vertical-align: top;">
+                                    <div style="margin-bottom: 4px;"><strong>Delivery Services:</strong></div>
+                                    <table style="width: 100%; border:0px">
+                                        <tr>
+                                            <td style="width: 50%; vertical-align: top;">
+                                                <t t-foreach="env['delivery.service'].search([], order='sequence')" t-as="service">
+                                                    <t t-if="service_index &lt; (env['delivery.service'].search_count([]) / 2)">
+                                                        <t t-if="service.id in o.delivery_service_ids.ids">☒</t>
+                                                        <t t-else="">☐</t>
+                                                        <span t-field="service.name"/><br/>
+                                                    </t>
+                                                </t>
+                                            </td>
+                                            <td style="width: 50%; vertical-align: top;">
+                                                <t t-foreach="env['delivery.service'].search([], order='sequence')" t-as="service">
+                                                    <t t-if="service_index >= (env['delivery.service'].search_count([]) / 2)">
+                                                        <t t-if="service.id in o.delivery_service_ids.ids">☒</t>
+                                                        <t t-else="">☐</t>
+                                                        <span t-field="service.name"/><br/>
+                                                    </t>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                        </table>
+
+                        <!-- Container Details Table -->
+<!--                        <div style="min-height: 200px">-->
+                        <table style="width: 100%; border-collapse: collapse; margin-top: -1px;">
+                            <thead>
+                                <tr>
+                                    <th style="border: 1px solid black; padding: 4px; text-align: left;">
+                                        Container No./Seal No.<br/>
+                                        Marks &amp; Numbers
+                                    </th>
+                                    <th style="border: 1px solid black; padding: 4px; text-align: left;">
+                                        Quantity<br/>
+                                        (UNIT)
+                                    </th>
+                                    <th style="border: 1px solid black; padding: 4px; text-align: left;">
+                                        Description of Goods
+                                    </th>
+                                    <th style="border: 1px solid black; padding: 4px; text-align: right;">
+                                        Gross Weight<br/>
+                                        (KG)
+                                    </th>
+                                    <th style="border: 1px solid black; padding: 4px; text-align: right;">
+                                        Measurement<br/>
+                                        (CBM)
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Content rows -->
+                                <tr t-foreach="o.operation_line_ids" t-as="line">
+                                    <td style="border-left: 1px solid black; border-right: 1px solid black; padding: 4px;">
+                                        <span t-field="line.container_no"/>/<span t-field="line.seal_no"/><br/>
+                                        <span t-field="line.remark" />
+                                    </td>
+                                    <td style="border-left: 1px solid black; border-right: 1px solid black; padding: 4px;">
+                                        <span t-field="line.packages_no"/>
+                                        <span t-field="line.packages_no_uom"/>
+                                    </td>
+                                    <td style="border-left: 1px solid black; border-right: 1px solid black; padding: 4px;">
+                                        <span t-field="line.container_product_name"/>
+                                    </td>
+                                    <td style="border-left: 1px solid black; border-right: 1px solid black; padding: 4px; text-align: right;">
+                                        <span t-field="line.exp_gross_weight"/>
+                                    </td>
+                                    <td style="border-left: 1px solid black; border-right: 1px solid black; padding: 4px; text-align: right;">
+                                        <span t-field="line.exp_vol"/>
+                                    </td>
+                                </tr>
+                                <!-- Empty space row with bottom border -->
+                                <tr>
+                                    <td style="border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black; height: 200px;"></td>
+                                    <td style="border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;"></td>
+                                    <td style="border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;"></td>
+                                    <td style="border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;"></td>
+                                    <td style="border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+<!--                        </div>-->
+
+                        <!-- Company Footer -->
+                        <div style="text-align: center; border: 1px solid black">
+                            <p style="margin-bottom: 5px;">for Delivery of Goods apply to:</p>
+                            <strong t-field="o.company_id.name"/><br/>
+                            <span t-field="o.company_id.street"/><br/>
+                            <span>Phone: </span><span t-field="o.company_id.phone"/>
+                        </div>
+
+                        <!-- Signature Section -->
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="border: 1px solid black; padding: 10px; width: 50%;">
+                                    <strong>Checked and Received by:</strong>
+                                    <br/><br/>
+                                    Signature: _______________________<br/><br/>
+                                    Name: _________________________<br/><br/>
+                                    Date: ____________ Time: ___________<br/><br/>
+                                    Phone: _________________________
+                                </td>
+                                <td style="border: 1px solid black; padding: 10px; width: 50%;">
+                                    <strong>Arranged and Delivered by:</strong>
+                                    <br/><br/>
+                                    Signature: _______________________<br/><br/>
+                                    Name: _________________________<br/><br/>
+                                    Date: ____________ Time: ___________<br/><br/>
+                                    Phone: _________________________
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

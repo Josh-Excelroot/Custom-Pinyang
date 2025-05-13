@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record model="crm.stage" id="prospect_crm">
+            <field name="name">Prospect</field>
+            <field name="probability">10</field>
+            <field name="stay_check_type">duration</field>
+            <field name="stay_check_duration">24.00</field>
+            <field name="on_change">1</field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record model="crm.stage" id="info_gathering_crm">
+            <field name="name">Info Gathering</field>
+            <field name="probability">20</field>
+            <field name="stay_check_type">duration</field>
+            <field name="stay_check_duration">48.00</field>
+            <field name="on_change">1</field>
+            <field name="sequence">2</field>
+        </record>
+        <record model="crm.stage" id="proposition_crm">
+            <field name="name">Proposition</field>
+            <field name="probability">40</field>
+            <field name="stay_check_type">duration</field>
+            <field name="stay_check_duration">48.00</field>
+            <field name="on_change">1</field>
+            <field name="sequence">3</field>
+        </record>
+        <record model="crm.stage" id="quotation_crm">
+            <field name="name">Quotation</field>
+            <field name="probability">50</field>
+            <field name="stay_check_type">duration</field>
+            <field name="stay_check_duration">72.00</field>
+            <field name="on_change">1</field>
+            <field name="sequence">70</field>
+        </record>
+        <record model="crm.stage" id="nego_crm">
+            <field name="name">Nego</field>
+            <field name="probability">70</field>
+            <field name="stay_check_type">duration</field>
+            <field name="stay_check_duration">72.00</field>
+            <field name="on_change">1</field>
+            <field name="sequence">80</field>
+        </record>
+        <record model="crm.stage" id="special_attention_crm">
+            <field name="name">Special Attention</field>
+            <field name="probability">50</field>
+            <field name="stay_check_type">duration</field>
+            <field name="stay_check_duration">24.00</field>
+            <field name="on_change">1</field>
+            <field name="sequence">90</field>
+        </record>
+        <record model="crm.stage" id="won_stage_crm">
+            <field name="name">Won</field>
+            <field name="probability">100</field>
+            <field name="stay_check_type">none</field>
+            <field name="is_won_stage">1</field>
+            <field name="on_change">1</field>
+            <field name="sequence">91</field>
+        </record>
+    </data>
+</odoo>
+

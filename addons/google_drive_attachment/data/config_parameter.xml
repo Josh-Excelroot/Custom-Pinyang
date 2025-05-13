@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="google_drive_service_account_json_key" model="ir.config_parameter">
+            <field name="key">google_drive_service_account_json_key</field>
+            <field name="value">false</field>
+        </record>
+
+        <record id="google_drive_service_account_json_key_file_path" model="ir.config_parameter">
+            <field name="key">google_drive_service_account_json_key_file_path</field>
+            <field name="value">false</field>
+        </record>
+    </data>
+</odoo>

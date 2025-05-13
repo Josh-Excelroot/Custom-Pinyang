@@ -1,0 +1,1729 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="account_financial_report.report_sst_report_qweb">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <!-- <t t-call="web.external_layout"> -->
+                <t t-call="account_financial_report.internal_layout_sst">
+                    <t t-call="account_financial_report.report_sst_report_base"/>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="account_financial_report.report_sst_report_base">
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <t t-set="title" style="text-align: center;">&#160;&#160;&#160;&#160;SST REPORT -
+            <t t-raw="o.company_id.name"/>
+        </t>
+        <t t-set="company_name" t-value="o.company_id.name"/>
+        <div class="page">
+            <div class="row">
+                <h4 class="mt0" t-esc="title or 'SST Report'" style="text-align: center;"/>
+            </div>
+            <!-- Display filters -->
+            <t t-call="account_financial_report.report_sst_report_filters"/>
+            <div class="page_break"/>
+            <div t-if="o.is_b2b_exemption" class="act_as_table data_table" style="width: 100%;font-size:10pt;">
+                <t t-set="total_inv_amt" t-value="0"/>
+                <t t-set="total_inv_taxable_amt" t-value="0"/>
+                <t t-set="total_inv_taxable_amt_6_percent" t-value="0"/>
+                <t t-set="total_inv_taxable_amt_8_percent" t-value="0"/>
+                <t t-set="total_sst_amt" t-value="0"/>
+                <t t-set="current_sst_amt_6_percent" t-value="0"/>
+                <t t-set="total_sst_amt_6_percent" t-value="0"/>
+                <t t-set="current_sst_amt_8_percent" t-value="0"/>
+                <t t-set="total_sst_amt_8_percent" t-value="0"/>
+                <t t-set="total_received_inv_amt" t-value="0"/>
+                <t t-set="total_received_taxable_inv_amt" t-value="0"/>
+                <t t-set="total_received_taxable_amt" t-value="0"/>
+                <t t-set="current_b2b_exception_amt" t-value="0"/>
+                <t t-set="total_b2b_exception_amt" t-value="0"/>
+                <!-- Display table headers for lines -->
+                <div class="act_as_thead" style="page-break-inside: avoid;">
+                    <div class="act_as_row labels">
+
+                        <!--## code-->
+                        <div class="act_as_cell first_column" style="width: 13%;">Customer</div>
+                        <!--## name-->
+                        <div class="act_as_cell" style="width: 10%;">Inv. No</div>
+                        <!--## net-->
+                        <div class="act_as_cell" style="width: 7%;">Inv. Date</div>
+                        <!--## tax-->
+                        <!-- <div class="act_as_cell" style="width: 8%;">Inv. Amt</div>-->
+                        <div class="act_as_cell" style="width: 7%;">Paid Date</div>
+                        <!--## net-->
+                        <div class="act_as_cell" style="width: 7%;">Inv. Total</div>
+                        <!--## net-->
+                        <div class="act_as_cell" style="width: 7%;">Taxable 6% Amt</div>
+                        <div class="act_as_cell" style="width: 7%;">Taxable 8% Amt</div>
+                        <!--## tax-->
+                        <div class="act_as_cell" style="width: 7%;">SST 6%</div>
+                        <div class="act_as_cell" style="width: 7%;">SST 8%</div>
+                        <div class="act_as_cell" style="width: 7%;">B2B Exemption Amt</div>
+                        <div class="act_as_cell" style="width: 7%;">Received Amt</div>
+                        <!--## net-->
+                        <div class="act_as_cell" style="width: 7%;">Received Taxable Amt</div>
+                        <!--## tax-->
+                        <div class="act_as_cell" style="width: 7%;">Received SST Amt</div>
+                    </div>
+                </div>
+
+                <t t-foreach="o.taxdetails_ids" t-as="line">
+                    <div class="act_as_row lines">
+                        <div class="act_as_cell left">
+                            <span t-field="line.customer.name"/>
+                        </div>
+                        <div class="act_as_cell left">
+                            <span t-field="line.invoice_no"/>
+                        </div>
+                        <div class="act_as_cell left">
+                            <span t-field="line.invoice_date"/>
+                        </div>
+                        <div class="act_as_cell left">
+                            <span t-field="line.invoice_paid_date"/>
+                        </div>
+                        <div class="act_as_cell right">
+                            <span t-field="line.invoice_amount"/>
+                            <t t-set="total_inv_amt" t-value="total_inv_amt + line.invoice_amount"/>
+                        </div>
+                        <!-- <div class="act_as_cell left">
+                             &lt;!&ndash;<span t-field="line.invoice_no"/>&ndash;&gt;
+                         </div>-->
+                        <div class="act_as_cell right">
+                            <span t-field="line.taxable_amount_6_percent"/>
+                            <t t-set="total_inv_taxable_amt_6_percent"
+                               t-value="total_inv_taxable_amt_6_percent + line.taxable_amount_6_percent"/>
+                        </div>
+                        <div class="act_as_cell right">
+                            <span t-field="line.taxable_amount_8_percent"/>
+                            <t t-set="total_inv_taxable_amt_8_percent"
+                               t-value="total_inv_taxable_amt_8_percent + line.taxable_amount_8_percent"/>
+                        </div>
+                        <t>
+                            <!--SST 6%-->
+                            <div class="act_as_cell right">
+                                <span t-field="line.sst_6_percent"/>
+                                <t t-set="total_sst_amt_6_percent"
+                                   t-value="total_sst_amt_6_percent + line.sst_6_percent"/>
+                            </div>
+                            <!--SST 8%-->
+                            <div class="act_as_cell right">
+                                <span t-field="line.sst_8_percent"/>
+                                <t t-set="total_sst_amt_8_percent"
+                                   t-value="total_sst_amt_8_percent + line.sst_8_percent"/>
+                            </div>
+                        </t>
+                        <!--B2B Exemption-->
+                        <div class="act_as_cell right">
+                            <t>
+                                <span t-field="line.b2b_exemption_amt"/>
+                                <t t-set="total_b2b_exception_amt"
+                                   t-value="total_b2b_exception_amt + line.b2b_exemption_amt"/>
+                            </t>
+                        </div>
+                        <div class="act_as_cell right">
+                            <span t-field="line.received_invoice_amount"/>
+                            <t t-set="total_received_inv_amt"
+                               t-value="total_received_inv_amt + line.received_invoice_amount"/>
+                        </div>
+                        <div class="act_as_cell right" t-if="line.b2b_exemption_amt != 0">
+                            <span>0.00</span>
+                        </div>
+                        <div class="act_as_cell right" t-if="line.b2b_exemption_amt == 0">
+                            <span t-field="line.received_taxable_invoice_amount"/>
+                            <t t-set="total_received_taxable_inv_amt"
+                               t-value="total_received_taxable_inv_amt + line.received_taxable_invoice_amount"/>
+                        </div>
+                        <div class="act_as_cell right" t-if="line.b2b_exemption_amt != 0">
+                            <span>0.00</span>
+                        </div>
+                        <div class="act_as_cell right" t-if="line.b2b_exemption_amt == 0">
+                            <span t-field="line.received_taxable_amount"/>
+                            <t t-set="total_received_taxable_amt"
+                               t-value="total_received_taxable_amt + line.received_taxable_amount"/>
+                        </div>
+                    </div>
+                </t>
+
+                <div class="act_as_row" style="font-weight: bold;">
+                    <div class="act_as_cell right">
+                    </div>
+                    <div class="act_as_cell left">
+
+                    </div>
+                    <div class="act_as_cell left">
+                    </div>
+                    <div class="act_as_cell right">
+                        TOTAL:
+                    </div>
+                    <div class="act_as_cell right">
+                        <span t-esc="'{0:,.2f}'.format(total_inv_amt)"/>
+                    </div>
+                    <div class="act_as_cell right">
+                        <span t-esc="'{0:,.2f}'.format(total_inv_taxable_amt_6_percent)"/>
+                    </div>
+                    <div class="act_as_cell right">
+                        <span t-esc="'{0:,.2f}'.format(total_inv_taxable_amt_8_percent)"/>
+                    </div>
+                    <div class="act_as_cell right">
+                        <span t-esc="'{0:,.2f}'.format(total_sst_amt_6_percent)"/>
+                    </div>
+                    <div class="act_as_cell right">
+                        <span t-esc="'{0:,.2f}'.format(total_sst_amt_8_percent)"/>
+                    </div>
+                    <div class="act_as_cell right">
+                        <span t-esc="'{0:,.2f}'.format(total_b2b_exception_amt)"/>
+                    </div>
+                    <div class="act_as_cell right">
+                        <span t-esc="'{0:,.2f}'.format(total_received_inv_amt)"/>
+                    </div>
+                    <div class="act_as_cell right">
+                        <span t-esc="'{0:,.2f}'.format(total_received_taxable_inv_amt)"/>
+                    </div>
+                    <div class="act_as_cell right">
+                        <span t-esc="'{0:,.2f}'.format(total_received_taxable_amt)"/>
+                    </div>
+                </div>
+
+            </div>
+            <div t-if="not o.is_b2b_exemption" class="act_as_table data_table" style="width: 100%;font-size:10pt;">
+                <t t-set="total_inv_amt" t-value="0"/>
+                <t t-set="total_inv_taxable_amt" t-value="0"/>
+                <t t-set="total_inv_taxable_amt_6_percent" t-value="0"/>
+                <t t-set="total_inv_taxable_amt_8_percent" t-value="0"/>
+                <t t-set="total_sst_amt" t-value="0"/>
+                <t t-set="total_sst_amt_6_percent" t-value="0"/>
+                <t t-set="total_sst_amt_8_percent" t-value="0"/>
+                <t t-set="total_received_inv_amt" t-value="0"/>
+                <t t-set="total_received_taxable_inv_amt" t-value="0"/>
+                <t t-set="total_received_taxable_amt" t-value="0"/>
+                <t t-set="total_b2b_exception_amt" t-value="0"/>
+                <!-- Display table headers for lines -->
+                <div class="act_as_thead" style="page-break-inside: avoid;">
+                    <div class="act_as_row labels">
+                        <!--## code-->
+                        <div class="act_as_cell first_column" style="width: 14%;">Customer</div>
+                        <!--## name-->
+                        <div class="act_as_cell" style="width: 10%;">Inv. No</div>
+                        <!--## net-->
+                        <div class="act_as_cell" style="width: 8%;">Inv. Date</div>
+                        <!--## tax-->
+                        <!-- <div class="act_as_cell" style="width: 8%;">Inv. Amt</div>-->
+                        <div class="act_as_cell" style="width: 8%;">Paid Date</div>
+                        <!--## net-->
+                        <div class="act_as_cell" style="width: 8%;">Inv. Total</div>
+                        <!--## net-->
+                        <div class="act_as_cell" style="width: 8%;">Taxable 6% Amt</div>
+                        <div class="act_as_cell" style="width: 8%;">Taxable 8% Amt</div>
+                        <!--## tax-->
+                        <div class="act_as_cell" style="width: 7%;">SST 6%</div>
+                        <div class="act_as_cell" style="width: 7%;">SST 8%</div>
+                        <div class="act_as_cell" style="width: 8%;">Received Amt</div>
+                        <!--## net-->
+                        <div class="act_as_cell" style="width: 7%;">Received Taxable Amt</div>
+                        <!--## tax-->
+                        <div class="act_as_cell" style="width: 7%;">Received SST Amt</div>
+                    </div>
+                </div>
+                <t t-foreach="o.taxdetails_ids" t-as="line">
+                    <div class="act_as_row lines">
+                        <div class="act_as_cell left">
+                            <span t-field="line.customer.name"/>
+                        </div>
+                        <div class="act_as_cell left">
+                            <span t-field="line.invoice_no"/>
+                        </div>
+                        <div class="act_as_cell left">
+                            <span t-field="line.invoice_date"/>
+                        </div>
+                        <div class="act_as_cell left">
+                            <span t-field="line.invoice_paid_date"/>
+                        </div>
+                        <div class="act_as_cell right">
+                            <span t-field="line.invoice_amount"/>
+                            <t t-set="total_inv_amt" t-value="total_inv_amt + line.invoice_amount"/>
+                        </div>
+                        <!-- <div class="act_as_cell left">
+                             &lt;!&ndash;<span t-field="line.invoice_no"/>&ndash;&gt;
+                         </div>-->
+                        <div class="act_as_cell right">
+                            <span t-field="line.taxable_amount_6_percent"/>
+                            <t t-set="total_inv_taxable_amt_6_percent"
+                               t-value="total_inv_taxable_amt_6_percent + line.taxable_amount_6_percent"/>
+                        </div>
+                        <div class="act_as_cell right">
+                            <span t-field="line.taxable_amount_8_percent"/>
+                            <t t-set="total_inv_taxable_amt_8_percent"
+                               t-value="total_inv_taxable_amt_8_percent + line.taxable_amount_8_percent"/>
+                        </div>
+                        <!--SST 6%-->
+                        <div class="act_as_cell right">
+                            <span t-field="line.sst_6_percent"/>
+                            <t t-set="total_sst_amt_6_percent" t-value="total_sst_amt_6_percent + line.sst_6_percent"/>
+                        </div>
+                        <!--SST 8%-->
+                        <div class="act_as_cell right">
+                            <span t-field="line.sst_8_percent"/>
+                            <t t-set="total_sst_amt_8_percent" t-value="total_sst_amt_8_percent + line.sst_8_percent"/>
+                        </div>
+                        <div class="act_as_cell right">
+                            <span t-field="line.received_invoice_amount"/>
+                            <t t-set="total_received_inv_amt"
+                               t-value="total_received_inv_amt + line.received_invoice_amount"/>
+                        </div>
+                        <div class="act_as_cell right" t-if="not line.customer.property_account_position_id">
+                            <span t-field="line.received_taxable_invoice_amount"/>
+                            <t t-set="total_received_taxable_inv_amt"
+                               t-value="total_received_taxable_inv_amt + line.received_taxable_invoice_amount"/>
+                        </div>
+                        <div class="act_as_cell right" t-if="not line.customer.property_account_position_id">
+                            <span t-field="line.received_taxable_amount"/>
+                            <t t-set="total_received_taxable_amt"
+                               t-value="total_received_taxable_amt + line.received_taxable_amount"/>
+                        </div>
+                    </div>
+                </t>
+
+                <div class="act_as_row" style="font-weight: bold;">
+                    <div class="act_as_cell right">
+                    </div>
+                    <div class="act_as_cell left">
+
+                    </div>
+                    <div class="act_as_cell left">
+                    </div>
+                    <div class="act_as_cell right">
+                        TOTAL:
+                    </div>
+                    <div class="act_as_cell right">
+                        <span t-esc="'{0:,.2f}'.format(total_inv_amt)"/>
+                    </div>
+                    <div class="act_as_cell right">
+                        <span t-esc="'{0:,.2f}'.format(total_inv_taxable_amt_6_percent)"/>
+                    </div>
+                    <div class="act_as_cell right">
+                        <span t-esc="'{0:,.2f}'.format(total_inv_taxable_amt_8_percent)"/>
+                    </div>
+                    <div class="act_as_cell right">
+                        <span t-esc="'{0:,.2f}'.format(total_sst_amt_6_percent)"/>
+                    </div>
+                    <div class="act_as_cell right">
+                        <span t-esc="'{0:,.2f}'.format(total_sst_amt_8_percent)"/>
+                    </div>
+                    <div class="act_as_cell right">
+                        <span t-esc="'{0:,.2f}'.format(total_received_inv_amt)"/>
+                    </div>
+                    <div class="act_as_cell right">
+                        <span t-esc="'{0:,.2f}'.format(total_received_taxable_inv_amt)"/>
+                    </div>
+                    <div class="act_as_cell right">
+                        <span t-esc="'{0:,.2f}'.format(total_received_taxable_amt)"/>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </template>
+
+    <template id="account_financial_report.report_sst_report_filters">
+        <div class="act_as_table data_table" style="width: 100%;font-size:10pt;">
+            <div class="act_as_row labels">
+                <div class="act_as_cell">Date From</div>
+                <div class="act_as_cell">Date To</div>
+                <div class="act_as_cell">Based On</div>
+            </div>
+            <div class="act_as_row">
+                <div class="act_as_cell">
+                    <span t-field="o.date_from"/>
+                </div>
+                <div class="act_as_cell">
+                    <span t-field="o.date_to"/>
+                </div>
+                <div class="act_as_cell">
+                    <span t-field="o.paid_only"/>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="account_financial_report.second_report_sst_report_qweb">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <!-- <t t-call="web.external_layout"> -->
+                <t t-call="account_financial_report.internal_layout">
+                    <t t-call="account_financial_report.report_sst_report_second"/>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="account_financial_report.report_sst_report_second">
+        <div class="page">
+            <div class="row">
+                <table width="97%" style="margin-left:15px;">
+                    <tr>
+                        <td width="67%" align="left" style="text-align:left;display: inline-block;">
+                            <span style="display: inline-block;width: 30px;height: 29px;line-height:12px;border-top: 3px solid black;border-left: 3px solid black;"/>
+                            <h1 style="display: inline-block">*SST-02*</h1>
+                        </td>
+                        <td width="33%" align="right" style="text-align:right;">
+                            <span style="display: inline-block;width: 30px;height: 29px;line-height:12px;border-top: 3px solid black;border-right: 3px solid black;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="67%" align="left" style="text-align:left;">
+                        </td>
+                        <td width="33%" style="border:1px solid black;width:33%;padding-left: 16px;">
+                            <span>No. SST-02 :</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="67%" align="left" style="text-align:left;padding-bottom:3%">
+                        </td>
+                        <td width="33%" align="" style="padding-top:3%">
+                            <div class="checkbox" style="width: 50px;height: 32px;border:1px solid black;display: inline-block;"/>
+                            <span style="text-align:right;vertical-align: top;margin-top: 5px;display: inline-block;width:60%;">Pindaan / Amendment</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br/>
+            <br/>
+            <!--            page 1-->
+            <t t-set="sst_amount" t-value="sum(o.taxdetails_ids.mapped('sst_amount'))"/>
+            <t t-set="sst_total" t-value="sum(o.taxdetails_ids.mapped(lambda x: x.taxable_amount_6_percent + x.taxable_amount_8_percent))"/>
+            <t t-set="invoice_taxable_amount" t-value="sum(o.taxdetails_ids.mapped('invoice_taxable_amount'))"/>
+            <div style="border:1px solid black;" width="100%" >
+                <table width="100%" style="">
+                    <tr>
+                        <td width="25%" align="right">
+                            <img style="margin-top:25px;" src="/account_financial_report/static/src/logo_pdf.png" height="120" width="120"/>
+                        </td>
+                        <td width="55%" align="center" style="text-align: center;font-weight: bold;font-size:20px;">
+                            JABATAN KASTAM DIRAJA MALAYSIA<br/>ROYAL MALAYSIAN CUSTOMS DEPARTMENT<br/><br/><br/>PENYATA CUKAI JUALAN / CUKAI PERKHIDMATAN<br/>SALES TAX / SERVICE TAX RETURN
+                        </td>
+                        <td width="20%" align="center"/>
+                    </tr>
+                </table>
+                <br/>
+                <!--                <table width="100%">-->
+                <!--                    <tr>-->
+                <!--                        <td width="30%" align="center" style="font-weight:bold;">-->
+                <!--                            Nota Penting (Important Notes)-->
+                <!--                        </td>-->
+                <!--                        <td width="50%" align="center" style="text-align: center;font-weight: bold;">-->
+                <!--                        </td>-->
+                <!--                        <td width="20%" align="center"/>-->
+                <!--                    </tr>-->
+                <!--                </table>-->
+                <div width="100%">
+                    <h6 style="width: 25%;font-weight: 700;position: relative;left: 64px;background: white;padding-left: 10px;border: 1px solid;padding-right: 11px;bottom: -18px;">Nota Penting (Important Notes)</h6>
+                    <table width="95%" style="border:1px solid black;margin-left: 37px;border-collapse: separate;border-radius: 15px;">
+                        <tbody style="display: inline-block;padding-left: 20px;padding-top: 12px;">
+                            <tr>
+                                <td>
+                                    1) Sila isikan borang ini dengan menaip menggunakan <b>HURUF BESAR</b>.
+                                    <br/>
+                                    <p style="margin-left:18px;margin-bottom:0px;">Please type in using <b>BLOCK LETTERS.</b></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    2) Borang ini hendaklah diisi secara berasingan bagi Cukai Jualan dan Cukai Perkhidmatan
+                                    <br/>
+                                    <p style="margin-left:18px;margin-bottom:0px;">This form must be declared separately for Sales Tax and Service Tax</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    3) Sila rujuk <b>Panduan Mengisi Penyata SST-02</b>
+                                    <br/>
+                                    <p style="margin-left:18px;margin-bottom:0px;">Please refer to <b>SST-02 Returns Guidelines.</b></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    4) Ruangan yang bertanda (*) adalah wajib diisi.
+                                    <br/>
+                                    <p style="margin-left:18px;margin-bottom:0px;">Column with (*) is a mandatory field.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    5) Sekiranya tiada nilai untuk diikrar, sila isi angka ‘0’.
+                                    <br/>
+                                    <p style="margin-left:18px;margin-bottom:0px;">If nothing to declare, please fill in “0”.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    6) Sila hubungi Pusat Panggilan Kastam di talian 1-300-88-8500 / 03-78067200 atau emel
+                                    <br/>
+                                    <p style="margin-left:18px;margin-bottom:0px;">ccc@customs.gov.my untuk pertanyaan lanjut.</p>
+                                    <p style="margin-left:18px;margin-bottom:0px;">Please contact Customs Call Center at 1-300-88-8500 / 03-78067200 or email ccc@customs.gov.my for further enquiry.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br/>
+                <table width="90%" style="margin-left: 36px;border: 1px solid;background: #97bdfc;">
+                    <tr>
+                        <td width="5%"/>
+                        <td width="90%">
+                            <p style="text-align:center;font-weight:bold;font-size:15px;">BAHAGIAN A : MAKLUMAT PENGILANG BERDAFTAR / ORANG BERDAFTAR
+                                <br/>
+                                PART A : REGISTERED MANUFACTURE / REGISTERED PERSON PARTICULARS</p>
+                        </td>
+                        <td width="5%"/>
+
+                    </tr>
+                </table>
+                <br/>
+                <table width="100%">
+                    <tr>
+                        <td width="50%">
+                        </td>
+                        <td width="25%" style="text-align:center;">
+                            <b>CUKAI JUALAN / <br/>
+                                SALES TAX</b>
+                        </td>
+                        <td width="25%" style="text-align:center;">
+                            <b>CUKAI PERKHIDMATAN /<br/>
+                                SERVICE TAX</b>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td width="50%" style="vertical-align: top;padding-left:15px;">
+                            1) Jenis Penyata (Tandakan x dalam kotak yang berkaitan)*<br/>
+                            <p style="margin-left:17px;margin-top:0px;margin-bottom:0px;">Type of Return (Tick x in the relevant box)*</p>
+                        </td>
+                        <td align="center" width="25%" style="vertical-align:top;">
+                            <span t-if="o.type_of_tax=='Sales Tax'" style="width: 50px;height: 45px;border:1px solid black;font-size:20px;margin-top:-8px;display:inline-block;">X</span>
+                            <span t-else="" style="width: 50px;height: 45px;border:1px solid black;font-size:20px;display:inline-block;"/>
+                            <!--                            <div t-if="o.type_of_tax=='Sales Tax'" class="checkbox" style="width: 50px;height: 45px;border:1px solid black;font-size:20px;padding-top:-5px;">X</div>-->
+                            <!--                            <div t-else="" class="checkbox" style="width: 50px;height: 45px;border:1px solid black;"/>-->
+                        </td>
+                        <td align="center" width="25%">
+                            <span t-if="o.type_of_tax=='Service Tax'" style="width: 50px;height: 45px;border:1px solid black;font-size:20px;margin-top:-8px;display:inline-block;">X</span>
+                            <span t-else="" style="width: 50px;height: 45px;border:1px solid black;font-size:20px;display:inline-block;"/>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <table width="100%">
+                    <tr>
+                        <td width="50%" style="padding-left:15px;">
+                            <p style="margin-left:55px;margin-top:0px;margin-bottom:0px;"><b>No. Pendaftaran SST.*<br/>
+                                SST Registration No.*</b></p>
+                        </td>
+                        <td width="50%" style="vertical-align: bottom;">
+                            <div style="width: 350px;height: 45px;border:1px solid black;"><span t-esc="o.company_id.vat" style="padding-left:12px"/></div>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <table width="100%">
+                    <tr>
+                        <td width="50%" style="padding-left:15px;">
+                            2) Nama Pengilang Berdaftar / Orang Berdaftar*.
+                            <p style="margin-left:17px;margin-top:0px;margin-bottom:0px;">Name of Registered Manufacturer / Registered</p>
+                            <p style="margin-top:0px;margin-bottom:0px;margin-left:17px;">Person.*</p>
+                        </td>
+                        <td width="50%" style="vertical-align:bottom;">
+                            <div style="width: 520px;height: 45px;border:1px solid black;margin-bottom:18px;"><span t-esc="o.company_id.name" style="padding-left:12px"/></div>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <table width="100%">
+                    <tr>
+                        <td width="50%" style="padding-left:15px;">
+                            3) Tempoh Bercukai.*
+                            <p style="margin-left:17px;margin-top:0px;margin-bottom:0px;">Taxable Period.*</p>
+                        </td>
+                        <td width="25%" style="vertical-align:bottom;">
+                            <div>
+                                <t t-set="date" t-value="o.date_from.strftime('%d-%m-%Y')"/>
+                                <t t-set="date_split" t-value="date.split('-')"/>
+                                <t t-set="date_day" t-value="date_split[0]"/>
+                                <t t-set="date_month" t-value="date_split[1]"/>
+                                <t t-set="date_year" t-value="date_split[2]"/>
+                                <t t-set="date_f" t-value="date_day[0]"/>
+                                <t t-set="date_s" t-value="date_day[1]"/>
+                                <t t-set="month_f" t-value="date_month[0]"/>
+                                <t t-set="month_s" t-value="date_month[1]"/>
+                                <t t-set="year_f" t-value="date_year[2]"/>
+                                <t t-set="year_s" t-value="date_year[3]"/>
+                                <div class="date-item" style="padding-bottom: 10px;">
+                                    <span style="display: inline-block; width: 40px; height: 40px;vertical-align:bottom;">dari<br/>from</span>
+                                    <span style="display: inline-block; width: 24px; height: 40px; border:1px solid #000;vertical-align:bottom;padding: 5px;font-size: 20px;font-weight: 600;" t-esc="date_f"/>
+                                    <span style="display: inline-block; width: 24px; height: 40px; border:1px solid #000;margin-left:-4px;vertical-align:bottom;padding: 5px;font-size: 20px;font-weight: 600;" t-esc="date_s"/>
+                                    <span style="display: inline-block;width: 20px;height: 40px;border: none;line-height: 40px;text-align: center;font-size: 30px;vertical-align: bottom">/</span>
+                                    <span style="display: inline-block; width: 24px; height: 40px; border:1px solid #000;vertical-align:bottom;padding: 5px;font-size: 20px;font-weight: 600;" t-esc="month_f"/>
+                                    <span style="display: inline-block; width: 24px; height: 40px; border:1px solid #000;margin-left:-5px;vertical-align:bottom;padding: 5px;font-size: 20px;font-weight: 600;" t-esc="month_s"/>
+                                    <span style="display: inline-block;width: 20px;height: 40px;border: none;line-height: 40px;text-align: center;font-size: 30px;vertical-align: bottom">/</span>
+                                    <span style="display: inline-block; width: 24px; height: 40px; border:1px solid #000;vertical-align:bottom;padding: 5px;font-size: 20px;font-weight: 600;" t-esc="year_f"/>
+                                    <span style="display: inline-block; width: 24px; height: 40px; border:1px solid #000;margin-left:-6px;vertical-align:bottom;padding: 5px;font-size: 20px;font-weight: 600;" t-esc="year_s"/>
+                                </div>
+                            </div>
+                        </td>
+                        <td width="25%" style="vertical-align:bottom;">
+                            <div>
+                                <t t-set="date" t-value="o.date_to.strftime('%d-%m-%Y')"/>
+                                <t t-set="date_split" t-value="date.split('-')"/>
+                                <t t-set="date_day" t-value="date_split[0]"/>
+                                <t t-set="date_month" t-value="date_split[1]"/>
+                                <t t-set="date_year" t-value="date_split[2]"/>
+                                <t t-set="date_f" t-value="date_day[0]"/>
+                                <t t-set="date_s" t-value="date_day[1]"/>
+                                <t t-set="month_f" t-value="date_month[0]"/>
+                                <t t-set="month_s" t-value="date_month[1]"/>
+                                <t t-set="year_f" t-value="date_year[2]"/>
+                                <t t-set="year_s" t-value="date_year[3]"/>
+                                <div class="date-item" style="padding-bottom: 10px;">
+                                    <span style="display: inline-block; width: 50px; height: 40px;vertical-align:bottom;">hingga<br/>untill</span>
+                                    <span style="display: inline-block; width: 24px; height: 40px; border:1px solid #000;vertical-align:bottom;padding: 5px;font-size: 20px;font-weight: 600;" t-esc="date_f"/>
+                                    <span style="display: inline-block; width: 24px; height: 40px; border:1px solid #000;margin-left:-4px;vertical-align:bottom;padding: 5px;font-size: 20px;font-weight: 600;" t-esc="date_s"/>
+                                    <span style="display: inline-block;width: 20px;height: 40px;border: none;line-height: 40px;text-align: center;font-size: 30px;vertical-align: bottom">/</span>
+                                    <span style="display: inline-block; width: 24px; height: 40px; border:1px solid #000;vertical-align:bottom;padding: 5px;font-size: 20px;font-weight: 600;" t-esc="month_f"/>
+                                    <span style="display: inline-block; width: 24px; height: 40px; border:1px solid #000;margin-left:-5px;vertical-align:bottom;padding: 5px;font-size: 20px;font-weight: 600;" t-esc="month_s"/>
+                                    <span style="display: inline-block;width: 20px;height: 40px;border: none;line-height: 40px;text-align: center;font-size: 30px;vertical-align: bottom">/</span>
+                                    <span style="display: inline-block; width: 24px; height: 40px; border:1px solid #000;vertical-align:bottom;padding: 5px;font-size: 20px;font-weight: 600;" t-esc="year_f"/>
+                                    <span style="display: inline-block; width: 24px; height: 40px; border:1px solid #000;margin-left:-6px;vertical-align:bottom;padding: 5px;font-size: 20px;font-weight: 600;" t-esc="year_s"/>
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>
+                </table>
+                <table width="100%">
+                    <tr>
+                        <td width="54%">
+                        </td>
+                        <td width="26%" style="vertical-align:bottom;">
+                            <span style="display:inline-block">(hari)</span>
+                            <span style="display:inline-block;width:13%;"/>
+                            <span style="display:inline-block">(bulan)</span>
+                            <span style="display:inline-block;width:7%;"/>
+                            <span style="display:inline-block">(tahun)</span>
+                        </td>
+                        <td width="20%" style="vertical-align:bottom;">
+                            <span style="display:inline-block">(hari)</span>
+                            <span style="display:inline-block;width:14%;"/>
+                            <span style="display:inline-block">(bulan)</span>
+                            <span style="display:inline-block;width:8%;"/>
+                            <span style="display:inline-block">(tahun)</span>
+                        </td>
+
+                    </tr>
+                     <tr>
+                        <td width="54%">
+                        </td>
+                        <td width="26%" style="vertical-align:bottom;">
+                            <span style="display:inline-block">(day)</span>
+                            <span style="display:inline-block;width:13%;"/>
+                            <span style="display:inline-block">(month)</span>
+                            <span style="display:inline-block;width:7%;"/>
+                            <span style="display:inline-block">(year)</span>
+                        </td>
+                        <td width="20%" style="vertical-align:bottom;">
+                            <span style="display:inline-block">(day)</span>
+                            <span style="display:inline-block;width:14%;"/>
+                            <span style="display:inline-block">(month)</span>
+                            <span style="display:inline-block;width:8%;"/>
+                            <span style="display:inline-block">(year)</span>
+                        </td>
+
+                    </tr>
+                </table>
+                <br/>
+                <table width="100%">
+                    <tr>
+                        <td width="50%" style="padding-left:15px;">
+                            4) Tarikh Akhir Serahan Penyata dan Bayaran*
+                            <p style="margin-left:17px;margin-top:0px;margin-bottom:0px;">Return and Payment Due Date*</p>
+                        </td>
+                        <td width="25%" style="vertical-align:bottom;">
+                        </td>
+                        <td width="25%" style="vertical-align:bottom;">
+                            <t t-set="last_day_of_next_mon" t-value="o.last_day_of_next_month(o.date_to)"/>
+                            <t t-set="date_split" t-value="last_day_of_next_mon.split('-')"/>
+                            <t t-set="date_day" t-value="date_split[0]"/>
+                            <t t-set="date_month" t-value="date_split[1]"/>
+                            <t t-set="date_year" t-value="date_split[2]"/>
+                            <t t-set="date_f" t-value="date_day[0]"/>
+                            <t t-set="date_s" t-value="date_day[1]"/>
+                            <t t-set="month_f" t-value="date_month[0]"/>
+                            <t t-set="month_s" t-value="date_month[1]"/>
+                            <t t-set="year_f" t-value="date_year[2]"/>
+                            <t t-set="year_s" t-value="date_year[3]"/>
+                            <div>
+                                <div class="date-item" style="padding-bottom: 10px;">
+                                    <span style="display: inline-block; width: 50px; height: 40px;vertical-align:bottom;">hingga<br/>untill</span>
+                                    <span style="display: inline-block; width: 24px; height: 40px; border:1px solid #000;vertical-align:bottom;padding: 5px;font-size: 20px;font-weight: 600;" t-esc="date_f"/>
+                                    <span style="display: inline-block; width: 24px; height: 40px; border:1px solid #000;margin-left:-4px;vertical-align:bottom;padding: 5px;font-size: 20px;font-weight: 600;" t-esc="date_s"/>
+                                    <span style="display: inline-block;width: 20px;height: 40px;border: none;line-height: 40px;text-align: center;font-size: 30px;vertical-align: bottom">/</span>
+                                    <span style="display: inline-block; width: 24px; height: 40px; border:1px solid #000;vertical-align:bottom;padding: 5px;font-size: 20px;font-weight: 600;" t-esc="month_f"/>
+                                    <span style="display: inline-block; width: 24px; height: 40px; border:1px solid #000;margin-left:-5px;vertical-align:bottom;padding: 5px;font-size: 20px;font-weight: 600;" t-esc="month_s"/>
+                                    <span style="display: inline-block;width: 20px;height: 40px;border: none;line-height: 40px;text-align: center;font-size: 30px;vertical-align: bottom">/</span>
+                                    <span style="display: inline-block; width: 24px; height: 40px; border:1px solid #000;vertical-align:bottom;padding: 5px;font-size: 20px;font-weight: 600;" t-esc="year_f"/>
+                                    <span style="display: inline-block; width: 24px; height: 40px; border:1px solid #000;margin-left:-6px;vertical-align:bottom;padding: 5px;font-size: 20px;font-weight: 600;" t-esc="year_s"/>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <table width="100%">
+                    <tr>
+                        <td width="54%">
+                        </td>
+                        <td width="26%" style="vertical-align:bottom;">
+                        </td>
+                        <td width="20%" style="vertical-align:bottom;">
+                            <span style="display:inline-block">(hari)</span>
+                            <span style="display:inline-block;width:14%;"/>
+                            <span style="display:inline-block">(bulan)</span>
+                            <span style="display:inline-block;width:8%;"/>
+                            <span style="display:inline-block">(tahun)</span>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td width="54%">
+                        </td>
+                        <td width="26%" style="vertical-align:bottom;">
+                        </td>
+                        <td width="20%" style="vertical-align:bottom;">
+                            <span style="display:inline-block">(day)</span>
+                            <span style="display:inline-block;width:14%;"/>
+                            <span style="display:inline-block">(month)</span>
+                            <span style="display:inline-block;width:8%;"/>
+                            <span style="display:inline-block">(year)</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <p style="page-break-before:always;"/>
+            <!--            page 2-->
+            <div style="border:1px solid black;">
+                <table width="100%" style="margin-top: 3px;border: 1px solid;background: #97bdfc;">
+                    <tr>
+                        <td width="5%"/>
+                        <td width="90%">
+                            <p style="text-align:center;font-weight:bold;font-size:15px;margin-bottom: 0px;margin-top: 0px;">BAHAGIAN B1 : MAKLUMAT JUALAN / PERKHIDMATAN
+                                <br/>
+                                PART B1 : SALES / SERVICE DETAILS</p>
+                        </td>
+                        <td width="5%"/>
+
+                    </tr>
+                </table>
+                <table width="100%" style="margin-top: 3px;border:1px solid black;">
+                    <tr>
+                        <td width="5%" style="text-align:center;border:1px solid black;vertical-align: middle;">
+                            (5)<br/>Bil.<br/>No.
+                        </td>
+                        <td width="20%" style="text-align:center;border:1px solid black;vertical-align: middle;">
+                            (6)
+                            <br/>
+                            Maklumat Barang Kena
+                            <br/>
+                            Cukai
+                            <br/>
+                            Jenis Perkhidmatan
+                            <br/>
+                            Bercukai Disediakan /
+                            <br/>
+                            Diimport.*
+                            <br/>
+                            Description of Taxable
+                            <br/>
+                            Goods
+                            <br/>
+                            Type of Taxable Service
+                            <br/>
+                            Provided / Imported.*
+                        </td>
+                        <td width="15%" style="text-align:center;border:1px solid black;vertical-align: middle;">
+                            (7)
+                            <br/>
+                            Kod Tariff Kastam
+                            <br/>
+                            / Kod Jenis
+                            <br/>
+                            Perkhidmatan.*
+                            <br/>
+                            Customs Tariff
+                            <br/>
+                            Code / Service
+                            <br/>
+                            Type Code.*
+                        </td>
+                        <td width="20%" style="text-align:center;border:1px solid black;vertical-align: middle;">
+                            (8)
+                            <br/>
+                            Nilai Barang-barang
+                            <br/>
+                            Dijual (Termasuk Nilai
+                            <br/>
+                            Nota Debit)
+                            <br/>
+                            / Nilai Kerja Yang
+                            <br/>
+                            Dilakukan.*
+                            <br/>
+                            <br/>
+                            Value of Taxable Goods
+                            <br/>
+                            Sold (Including Value of
+                            <br/>
+                            Debit Note) /
+                            <br/>
+                            Value of Work
+                            <br/>
+                            Performed. *
+                            <br/>
+                            <b>(RM)</b>
+                        </td>
+                        <td width="25%" style="text-align:center;border:1px solid black;vertical-align: middle;">
+                            (9)
+                            <br/>
+                            Nilai Barang-barang Yang
+                            <br/>
+                            Dipakai Sendiri
+                            <br/>
+                            / Dilupus
+                            <br/>
+                            <br/>
+                            Nilai Perkhidmatan Yang
+                            <br/>
+                            Diberi Percuma*
+                            <br/>
+                            <br/>
+                            Value of Goods For Own Used /
+                            <br/>
+                            Disposed
+                            <br/>
+                            <br/>
+                            Values of Free Services *
+                            <br/>
+                            <b>(RM)</b>
+                        </td>
+                        <td width="15%" style="text-align:center;border:1px solid black;vertical-align: middle;">
+                            (10)
+                            <br/>
+                            Nilai
+                            <br/>
+                            Perkhidmatan
+                            <br/>
+                            Bercukai
+                            <br/>
+                            (Termasuk Nilai
+                            <br/>
+                            Nota Debit) *
+                            <br/>
+                            <br/>
+                            Value of Taxable
+                            <br/>
+                            Service
+                            <br/>
+                            (Including Value
+                            <br/>
+                            of Debit Note)*
+                            <br/>
+                            <b>(RM)</b>
+                        </td>
+                    </tr>
+                    <tr style="height:17px;">
+                        <td width="5%" style="text-align:center;border:1px solid black;">
+                            <span t-if="o.company_id.vat">1</span>
+                        </td>
+                        <td width="20%" style="text-align:center;border:1px solid black;">
+                            <span t-if="o.company_id.vat" t-esc="o.company_id.service_provider"/>
+                        </td>
+                        <td width="15%" style="text-align:center;border:1px solid black;">
+                            <span t-if="o.company_id.vat" t-esc="o.company_id.tariff_code"/>
+                        </td>
+                        <td width="20%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="25%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="15%" style="text-align:center;border:1px solid black;">
+                            <span t-esc="'{0:,.2f}'.format(sst_total)"/>
+                        </td>
+                    </tr>
+                    <tr style="height:17px;">
+                        <td width="5%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="20%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="15%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="20%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="25%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="15%" style="text-align:center;border:1px solid black;"></td>
+                    </tr>
+                    <tr style="height:17px;">
+                        <td width="5%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="20%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="15%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="20%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="25%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="15%" style="text-align:center;border:1px solid black;"></td>
+                    </tr>
+                    <tr style="height:17px;">
+                        <td width="5%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="20%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="15%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="20%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="25%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="15%" style="text-align:center;border:1px solid black;"></td>
+                    </tr>
+                    <tr style="height:17px;">
+                        <td width="5%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="20%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="15%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="20%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="25%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="15%" style="text-align:center;border:1px solid black;"></td>
+                    </tr>
+                    <tr style="height:17px;">
+                        <td width="5%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="20%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="15%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="20%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="25%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="15%" style="text-align:center;border:1px solid black;"></td>
+                    </tr>
+                    <tr style="height:17px;">
+                        <td width="5%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="20%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="15%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="20%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="25%" style="text-align:center;border:1px solid black;"></td>
+                        <td width="15%" style="text-align:center;border:1px solid black;"></td>
+                    </tr>
+<!--                    <tr style="height:17px;">-->
+<!--                        <td width="5%" style="text-align:center;border:1px solid black;"></td>-->
+<!--                        <td width="20%" style="text-align:center;border:1px solid black;"></td>-->
+<!--                        <td width="15%" style="text-align:center;border:1px solid black;"></td>-->
+<!--                        <td width="20%" style="text-align:center;border:1px solid black;"></td>-->
+<!--                        <td width="25%" style="text-align:center;border:1px solid black;"></td>-->
+<!--                        <td width="15%" style="text-align:center;border:1px solid black;"></td>-->
+<!--                    </tr>-->
+<!--                    <tr style="height:17px;">-->
+<!--                        <td width="5%" style="text-align:center;border:1px solid black;"></td>-->
+<!--                        <td width="20%" style="text-align:center;border:1px solid black;"></td>-->
+<!--                        <td width="15%" style="text-align:center;border:1px solid black;"></td>-->
+<!--                        <td width="20%" style="text-align:center;border:1px solid black;"></td>-->
+<!--                        <td width="25%" style="text-align:center;border:1px solid black;"></td>-->
+<!--                        <td width="15%" style="text-align:center;border:1px solid black;"></td>-->
+<!--                    </tr>-->
+                    <tr style="height:30px;">
+                        <td colspan="3" style="text-align:right;border:1px solid black;">
+                            <b>JUMLAH.*<br/>TOTAL.*</b>
+                        </td>
+                        <td width="20%" style="text-align:center;border:1px solid black;">0.00</td>
+                        <td width="25%" style="text-align:center;border:1px solid black;">0.00</td>
+                        <td width="15%" style="text-align:center;border:1px solid black;">
+                            <span t-esc="'{0:,.2f}'.format(sst_total)"/>
+                        </td>
+                    </tr>
+                    <tr style="height:30px;">
+                        <td colspan="3" style="text-align:right;border:1px solid black;">
+                            <b>JUMLAH KESELURUHAN.*<br/>NET TOTAL.*</b>
+                        </td>
+                        <td colspan="3" style="text-align:right;border:1px solid black;">
+                            <span t-esc="'{0:,.2f}'.format(sst_total)"/>
+                        </td>
+
+                    </tr>
+                </table>
+                <table width="100%" style="margin-top: 3px;border: 1px solid;background: #97bdfc;">
+                    <tr>
+                        <td width="5%"/>
+                        <td width="90%">
+                            <p style="text-align:center;font-weight:bold;font-size:15px;margin-bottom: 0px;margin-top: 0px;">
+                                BAHAGIAN B2 : NILAI CUKAI YANG KENA DIBAYAR ATAS BARANGAN (JUALAN / PELUPUSAN /
+                                <br/>
+                                KEGUNAAN SENDIRI) / PERKHIDMATAN (PERKHIDMATAN DIBERIKAN / KEGUNAAN SENDIRI)
+                                <br/>
+                                PART B2 : VALUE OF TAX PAYABLE FOR GOODS (SALES, DISPOSED, OWN USE) /
+                                <br/>
+                                SERVICES (SERVICES PERFORMED / OWN USE)
+                            </p>
+                        </td>
+                        <td width="5%"/>
+
+                    </tr>
+                </table>
+                <table width="95%" style="margin-left: 25px;margin-top: 3px;">
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;font-size:14px">
+                            11) Jumlah Nilai Jualan dan Cukai Yang Kena dibayar Mengikut Kadar Cukai.*<br/>
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">Total Value of Tax Payable as Per Tax Rate.*</p>
+                        </td>
+                        <td align="left">
+                        </td>
+                        <td align="center">
+                        </td>
+                        <td align="center">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: top;padding-left:15px;">
+                        </td>
+                        <td align="left" style="font-size:12px;text-align:center;">
+                            Nilai Jualan / Perkhidmatan Bercukai /
+                            <br/>
+                            Bilangan Kad
+                            <br/>
+                            Value of Taxable Sales / Service
+                            <br/>
+                            / No. of Cards
+                        </td>
+                        <td align="center" style="font-size:12px;text-align:center;vertical-align:middle;">
+                            Kadar Cukai<br/>
+                            Tax Rate
+                        </td>
+                        <td align="center" style="font-size:12px;text-align:center;vertical-align:middle;">
+                            Nilai Cukai Kena Bayar <br/>
+                            Value of Tax Payable
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;">
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">a) Barang Bercukai Berkadar 5%.
+                                <br/>
+                                Taxable Goods at 5% Rate.</p><br/>
+                        </td>
+                        <td align="left" style="width:17%;">
+                            <span style="border:1px solid black;display:block;width:100%;"><b>&amp;nbsp;RM.</b></span>
+                        </td>
+                        <td align="center" style="width:10%;">
+                            <span style="border:1px solid black;display:block;width:60%;"><b>5%</b></span>
+                        </td>
+                        <td align="left" style="width:17%;">
+                            <span style="border:1px solid black;display:block;width:100%;"><b>&amp;nbsp;RM.</b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;">
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">b) Barang Bercukai Berkadar 10%
+                                <br/>
+                                Taxable Goods at 10% Rate.</p><br/>
+                        </td>
+                        <td align="left" style="width:17%;">
+                            <span style="border:1px solid black;display:block;width:100%;"><b>&amp;nbsp;RM.</b></span>
+                        </td>
+                        <td align="center" style="width:10%;">
+                            <span style="border:1px solid black;display:block;width:60%;"><b>10%</b></span>
+                        </td>
+                        <td align="left" style="width:17%;">
+                            <span style="border:1px solid black;display:block;width:100%;"><b>&amp;nbsp;RM.</b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;">
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">c) Perkhidmatan Bercukai selain dari Kumpulan H.
+                                <br/>
+                                Taxable Services other than from Group H.</p><br/>
+                        </td>
+                        <td align="left" style="width:17%;">
+<!--                            <span style="border:1px solid black;display:block;width:100%;"><b>&amp;nbsp;RM.<span t-if="invoice_taxable_amount" t-esc="'{0:,.2f}'.format(invoice_taxable_amount)"/></b></span>-->
+                            <span style="border:1px solid black;display:block;width:100%;"><b>&amp;nbsp;RM.<span t-if="o.sst_6_taxable_invoice_amount" t-esc="'{0:,.2f}'.format(o.sst_6_taxable_invoice_amount)"/></b></span>
+                        </td>
+                        <td align="center" style="width:10%;">
+                            <span style="border:1px solid black;display:block;width:60%;"><b>6%</b></span>
+                        </td>
+                        <td align="left" style="width:17%;">
+<!--                            <span style="border:1px solid black;display:block;width:100%;"><b>&amp;nbsp;RM.<span t-if="sst_amount" t-esc="'{0:,.2f}'.format(sst_amount)"/></b></span>-->
+                            <span style="border:1px solid black;display:block;width:100%;"><b>&amp;nbsp;RM.<span t-if="o.sst_6_taxable_invoice_amount" t-esc="'{0:,.2f}'.format(o.sst_6_taxable_invoice_amount*0.06)"/></b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;">
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">
+                                <br/>
+                                    </p><br/>
+                        </td>
+                        <td align="left" style="width:17%;">
+                            <span style="border:1px solid black;display:block;width:100%;"><b>&amp;nbsp;RM.<span t-if="o.sst_8_taxable_invoice_amount" t-esc="'{0:,.2f}'.format(o.sst_8_taxable_invoice_amount)"/></b></span>
+                        </td>
+                        <td align="center" style="width:10%;">
+                            <span style="border:1px solid black;display:block;width:60%;"><b>8%</b></span>
+                        </td>
+                        <td align="left" style="width:17%;">
+                            <span style="border:1px solid black;display:block;width:100%;"><b>&amp;nbsp;RM.<span t-if="o.sst_8_taxable_invoice_amount" t-esc="'{0:,.2f}'.format(o.sst_8_taxable_invoice_amount*0.08)"/></b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;">
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">d) Perkhidmatan Bercukai dari Kumpulan H.
+                                <br/>
+                                Taxable Services from Group H.</p>
+                        </td>
+                        <td align="right" style="width:17%;">
+                            <span style="border:1px solid black;display:block;width:100%;"><b>0 UNIT</b></span>
+                        </td>
+                        <td align="center" style="width:10%;">
+                            <span style="border:1px solid black;display:block;width:60%;"><b>&amp;nbsp;RM 25</b></span>
+                        </td>
+                        <td align="left" style="width:17%;">
+                            <span style="border:1px solid black;display:block;width:100%;"><b>&amp;nbsp;RM.</b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;font-size:14px">
+                            12) Jumlah Nilai Cukai Yang Kena Dibayar.*<br/>
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">Total Value of Tax Payable.*</p>
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">(12) = [11(a) + 11(b)] <b>ATAU / OR</b> [11(c) + 11(d)]</p>
+                        </td>
+                        <td colspan="3" align="right">
+<!--                            <span style="border:1px solid black;display:block;width: 49%;text-align: left;"><b>&amp;nbsp;RM.<span t-if="sst_amount" t-esc="'{0:,.2f}'.format(sst_amount)"/></b></span>-->
+                            <span style="border:1px solid black;display:block;width: 49%;text-align: left;"><b>&amp;nbsp;RM.<span t-if="o.sst_total" t-esc="'{0:,.2f}'.format(o.sst_total)"/></b></span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;font-size:14px">
+                            13) Amaun Potongan cukai<br/>
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">Amount of Tax Deduction</p>
+                        </td>
+                        <td colspan="3" align="right">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;">
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">a) Potongan Cukai Melalui Nota Kredit*
+                                <br/>
+                                Tax Deduction from Credit Note*</p><br/>
+                        </td>
+                        <td colspan="3" align="right">
+                            <span style="border:1px solid black;display:block;width: 49%;text-align: left;"><b>&amp;nbsp;RM.</b></span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;">
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">b) Potongan Cukai Jualan*
+                                <br/>
+                                Sales Tax Deduction.*</p><br/>
+                        </td>
+                        <td colspan="3" align="right">
+                            <span style="border:1px solid black;display:block;width: 49%;text-align: left;"><b>&amp;nbsp;RM.</b></span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;">
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">c) Potongan Cukai Perkhidmatan**
+                                <br/>
+                                Service Tax Deduction *</p><br/>
+                        </td>
+                        <td colspan="3" align="right">
+                            <span style="border:1px solid black;display:block;width: 49%;text-align: left;"><b>&amp;nbsp;RM.</b></span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;font-size:14px">
+                            13A) Pelarasan di bawah Potongan Cukai Jualan<br/>
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">Adjustment under Sales Tax Deduction</p>
+                        </td>
+                        <td colspan="3" align="right">
+                            <span style="border:1px solid black;display:block;width: 49%;text-align: left;"><b>&amp;nbsp;RM.</b></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <p style="page-break-before:always;"/>
+            <div style="border:1px solid black;">
+                <table width="95%" style="margin-left: 25px;margin-top: 3px;font-size: 14px;">
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;">
+                            14) Jumlah Cukai Yang Kena Dibayar Sebelum Penalti Dikenakan*<br/>
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">Total Tax Payable Before Penalty Imposed*</p>
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">(14) = (12) - (13)</p>
+                        </td>
+                        <td align="center" style="width:10%;">
+                        </td>
+                        <td align="left" style="width:17%">
+<!--                            <span style="border:1px solid black;display:block;width:100%;"><b>&amp;nbsp;RM.<span t-if="sst_amount" t-esc="'{0:,.2f}'.format(sst_amount)"/></b></span>-->
+                            <span style="border:1px solid black;display:block;width:100%;"><b>&amp;nbsp;RM.<span t-if="o.sst_total" t-esc="'{0:,.2f}'.format(o.sst_total)"/></b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;font-size:14px">
+                            15) Kadar Penalti / Amaun Penalti<br/>
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">Penalty Rate / Penalty Amount</p>
+                        </td>
+                        <td align="center" style="width:10%;">
+                            <span style="border:1px solid black;display:block;width:50%;"><b>0%</b></span>
+                        </td>
+                        <td align="left" style="width:17%;">
+                            <span style="border:1px solid black;display:block;width:100%;"><b>&amp;nbsp;RM.</b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;">
+                            16) Jumlah Cukai Kena Dibayar Termasuk Penalti
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">Total of Tax Payable Inclusive Penalty
+                                (16) = (14) + (15)</p><br/>
+                        </td>
+                        <td align="center" style="width:10%;">
+                        </td>
+                        <td align="left" style="width:17%;">
+<!--                            <span style="border:1px solid black;display:block;width:100%;"><b>&amp;nbsp;RM.<span t-if="sst_amount" t-esc="'{0:,.2f}'.format(sst_amount)"/></b></span>-->
+                            <span style="border:1px solid black;display:block;width:100%;"><b>&amp;nbsp;RM.<span t-if="o.sst_total" t-esc="'{0:,.2f}'.format(o.sst_total)"/></b></span>
+                        </td>
+                    </tr>
+                </table>
+                <table width="90%" style="margin-left: 36px;margin-top: 3px;border: 1px solid;background: #97bdfc;">
+                    <tr>
+                        <td width="5%"/>
+                        <td width="90%">
+                            <p style="text-align:center;font-weight:bold;font-size:15px;margin-bottom: 0px;margin-top: 0px;">BAHAGIAN C : BARANG-BARANG DI BAWAH JADUAL KEDUA, PERINTAH CUKAI JUALAN
+                                <br/>
+                                (KADAR CUKAI) 2018
+                                <br/>
+                                PART C : GOODS UNDER SCHEDULE 2, SALES TAX ORDER (TAX RATE) 2018
+                            </p>
+                        </td>
+                        <td width="5%"/>
+                    </tr>
+                </table>
+                <table width="95%" style="margin-left: 25px;margin-top: 10px;font-size: 14px;">
+                    <tr>
+                        <td colspan="3" style="vertical-align: top;padding-left:15px;">
+                            17) Jumlah Nilai Jualan dan Cukai Yang Kena dibayar mengikut kadar cukai.<br/>
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">Total Value of Tax Payable as per rate of tax.</p>
+                        </td>
+                        <td align="center" style="width:10%;">
+                        </td>
+                        <td align="left" style="width:17%">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: top;padding-left:15px;text-align: right;">
+                        </td>
+                        <td style="text-align:center;">
+
+                        </td>
+                        <td align="center" style="width:17%;">
+                            Kuantiti Jualan<br/> Sold Quantity
+                        </td>
+                        <td align="left" style="width:17%">
+                            Nilai Jualan Bercukai<br/>Value of Taxable Sales
+                        </td>
+                        <td align="left" style="width:17%">
+                            Nilai Cukai Kena Bayar<br/>Value of Tax Payable
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: top;padding-left:25px;">
+                            <span style="display: inline-block;">Berkadar<br/>At Rate</span>
+                            <span style="display: inline-block;border:1px solid black;width: 70%;vertical-align: top;"><b>&amp;nbsp;R.M.</b></span>
+                        </td>
+                        <td align="center" style="width:17%;vertical-align: top;">
+                            Per Liter.*<br/>
+                            Per Liter.*
+                        </td>
+                        <td align="left" style="width:17%;vertical-align: top;">
+                            <span style="display: inline-block;border:1px solid black;width:90%;"><b>&amp;nbsp;0.0</b></span>
+                        </td>
+                        <td align="left" style="width:17%;vertical-align: top;">
+                            <span style="display: inline-block;border:1px solid black;width:75%"><b>&amp;nbsp;R.M.</b></span>
+                        </td>
+                        <td align="left" style="width:17%;vertical-align: top;">
+                            <span style="display: inline-block;border:1px solid black;width:80%;"><b>&amp;nbsp;R.M.</b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: top;padding-left:25px;">
+                            <span style="display: inline-block;">Berkadar<br/>At Rate</span>
+                            <span style="display: inline-block;border:1px solid black;width: 70%;vertical-align: top;"><b>&amp;nbsp;R.M.</b></span>
+                        </td>
+                        <td align="center" style="width:17%;vertical-align: top;">
+                            Per Kilogram.*<br/>
+                            Per Kilogram.*
+                        </td>
+                        <td align="left" style="width:17%;vertical-align: top;">
+                            <span style="display: inline-block;border:1px solid black;width:90%;"><b>&amp;nbsp;0.0</b></span>
+                        </td>
+                        <td align="left" style="width:17%;vertical-align: top;">
+                            <span style="display: inline-block;border:1px solid black;width:75%"><b>&amp;nbsp;R.M.</b></span>
+                        </td>
+                        <td align="left" style="width:17%;vertical-align: top;">
+                            <span style="display: inline-block;border:1px solid black;width:80%;"><b>&amp;nbsp;R.M.</b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: top;padding-left:25px;">
+                            <span style="display: inline-block;">Berkadar<br/>At Rate</span>
+                            <span style="text-align: center;display: inline-block;border:1px solid black;width: 20%;vertical-align: top;margin-left: 60px;"><b>&amp;nbsp;0%</b></span>
+                        </td>
+                        <td align="center" style="width:17%;vertical-align: top;">
+                            ad-volerum.*<br/>
+                            ad-volerum.*
+                        </td>
+                        <td align="left" style="width:17%;vertical-align: top;">
+                        </td>
+                        <td align="left" style="width:17%;vertical-align: top;">
+                            <span style="display: inline-block;border:1px solid black;width:75%"><b>&amp;nbsp;R.M.</b></span>
+                        </td>
+                        <td align="left" style="width:17%;vertical-align: top;">
+                            <span style="display: inline-block;border:1px solid black;width:80%;"><b>&amp;nbsp;R.M.</b></span>
+                        </td>
+                    </tr>
+                </table>
+                <table width="90%" style="margin-left: 36px;margin-top: 10px;border: 1px solid;background: #97bdfc;">
+                    <tr>
+                        <td width="5%"/>
+                        <td width="90%">
+                            <p style="text-align:center;font-weight:bold;font-size:15px;margin-bottom: 0px;margin-top: 0px;">
+                                BAHAGIAN D : JUALAN / PERKHIDMATAN YANG DIKECUALIKAN CUKAI
+                                <br/>
+                                PART D : SALES / SERVICES EXEMPTED FROM TAX
+                            </p>
+                        </td>
+                        <td width="5%"/>
+                    </tr>
+                </table>
+                <table width="95%" style="margin-left: 25px;margin-top: 10px;font-size: 14px;">
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;font-size:14px">
+                            18) Jualan Barang-Barang Bercukai / Perkhidmatan Bercukai. *<br/>
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">Sales of Taxable Goods/ Taxable Services.*</p><br/>
+                        </td>
+                        <td colspan="3" align="right">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;">
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">a) Eksport / Kawasan Khas / Kawasan Ditetapkan.*
+                                <br/>
+                                Export / Special Area / Designated Area.*</p><br/>
+                        </td>
+                        <td colspan="3" align="right">
+                            <span style="border:1px solid black;display:block;width: 49%;text-align: left;"><b>&amp;nbsp;RM.</b></span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" style="vertical-align: top;padding-left:15px;">
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">b)
+                                Jualan Tempatan Kepada Orang di bawah Perintah Cukai Jualan (Orang Yang Dikecualikan Daripada Pembayaran Cukai Jualan) 2018:
+                                Local sales exempted to person under the Sales Tax (Person Exempted From Payment of Sales Tax) Order 2018:-
+                                <br/>
+                                Local sales exempted to person under the Sales Tax (Person Exempted From Payment of Sales Tax) Order 2018:-</p><br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;">
+                            <p style="margin-left:40px;margin-top:0px;margin-bottom:0px;">1) Jadual A (Kumpulan Orang).*
+                                <br/>
+                                Schedule A (Class of Person).*</p><br/>
+                        </td>
+                        <td colspan="3" align="right">
+                            <span style="border:1px solid black;display:block;width: 49%;text-align: left;"><b>&amp;nbsp;RM.</b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;">
+                            <p style="margin-left:40px;margin-top:0px;margin-bottom:0px;">2) Jadual B (Pengilang Spesifik Barang Tidak Bercukai).*
+                                <br/>
+                                Schedule B (Manufacturer of specific non taxable goods).*</p><br/>
+                        </td>
+                        <td colspan="3" align="right" style="vertical-align:top">
+                            <span style="border:1px solid black;display:block;width: 49%;text-align: left;line-height:35px; "><b>&amp;nbsp;RM.</b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;">
+                            <p style="margin-left:40px;margin-top:0px;margin-bottom:0px;">3) Jadual C (Pengilang Berdaftar).*
+                                <br/>
+                                Schedule C (Registered Manufacturer).*</p><br/>
+                        </td>
+                        <td colspan="3" align="right">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;">
+                            <p style="margin-left:50px;margin-top:0px;margin-bottom:0px;">i) Butiran 1 dan 2 (Pembelian / Pengimportan Bahan Mentah / Komponen / Bahan
+                                <br/>
+                                Pembungkusan Yang Dikecualikan Cukai Jualan).*
+                                <br/>
+                                Item 1 and 2 (Purchase / Importation of Raw Materials / Components / Packaging
+                                <br/>
+                                Materials Exempted From Sales Tax).*
+                            </p>
+                            <br/>
+                        </td>
+                        <td colspan="3" align="right">
+                            <span style="border:1px solid black;display:block;width: 49%;text-align: left;"><b>&amp;nbsp;RM.</b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;">
+                            <p style="margin-left:50px;margin-top:0px;margin-bottom:0px;">ii) Butiran 3 dan 4 (Pembelian / Pengimportan Bahan Mentah / Komponen / Bahan
+                                <br/>
+                                Pembungkusan Bagi Pihak Pengilang Berdaftar Yang Dikecualikan Cukai Jualan).*
+                                <br/>
+                                Item 3 and 4 (Purchase / Importation of Raw Materials / Components / Packaging
+                                <br/>
+                                Materials on behalf of Registered Manufacturer Exempted From Sales Tax).*<br/>
+                            </p><br/>
+                        </td>
+                        <td colspan="3" align="right" style="vertical-align:top;">
+                            <span style="border:1px solid black;display:block;width: 49%;text-align: left;line-height:35px;"><b>&amp;nbsp;RM.</b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;">
+                            <p style="margin-left:50px;margin-top:0px;margin-bottom:0px;">iii) Butiran 5 (Nilai Kerja Dilakukan Yang Dikecualikan Cukai Jualan).*
+                                <br/>
+                                Item 5 (Value of Work Performed Exempted from Sales Tax).*
+                            </p>
+                            <br/><br/>
+                        </td>
+                        <td colspan="3" align="right" style="vertical-align:top;">
+                            <span style="border:1px solid black;display:block;width: 49%;text-align: left;line-height:35px;"><b>&amp;nbsp;RM.</b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;">
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">c) Jumlah Nilai Perkhidmatan Bercukai Yang Dikecualikan
+                                <br/>
+                                Total Value of Exempted Taxable Services</p><br/>
+                        </td>
+                        <td colspan="3" align="right">
+                            <span style="border:1px solid black;display:block;width: 49%;text-align: left;"><b>&amp;nbsp;RM.<span t-esc="'{0:,.2f}'.format(o.sst_02_b2b_exemption_amt)"/></b></span>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+            <p style="page-break-before:always;"/>
+            <div style="border:1px solid black;">
+                <table width="90%" style="margin-left: 36px;margin-top: 13px;border: 1px solid;background: #97bdfc;">
+                    <tr>
+                        <td width="5%"/>
+                        <td width="90%">
+                            <p style="text-align:center;font-weight:bold;font-size:15px;margin-bottom: 0px;margin-top: 0px;">BAHAGIAN E: BELIAN DI BAWAH JADUAL C, PERINTAH CUKAI JUALAN
+                                <br/>
+                                (ORANG YANG DIKECUALIKAN DARIPADA PEMBAYARAN CUKAI JUALAN) 2018
+                                <br/>
+                                <br/>
+                                PART E : PURCHASE UNDER THE SCHEDULE C, SALES TAX
+                                <br/>
+                                (PERSON EXEMPTED FROM PAYMENT OF SALES TAX) ORDER 2018
+                            </p>
+                        </td>
+                        <td width="5%"/>
+                    </tr>
+                </table>
+                <br/>
+                <br/>
+                <table width="95%" style="margin-left: 25px;margin-top: 3px;font-size: 14px;">
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;font-size:14px">
+                            19) Butiran 1 dan 2 (Pembelian / Pengimportan Bahan Mentah / Komponen / Bahan<br/>
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">Pembungkusan Yang Dikecualikan Cukai Jualan).*
+                                <br/>Item 1 and 2 (Purchase / Importation of Raw Materials / Components / Packaging
+                                <br/>Materials Exempted From Sales Tax).*</p>
+                        </td>
+                        <td colspan="3" align="right" style="vertical-align:middle;">
+                            <span style="border:1px solid black;display:block;width: 49%;text-align: left;line-height:35px"><b>&amp;nbsp;RM.</b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;font-size:14px">
+                            20) Butiran 3 dan 4 (Pembelian / Pengimportan Bahan Mentah / Komponen / Bahan<br/>
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">
+                                Pembungkusan Bagi Pihak Pengilang Berdaftar Yang Dikecualikan Cukai Jualan).*
+                                <br/>Item 3 and 4 (Purchase / Importation of Raw Materials / Components / Packaging
+                                <br/>Materials on behalf Registered Manufacturer Exempted From Sales Tax).*</p>
+                        </td>
+                        <td colspan="3" align="right" style="vertical-align:middle;">
+                            <span style="border:1px solid black;display:block;width: 49%;text-align: left;line-height:35px"><b>&amp;nbsp;RM.</b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="55%" style="vertical-align: top;padding-left:15px;font-size:14px">
+                            21) Butiran 5 (Nilai Kerja Dilakukan Yang Dikecualikan Cukai Jualan).*<br/>
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">
+                                Item 5 (Value of Work Performed Exempted from Sales Tax).*
+                                <br/></p>
+                        </td>
+                        <td colspan="3" align="right" style="vertical-align:middle;">
+                            <span style="border:1px solid black;display:block;width: 49%;text-align: left;line-height:35px"><b>&amp;nbsp;RM.</b></span>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <br/>
+                <table width="90%" style="margin-left: 36px;margin-top: 3px;border: 1px solid;background: #97bdfc;">
+                    <tr>
+                        <td width="5%"/>
+                        <td width="90%">
+                            <p style="text-align:center;font-weight:bold;font-size:15px;margin-bottom: 0px;margin-top: 0px;">BAHAGIAN F : AKUAN
+                                <br/>
+                                PART F : DECLARATIONS
+                                <br/>
+                            </p>
+                        </td>
+                        <td width="5%"/>
+                    </tr>
+                </table>
+                <br/>
+                <br/>
+                <table width="95%" style="margin-left: 25px;margin-top: 3px;font-size: 14px;">
+                    <tr>
+                        <td width="100%" style="vertical-align: top;padding-left:15px;font-size:14px">
+                            22) Dengan ini saya sebagai pegawai yang diberi kuasa mengesahkan dan memperakui bahawa butir-butir yang dinyatakan dalam penyata ini<br/>
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">adalah benar dan lengkap.*
+                                <br/>I as an authorized officer hereby certify that the particulars stated in this return are true and complete.*</p>
+                        </td>
+                    </tr>
+
+                </table>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <table width="100%">
+                    <tr>
+                        <td width="50%" style="vertical-align:bottom;padding-left:100px;">Tarikh / Date*</td>
+                        <td width="50%" style="vertical-align:bottom;text-align:center;"/>
+                    </tr>
+                    <tr>
+                        <td width="50%" style="vertical-align:bottom;">
+                            <div>
+                                <t t-set="date" t-value="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>
+                                <t t-set="date_split" t-value="date.split('/')"/>
+                                <t t-set="date_day" t-value="date_split[0]"/>
+                                <t t-set="date_month" t-value="date_split[1]"/>
+                                <t t-set="date_year" t-value="date_split[2]"/>
+                                <t t-set="date_f" t-value="date_day[0]"/>
+                                <t t-set="date_s" t-value="date_day[1]"/>
+                                <t t-set="month_f" t-value="date_month[0]"/>
+                                <t t-set="month_s" t-value="date_month[1]"/>
+                                <t t-set="year_f" t-value="date_year[0]"/>
+                                <t t-set="year_s" t-value="date_year[1]"/>
+                                <t t-set="year_t" t-value="date_year[2]"/>
+                                <t t-set="year_fo" t-value="date_year[3]"/>
+                                <div class="date-item" style="text-align:center">
+                                    <span style="display: inline-block; width: 35px; height: 35px; border:1px solid #000;vertical-align:bottom;font-size:22px;" t-esc="date_f"/>
+                                    <span style="display: inline-block; width: 35px; height: 35px; border:1px solid #000;margin-left:-5px;vertical-align:bottom;font-size:22px;" t-esc="date_s"/>
+                                    <span style="display: inline-block;width: 20px;height: 35px;border: none;line-height: 35px;text-align: center;font-size: 30px;vertical-align: bottom">/</span>
+                                    <span style="display: inline-block; width: 35px; height: 35px; border:1px solid #000;vertical-align:bottom;font-size:22px;" t-esc="month_f"/>
+                                    <span style="display: inline-block; width: 35px; height: 35px; border:1px solid #000;margin-left:-6px;vertical-align:bottom;font-size:22px;" t-esc="month_s"/>
+                                    <span style="display: inline-block;width: 20px;height: 35px;border: none;line-height: 35px;text-align: center;font-size: 30px;vertical-align: bottom">/</span>
+                                    <span style="display: inline-block; width: 35px; height: 35px; border:1px solid #000;vertical-align:bottom;font-size:22px;" t-esc="year_f"/>
+                                    <span style="display: inline-block; width: 35px; height: 35px; border:1px solid #000;margin-left:-4px;vertical-align:bottom;font-size:22px;" t-esc="year_s"/>
+                                    <span style="display: inline-block; width: 35px; height: 35px; border:1px solid #000;margin-left:-6px;vertical-align:bottom;font-size:22px;" t-esc="year_t"/>
+                                    <span style="display: inline-block; width: 35px; height: 35px; border:1px solid #000;margin-left:-4px;vertical-align:bottom;font-size:22px;" t-esc="year_fo"/>
+                                </div>
+                            </div>
+                        </td>
+                        <td width="50%" style="vertical-align:bottom;text-align:center;">
+                            .………………………………………………………………
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="50%" style="vertical-align:bottom;">
+                            <div>
+                                <div class="date-item" style="">
+                                    <span style="display: inline-block;width: 40px;height: 35px;vertical-align:bottom;margin-left: 125px;">(hari)</span>
+                                    <span style="display: inline-block;width: 60px;height: 35px;vertical-align:bottom;margin-left: 45px;">(bulan)</span>
+                                    <span style="display: inline-block;width: 60px;height: 35px;vertical-align:bottom;margin-left: 70px;">(Tahun)</span>
+                                </div>
+                            </div>
+
+                        </td>
+                        <td width="50%" style="vertical-align:bottom;text-align:center;">
+                            <b>Tandatangan Pengikrar*</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="50%" style="vertical-align:bottom;">
+                            <div>
+                                <div class="date-item" style="">
+                                    <span style="display: inline-block;width: 40px;height: 35px;vertical-align:bottom;margin-left: 125px;">(day)</span>
+                                    <span style="display: inline-block;width: 60px;height: 35px;vertical-align:bottom;margin-left: 45px;">(month)</span>
+                                    <span style="display: inline-block;width: 60px;height: 35px;vertical-align:bottom;margin-left: 70px;">(year)</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td width="50%" style="vertical-align:bottom;text-align:center;">
+                            <b>Declarant Signature</b>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td width="50%" style="vertical-align:bottom;">
+                        </td>
+                        <td width="50%" style="vertical-align:bottom;text-align:center;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="50%" style="vertical-align:bottom;">
+                        </td>
+                        <td width="50%" style="vertical-align:bottom;text-align:center;">
+                        </td>
+                    </tr>
+
+                </table>
+                <br/>
+                <br/>
+                <br/>
+                <table width="100%">
+                    <tr>
+                        <td width="50%" style="vertical-align: top;padding-left:15px;font-size:14px">
+                            23) Nama Pengikrar.*<br/>
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">
+                                Name of Declarant.*
+                                <br/></p>
+                        </td>
+                        <td width="50%" align="left" style="vertical-align:middle;">
+                            <span style="border:1px solid black;display:block;text-align: left;line-height:30px;height: 26px;width: 90%;padding-left:5px" t-esc="o.env.user.partner_id.name" t-if="o.env.user.partner_id.name"/>
+                            <span t-else="" style="border:1px solid black;display:block;text-align: left;line-height:30px;height: 26px;width: 90%;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="50%" style="vertical-align: top;padding-left:15px;font-size:14px">
+                            24) No. Kad Pengenalan / Passport.*<br/>
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">
+                                Identity Card / Passport No.*
+                                <br/></p>
+                        </td>
+                        <td width="50%" align="left" style="vertical-align:middle;">
+                            <span t-if="o.env.user.partner_id.vat" style="padding-left:5px;border:1px solid black;display:block;text-align: left;line-height:30px;height: 26px;width: 90%;" t-esc="o.env.user.partner_id.vat"/>
+                            <span t-else="" style="border:1px solid black;display:block;text-align: left;line-height:30px;height: 26px;width: 90%;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="50%" style="vertical-align: top;padding-left:15px;font-size:14px">
+                            25) Jawatan Pengikrar.*<br/>
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">
+                                Designation of Declarant.*
+                                <br/></p>
+                        </td>
+                        <td width="50%" align="left" style="vertical-align:middle;">
+                            <span style="padding-left:5px;border:1px solid black;display:block;text-align: left;line-height:30px;height: 26px;width: 90%;" t-esc="o.env.user.partner_id.function" t-if="o.env.user.partner_id.function"/>
+                            <span style="border:1px solid black;display:block;text-align: left;line-height:30px;height: 26px;width: 90%;" t-else=""/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="50%" style="vertical-align: top;padding-left:15px;font-size:14px">
+                            26) No. Telefon.*<br/>
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">
+                                Telephone No.*
+                                <br/></p>
+                        </td>
+                        <td width="50%" align="left" style="vertical-align:middle;">
+                            <span style="padding-left:5px;border:1px solid black;display:block;text-align: left;line-height:30px;height: 26px;width: 90%;" t-esc="o.env.user.partner_id.phone" t-if="o.env.user.partner_id.phone"/>
+                            <span style="border:1px solid black;display:block;text-align: left;line-height:30px;height: 26px;width: 90%;" t-else="o.env.user.partner_id.phone"/>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+            </div>
+            <p style="page-break-before:always;"/>
+            <div style="border:1px solid black;">
+                <table width="90%" style="margin-left: 36px;margin-top: 13px;border: 1px solid;background: #97bdfc;">
+                    <tr>
+                        <td width="5%"/>
+                        <td width="90%">
+                            <p style="text-align:center;font-weight:bold;font-size:15px;margin-bottom: 0px;margin-top: 0px;">BAHAGIAN G : UNTUK KEGUNAAN PEJABAT
+                                <br/>
+                                PART G : FOR OFFICIAL USE
+                                <br/>
+                                <br/>
+                            </p>
+                        </td>
+                        <td width="5%"/>
+                    </tr>
+                </table>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <table width="95%" style="margin-left: 25px;margin-top: 3px;font-size: 14px;">
+                    <tr>
+                        <td width="50%" style="vertical-align: top;padding-left:15px;font-size:14px">
+                            <p style="margin-left:120px;margin-top:0px;margin-bottom:0px;"><span t-esc="date"/></p>
+                        </td>
+                        <td width="50%" align="center" style="vertical-align:middle;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="50%" style="vertical-align: top;padding-left:15px;font-size:14px">
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">27(a)    ………………..……………………….…….</p>
+                        </td>
+                        <td width="50%" align="center" style="vertical-align:middle;">
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">27(b)  ………………..……………………….…….</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="50%" style="vertical-align: top;padding-left:65px;font-size:14px">
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">Tarikh Penyata Diterima</p>
+                        </td>
+                        <td width="50%" align="center" style="vertical-align:middle;">
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">Tarikh Cop Pos</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="50%" style="vertical-align: top;padding-left:65px;font-size:14px">
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">Date Return Received</p>
+                        </td>
+                        <td width="50%" align="center" style="vertical-align:middle;">
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">Post Marked Date</p>
+                        </td>
+                    </tr>
+                </table>
+                <table width="100%" style="margin-top:140px;">
+                    <tr>
+                        <td colspan="2" style="vertical-align: top;padding-left:15px;font-size:14px;text-align:center;">
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">27(c) ………………..……………………….…….</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="vertical-align: top;padding-left:15px;font-size:14px;text-align:center;">
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">Pegawai Penerima</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="vertical-align: top;padding-left:15px;font-size:14px;text-align:center;">
+                            <p style="margin-left:25px;margin-top:0px;margin-bottom:0px;">Received Offcer</p>
+                        </td>
+                    </tr>
+
+                </table>
+                <br/>
+                <br/>
+
+            </div>
+        </div>
+    </template>
+</odoo>

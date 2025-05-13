@@ -1,0 +1,9 @@
+12.0.1.3
+-- stock valuation calculation improved
+
+12.0.1.4
+-- Fixed error on _do_unreserve method 
+
+
+12.0.1.5
+-- called cancel method in base method of action cancel

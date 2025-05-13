@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="attendance_report_view_form" model="ir.ui.view">
+        <field name="name">attendance.report.form</field>
+        <field name="model">attendance.report</field>
+        <field name="arch" type="xml">
+            <form string="Attendance Sheet Report">
+                <field name="attendance_sheet"/>
+                <footer>
+                    <button name="create_report" string="Generate Report" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_attendance_sheets_report" model="ir.actions.act_window">
+        <field name="name">Attendance Sheet Report</field>
+        <field name="res_model">attendance.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="goexcel_attendance.attendance_report_view_form" />
+        <field name="target">new</field>
+    </record>
+
+<!--    <menuitem id="hr_attendance_sheets_report"-->
+<!--              name="Attendance Sheet Report"-->
+<!--              parent="hr_attendance.menu_hr_attendance_manage_attendances"-->
+<!--              action="action_attendance_sheets_report" sequence="10"/>-->
+</odoo>

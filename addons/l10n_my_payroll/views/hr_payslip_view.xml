@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--        #####################################################
+                                    HR Payslips
+                #####################################################    -->
+
+
+
+    <record id="view_hr_payslip_date_tree" model="ir.ui.view">
+        <field name="name">hr.payslip</field>
+        <field name="model">hr.payslip</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_from']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='date_to']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="date_from"/>
+                <field name="date_to"/>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="gross_salary"/>
+                <field name="net_salary"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="ppm_payroll_form_view">
+        <field name="name">ppm.payroll.extended.form</field>
+        <field name="model">hr.payslip</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='compute_sheet']" position="attributes">
+                <attribute name="id">preview_report_view</attribute>
+            </xpath>
+            <xpath expr="//button[@name='compute_sheet']" position="after">
+                <button id="preview_report_view" name="view_pdf_right" string="Preview" type="object" class="oe_highlight"/>
+            </xpath>
+
+
+            <xpath expr="//button[@name='action_payslip_done']" position="attributes">
+                <attribute name="groups">hr.group_hr_manager</attribute>
+            </xpath>
+            <xpath expr="//field[@name='number']" position="after">
+                <field name="date_from_month" invisible="1"/>
+                <field name="date_from_year" invisible="1"/>
+            </xpath>
+            <xpath expr="//button[@name='refund_sheet']" position="attributes">
+                <attribute name="groups">hr.group_hr_manager</attribute>
+                <attribute name="attrs">{'invisible':['|',('credit_note','=',True),'|',('refund','=',True)]}</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_payslip_draft']" position="attributes">
+                <attribute name="groups">hr.group_hr_manager</attribute>
+                <attribute name="states">cancel,done</attribute>
+            </xpath>
+            <xpath expr="//button[@name='compute_sheet']" position="attributes">
+                <attribute name="groups">hr.group_hr_manager</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_payslip_cancel']" position="attributes">
+                <attribute name="groups">hr.group_hr_manager</attribute>
+            </xpath>
+            <xpath expr="//field[@name='credit_note']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='paid']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <button name="action_payslip_cancel" position="before">
+                <button name="send_payslip_mail" string="Send Payslip" type="object" class="oe_highlight" groups="hr.group_hr_manager"/>
+                <button name="send_quick_payslip_mail" string=" Quick Send Payslip" type="object" class="oe_highlight" groups="hr.group_hr_manager"/>
+
+            </button>
+            <field name="struct_id" position="after">
+                <field name="active"/>
+                <!--<field name="pay_by_cheque" attrs="{'readonly':[('state','=','done')]}"/>-->
+                <!--<field name="cheque_number" attrs="{'invisible':[('pay_by_cheque', '=', False)], 'required':[('pay_by_cheque', '=', True)], 'readonly':[('state','=','done')]}"/>-->
+                <field name="total_ytd_gross"/>
+                <field name="total_ytd_epf_employee"/>
+                <field name="total_ytd_pcb"/>
+                <field name="total_ytd_zakat"/>
+                <field name="gross_salary" readonly="1"/>
+                <field name="total_ytd_pcb_ded"/>
+                <field name="net_salary" readonly="1"/>
+                <field name="remaining_month" invisible="0" />
+                <field name="sheet_id" widget="many2many_tags" string="Reimbursement Expense" invisible="0"/>
+                <field name="expense_amount" invisible="1"/>
+                <field name="total_ytd_medical" invisible="1"/>
+                <field name="total_ytd_supp_eqp" invisible="1"/>
+                <field name="total_ytd_supp_eqp" invisible="1"/>
+                <field name="total_ytd_medical_exam" invisible="1"/>
+                <field name="total_ytd_purchase_book" invisible="1"/>
+                <field name="total_ytd_pur_per_comp" invisible="1"/>
+                <field name="total_ytd_SSPN" invisible="1"/>
+                <field name="total_ytd_sport_equp" invisible="1"/>
+                <field name="total_ytd_former_wife" invisible="1"/>
+                <field name="total_ytd_edmd_ins" invisible="1"/>
+                <field name="total_ytd_annuity_premium" invisible="1"/>
+                <field name="total_ytd_int_house_loan" invisible="1"/>
+                <field name="refund" readonly="1" invisible="1"/>
+            </field>
+            <xpath expr="//page[3]" position="replace"/>
+            <xpath expr="//page[2]//tree/field[@name='sequence']" position="replace"/>
+            <xpath expr="//page[2]//tree/field[@name='name']" position="before">
+                <field name="sequence"/>
+            </xpath>
+            <xpath expr="//page[2]//tree/field[@name='quantity']" position="replace"/>
+            <xpath expr="//page[2]//tree/field[@name='rate']" position="replace"/>
+            <xpath expr="//page[2]//tree/field[@name='code']" position="replace">
+                <field name="code" string="SALARYCODE" />
+            </xpath>
+            <xpath expr="//page[2]//tree/field[@name='amount']" position="replace"/>
+            <xpath expr="//page[1]//tree/field[@name='sequence']" position="replace"/>
+            <xpath expr="//page[1]//tree/field[@name='code']" position="replace"/>
+            <xpath expr="//page[1]//tree/field[@name='name']" position="before">
+                <field name="code"/>
+            </xpath>
+            <xpath expr="//page[1]//tree/field[@name='contract_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//page[1]//tree/field[@name='sequence']" position="replace"/>
+            <xpath expr="//form/sheet/group/field[@name='number']" position="attributes">
+                <attribute name="readonly">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='payslip_count']" position="attributes">
+                <attribute name="string">Rules</attribute>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="leave_type"/>
+                <field name="leave_days" attrs="{'invisible':['|',('leave_type','=','unpaid'),('leave_type','=',False)],'readonly':[('leave_type','=','paid')]}"/>
+                <field name="unpaid_leave" domain="[('employee_id','=',employee_id),('payslip_status','=',False),('holiday_status_id.name','=','Unpaid')]"
+                       attrs="{'invisible':['|',('leave_type','=','paid'),('leave_type','=',False)]}" options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
+                <field name="other_allowance_sum" invisible="1"/>
+                <field name="non_taxable_allowance_sum" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="hr_payslip_extended_search_view">
+        <field name="name">hr.payslip.extended.search</field>
+        <field name="model">hr.payslip</field>
+        <field name="type">search</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_filter" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="date_to"/>
+                <field name="date_from"/>
+            </xpath>
+            <xpath expr="//filter[@name='draft']" position="before">
+                <filter string="This Year" name="thisyear" domain="[('date_from','&gt;=',time.strftime('%%Y-01-01')), ('date_from','&lt;=',time.strftime('%%Y-12-31'))]"/>
+                <filter string="Date From" name="date_from " date="date_from"/>
+                <filter name="date_from" string="Date From" icon="terp-partner" context="{'group_by':'date_from'}"/>
+            </xpath>
+            <!-- <xpath expr="//group" position="inside">
+                <filter string="Date From" name="datefrom" domain="[]" context="{'group_by':'date_from'}"/>
+            </xpath> -->
+            <xpath expr="//filter[@name='draft']" position="before">
+                <filter name="pay_filter" string="Pay" domain="[('active','=',False)]" help="Inactive Slip"/>
+            </xpath>
+            <xpath expr="//filter[@name='payslip_run_id']" position="before">
+                <filter name="active_filter" domain="[('active','=',True)]" string="Active" />
+                <filter name="inactive_filter" string="Inactive" domain="[('active','=',False)]" help="Inactive Employee"/>
+                <separator orientation="vertical"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_payroll.action_view_hr_payslip_form" model="ir.actions.act_window">
+        <field name="name">Employee Payslips</field>
+        <field name="res_model">hr.payslip</field>
+        <field name="view_type">form</field>
+        <field name="context">{'search_default_thisyear': True, 'default_active': True}</field>
+        <field name="view_id" ref="hr_payroll.view_hr_payslip_tree"/>
+        <field name="search_view_id" ref="hr_payroll.view_hr_payslip_filter"/>
+    </record>
+
+    <!--    ###########################################################
+                                Hr Payslip Line
+            ###########################################################-->
+
+    <record id="view_hr_payslip_line_tree_extended" model="ir.ui.view">
+        <field name="name">view.hr.payslip.line.tree.extended</field>
+        <field name="model">hr.payslip.line</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_line_tree" />
+        <field name="arch" type="xml">
+            <field name="total" position="after">
+                <field name="done_state" invisible="1"/>
+            </field>
+            <field name="category_id" position="attributes">
+                <attribute name="attrs">{'readonly':[('done_state','=',True)]}</attribute>
+            </field>
+            <field name="sequence" position="attributes">
+                <attribute name="attrs">{'readonly':[('done_state','=',True)]}</attribute>
+            </field>
+            <field name="name" position="attributes">
+                <attribute name="attrs">{'readonly':[('done_state','=',True)]}</attribute>
+            </field>
+            <field name="code" position="attributes">
+                <attribute name="attrs">{'readonly':[('done_state','=',True)]}</attribute>
+            </field>
+            <field name="quantity" position="attributes">
+                <attribute name="attrs">{'readonly':[('done_state','=',True)]}</attribute>
+            </field>
+            <field name="rate" position="attributes">
+                <attribute name="attrs">{'readonly':[('done_state','=',True)]}</attribute>
+            </field>
+            <field name="amount" position="attributes">
+                <attribute name="attrs">{'readonly':[('done_state','=',True)]}</attribute>
+            </field>
+            <field name="employee_id" position="replace"></field>
+        </field>
+    </record>
+
+    <record id="view_hr_payslip_line_form_extended" model="ir.ui.view">
+        <field name="name">view.hr.payslip.line.form.extended</field>
+        <field name="model">hr.payslip.line</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_line_form"/>
+        <field name="arch" type="xml">
+            <field name="employee_id" position="replace"></field>
+        </field>
+    </record>
+
+    <!--    ###########################################################
+                                 Salary Rules
+            ###########################################################        -->
+    <record model="ir.ui.view" id="hr_salary_rule_form_view_payroll">
+        <field name="name">hr.salary.rule.form.view.payroll</field>
+        <field name="model">hr.salary.rule</field>
+        <field name="inherit_id" ref="hr_payroll.hr_salary_rule_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='condition_select']" position="attributes">
+                <attribute name="colspan">4</attribute>
+            </xpath>
+            <xpath expr="//field[@name='condition_range']" position="attributes">
+                <attribute name="colspan">4</attribute>
+            </xpath>
+            <xpath expr="//field[@name='condition_range_min']" position="attributes">
+                <attribute name="colspan">4</attribute>
+            </xpath>
+            <xpath expr="//field[@name='condition_range_max']" position="attributes">
+                <attribute name="colspan">4</attribute>
+            </xpath>
+            <xpath expr="//field[@name='amount_select']" position="attributes">
+                <attribute name="colspan">4</attribute>
+            </xpath>
+            <xpath expr="//field[@name='amount_percentage_base']" position="attributes">
+                <attribute name="colspan">4</attribute>
+            </xpath>
+            <xpath expr="//field[@name='quantity']" position="attributes">
+                <attribute name="colspan">4</attribute>
+            </xpath>
+            <xpath expr="//field[@name='amount_fix']" position="attributes">
+                <attribute name="colspan">4</attribute>
+            </xpath>
+            <xpath expr="//field[@name='amount_percentage']" position="attributes">
+                <attribute name="colspan">4</attribute>
+            </xpath>
+            <xpath expr="//field[@name='register_id']" position="attributes">
+                <attribute name="colspan">4</attribute>
+            </xpath>
+            <field name="appears_on_payslip" position="replace">
+                <field name="appears_on_payslip" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_sequence_tree" model="ir.ui.view">
+        <field name="name">hr.salary.rule.sequence.tree</field>
+        <field name="model">hr.salary.rule</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="hr_payroll.hr_salary_rule_list" />
+        <field name="arch" type="xml">
+            <field name="sequence" position="replace"></field>
+            <field name="name" position="before">
+                <field name="id" readonly="1"/>
+                <field name="sequence"/>
+            </field>
+        </field>
+    </record>
+
+
+    <!--        #####################################################
+                                    PCB Salary Rule
+                #####################################################    -->
+
+    <record id="view_pcb_salary_rule_form" model="ir.ui.view">
+        <field name="name">view.pcb.salary.rule.form</field>
+        <field name="model">pcb.salary.rule</field>
+        <field name="arch" type="xml">
+            <form string="PCB Salary Rule" >
+                <sheet>
+                    <separator colspan="4" string="PCB Salary Rule"/>
+                    <group col="6" colspan="4">
+                        <field name="p_from" />
+                        <field name="to" />
+                        <field name="k" />
+                        <field name="ka1" />
+                        <field name="ka2" />
+                        <field name="ka3" />
+                        <field name="ka4" />
+                        <field name="ka5" />
+                        <field name="ka6" />
+                        <field name="ka7" />
+                        <field name="ka8" />
+                        <field name="ka9" />
+                        <field name="ka10" />
+                        <field name="ka11" />
+                        <field name="ka12" />
+                        <field name="ka13" />
+                        <field name="ka14" />
+                        <field name="ka15" />
+                        <field name="ka16" />
+                        <field name="ka17" />
+                        <field name="ka18" />
+                        <field name="ka19" />
+                        <field name="ka20" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_pcb_salary_rule_tree" model="ir.ui.view">
+        <field name="name">view.pcb.salary.rule.tree</field>
+        <field name="model">pcb.salary.rule</field>
+        <field name="arch" type="xml">
+            <tree string="PCB Salary Rule">
+                <field name="p_from" />
+                <field name="to" />
+                <field name="k" />
+                <field name="ka1" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_pcb_salary_rule" model="ir.actions.act_window">
+        <field name="name">PCB Salary Rule</field>
+        <field name="res_model">pcb.salary.rule</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--        #####################################################
+                                Other Inherited Views
+                #####################################################    -->
+
+    <!--  Form view :Payroll Structure -->
+    <record id="hr_salary_rule_category_admin_form" model="ir.ui.view">
+        <field name="name">hr.payroll.structure.form</field>
+        <field name="model">hr.payroll.structure</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_employee_grade_form" />
+        <field name="arch" type="xml">
+            <field name="rule_ids" position="replace">
+                <field colspan="4" name="rule_ids" nolabel="1" domain="[('parent_rule_id','=',False)]" >
+                    <tree string="Salary Rule">
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="category_id"/>
+                        <field name="sequence" invisible="1"/>
+                        <field name="register_id"/>
+                    </tree>
+                </field>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_payslip_run_form" model="ir.ui.view">
+        <field name="name">hr.payslip.run.form</field>
+        <field name="model">hr.payslip.run</field>
+        <field name="inherit_id" ref="hr_payroll.hr_payslip_run_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <button name="%(hr_payroll.action_hr_payslip_by_employees)d" position="replace">
+                <button name="open_payslip_employee" type="object" states="draft" string="Generate Payslips" />
+            </button>
+            <xpath expr="//field[@name='slip_ids']" position="attributes">
+                <attribute name="readonly" >True</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_payslip_by_employees_view_inherited" model="ir.ui.view">
+        <field name="name">hr_payroll_payslip_employees</field>
+        <field name="model">hr.payslip.employees</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_by_employees"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_ids']" position="replace">
+                <field name="date_start" invisible="1"/>
+                <field name="date_end" invisible="1"/>
+                <field name="employee_ids" colspan="4" nolabel="1" context="{'batch_start_date': date_start, 'batch_end_date': date_end}">
+                    <tree string="Employees" editable="bottom">
+                        <field name="name" string="Employee"/>
+                    </tree>
+                </field>
+                <footer>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_expense_sheet_view_inherited" model="ir.ui.view">
+        <field name="name">_hr_expense_sheet_view</field>
+        <field name="model">hr.expense.sheet</field>
+        <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/group" position="after">
+                <group>
+                    <label for="month" string="Month/Year"/>
+                    <div>
+                        <field name="month" class="oe_inline"/> -
+                        <field name="year" class="oe_inline oe_no_button" />
+                    </div>
+                    <field name="payslip_ids" invisible="1"/>
+                </group>
+            </xpath>
+            <xpath expr="//div[@class='oe_button_box']" position="inside">
+                <button name="view_payslip" class="oe_stat_button" icon="fa-money" type="object" attrs="{'invisible':[('payslip_ids', '=', [])]}">
+                    <span>Payslip</span>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='expense_line_ids'] //tree/field[@name='name']" position="after">
+                <field name="product_id"/>
+                <field name="account_id"/>
+            </xpath>
+            <xpath expr="//field[@name='expense_line_ids'] //tree" position="attributes">
+                <attribute name="default_order">date</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_expense_sheet_tree_view_inherited" model="ir.ui.view">
+        <field name="name">_hr_expense_sheet_tree_view</field>
+        <field name="model">hr.expense.sheet</field>
+        <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_tree"/>
+        <field name="arch" type="xml">
+            <!--            <xpath expr="/tree/field[@name='employee_id']" position="replace">-->
+            <!--                &lt;!&ndash;                <attribute name="invisible">0</attribute>&ndash;&gt;-->
+            <!--            </xpath>-->
+            <xpath expr="/tree/field[@name='name']" position="before">
+                <field name="month"/>
+                <field name="year"/>
+                <!--                <field name="employee_id"/>-->
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_expense_view_form_inherit_type_expense" model="ir.ui.view">
+        <field name="name">hr.expense.inherit</field>
+        <field name="model">hr.expense</field>
+        <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="type_of_expense"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_product_view_form_inherit_type_expense" model="ir.ui.view">
+        <field name="name">product.product.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="hr_expense.product_product_expense_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='taxes_id']" position="after">
+                <field name="type_of_expense"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_view_form_inherit_type_expense" model="ir.ui.view">
+        <field name="name">product.template.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="account.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='property_account_expense_id']" position="after">
+                <field name="type_of_expense"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

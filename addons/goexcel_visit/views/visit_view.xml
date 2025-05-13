@@ -1,0 +1,377 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="sequence_visit" model="ir.sequence">
+        <field name="name">visit</field>
+        <field name="code">visit</field>
+        <field name="active">TRUE</field>
+        <field name="prefix">CV-%(y)s%(month)s-</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <!-- Kanban View Of Visit -->
+    <record id="view_kanban_visit" model="ir.ui.view">
+        <field name="name">Visit KANBAN</field>
+        <field name="model">visit</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" default_group_by="visit_status" quick_create="false">
+                <field name="customer_name"/>
+                <field name="visit_status"/>
+                <field name="color"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card {{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}} oe_kanban_global_click_edit oe_semantic_html_override">
+
+                            <div class="o_dropdown_kanban dropdown">
+                                <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown" data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                    <span class="fa fa-ellipsis-v"/>
+                                </a>
+                                <div class="dropdown-menu" role="menu">
+                                    <t t-if="widget.editable"><a role="menuitem" type="edit" class="dropdown-item">Edit</a></t>
+                                    <t t-if="widget.deletable"><a role="menuitem" type="delete" class="dropdown-item">Delete</a></t>
+                                    <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                </div>
+                            </div>
+                            <div class="oe_kanban_box_header oe_kanban_color_bgdark oe_kanban_color_border oe_kanban_draghandle">
+                                <table class="oe_kanban_table">
+                                    <tr>
+                                        <td align="left" class="oe_kanban_title1" style="padding-left:10px;" valign="middle">
+                                            <h4>
+                                                <a type="open">
+                                                    <field name="visit_id"/>
+                                                    /
+
+                                                    <field name="customer_name"/>
+                                                    :
+
+                                                    <field name="visit_purpose"/>
+                                                </a>
+                                            </h4>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <br/>
+                            </div>
+                            <div class="oe_kanban_box_content oe_kanban_color_bglight oe_kanban_box_show_onclick_trigger oe_kanban_color_border">
+                                <table class="oe_kanban_table">
+                                    <tr width="300">
+                                        <td align="left" style="padding-left:10px;" valign="top">
+                                            <table>
+                                                <tr>
+                                                    <td>Contact :</td>
+                                                    <td style="padding-left:10px;">
+                                                        <b>
+                                                            <field name="contact"/>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Planned Start Date Time : </td>
+                                                    <td style="padding-left:10px;">
+                                                        <b>
+                                                            <field name="visit_planned_start_date_time"/>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Planned End Date Time : </td>
+                                                    <td style="padding-left:10px;">
+                                                        <b>
+                                                            <field name="visit_planned_end_date_time"/>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Checked-In Date Time : </td>
+                                                    <td style="padding-left:10px;">
+                                                        <b>
+                                                            <field name="check_in_date_time"/>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_right" style="margin-left:7px;">
+                                    <field name="priority" widget="priority"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <!-- Tree View Visit -->
+    <record id="view_tree_visit" model="ir.ui.view">
+        <field name="name">Visit</field>
+        <field name="model">visit</field>
+        <field name="arch" type="xml">
+            <tree string="Visit">
+                <field name="sequence" widget="handle"/>
+                <field name="visit_id"/>
+                <field name="customer_name"/>
+                <field name="contact"/>
+                <field name="visit_purpose"/>
+                <field name="visit_status"/>
+                <field name="visit_planned_start_date_time"/>
+                <field name="visit_planned_end_date_time"/>
+                <field name="check_in_date_time"/>
+                <field name="check_out_date_time"/>
+                <field name="remark"/>
+            </tree>
+        </field>
+    </record>
+    <!-- Form View Visit -->
+    <record id="view_form_visit" model="ir.ui.view">
+        <field name="name">Visit Form</field>
+        <field name="model">visit</field>
+        <field name="arch" type="xml">
+            <form string="Visit">
+                <header attrs="{'invisible': [('visit_id', '=', False),('visit_reference', '!=', False)]}">
+                    <button attrs="{'invisible': [('visit_id', '=', False)]}" class="oe_highlight" name="action_next_visit" string="Next Visit" type="object"/>
+                    <button attrs="{'invisible': [('visit_status', 'in', ['02','03'])]}" class="oe_highlight" context="{'visit_id': active_id}" id="get_location_check_in" name="action_check_in" string="Check In" type="object"/>
+                    <button attrs="{'invisible': [('visit_status', 'in', ['01','03'])]}" class="oe_highlight" context="{'visit_id': active_id}" id="get_location_check_out" name="action_check_out" string="Check Out" type="object"/>
+                    <button attrs="{'invisible': [('visit_status', '=', '01')]}" name="action_reset_status" string="Reset to Open" type="object"/>
+                    <button id="get_location" name="open_customer_map" string="Customer Map" type="object"/>
+                    <!--
+                                        <button name="action_prospect_creation" type="object" string="Prospect Creation"/>
+                    -->
+                    <button id="save_customer_location" context="{'visit_id': active_id}" name="open_save_customer_location" string="Save Customer Location" type="object"/>
+                    <button attrs="{'invisible': [('visit_status', 'in', ['01'])]}" name="open_check_in_location" string="Check In Location" type="object"/>
+                    <button attrs="{'invisible': [('visit_status', 'in', ['01','02'])]}" name="open_check_out_location" string="Check Out Location" type="object"/>
+                    <button id="create_sale_order" name="action_create_new_sale_order" string="Create Sale Order" type="object"/>
+                    <button id="create_opportunity" name="action_create_new_opportunity" string="Create Opportunity" type="object"/>
+                    <field clickable="False" name="visit_status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button attrs="{'invisible': [('next_visit_count', '=', 0)]}" class="oe_stat_button" icon="fa-plane" name="view_next_visit" type="object">
+                            <field name="next_visit_count" string="Next Visit" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group string="">
+                        <group string="">
+                            <field name="is_readonly" invisible="1" />
+                            <field name="remark" attrs="{'readonly': [('is_readonly', '=', True)]}"/>
+                            <!-- attrs="{'readonly': ['|', '&amp;', ('visit_id', '=', False),('visit_reference', '!=', False),'|' ,('is_readonly', '=', True)]}" -->
+                            <field name="customer_name"  context="{'search_default_customer':1, 'show_address': 1, 'show_email': 1}" options="{'no_create': True, 'no_create_edit':True}"/>
+                            <!-- attrs="{'readonly': ['|','&amp;',('visit_id', '=', False),('visit_reference', '!=', False), '|', ('is_readonly', '=', True)]}"  -->
+                            <field name="contact" domain="[('parent_id', '=', customer_name)]" options="{&quot;always_reload&quot;: True}"/>
+                            <field name="gap_day" invisible="1"/>
+                            <field name="partner_visit_frequency" invisible="1"/>
+                            <field name="last_visit_date" invisible="1"/>
+                            <field name="visit_purpose" options="{'horizontal': true}" widget="radio"/>
+                            <field name="opportunity_id" readonly="1" attrs="{'invisible': [('opportunity_id', '=', False)]}"/>
+                            <field name="visit_planned_start_date_time" attrs="{'readonly': [('is_readonly', '=', True)]}"/>
+                            <field name="visit_planned_end_date_time" attrs="{'readonly': [('is_readonly', '=', True)]}"/>
+                            <field name="visit_id"/>
+                            <field name="check_in_gps_location" attrs="{'readonly': [('is_readonly', '=', True)]}"/>
+                            <field name="check_out_gps_location" attrs="{'readonly': [('is_readonly', '=', True)]}"/>
+                            <!--                            <field name="outstanding_invoices_amount" readonly="1"/>-->
+                        </group>
+                        <group string="">
+                            <field name="last_visit_remark" attrs="{'readonly': [('is_readonly', '=', True)]}"/>
+                            <field name="last_visit_purpose" attrs="{'readonly': [('is_readonly', '=', True)]}"/>
+                            <field name="sales_person" attrs="{'readonly': [('is_readonly', '=', True)]}"/>
+                            <field name="check_in_date_time" attrs="{'readonly': [('is_readonly', '=', True)]}"/>
+                            <field name="check_out_date_time" attrs="{'readonly': [('is_readonly', '=', True)]}"/>
+                            <field name="visit_duration_char" attrs="{'readonly': [('is_readonly', '=', True)]}"/>
+                            <field name="priority" widget="priority"/>
+                            <field name="visit_outcome" attrs="{'readonly': [('is_readonly', '=', True)]}"/>
+                            <field name="opportunity_id" attrs="{'readonly': [('is_readonly', '=', True)]}"/>
+                            <field name="last_opportunity_stage_id" attrs="{'readonly': [('is_readonly', '=', True)]}"/>
+                            <field attrs="{'invisible': 1, 'readonly': [('is_readonly', '=', True)]}" name="destination"/>
+                            <field attrs="{'invisible': 1, 'readonly': [('is_readonly', '=', True)]}" name="partner_latitude"/>
+                            <field attrs="{'invisible': 1, 'readonly': [('is_readonly', '=', True)]}" name="partner_longitude"/>
+                            <field attrs="{'invisible': 1, 'readonly': [('is_readonly', '=', True)]}" name="visit_reference"/>
+
+                            <field name="visit_spanco_id" attrs="{'readonly': [('is_readonly', '=', True)]}" invisible="1"/>
+                            <field name="manager_review" groups="sales_team.group_sale_salesman_all_leads"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Info">
+                            <group>
+                                <field name="create_date"/>
+                                <field name="create_uid"/>
+                                <field name="write_date"/>
+                                <field name="write_uid"/>
+                            </group>
+                        </page>
+                        <page name="spanco" string="Visit Objectives">
+                            <field mode="tree" name="visit_spanco_ids">
+                                <tree editable="bottom">
+                                    <field name="visit_spanco_purpose_id" />
+                                    <field name="visit_spanco_value_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page attrs="{'invisible': [('manager_review', '=', False)]}" name="manager_review" string="Manager Review">
+                            <group>
+                                <field name="remark_customer" placeholder="Remark For Customer"/>
+                                <field name="remark_salesman" placeholder="Remark For Salesperson"/>
+                                <field name="improvement_customer" placeholder="Improvement For Customer"/>
+                                <field name="improvement_salesperson" placeholder="Improvement For SalesPerson"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" options="{'post_refresh': 'recipients'}" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <!-- Search View Visit -->
+    <record id="view_search_visit" model="ir.ui.view">
+        <field name="name">Visit Filter</field>
+        <field name="model">visit</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="customer_name"/>
+                <field name="contact"/>
+                <filter date="visit_planned_start_date_time" name="visit_planned_start_date_time" string="Planned Start Date"/>
+                <filter domain="[('visit_planned_start_date_time', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('visit_planned_start_date_time', '&lt;=',datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]" name="visit_date_today" string="Planned Date Today"/>
+                <!--                <filter domain="['|', ('', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('visit_planned_start_date_time', '&lt;=',datetime.datetime.now().strftime('%Y-%m-%d 23:23:59')),-->
+                <!--                    ('check_in_date_time', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('check_in_date_time', '&lt;=',datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]" name="visit_date_today" string="Visit Date Today"/>-->
+                <filter domain="[('check_in_date_time', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('check_in_date_time', '&lt;=',datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]" name="actual_visit_date_today" string="Check In Visit Today"/>
+                <filter domain="[('visit_status', 'in', ['01', '02'])]" name="not_done_visvisit_planned_start_date_timeit" string="Not Done Visit"/>
+                <filter date="check_in_date_time" name="check_in_date_time" string="Check In Date"/>
+                <filter domain="[('visit_status', '=', '01')]" name="open_visit" string="Open Visit"/>
+                <filter domain="[('visit_status', '=', '02')]" name="in_process_visit" string="In Process Visit"/>
+                <filter domain="[('visit_status', '=', '03')]" name="done_visit" string="Done Visit"/>
+                <group expand="0" string="Group By">
+                    <filter context="{'group_by':'sales_person'}" domain="[]" name="sales_person_groupby" string="Salesperson"/>
+                    <filter context="{'group_by':'visit_planned_start_date_time:week'}" name="planned_visit_date_time_grp" string="Visit Planned Date"/>
+                    <filter context="{'group_by':'check_in_date_time:week'}" name="check_in_date_time_grp" string="Visit Check In Date"/>
+                    <filter context="{'group_by':'visit_status'}" domain="[]" name="visit_status_grp" string="Visit Status" />
+                    <!--<filter context="{'group_by':'status'}" name="visit_status_grp" string="Visit Status"/>-->
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_calendar_visit" model="ir.ui.view">
+        <field name="name">Visit Calendar View</field>
+        <field name="model">visit</field>
+        <field name="arch" type="xml">
+            <calendar color="visit_id" quick_add="False" date_start="visit_planned_start_date_time" date_stop="visit_planned_end_date_time" event_open_popup="%(goexcel_visit.view_form_visit)s" date_delay="visit_duration" mode="week" string="Visit">
+                <field name="customer_name"/>
+                <field name="contact"/>
+                <field name="visit_id"/>
+                <field name="visit_planned_start_date_time"/>
+                <field name="visit_planned_end_date_time"/>
+                <field name="visit_duration"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_pivot_visit" model="ir.ui.view">
+        <field name="name">Visit Pivot View</field>
+        <field name="model">visit</field>
+        <field name="arch" type="xml">
+            <pivot string="Visit Analysis">
+                <field name="sales_person" type="row"/>
+                <field interval="month" name="visit_planned_start_date_time" type="col"/>
+                <field name="visit_duration" type="measure"/>
+                <field name="visit_count" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+
+    <!--  <act_window id="action_visit" name="Visit" res_model="visit" view_mode="kanban,tree,form,calendar,pivot" />-->
+    <record id="action_visit" model="ir.actions.act_window">
+        <field name="name">Visit</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">visit</field>
+        <field name="view_mode">kanban,tree,form,calendar,pivot</field>
+        <field name="context">{'search_default_visit_date_today':1, 'search_default_actual_visit_date_today':1}</field>
+        <!-- <field name="domain">[('sales_person','=',uid)]</field> -->
+    </record>
+
+    <!-- arrange the sequence of tree view to be 4th -->
+    <record id="action_visit_view_form" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_form_visit"/>
+        <field name="act_window_id" ref="goexcel_visit.action_visit"/>
+    </record>
+    <!-- arrange the sequence of tree view to be 3rd -->
+    <!-- <record id="action_visit_view_map" model="ir.actions.act_window.view">
+        <field eval="3" name="sequence"/>
+        <field name="view_mode">map</field>
+        <field name="view_id" ref="view_visit_map"/>
+        <field name="act_window_id" ref="goexcel_visit.action_visit"/>
+    </record> -->
+    <!-- arrange the sequence of tree view to be 2nd -->
+    <record id="action_visit_view_tree" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_tree_visit"/>
+        <field name="act_window_id" ref="goexcel_visit.action_visit"/>
+    </record>
+    <!-- arrange the sequence of tree view to be 1st -->
+    <record id="action_visit_view_kanban" model="ir.actions.act_window.view">
+        <field eval="1" name="sequence"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="view_kanban_visit"/>
+        <field name="act_window_id" ref="goexcel_visit.action_visit"/>
+    </record>
+
+    <record id="frequency_view_tree_visit" model="ir.ui.view">
+        <field name="name">Visit</field>
+        <field name="model">visit</field>
+        <field name="arch" type="xml">
+            <tree string="Visit">
+                <field name="sequence" widget="handle"/>
+                <field name="visit_id"/>
+                <field name="customer_name"/>
+                <field name="last_visit_date"/>
+                <field name="sales_person"/>
+                <field name="partner_visit_frequency"/>
+                <field name="visit_city"/>
+                <field name="gap_day"/>
+                <field name="visit_status"/>
+                <field name="remark"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_visit_frequency" model="ir.actions.act_window">
+        <field name="name">Customer Exceeded Visit Frequency</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">visit</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{}</field>
+        <field name="domain">['|','|','|','|','|','|',
+            '&amp;',('partner_visit_frequency','=','01'),('last_visit_date','&lt;',(datetime.datetime.now()-datetime.timedelta(days=7))),
+            '&amp;',('partner_visit_frequency','=','02'),('last_visit_date','&lt;',(datetime.datetime.now()-datetime.timedelta(days=14))),
+            '&amp;',('partner_visit_frequency','=','03'),('last_visit_date','&lt;',(datetime.datetime.now()-datetime.timedelta(days=30))),
+            '&amp;',('partner_visit_frequency','=','04'),('last_visit_date','&lt;',(datetime.datetime.now()-datetime.timedelta(days=60))),
+            '&amp;',('partner_visit_frequency','=','06'),('last_visit_date','&lt;',(datetime.datetime.now()-datetime.timedelta(days=120))),
+            '&amp;',('partner_visit_frequency','=','07'),('last_visit_date','&lt;',(datetime.datetime.now()-datetime.timedelta(days=182))),
+            '&amp;',('partner_visit_frequency','=','08'),('last_visit_date','&lt;',(datetime.datetime.now()-datetime.timedelta(days=365)))
+            ]</field>
+    </record>
+
+
+    <record id="action_visit_view_tree_frequency" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="frequency_view_tree_visit"/>
+        <field name="act_window_id" ref="goexcel_visit.action_visit_frequency"/>
+    </record>
+
+    <menuitem id="menu_visit_root" name="Visit Management" web_icon="goexcel_visit,static/description/icon.png"/>
+    <menuitem action="action_visit" id="menu_visit" name="Visit" parent="menu_visit_root" sequence="1"/>
+    <menuitem action="action_visit" id="menu_visit_new_menu" name="Visit" parent="menu_visit" sequence="1"/>
+    <menuitem action="action_visit_frequency" id="menu_visit_new" name="Customer Exceeded Visit Frequency" parent="menu_visit" sequence="2"/>
+
+</odoo>

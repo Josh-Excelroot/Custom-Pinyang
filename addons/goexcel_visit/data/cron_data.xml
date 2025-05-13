@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_cron_visit_notify_user" model="ir.cron">
+        <field name="name">Visit; Notify Salesman</field>
+        <field name="interval_number">30</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model_id" ref="model_visit"/>
+        <field name="code">model.run_visit_notify()</field>
+        <field name="state">code</field>
+    </record>
+</odoo>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_extend_reason_form_view" model="ir.ui.view">
+        <field name="name">sale.extend.reason.form</field>
+        <field name="model">sale.extend.reason</field>
+        <field name="arch" type="xml">
+            <form string="Sale extend Reason">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                        </group>
+                        <group>
+                            <field groups="base.group_multi_company" name="company_id" options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="sale_extend_reason_tree_view" model="ir.ui.view">
+        <field name="name">sale.extend.reason.tree</field>
+        <field name="model">sale.extend.reason</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field groups="base.group_multi_company" name="company_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_sale_extend_reason" model="ir.actions.act_window">
+        <field name="name">Sale Extend Reason</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.extend.reason</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    </record>
+    <menuitem action="action_sale_extend_reason" id="menu_sale_extend_reason" name="Extend Reason" parent="sale.menu_sale_config" sequence="10"/>
+</odoo>

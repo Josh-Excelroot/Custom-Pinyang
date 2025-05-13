@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_account_journal_form_pay" model="ir.ui.view">
+            <field name="name">account.journal.form</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+
+                <xpath expr="//page[@name='journal_entries']" position="inside">
+                    <group >
+                        <field name="inbound_sequence_id" attrs="{'invisible': [('type', 'not in', ['bank', 'cash'])]}"/>
+                        <field name="outbound_sequence_id" attrs="{'invisible': [('type', 'not in', ['bank', 'cash'])]}"/>
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rights_cost_center,cost.center,model_cost_center,base.group_user,1,0,0,0
+access_master_report,master_report,model_master_report_out,base.group_user,1,1,1,1
+access_additional_tax_user,Access Additional Tax User,model_additional_tax,base.group_user,1,1,1,1
+access_month_year_user,Access Month Year User,model_month_year,base.group_user,1,1,1,1

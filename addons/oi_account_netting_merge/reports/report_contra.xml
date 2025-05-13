@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report id="action_report_contra"
+            model="account.netting"
+            string="Contra"
+            report_type="qweb-pdf"
+            name="oi_account_netting_merge.report_contra"
+            file="oi_account_netting_merge.report_contra"
+            print_report_name="'Contra - %s' % (object.name)"
+    />
+
+    <template id="report_contra">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                    <div class="page">
+                        <h3>
+                            <strong>Contra:&#160;<span t-field="o.name"/>
+                            </strong>
+                        </h3>
+                        <div class="row mt64">
+                            <div class="col-6" t-if="o.date">
+                                <strong>Payment Date:</strong>
+                                <span t-field="o.date"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <strong>Customer:</strong>
+                                <strong>
+                                    <span t-field="o.receivable_partner_id"/>
+                                </strong>
+                                <br/>
+                                <t t-if="o.receivable_partner_id.street">
+                                    <span t-field="o.receivable_partner_id.street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="o.receivable_partner_id.street2">
+                                    <span t-field="o.receivable_partner_id.street2"/>
+                                </t>
+                                <t t-if="o.receivable_partner_id.zip">
+                                    <span t-field="o.receivable_partner_id.zip"/>
+                                </t>
+                                <t t-if="o.receivable_partner_id.city">,
+                                    <span t-field="o.receivable_partner_id.city"/>
+                                </t>
+                                <t t-if="o.receivable_partner_id.state_id">, 
+                                    <span t-field="o.receivable_partner_id.state_id.name"/>
+                                </t>
+                                <t t-if="o.receivable_partner_id.country_id">, 
+                                    <span t-field="o.receivable_partner_id.country_id.name"/>
+                                    <br/>
+                                </t>
+                                <t t-if="o.receivable_partner_id.phone">Tel: 
+                                    <span t-field="o.receivable_partner_id.phone"/>
+                                    <t t-if="o.receivable_partner_id.fax">
+                                        , Fax: 
+                                        <span t-field="o.receivable_partner_id.fax"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class="col-6">
+                                <strong>Vendor:</strong>
+                                <strong>
+                                    <span t-field="o.payable_partner_id"/>
+                                </strong>
+                                <br/>
+                                <t t-if="o.payable_partner_id.street">
+                                    <span t-field="o.payable_partner_id.street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="o.payable_partner_id.street2">
+                                    <span t-field="o.payable_partner_id.street2"/>
+                                </t>
+                                <t t-if="o.payable_partner_id.zip">
+                                    <span t-field="o.payable_partner_id.zip"/>
+                                </t>
+                                <t t-if="o.payable_partner_id.city">,
+                                    <span t-field="o.payable_partner_id.city"/>
+                                </t>
+                                <t t-if="o.payable_partner_id.state_id">, 
+                                    <span t-field="o.payable_partner_id.state_id.name"/>
+                                </t>
+                                <t t-if="o.payable_partner_id.country_id">, 
+                                    <span t-field="o.payable_partner_id.country_id.name"/>
+                                    <br/>
+                                </t>
+                                <t t-if="o.payable_partner_id.phone">Tel: 
+                                    <span t-field="o.payable_partner_id.phone"/>
+                                    <t t-if="o.payable_partner_id.fax">
+                                        , Fax: 
+                                        <span t-field="o.payable_partner_id.fax"/>
+                                    </t>
+                                </t>
+                                <!-- <strong>Payment Method: </strong><span t-field="o.payment_method_id.name"/-->>
+                            </div>
+                        </div>
+                        <div class="row mb64">
+                            <!--<div class="col-6">
+                                <strong>Payment Amount: </strong><span t-field="o.amount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                             </div>-->
+                            <div class="col-6">
+                                <!--Ahmad Zaman - 23/1/25 - Updated the contra report-->
+                                <t t-set="contra_amount" t-value="0.00"/>
+                                <tr t-foreach="o.contra_receivable_ids" t-as="inv">
+                                    <t t-set="contra_amount" t-value="contra_amount + inv.contra_amount"/>
+                                </tr>
+                                <strong>Contra Amount:</strong>
+                                <span t-esc="contra_amount"
+                                      t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                            </div>
+                            <div class="col-6" t-if="o.ref">
+                                <strong>Reference:</strong>
+                                <span t-field="o.ref"/>
+                            </div>
+                        </div>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span>Invoice Date</span>
+                                    </th>
+                                    <th>
+                                        <span>Invoice Number</span>
+                                    </th>
+                                    <th class="text-right">
+                                        <span>Original Amount</span>
+                                    </th>
+                                    <th class="text-right">
+                                        <span>Amount Paid</span>
+                                    </th>
+                                    <th class="text-right">
+                                        <span>Balance</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.contra_receivable_ids" t-as="inv" t-if="inv.contra_amount != 0">
+                                    <td>
+                                        <span t-field="inv.date"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="inv.move_id.name"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="inv.debit"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="inv.contra_amount"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="inv.amount_residual"/>
+                                    </td>
+                                </tr>
+                                <tr t-foreach="o.contra_payable_ids" t-as="inv" t-if="inv.contra_amount != 0">
+                                    <td>
+                                        <span t-field="inv.date"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="inv.move_id.name"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="inv.credit"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="inv.contra_amount"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="inv.amount_residual"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

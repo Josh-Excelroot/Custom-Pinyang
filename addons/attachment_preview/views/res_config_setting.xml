@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id="res_config_settings_view_form_preview" model="ir.ui.view">
+		<field name="name">res.config.settings.view.form</field>
+		<field name="model">res.config.settings</field>
+		<field name="inherit_id" ref="account.res_config_settings_view_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//div[@id='invoicing_settings']" position="inside">
+
+				<div class="col-xs-12 col-md-6 o_setting_box" title="Attachment Preview">
+					<h6>Attachment Preview</h6>
+					<div class="o_setting_left_pane">
+						<div class="text-muted">
+							<field name="invoice_preview_field"/>
+						</div>
+					</div>
+					<div class="o_setting_right_pane">
+						<span class="o_form_label">Invoice Preview</span>
+						<div class="text-muted">
+							Enable to have a PDF view of Invoice on the form view.
+						</div>
+					</div>
+
+				</div>
+				<div class="col-xs-12 col-md-6 o_setting_box" title="Attachment Preview">
+					<h6>Vendor Preview</h6>
+					<div class="o_setting_left_pane">
+						<div class="text-muted">
+							<field name="vendor_preview_field" force_save="1"/>
+						</div>
+					</div>
+					<div class="o_setting_right_pane">
+						<span class="o_form_label">Vendor Bill Preview</span>
+						<div class="text-muted">
+							Enable to have a PDF view of vendor bills on the form view.
+						</div>
+					</div>
+
+				</div>
+			</xpath>
+		</field>
+	</record>
+
+</odoo>

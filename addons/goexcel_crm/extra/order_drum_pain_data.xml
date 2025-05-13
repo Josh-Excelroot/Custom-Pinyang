@@ -1,0 +1,14 @@
+<odoo>
+    <data noupdate="0">
+        <record id="001" model="">
+            <field name="name">Drum</field>
+            <field name="active">True</field>
+            <field name="full_name">Drum</field>
+        </record>
+        <record id="002" model="">
+            <field name="name">Pail</field>
+            <field name="active">True</field>
+            <field name="full_name">Pail</field>
+        </record>
+    </data>
+</odoo>

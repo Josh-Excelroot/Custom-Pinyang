@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_booking_log_line,Freight Manager,model_booking_log_line,sci_goexcel_freight.freight_group_manager,1,1,1,1
+access_booking_log_line,Freight User,model_booking_log_line,sci_goexcel_freight.freight_group_user,1,1,1,1
+access_booking_log_line,Freight Own,model_booking_log_line,sci_goexcel_freight.freight_group_own,1,1,1,1
+access_reschedule_sailing,Freight Manager,model_reschedule_sailing,sci_goexcel_freight.freight_group_manager,1,1,1,1
+access_reschedule_sailing,Freight User,model_reschedule_sailing,sci_goexcel_freight.freight_group_user,1,1,1,1
+access_reschedule_sailing,Freight Own,model_reschedule_sailing,sci_goexcel_freight.freight_group_own,1,1,1,1
+access_schedule_booking_line,Freight Manager,model_schedule_booking_line,sci_goexcel_freight.freight_group_manager,1,1,1,1
+access_schedule_booking_line,Freight User,model_schedule_booking_line,sci_goexcel_freight.freight_group_user,1,1,1,1
+access_schedule_booking_line,Freight Own,model_schedule_booking_line,sci_goexcel_freight.freight_group_own,1,1,1,1

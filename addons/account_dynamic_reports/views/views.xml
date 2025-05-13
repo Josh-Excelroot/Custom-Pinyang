@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" inherit_id="web.assets_backend" name="account_dynamic_reports assets">
+        <xpath expr="." position="inside">
+            <link href="/account_dynamic_reports/static/src/scss/dynamic_common_style.scss" rel="stylesheet" type="text/scss"/>
+            <script src="/account_dynamic_reports/static/src/js/select2.full.min.js" type="text/javascript"/>
+            <script src="/account_dynamic_reports/static/src/js/script.js" type="text/javascript"/>
+        </xpath>
+    </template>
+    <menuitem groups="account.group_account_manager" id="account_reports_ins" name="Dynamic Reports(Wiz)" parent="account.menu_finance_reports" sequence="10"/>
+    <menuitem groups="base.group_erp_manager" id="account_reports_ins_wiz" name="Accounting Reports" parent="account.menu_finance_reports" sequence="15"/>
+    <!-- ============ Financial Report =============== -->
+    <record id="view_ins_account_financial_report_form" model="ir.ui.view">
+        <field name="name">account.financial.report.form</field>
+        <field name="model">ins.account.financial.report</field>
+        <field name="arch" type="xml">
+            <form string="Account Report">
+                <group col="4">
+                    <field name="name"/>
+                    <field name="parent_id"/>
+                    <field name="sequence"/>
+                    <field name="type"/>
+                    <field name="sign"/>
+                    <field name="financial_report_menu" widget="radio" options="{'horizontal': true}"
+                           attrs="{'invisible':[('type','!=','sum')]}"/>
+                    <field attrs="{'required':[('type','in',['accounts','account_type'])]}" name="range_selection"/>
+                    <field name="percent_margin_divisor" attrs="{'invisible':[('type','=','sum')]}"/>
+                    <field invisible="1" name="style_overwrite"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </group>
+                <notebook attrs="{'invisible': [('type','not in',['sum','accounts','account_type', 'account_report'])]}">
+                    <page string="Report">
+                        <group>
+                            <field attrs="{'invisible': [('type','not in',['sum','accounts','account_type'])]}" name="display_detail"/>
+                            <field attrs="{'invisible': [('type', '!=', 'account_report')]}" name="account_report_id"/>
+                        </group>
+                        <field attrs="{'invisible': [('type', '!=', 'accounts')]}" name="account_ids"/>
+                        <field attrs="{'invisible': [('type', '!=', 'account_type')]}" name="account_type_ids"/>
+                        <label for="exclude_account_ids" attrs="{'invisible': [('type', '!=', 'account_type')]}"/>
+                        <field attrs="{'invisible': [('type', '!=', 'account_type')]}" name="exclude_account_ids"/>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+    <record id="view_ins_account_financial_report_tree" model="ir.ui.view">
+        <field name="name">account.financial.report.tree</field>
+        <field name="model">ins.account.financial.report</field>
+        <field name="arch" type="xml">
+            <tree string="Account Report">
+                <field name="name"/>
+                <field name="sequence"/>
+                <field invisible="1" name="parent_id"/>
+                <field name="type"/>
+                <field name="account_report_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_ins_account_financial_report_search" model="ir.ui.view">
+        <field name="name">account.financial.report.search</field>
+        <field name="model">ins.account.financial.report</field>
+        <field name="arch" type="xml">
+            <search string="Account Report">
+                <field name="name" string="Account Report"/>
+                <field name="type"/>
+                <field name="account_report_id"/>
+                <group expand="0" string="Group By">
+                    <filter context="{'group_by':'parent_id'}" domain="" name="filter_parent_rep" string="Parent Report"/>
+                    <filter context="{'group_by':'type'}" domain="[]" name="filter_rep_type" string="Report Type"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="action_ins_account_financial_report_tree" model="ir.actions.act_window">
+        <field name="name">Financial Reports</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ins.account.financial.report</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_ins_account_financial_report_search"/>
+        <field name="view_id" ref="view_ins_account_financial_report_tree"/>
+    </record>
+    <menuitem action="action_ins_account_financial_report_tree" id="ins_account_financial_report" name="Financial Reports" parent="account.account_account_menu" sequence="500"/>
+</odoo>

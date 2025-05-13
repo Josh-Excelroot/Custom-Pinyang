@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template xml:space="preserve">
+    <t t-extend="ks_ListView.buttons">
+          <t t-jquery="button.ks_export_button" t-operation="after">
+            <button class="btn btn-primary oe_action_button" type="button" accesskey="f">User Guide</button>
+        </t>
+        </t>
+
+  </template>
+ <!--        <t t-extend="ks_ListView.buttons">-->
+    <!--          <t t-jquery="button.ks_export_button" t-operation="after">-->
+    <!--              <button class="btn btn-primary oe_action_button" type="button" accesskey="f"-->
+    <!--                      t-att-modelName="widget.modelName">User Manual</button>-->
+    <!--          </t>-->
+    <!--      </t>-->
+
+    <!--    <t t-extend="ListView.buttons">-->
+    <!--        <t t-jquery="button.ks_export_button" t-operation="after">-->
+    <!--            <button class="btn btn-primary oe_action_button" type="button" accesskey="f">User Manual</button>-->
+    <!--        </t>-->
+    <!--    </t>-->

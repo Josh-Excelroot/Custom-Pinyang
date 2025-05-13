@@ -1,0 +1,169 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <!-- Mail template are declared in a NOUPDATE block
+         so users can freely customize/delete them -->
+    <data noupdate="0">
+        <!--Email template -->
+        <record id="technical_mail_template" model="mail.template">
+            <field name="name">Technical Mail Template</field>
+            <field name="model_id" ref="goexcel_crm.model_technical_customer_plan"/>
+            <field name="email_from">${object.company_id.email_formatted |safe}</field>
+            <field name="partner_to">${object.owner_id.partner_id.id | safe}</field>
+            <field name="subject">${object.company_id.name} Plan (Ref ${object.name or 'n/a'})</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear 
+                    % if object.owner_id:
+                        (${object.owner_id.partner_id.name})
+                    % endif
+                    <br /><br />
+                    "Kindly Assist for Technical Plan <strong>${object.name}</strong> <strong>${object.partner_id.name}</strong> on <strong>${object.date}</strong> "  
+                    from ${object.company_id.name}.
+                    <br /><br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.owner_id.partner_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+
+        <record id="lead_assign_mail_template" model="mail.template">
+            <field name="name">CRM Lead Assign</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="email_from">${object.company_id.email_formatted |safe}</field>
+            <field name="partner_to">${object.user_id.partner_id.id | safe}</field>
+            <field name="subject">${object.company_id.name} Lead (Ref ${object.name or 'n/a'})</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear 
+                    % if object.user_id:
+                        (${object.user_id.partner_id.name})
+                    % endif
+                    <br/><br/>
+
+                    You've been assigned a lead ${object.description} by ${object.create_uid.name} on ${object.create_date}
+                    
+                    from ${object.company_id.name}.
+                    <br /><br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.user_id.partner_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+
+        <record id="gift_approval_req_mail_template" model="mail.template">
+            <field name="name">Gift Approval Request</field>
+            <field name="model_id" ref="goexcel_crm.model_gift_celebration"/>
+            <field name="email_from">${object.company_id.email_formatted |safe}</field>
+            <field name="partner_to">${object.requested_user_id.partner_id.id | safe}</field>
+            <field name="subject">${object.company_id.name} Gift Approval Request For ${object.gift_type or 'n/a'}</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear,
+                    <br />
+                    New Gift Approval Request <strong>${object.name}</strong> has been created by ${object.requested_user_id.name} and required to approve
+                 <a href="${object.env['ir.config_parameter'].sudo().get_param('web.base.url')}/web#id=${object.id}&amp;action=${ctx['action_id']}&amp;model=gift.celebration&amp;view_type=form&amp;menu_id=${ctx['menu_id']}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #FFFFFF; border-color:#875A7B; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius:3px;">click to View</a>
+                <br />
+                    from ${object.company_id.name}.
+                    <br /><br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.requested_user_id.partner_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <record id="gift_approved_mail_template" model="mail.template">
+            <field name="name">Gift Approved Notification</field>
+            <field name="model_id" ref="goexcel_crm.model_gift_celebration"/>
+            <field name="email_from">${object.company_id.email_formatted |safe}</field>
+            <field name="partner_to">${object.requested_user_id.partner_id.id | safe}</field>
+            <field name="subject">${object.company_id.name} Gift Request Approved For ${object.gift_type or 'n/a'}</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear
+                    % if object.requested_user_id:
+                        ${object.requested_user_id.partner_id.name},
+                    % endif
+                  <br />
+                    Your Gift request <strong>${object.name}</strong> has been approved by ${object.approved_by.name}.
+                    <br />
+                    from ${object.company_id.name}.
+                    <br /><br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.requested_user_id.partner_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <record id="gift_approved_ntfy_mail_template" model="mail.template">
+            <field name="name">Gift Approved Notification (Admin stuff)</field>
+            <field name="model_id" ref="goexcel_crm.model_gift_celebration"/>
+            <field name="email_from">${object.company_id.email_formatted |safe}</field>
+            <field name="partner_to">${object.requested_user_id.partner_id.id | safe}</field>
+            <field name="subject">${object.company_id.name} Gift Request Approved For ${object.gift_type or 'n/a'}</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear,
+                  <br />
+                    Gift request <strong>${object.name}</strong> has been approved by ${object.approved_by.name}.
+                    <br />
+                    from ${object.company_id.name}.
+                    <br /><br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.requested_user_id.partner_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <record id="gift_rejected_mail_template" model="mail.template">
+            <field name="name">Gift rejected</field>
+            <field name="model_id" ref="goexcel_crm.model_gift_celebration"/>
+            <field name="email_from">${object.company_id.email_formatted |safe}</field>
+            <field name="partner_to">${object.requested_user_id.partner_id.id | safe}</field>
+            <field name="subject">${object.company_id.name} Gift Request Rejected For ${object.gift_type or 'n/a'}</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear
+                    % if object.requested_user_id:
+                        ${object.requested_user_id.partner_id.name},
+                    % endif
+
+                  <br />
+                    Your Gift request Approval <strong>${object.name}</strong> has been rejected by ${object.rejected_by.name}
+                    <br />
+                    from ${object.company_id.name}.
+                    <br /><br />
+                    Do not hesitate to contact us if you have any question.
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.requested_user_id.partner_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

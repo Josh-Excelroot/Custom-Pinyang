@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="customer_payment_report_search_view" model="ir.ui.view">
+        <field name="name">customer.payment.report.search</field>
+        <field name="model">customer.payment.report</field>
+        <field name="arch" type="xml">
+            <search string="Customer Payment Lines">
+                <field name="name"/>
+                <field name="payment_date"/>
+                <field name="partner_id"/>
+                <!--     <filter string="This Month" name="this_month"
+                           domain="[('payment_date','&lt;',(context_today()+relativedelta(months=1)).strftime('%%Y-%%m-01')), ('payment_date','&gt;=',time.strftime('%%Y-%%m-01'))]"/>
+                           &lt;!&ndash;domain="[('date','&lt;',(context_today()+relativedelta(months=1)).strftime('%%Y-%%m-01')), ('date','&gt;=',time.strftime('%%Y-%%m-01'))]"&ndash;&gt;
+-->                  <group expand="1" string="Group By">
+                <filter string="Customer" name="group_partner_id" context="{'group_by':'partner_id'}"/>
+                <filter string="Status" name="group_state" context="{'group_by':'state'}"/>
+                <filter string="Date" name="group_payment_date" context="{'group_by':'payment_date'}"/>
+            </group>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="customer_payment_combined_report_tree_view" model="ir.ui.view" >
+        <field name="name">customer.payment.report.tree</field>
+        <field name="model">customer.payment.report</field>
+        <field name="arch" type="xml">
+            <tree string="Customer Payment">
+                <field name="name"/>
+                <field name="payment_date"/>
+                <field name="partner_id"/>
+                <field name="account_payment_id" context="{'form_view_ref': 'account.view_account_payment_form'}"/>
+                <field name="account_voucher_id" context="{'form_view_ref': 'account_voucher.view_sale_receipt_form'}"/>
+                <field name="journal_id"/>
+                <field name="payment_amount" sum="Total"/>
+                <field name="currency_id" invisible="1"/>
+                <!-- <field name="cheque_no"/>-->
+                <field name="state"/>
+                <field name="reference"/>
+                <!--  <field name="company_id"/>-->
+            </tree>
+        </field>
+    </record>
+
+
+<!--    <record id="customer_payment_report_form_view" model="ir.ui.view">-->
+<!--        <field name="name">customer.payment.report.form</field>-->
+<!--        <field name="model">customer.payment.report</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <form string="Customer Payment">-->
+<!--                <sheet>-->
+<!--                    <group>-->
+<!--                        <group>-->
+<!--                            <field name="name"/>-->
+<!--                            <field name="payment_date"/>-->
+<!--                            <field name="journal_id"/>-->
+<!--                            <field name="currency_id" invisible="1"/>-->
+<!--                            <field name="payment_amount" sum="Total"/>-->
+
+<!--                        </group>-->
+<!--                        <group>-->
+<!--                            <field name="partner_id"/>-->
+<!--                            <field name="account_payment_id"/>-->
+<!--                            <field name="account_voucher_id"/>-->
+<!--                            <field name="state"/>-->
+<!--                            <field name="reference"/>-->
+<!--                        </group>-->
+<!--                    </group>-->
+<!--                </sheet>-->
+<!--            </form>-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+    <record id="customer_payment_report_pivot_view" model="ir.ui.view">
+        <field name="name">customer.payment.report.pivot</field>
+        <field name="model">customer.payment.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Customer Payment">
+                <field name="payment_date" interval="month" type="row"/>
+                <field name="payment_amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+     <record id="action_customer_payment_combined_report" model="ir.actions.act_window">
+        <field name="name">Customer Payment Combined Listing</field>
+         <field name="type">ir.actions.act_window</field>
+        <field name="res_model">customer.payment.report</field>
+       <!-- <field name="view_type">form</field>-->
+        <field name="view_mode">tree,pivot</field>
+        <!-- <field name="view_id" ref="customer_payment_combined_report_tree_view"/>-->
+        <!-- <field name="context">{"search_default_this_month":1}</field>-->
+        <!--<field name="search_view_id" ref="customer_payment_report_search_view"/>-->
+    </record>
+
+
+    <menuitem name="Payment (Combined)" id="menu_action_customer_payment_report" action="action_customer_payment_combined_report"  parent="account.menu_finance_receivables" sequence="20"/>
+
+
+</odoo>   

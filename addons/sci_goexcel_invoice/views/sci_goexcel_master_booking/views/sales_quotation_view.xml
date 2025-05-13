@@ -1,0 +1,15 @@
+<odoo>
+
+    <!-- Inherited the sales quotation view and added 'Copy to Booking' button -->
+     <record model="ir.ui.view" id="view_sales_quotation_master_booking">
+        <field name="name">Copy to Booking</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_copy_to_rft']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

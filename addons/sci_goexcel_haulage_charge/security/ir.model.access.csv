@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_freight_haulage_charge,Freight Manager,model_freight_haulage_charge,sci_goexcel_freight.freight_group_manager,1,1,1,1
+access_freight_haulage_charge,Freight User,model_freight_haulage_charge,sci_goexcel_freight.freight_group_user,1,1,1,1
+access_freight_haulage_charge,Freight Own,model_freight_haulage_charge,sci_goexcel_freight.freight_group_own,1,1,1,1
+access_freight_haulage_charge_line,Freight Manager,model_freight_haulage_charge_line,sci_goexcel_freight.freight_group_manager,1,1,1,1
+access_freight_haulage_charge_line,Freight User,model_freight_haulage_charge_line,sci_goexcel_freight.freight_group_user,1,1,1,1
+access_freight_haulage_charge_line,Freight Own,model_freight_haulage_charge_line,sci_goexcel_freight.freight_group_own,1,1,1,1
+access_freight_faf_percent,Freight Manager,model_freight_faf_percent,base.group_user,1,1,1,1

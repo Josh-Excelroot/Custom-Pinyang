@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="lcl_settings_form_view" model="ir.ui.view">
+            <field name="name">lcl.settings.form.view</field>
+            <field name="model">lcl.settings</field>
+            <field name="type">form</field>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <form string="LCL Settings View">
+                <group>
+                    <field name="service_type" string="Service Type"/>
+                    <field name="lcl_product" string="Product"/>
+                    <field name="lcl_round_up_method" string="Round up Method"/>
+                </group>
+            </form>
+
+            </field>
+        </record>
+
+        <record id="lcl_settings_tree_view" model="ir.ui.view">
+            <field name="name">lcl.settings.tree.view</field>
+            <field name="model">lcl.settings</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <field name="service_type"/>
+                <field name='lcl_product'/>
+                <field name="lcl_round_up_method"/>
+            </field>
+        </record>
+    </data>
+
+       <record id="action_lcl_settings" model="ir.actions.act_window">
+            <field name="name">LCL Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">lcl.settings</field>
+            <field name="view_mode">tree,form</field>
+       </record>
+
+    <menuitem id="menu_lcl_settings" parent="sale.menu_sale_config" action="action_lcl_settings" sequence="5" />
+</odoo>

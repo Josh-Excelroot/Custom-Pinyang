@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id='view_tree_local_charge' model='ir.ui.view'>
+        <field name="name">Local Charge List</field>
+        <field name="model">freight.local.charge</field>
+        <field name="arch" type="xml">
+			<tree string='Local Charge'>
+				<field name="name"/>
+                <field name="carrier" domain="[('carrier','=',True)]"/>
+                <field name="port_of_loading"/>
+                <field name="currency"/>
+                <field name="valid_to"/>
+                <field name="state"/>
+			</tree>
+		</field>
+	</record>
+
+    <record id="view_form_local_charge" model="ir.ui.view">
+        <field name="name">Local Charge Form</field>
+        <field name="model">freight.local.charge</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_approve" type="object" string="Approve" class="oe_highlight"
+                            attrs="{'invisible': ['|', ('approve_reject_local_charge','=', False), ('state','!=','approve')]}"/>
+                    <button name="action_reject" type="object" string="Reject" class="oe_highlight"
+                            attrs="{'invisible': ['|', ('approve_reject_local_charge','=', False), ('state','!=','approve')]}"/>
+                    <button name="action_approval" type="object" string="Send to Approval" class="oe_highlight"
+                            attrs="{'invisible': [('state','!=','draft')]}"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+
+                <sheet>
+                    <group string="General Information">
+                        <field name="name"/>
+                        <field name="approve_reject_local_charge" invisible="1"/>
+                        <field name="carrier" domain="[('carrier','=',True)]" />
+                        <field name="port_of_loading"/>
+                        <field name="currency"/>
+                        <field name="valid_to"/>
+                        <field name="approve_by" readonly="1" force_save="1"/>
+                        <field name="approve_date_time" readonly="1" force_save="1"/>
+                    </group>
+                    <!--
+                    <group string="Local Charge" >
+                        <field name="price_thc"/>
+                        <field name="price_doc_fee"/>
+                        <field name="price_seal_fee"/>
+                        <field name="price_edi"/>
+                        <field name="price_telex_release_charge"/>
+                        <field name="price_obl"/>
+                        <field name="price_communication"/>
+                    </group>
+                    -->
+                    <notebook>
+                        <page string="Line Item">
+                            <field name="local_charge_line_ids" mode="tree">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="cost_price"/>
+                                    <field name="price"/>
+
+
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_search_local_charge" model="ir.ui.view">
+        <field name="name">Local Charge Filter</field>
+        <field name="model">freight.local.charge</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <act_window id="action_configure_local_charge"
+        name="Local Charge"
+        res_model="freight.local.charge"
+        view_mode="tree,form"
+    />
+
+    <menuitem id="menu_freight_configure_local_charge"
+              name="Local Charge"
+              parent="sci_goexcel_freight.menu_freight_configure"
+              action="action_configure_local_charge" />
+</odoo>

@@ -1,0 +1,61 @@
+<odoo>
+
+    <record model="ir.ui.view" id="view_transport_inherit_shipping_address">
+        <field name="name">Custom Fields</field>
+        <field name="model">transport.rft</field>
+        <field name="type">form</field>
+        <field name="priority" eval="1"/>
+        <field name="inherit_id" ref="sci_goexcel_transport.view_form_transport_rft"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//page[@name='delivery_instruction']" position="attributes">
+                <attribute name="string">Remark</attribute>
+            </xpath>
+
+
+
+            <xpath expr="//field[@name='customer_seal']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='delivery_type']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='direct_loading']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='required_date_time']" position="after">
+                <field name="temperature_type" options="{'no_create': True, 'no_open': True, 'no_edit': True, 'no_create_edit': True}"/>
+                <field name="temperature_set_point" options="{'no_create': True, 'no_open': True, 'no_edit': True, 'no_create_edit': True}"/>
+            </xpath>
+            <xpath expr="//page[@name='cost_profit']" position="inside">
+                <group>
+                    <field name="pivot_sale_total" string="sales"/>
+                    <field name="pivot_cost_total" string="cost"/>
+                    <field name="pivot_profit_total" string="profit"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+
+
+    <record id="view_transport_rft_pivot" model="ir.ui.view">
+        <field name="name">transport.rft.pivot</field>
+        <field name="model">transport.rft</field>
+        <field name="arch" type="xml">
+            <pivot string="RFT Analysis">
+                <field name="required_date_time" interval="month" type="row"/>
+                <field name="billing_address" type="row"/>
+                <field name="pivot_sale_total" type="measure" groups="account.group_account_user"/>
+                <field name="pivot_cost_total" type="measure" groups="account.group_account_user"/>
+                <field name="pivot_profit_total" type="measure" groups="account.group_account_user"/>
+                <field name="pivot_margin_total" type="measure" groups="account.group_account_user"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="sci_goexcel_transport.action_transport_rft" model="ir.actions.act_window">
+        <field name="view_mode">tree,kanban,form,calendar,pivot</field>
+    </record>
+
+</odoo>

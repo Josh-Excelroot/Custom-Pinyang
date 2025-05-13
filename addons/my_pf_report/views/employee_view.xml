@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_employee_form_inherit5" model="ir.ui.view">
+            <field name="name">view.employee.form.inherit5</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='personal_information'] /group//group[3]" position="attributes">
+                    <attribute name="string">PCB Status</attribute>
+                </xpath>
+                <field name="bank_account_id" position="after">
+                    <field name="epf_no"/>
+                    <field name="ahli_kwsp_note" placeholder="Kwsp Member Note"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

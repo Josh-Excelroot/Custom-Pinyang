@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report id="action_cn_report" model="account.invoice" name="sci_goexcel_payment_receipt.report_cn" print_report_name="('Credit Note - ' + object.number)" report_type="qweb-pdf" string="Credit Note"/>
+    <template id="report_cn">
+        <t t-call="web.html_container">
+            <t t-as="o" t-foreach="docs">
+                <t t-call="web.external_layout">
+                    <!-- define in general settings ->document template, for logo, address -->
+                    <div class="page" style="font-size:10px;">
+                        <h3>
+                            <strong>Credit Note: 
+                                
+                                <span t-field="o.number"/></strong>
+                        </h3>
+                        <div class="row mt64">
+                            <div class="col-6" t-if="o.date_invoice">
+                                <strong>Date: </strong>
+                                <span t-field="o.date_invoice"/>
+                            </div>
+                            <div class="col-6" t-if="o.reference">
+                                <strong>Reference: </strong>
+                                <span t-field="o.reference"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <t t-if="o.type == 'out_refund'">
+                                    <strong>Customer: </strong>
+                                    <br/>
+                                </t>
+                                <t t-if="o.type == 'in_refund'">
+                                    <strong>Vendor: </strong>
+                                    <br/>
+                                </t>
+                                <u>
+                                    <strong>
+                                        <span t-field="o.partner_id"/>
+                                    </strong>
+                                </u>
+                                <br/>
+                                <t t-if="o.partner_id.street">
+                                    <span t-field="o.partner_id.street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="o.partner_id.street2">
+                                    <span t-field="o.partner_id.street2"/>
+                                </t>
+                                <t t-if="o.partner_id.zip">
+                                    <span t-field="o.partner_id.zip"/>
+                                </t>
+                                <t t-if="o.partner_id.city">,
+                                    
+                                    
+                                    <span t-field="o.partner_id.city"/></t>
+                                <t t-if="o.partner_id.state_id">,
+                                    
+                                    
+                                    <span t-field="o.partner_id.state_id.name"/></t>
+                                <t t-if="o.partner_id.country_id">,
+                                    
+                                    
+                                    <span t-field="o.partner_id.country_id.name"/>
+                                    <br/></t>
+                                <t t-if="o.partner_id.phone">Tel:
+                                    
+                                    
+                                    <span t-field="o.partner_id.phone"/>
+                                    <t t-if="o.partner_id.fax">
+                                        ,Fax:
+                                        
+                                        
+                                        <span t-field="o.partner_id.fax"/></t>
+                                </t>
+                            </div>
+                        </div>
+                        <div class="row mb64"/>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span>Payment Date</span>
+                                    </th>
+                                    <th>
+                                        <span>Invoice Date</span>
+                                    </th>
+                                    <th>
+                                        <span>Invoice Number</span>
+                                    </th>
+                                    <th>
+                                        <span>Reference</span>
+                                    </th>
+                                    <th class="text-right">
+                                        <span>Original Amount</span>
+                                    </th>
+                                    <th class="text-right">
+                                        <span>Amount Paid</span>
+                                    </th>
+                                    <th class="text-right">
+                                        <span>Balance</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-as="payment_line" t-foreach="payment_lines">
+                                    <tr>
+                                        <td>
+                                            <t t-if="payment_line['payment_date']">
+                                                <span t-esc="payment_line['payment_date'].strftime('%d/%m/%Y')"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <t t-if="payment_line['inv_date']">
+                                                <span t-esc="payment_line['inv_date'].strftime('%d/%m/%Y')"/>
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <span t-esc="payment_line['inv_no']"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="payment_line['ref']"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="payment_line['inv_amount']" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: payment_line[&quot;currency_id&quot;]}"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="payment_line['amount_paid']" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: payment_line[&quot;currency_id&quot;]}"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="payment_line['balance']" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: payment_line[&quot;currency_id&quot;]}"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="action_account_netting" model="ir.actions.act_window">
+		<field name="name">Contra (Different Partner)</field>
+		<field name="res_model">account.netting</field>
+		<field name="view_mode">tree,form</field>
+		<field name="context">{'default_journal_type' : 'general'}</field>
+	</record>
+
+
+
+
+</odoo>

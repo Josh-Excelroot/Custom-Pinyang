@@ -1,0 +1,263 @@
+<odoo>
+
+    <record id="view_form_booking_master_booking" model="ir.ui.view">
+        <field name="name">Booking Job</field>
+        <field name="model">freight.booking</field>
+        <field name="inherit_id" ref="sci_goexcel_freight.view_form_booking"/>
+        <field name="priority" eval="21" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_send_booking_confirmation']" position="before">
+                <button name="action_copy_job"
+                        type="object"
+                        string="Copy Job"
+                        class="oe_highlight" attrs="{'invisible': ['|', ('shipment_booking_status', 'not in', '01'), ('service_type', 'not in', 'ocean')]}"/>
+            </xpath>
+            <field name="sq_reference" position="after">
+                <field name="booking_id" string="Master Booking Ref." attrs="{'invisible': [('booking_id', '=', False)]}" readonly="1"/>
+                <!-- <field name="master_booking_no" />-->
+                <!--<field name="vendor_bill_update" />-->
+            </field>
+            <xpath expr="//field[@name='laden_back_terminal']" position="before">
+                <field name="laden_back_terminal2" />
+                <field name="empty_pick_up_depot" />
+            </xpath>
+            <xpath expr="//field[@name='shipment_type']" position="after">
+                <field name="bl_status"/>
+            </xpath>
+
+            <xpath expr="//field[@name='shipment_close_date_time']" position="before">
+                <field name="place_of_delivery_eta"/>
+            </xpath>
+            <xpath expr="//field[@name='voyage_no']" position="attributes">
+                <attribute name="force_save">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='intended_si_cut_off']" position="replace">
+                <field name="intended_si_cut_off_1"/>
+            </xpath>
+            <xpath expr="//field[@name='other_charges']" position="after">
+                <field name="slot_owner" options='{"always_reload": True, "no_create": True, "no_create_edit":True}' domain="[('is_slot_owner','=',True)]"/>
+                <field name="operator_code" options='{"always_reload": True, "no_create": True, "no_create_edit":True}'/>
+            </xpath>
+
+            <xpath expr="//field[@name='sq_reference']" position="after">
+                <field name="customer_reference_no" />
+                <field name="shipment_term" options='{"always_reload": True, "no_create": True, "no_create_edit":True}'/>
+                <field name="slot_type" />
+            </xpath>
+            <xpath expr="//field[@name='lcl_consolidation']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='container_qty']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='container_product_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='lcl_consolidation']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page[@name='service']/group/group[1]/field[@name='gate_in_date']" position="after">
+                <field name="drop_off_terminal"></field>
+                <field name="pick_up_terminal"></field>
+            </xpath>
+            <xpath expr="//field[@name='invoice_paid_status']" position="after">
+                <field name="billing_port"></field>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page[1]/field[@name='operation_line_ids']/tree/field[@name='container_no']" position="after">
+
+                <field name="container_product_id"></field>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page[1]/field[@name='operation_line_ids']/tree/field[@name='remark']" position="after">
+                <field name="container_type" />
+                <field name="cargo_type" />
+                <field name="vgm" />
+                <field name="dg_flash_point" />
+                <field name="harmonized_id" />
+                <field name="temperature" />
+                <field name="depot_out_req_date" />
+                <field name="depot_out_date" />
+                <field name="terminal_in_date" />
+                <field name="vessel_loading_date_time" />
+            </xpath>
+        </field>
+    </record>
+
+    <!--   <record id="view_tree_booking_ocean_master_booking" model="ir.ui.view">
+        <field name="name">Master Booking Tree</field>
+        <field name="model">freight.booking</field>
+        <field name="priority" eval="1"/>
+        <field name="inherit_id" ref="sci_goexcel_freight.view_tree_ocean_booking"/>
+        <field name="arch" type="xml">
+             <xpath expr="//tree[@name='view_tree_ocean_booking']" position="replace">
+				<tree name="view_tree_ocean_booking" string='Booking Job' decoration-muted="shipment_booking_status=='09'" decoration-danger="shipment_booking_status=='08'" decoration-warning="shipment_booking_status=='11'">
+					<field name="shipment_booking_status"/>
+                    <field name="booking_no"/>
+                    <field name="carrier_booking_no"/>
+                    <field name="obl_no"/>
+                    <field name="vessel_name"/>
+                    <field name="voyage_no"/>
+                    <field name="booking_date_time"/>
+                    <field name="bl_status"/>
+					<field name="port_of_loading"/>
+					<field name="port_of_discharge"/>
+					<field name="direction"/>
+                    <field name="vgm"/>
+                    <field name="customer_name"/>
+					<field name="shipper"/>
+					<field name="consignee" />
+                    <field name="carrier" />
+					<field name="create_uid"/>
+				</tree>
+			</xpath>
+
+        </field>
+    </record>-->
+
+
+    <record id="view_search_booking_inherit_master_booking" model="ir.ui.view">
+        <field name="name">freight.booking.search.expand.filter</field>
+        <field name="model">freight.booking</field>
+        <field name="inherit_id" ref="sci_goexcel_freight.view_search_booking"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <filter string="This Year" name="this_year" domain="[('booking_date_time','&lt;=', time.strftime('%%Y-12-31')),('booking_date_time','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                <field name="master_booking_no"/>
+                <group expand="0" string="Group By">
+                    <filter string="Shipment Type" name="booking_shipment_type" domain="[]" context="{'group_by':'direction'}"/>
+                    <filter string="Carrier" name="booking_carrier" domain="[]" context="{'group_by':'carrier'}"/>
+                    <filter string="Carrier Booking No" name="booking_carrier_booking" domain="[]" context="{'group_by':'carrier_booking_no'}"/>
+                    <filter string="Consignee Name" name="booking_consignee" domain="[]" context="{'group_by':'consignee'}"/>
+                    <filter string="Vessel Name" name="booking_vessel_name" domain="[]" context="{'group_by':'vessel_name'}"/>
+                    <!--        <filter string="Vessel Name/Voyage No" name="booking_vessel_voyage" domain="[]" context="{'group_by':'vessel_voyage'}"/>-->
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="operator_code_tree" model="ir.ui.view">
+        <field name="name">operator.code.tree.view</field>
+        <field name="model">operator.code</field>
+        <field name="arch" type="xml">
+            <tree string="Operator Code">
+                <field name="name" />
+                <field name="code" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="operator_code_form" model="ir.ui.view">
+        <field name="name">operator.code.form.view</field>
+        <field name="model">operator.code</field>
+        <field name="arch" type="xml">
+            <form string='Operator Code'>
+                <group>
+                    <field name="name" />
+                    <field name="code" />
+                </group>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="action_operator_code" model="ir.actions.act_window">
+        <field name="name">Operator Code</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">operator.code</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <!--<field name="view_mode">tree,form,calendar,pivot,graph</field>-->
+    </record>
+
+
+    <menuitem id="menu_freight_operator_code" name="Operator Code" parent="sci_goexcel_freight.menu_freight_configure" action="action_operator_code" sequence="23"/>
+
+
+
+    <record id="shipment_term_tree" model="ir.ui.view">
+        <field name="name">shipment.term.tree.view</field>
+        <field name="model">shipment.term</field>
+        <field name="arch" type="xml">
+            <tree string="Shipment Term">
+                <field name="name" />
+                <field name="code" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="shipment_term_form" model="ir.ui.view">
+        <field name="name">shipment.term.form.view</field>
+        <field name="model">shipment.term</field>
+        <field name="arch" type="xml">
+            <form string='Shipment Term'>
+                <group>
+                    <field name="name" />
+                    <field name="code" />
+
+                </group>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="action_shipment_term" model="ir.actions.act_window">
+        <field name="name">Shipment Term</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">shipment.term</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <!--<field name="view_mode">tree,form,calendar,pivot,graph</field>-->
+    </record>
+
+
+    <menuitem id="menu_freight_shipment_term" name="Shipment Term" parent="sci_goexcel_freight.menu_freight_configure" action="action_shipment_term" sequence="24"/>
+
+
+
+
+
+    <record id="sci_goexcel_freight.action_ocean_booking" model="ir.actions.act_window">
+        <field name="context">{"search_default_this_year":1}</field>
+    </record>
+
+
+
+    <record id="cargo_type_tree" model="ir.ui.view">
+        <field name="name">cargo.type.tree.view</field>
+        <field name="model">cargo.type</field>
+        <field name="arch" type="xml">
+            <tree string="Operator Code">
+                <field name="name" />
+                <field name="code" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cargo_type_form" model="ir.ui.view">
+        <field name="name">cargo.type.form.view</field>
+        <field name="model">cargo.type</field>
+        <field name="arch" type="xml">
+            <form string='Cargo Type'>
+                <group>
+                    <field name="name" />
+                    <field name="code" />
+                </group>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="action_cargo_type" model="ir.actions.act_window">
+        <field name="name">Cargo Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cargo.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <!--<field name="view_mode">tree,form,calendar,pivot,graph</field>-->
+    </record>
+
+
+    <menuitem id="menu_freight_cargo_type" name="Cargo Type" parent="sci_goexcel_freight.menu_freight_configure" action="action_cargo_type" sequence="25"/>
+
+
+
+</odoo>

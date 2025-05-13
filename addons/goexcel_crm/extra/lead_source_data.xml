@@ -1,0 +1,84 @@
+<odoo>
+    <data noupdate="0">
+        <record id="001" model="utm.source">
+            <field name="name">Association</field>
+            <!-- <field name="active">True</field> -->
+            <!-- <field name="full_name">Association</field> -->
+        </record>
+        <record id="002" model="utm.source">
+            <field name="name">Advertisement</field>
+            <!-- <field name="active">True</field> -->
+            <!-- <field name="full_name">Advertisement</field> -->
+        </record>
+        <record id="003" model="utm.source">
+            <field name="name">Competitor</field>
+            <!-- <field name="active">True</field> -->
+            <!-- <field name="full_name">Competitor</field> -->
+        </record>
+        <record id="004" model="utm.source">
+            <field name="name">Door to door</field>
+            <!-- <field name="active">True</field> -->
+            <!-- <field name="full_name">Door to door</field> -->
+        </record>
+        <record id="005" model="utm.source">
+            <field name="name">Google map</field>
+            <!-- <field name="active">True</field> -->
+            <!-- <field name="full_name">Google map</field> -->
+        </record>
+        <record id="006" model="utm.source">
+            <field name="name">Google search</field>
+            <!-- <field name="active">True</field> -->
+            <!-- <field name="full_name">Google search</field> -->
+        </record>
+        <record id="007" model="utm.source">
+            <field name="name">Inquiry</field>
+            <!-- <field name="active">True</field> -->
+            <!-- <field name="fuly">Inquiry</field> -->
+        </record>
+        <record id="008" model="utm.source">
+            <field name="name">Intro n referral</field>
+            <!-- <field name="active">True</field> -->
+            <!-- <field name="full_name">Intro n referral</field> -->
+        </record>
+        <record id="009" model="utm.source">
+            <field name="name">Linkedin</field>
+            <!-- <field name="active">True</field> -->
+            <!-- <field name="full_name">Linkedin</field> -->
+        </record>
+        <record id="010" model="utm.source">
+            <field name="name">Magazine</field>
+            <!-- <field name="active">True</field> -->
+            <!-- <field name="full_name">Magazine</field> -->
+        </record>
+        <record id="011" model="utm.source">
+            <field name="name">Networking</field>
+            <!-- <field name="active">True</field> -->
+            <!-- <field name="full_name">Networking</field> -->
+        </record>
+        <record id="012" model="utm.source">
+            <field name="name">Newspaper or media</field>
+            <!-- <field name="active">True</field> -->
+            <!-- <field name="full_name">Newspaper or media</field> -->
+        </record>
+        <record id="013" model="utm.source">
+            <field name="name">Office</field>
+            <!-- <field name="active">True</field> -->
+            <!-- <field name="full_name">Office</field> -->
+        </record>
+        <record id="014" model="utm.source">
+            <field name="name">Roadshow and tradeshow</field>
+            <!-- <field name="active">True</field> -->
+            <!-- <field name="full_name">Roadshow and tradeshow</field> -->
+        </record>
+        <record id="015" model="utm.source">
+            <field name="name">Vehicle</field>
+            <!-- <field name="active">True</field> -->
+            <!-- <field name="full_name">Vehicle</field> -->
+        </record>
+        <record id="016" model="utm.source">
+            <field name="name">Transfer from DSR</field>
+            <!-- <field name="active">True</field> -->
+            <!-- <field name="full_name">Transfer from DSR</field> -->
+        </record>
+    </data>
+</odoo>

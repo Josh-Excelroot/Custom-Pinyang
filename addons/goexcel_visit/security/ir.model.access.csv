@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_visit_outcome,access_visit_outcome,model_visit_outcome,base.group_user,1,1,1,1
+access_visit_spanco,access_visit_spanco,model_visit_spanco,base.group_user,1,1,1,1
+access_visit_spanco_value,access_visit_spanco_value,model_visit_spanco_value,base.group_user,1,1,1,1
+access_visit_spanco_line,access_visit_spanco_line,model_visit_spanco_line,base.group_user,1,1,1,1
+access_visit_spanco_purpose,access_visit_spanco_purpose,model_visit_spanco_purpose,base.group_user,1,1,1,1
+access_visit_method,access_visit_method,model_visit_method,base.group_user,1,1,1,1
+access_visit_purpose,access_visit_purpose,model_visit_purpose,base.group_user,1,1,1,1
+access_visit,access_visit,model_visit,base.group_user,1,1,1,1

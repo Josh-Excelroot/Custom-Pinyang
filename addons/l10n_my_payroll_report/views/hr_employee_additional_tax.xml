@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_hr_employee_additional_tax_inherited" model="ir.ui.view">
+            <field name="name">hr.employee.form.additional.tax.inherited</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook//page[@name='hr_settings']" position="before">
+                    <page string="Additional Tax">
+                        <group>
+                            <field name="additional_tax_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="month_selection"/>
+                                    <field name="year_selection" widget="selection" attrs="{'readonly':[('month_selection','=',False)],'required':[('month_selection','!=',False)]}"/>
+                                    <field name="additional_tax_amount" attrs="{'readonly':[('month_selection','=',False)]}"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

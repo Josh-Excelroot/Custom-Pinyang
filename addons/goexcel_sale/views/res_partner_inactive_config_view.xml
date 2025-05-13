@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="res_partner_inactive_config_form_view" model="ir.ui.view">
+            <field name="name">goexcel_sale.res_partner_inactive_config.form</field>
+            <field name="model">res.partner.inactive.config</field>
+            <field name="arch" type="xml">
+                <form string="Customer Inactive Configuration">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="partner_status"/>
+                                <field name="last_invoice_gap_days"/>
+                                <field name="company_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="res_partner_inactive_config_tree_view" model="ir.ui.view">
+            <field name="name">goexcel_sale.res_partner_inactive_config.tree</field>
+            <field name="model">res.partner.inactive.config</field>
+            <field name="arch" type="xml">
+                <tree string="Customer Inactive Configuration">
+                    <field name="partner_status"/>
+                    <field name="last_invoice_gap_days"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="res_partner_inactive_config_act_window" model="ir.actions.act_window">
+            <field name="name">Customer Inactive Configuration</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner.inactive.config</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Customer Inactive Configuration.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="res_partner_inactive_config_menu"
+                  name="Customer Inactive Config."
+                  parent="contacts.res_partner_menu_config"
+                  sequence="5"
+                  action="goexcel_sale.res_partner_inactive_config_act_window"/>
+
+    </data>
+</odoo>

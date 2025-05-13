@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="url_wizard_from" model="ir.ui.view">
+        <field name="name">wizard.url.form</field>
+        <field name="model">wizard.url</field>
+        <field name="arch" type="xml">
+            <form string="Import Devis (code, quantity, price) .XLS(x)">
+
+                <group>
+                    <field name="name" groups="base.group_erp_manager"/>
+                    <field name="url" widget="url" groups="base.group_erp_manager"/>
+
+                    <field name="active_docs" invisible="1"/>
+                    <button string="Play Video" name="play_video" type="object" class="btn-primary" attrs="{'invisible': [('url', '=',False)]}"/>
+                </group>
+                <hr/>
+                <group>
+                    <field name="name2" groups="base.group_erp_manager"/>
+                        <field name="url2" widget="url" groups="base.group_erp_manager"/>
+                        <button string="Play Video 2" name="play_videosecond" type="object" class="btn-primary" attrs="{'invisible': [('url2', '=',False)]}"/>
+
+                </group>
+                <group>
+                    <field name="pdf_url" widget="url" attrs="{'readonly': [('active_docs', '=',False)]}"/>
+
+                </group>
+
+
+                <footer>
+                    <button string="Save" name="save_data" type="object"
+                            class="btn-primary" groups="base.group_erp_manager"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="url_wizard_html" model="ir.ui.view">
+        <field name="name">wizard.url.form</field>
+        <field name="model">wizard.url</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false" string="Import Devis (code, quantity, price) .XLS(x)">
+                <field name="html"/>
+                <footer>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+</odoo>

@@ -1,0 +1,69 @@
+<odoo>
+    <data noupdate="0">
+        <record id="001" model="customer.sector">
+            <field name="name">Agriculture</field>
+            <field name="active">True</field>
+            <field name="full_name">Agriculture</field>
+        </record>
+        <record id="002" model="customer.sector">
+            <field name="name">Auto &amp; Truck Dealers</field>
+            <field name="active">True</field>
+            <field name="full_name">Auto &amp; Truck Dealers</field>
+        </record>
+        <record id="003" model="customer.sector">
+            <field name="name">Automotive components</field>
+            <field name="active">True</field>
+            <field name="full_name">Automotive components</field>
+        </record>
+        <record id="004" model="customer.sector">
+            <field name="name">Aviation</field>
+            <field name="active">True</field>
+            <field name="full_name">Aviation</field>
+        </record>
+        <record id="005" model="customer.sector">
+            <field name="name">Construction</field>
+            <field name="active">True</field>
+            <field name="full_name">Construction</field>
+        </record>
+        <record id="006" model="customer.sector">
+            <field name="name">Fleet</field>
+            <field name="active">True</field>
+            <field name="full_name">Fleet</field>
+        </record>
+        <record id="007" model="customer.sector">
+            <field name="name">Manufacturing</field>
+            <field name="active">True</field>
+            <field name="full_name">Manufacturing</field>
+        </record>
+        <record id="008" model="customer.sector">
+            <field name="name">Marine</field>
+            <field name="active">True</field>
+            <field name="full_name">Marine</field>
+        </record>
+        <record id="009" model="customer.sector">
+            <field name="name">Metals</field>
+            <field name="active">True</field>
+            <field name="full_name">Metals</field>
+        </record>
+        <record id="010" model="customer.sector">
+            <field name="name">Mining</field>
+            <field name="active">True</field>
+            <field name="full_name">Mining</field>
+        </record>
+        <record id="011" model="customer.sector">
+            <field name="name">Power</field>
+            <field name="active">True</field>
+            <field name="full_name">Power</field>
+        </record>
+        <record id="012" model="customer.sector">
+            <field name="name">Workshop</field>
+            <field name="active">True</field>
+            <field name="full_name">Workshop</field>
+        </record>
+        <record id="013" model="customer.sector">
+            <field name="name">Trading</field>
+            <field name="active">True</field>
+            <field name="full_name">Trading</field>
+        </record>
+    </data>
+</odoo>

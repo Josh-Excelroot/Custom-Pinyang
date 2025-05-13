@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_location_data,access_location_data,model_location_data,base.group_user,1,1,1,1
+access_attendance_report_config,access_attendance_report_config,model_attendance_report_config,base.group_user,1,1,1,1
+access_attendance_report_config_lines,access_attendance_report_config_lines,model_attendance_report_config_lines,base.group_user,1,1,1,1
+access_hr_attendance_system_employee,hr.attendance.system.employee,model_hr_attendance,hr_attendance.group_hr_attendance,1,0,0,0
+access_hr_attendance_system_manager,hr.attendance.system.manager,model_hr_attendance,hr_attendance.group_hr_attendance_user,1,1,1,0
+access_hr_attendance_system_hr,hr.attendance.system.hr,model_hr_attendance,goexcel_attendance.group_hr_attendance_hr,1,1,1,1
+access_hr_attendance_system_admin,hr.attendance.system.admin,model_hr_attendance,hr_attendance.group_hr_attendance_manager,1,1,1,1
+access_hr_employee_employee,hr.employee.employee,model_hr_employee,hr_attendance.group_hr_attendance,1,0,0,0
+access_hr_employee_manager,hr.employee.manager,model_hr_employee,hr_attendance.group_hr_attendance_user,1,0,0,0
+access_hr_employee_hr,hr.employee.hr,model_hr_employee,goexcel_attendance.group_hr_attendance_hr,1,1,1,1
+access_hr_employee_admin,hr.employee.admin,model_hr_employee,hr_attendance.group_hr_attendance_manager,1,1,1,1

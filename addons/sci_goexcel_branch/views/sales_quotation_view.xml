@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<odoo>
+    <record model="ir.ui.view" id="view_sales_quotation_branch">
+		<field name="name">Freight Booking</field>
+		<field name="model">sale.order</field>
+        <field name="type">form</field>
+		<field name="inherit_id" ref="sale.view_order_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='payment_term_id']" position="after">
+				<field name="branch"/>
+			</xpath>
+		</field>
+	</record>
+
+	<record id='view_sales_quotation_tree_branch' model='ir.ui.view'>
+		<field name="name">Sales Quotation Tree</field>
+		<field name="model">sale.order</field>
+		<field name="type">tree</field>
+		<field name="priority" eval="10"/>
+		<field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='amount_total']" position="after">
+				<field name="branch"/>
+			</xpath>
+		</field>
+	</record>
+
+
+	<record id="view_sales_quotation_search_branch" model="ir.ui.view">
+		<field name="name">Quotation Search</field>
+		<field name="model">sale.order</field>
+		<field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+		<field name="arch" type="xml">
+			<search>
+				<filter string="To Approve Quotation" name="to_approve_quotation" domain="[('state', '=', 'approve')]"/>
+				<filter string="Approved Quotation" name="approved_quotation" domain="[('state', '=', 'approved')]"/>
+			</search>
+		</field>
+	</record>
+
+</odoo>

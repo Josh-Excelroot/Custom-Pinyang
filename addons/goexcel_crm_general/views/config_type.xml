@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="crm_config_type" model="ir.ui.view">
+        <field name="name">crm.config.type.form</field>
+        <field name="model">crm.config.type</field>
+        <field name="arch" type="xml">
+            <form string="Type">
+                <sheet>
+
+                    <field name="type" required="1"/>
+
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="crm_config_type_tree_view" model="ir.ui.view">
+        <field name="name">crm.config.type.tree</field>
+        <field name="model">crm.config.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="type"/>
+                 </tree>
+        </field>
+    </record>
+<!--        -->
+<!--            <record id="crm_lead_won_action1" model="ir.actions.act_window">-->
+<!--			<field name="name">Won Reason</field>-->
+<!--			<field name="type">ir.actions.act_window</field>-->
+<!--			<field name="res_model">crm.lead.won</field>-->
+<!--			<field name="view_type">form</field>-->
+<!--			<field name="view_mode">tree,form</field>-->
+<!--		</record>-->
+
+
+
+    <record id="action_config_type" model="ir.actions.act_window">
+        <field name="name">Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">crm.won.reason</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    </record>
+
+            <menuitem id="menu_config_type"
+              name="Type"
+              parent="crm.crm_menu_config"
+              action="action_config_type"/>
+
+
+
+    
+  </data>
+</odoo>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_notice_of_arrival_wo_rate_inherit_hide_fields" inherit_id="sci_goexcel_freight_2.report_notice_of_arrival_wo_rate">
+
+        <xpath expr="//table[@name='main_info']/tr[td[contains(text(), 'JOB NO')]]" position="replace">
+            <tr>
+                <td>JOB NO</td>
+                <td>:</td>
+                <td><span t-field="o.booking_no"/></td>
+                <td></td>
+                <td>ETA DATE</td>
+                <td>:</td>
+                <td><span t-field="o.port_of_discharge_eta"/></td>
+            </tr>
+        </xpath>
+        <xpath expr="//table[@name='main_info']/tr[td[contains(text(), 'POD')]]" position="replace">
+
+        </xpath>
+        <xpath expr="//table[@name='main_info']/tr[td[contains(text(), 'POL')]]" position="replace">
+            <tr>
+                <td>
+                    <t t-if="o.service_type == 'ocean'">
+                        POL
+                    </t>
+                    <t t-elif="o.service_type == 'air'">
+                        AIRPORT DEPT.
+                    </t>
+                </td>
+                <td>:</td>
+                <td>
+                    <t t-if="o.service_type == 'ocean'">
+                        <span t-field="o.port_of_loading"/>
+                    </t>
+                    <t t-elif="o.service_type == 'air'">
+                        <span t-field="o.airport_departure.name"/>
+                    </t>
+                </td>
+                <td/> <!-- ETD DATE removed here -->
+                <td>
+                    <t t-if="o.service_type == 'ocean'">
+                        POD
+                    </t>
+                    <t t-elif="o.service_type == 'air'">
+                        AIRPORT DEST.
+                    </t>
+                </td>
+                <td>:</td>
+                <td>
+                    <t t-if="o.service_type == 'ocean'">
+                        <span t-field="o.port_of_discharge"/>
+                    </t>
+                    <t t-elif="o.service_type == 'air'">
+                        <span t-field="o.airport_destination.name"/>
+                    </t>
+                </td>
+            </tr>
+        </xpath>
+
+        <xpath expr="//table[@name='main_info']/tr[td[contains(text(), 'FREIGHT TYPE')]]" position="replace"/>
+        <xpath expr="//table[@name='main_info']/tr[td[contains(text(), 'TERMINAL')]]" position="replace">
+            <td>TERMINAL</td>
+            <td>:</td>
+            <td><span t-field="o.terminal"/></td>
+            <td></td>
+            <td>FREIGHT TYPE</td>
+            <td>:</td>
+            <td><t t-if="o.freight_type"><span t-esc="o.freight_type.upper()"/></t></td>
+        </xpath>
+
+        <xpath expr="//table[@name='main_info']/tr[td[contains(text(), 'DESCRIPTION')]]" position="replace">
+            <tr>
+                <td>MARKING</td>
+                <td>:</td>
+                <td>
+                    <t t-if="o.cargo_type == 'fcl' and o.operation_line_ids">
+                        <span t-field="o.operation_line_ids[0].remark"/>
+                    </t>
+                    <t t-if="o.cargo_type == 'lcl' and o.operation_line_ids2">
+                        <span t-field="o.operation_line_ids2[0].shipping_mark"/>
+                    </t>
+                </td>
+                <td colspan="4"></td>
+            </tr>
+        </xpath>
+    </template>
+</odoo>

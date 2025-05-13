@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_pr_details_inherit" inherit_id="sci_goexcel_payment_receipt.report_pr_details">
+        <xpath expr="//table[hasclass('o_main_table')] //tbody //tr" position="replace">
+            <tr t-as="doc" t-foreach="docs">
+                <t t-if="doc['amount'] != 0">
+                    <td class="text-center">
+                        <span t-esc="doc['serial_no']"/>
+                    </td>
+                    <td class="text-center">
+                        <span t-esc="doc['invoice_date'].strftime('%d/%m/%Y')"/>
+                    </td>
+                    <td class="text-center">
+                        <span t-esc="doc['supplier_invoice_no']"/>
+                    </td>
+                    <td class="text-center">
+                        <span t-esc="doc['source_doc']"/>
+                    </td>
+                    <td class="text-right">
+                        <span t-esc="doc['original_amount']" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc[&quot;currency_id&quot;]}"/>
+                    </td>
+                    <td class="text-right">
+                        <span t-esc="doc['amount']" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc[&quot;currency_id&quot;]}"/>
+                    </td>
+                </t>
+                <t t-else="">
+                    <td class="text-center"/>
+                    <td class="text-center"/>
+                    <td class="text-center"/>
+                    <td class="text-center"/>
+                    <td class="text-right"/>
+                </t>
+            </tr>
+        </xpath>
+    </template>
+</odoo>

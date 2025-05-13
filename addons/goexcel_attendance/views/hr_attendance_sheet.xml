@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_attendance_sheet_view_form" model="ir.ui.view">
+        <field name="model">hr.attendance.sheet</field>
+        <field name="inherit_id" ref="hr_attendances_overtime.attendance_sheet_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="email_sent" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='total_overtime']" position="after">
+                <field name="overtime_cost_total"/>
+            </xpath>
+            <xpath expr="//field[@name='attendance_sheet_ids']/tree/field[@name='overtime']" position="replace">
+                <field name="overtime" sum="Overtime" widget="float_time"/>
+            </xpath>
+            <xpath expr="//field[@name='attendance_sheet_ids']/tree/field[@name='overtime']" position="after">
+                <field name="overtime_cost" sum="Overtime Cost"/>
+            </xpath>
+            <xpath expr="//field[@name='attendance_sheet_ids']/tree/field[@name='difftime']" position="replace">
+                <field name="difftime" sum="Difference" widget="float_time"/>
+            </xpath>
+            <xpath expr="//field[@name='attendance_sheet_ids']/tree/field[@name='total_attendance']" position="replace">
+                <field name="total_attendance" sum="Total Working Hour" widget="float_time"/>
+            </xpath>
+            <xpath expr="//button[@name='get_attendance']" position="attributes">
+                <attribute name="groups">goexcel_attendance.group_hr_attendance_hr</attribute>
+            </xpath>
+            <xpath expr="//button[@name='compute_attendance_data']" position="attributes">
+                <attribute name="string">Calculate Overtime</attribute>
+            </xpath>
+            <xpath expr="//button[@name='execute_send_to_manager']" position="attributes">
+                <attribute name="string">Send to HR</attribute>
+                <attribute name="groups">hr_attendance.group_hr_attendance_user</attribute>
+            </xpath>
+            <xpath expr="//button[@name='execute_set_to_approve']" position="attributes">
+                <attribute name="groups">goexcel_attendance.group_hr_attendance_hr</attribute>
+            </xpath>
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="manager_id" string="Direct Manager"/>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="hr_attendances_overtime.hr_attendance_sheets" name="Attendance Sheet" parent="hr_attendance.menu_hr_attendance_manage_attendances"
+              action="hr_attendances_overtime.action_attendance_sheets1" groups="hr_attendance.group_hr_attendance_user"/>
+</odoo>

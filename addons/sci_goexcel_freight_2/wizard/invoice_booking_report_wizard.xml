@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_booking_report_wizard_custom" model="ir.ui.view">
+            <field name="name">Invoice Booking Report Wizard</field>
+            <field name="model">invoice.booking.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Choose your date">
+                    <group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field name="file_data" filename="file_name" readonly="1"/>
+                            <field name="file_name" readonly="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="get_report_invoice_wizard" string="Generate Report" type="object"
+                                class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_booking_report_wizard_custom" model="ir.actions.act_window">
+            <field name="name">Action Invoice Booking Report Wizard</field>
+            <field name="res_model">invoice.booking.report.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="sci_goexcel_freight_2.view_booking_report_wizard_custom"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_invoice_booking_report" name="Invoiced Booking Profit Analysis(Excel)"
+                  parent="sci_goexcel_freight.menu_freight_report_analysis"
+                  action="action_view_booking_report_wizard_custom"/>
+    </data>
+</odoo>

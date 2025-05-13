@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <report id="action_payment_voucher_operation"
+            string="Payment Voucher (Operation)"
+            model="account.invoice"
+            report_type="qweb-pdf"
+            name="sci_goexcel_freight_2.report_pv_operation"
+            print_report_name = "('Payment Voucher ' + object.number)"
+    />
+
+    <template id="report_pv_operation">
+        <t t-call="web.html_container">
+           <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <style>
+                             body {
+                             font-family: sans-serif;
+                             font-size:10pt;
+                             }
+                        </style>
+
+                        <table width="100%" style="line-height: 150%; font-size:10pt;">
+                             <tr>
+                                <th style="width:17%;"></th>
+                                <td style="width:3%;"></td>
+                                <td style="width:30%;"></td>
+                                <td style="width:5%;"></td>
+                                <th style="width:17%;"><strong>PV NO</strong></th>
+                                <td style="width:3%;"><strong>:</strong></td>
+                                <td style="width:25%;"><strong></strong></td>
+                            </tr>
+                            <tr>
+                                <th style="width:17%;"><strong>TO</strong></th>
+                                <td style="width:3%;"><strong>:</strong></td>
+                                <td style="width:30%;"><strong><span t-field="o.partner_id.name"/></strong></td>
+                                <td style="width:5%;"></td>
+                                <th style="width:17%;"><strong>NO</strong></th>
+                                <td style="width:3%;"><strong>:</strong></td>
+                                <td style="width:25%;"><strong><span t-field="o.number"/></strong></td>
+                            </tr>
+                            <tr>
+                                <td style="width:17%;">BANK NAME</td>
+                                <td style="width:3%;">:</td>
+                                <td style="width:30%;">
+                                    <t t-if="o.partner_id.bank_ids">
+                                        <span t-esc="o.partner_id.bank_ids[0].bank_id.name"/>
+
+                                    </t>
+                                </td>
+                                <td style="width:5%;"></td>
+                                <td style="width:17%;">DATE</td>
+                                <td style="width:3%;">:</td>
+                                <td style="width:25%;"><span t-esc="o.date_invoice.strftime('%d/%m/%Y')"/></td>
+                            </tr>
+                              <tr>
+                                <td style="width:17%;">BANK A/C NO</td>
+                                <td style="width:3%;">:</td>
+                                <td style="width:30%;">
+                                    <t t-if="o.partner_id.bank_ids">
+                                        <span t-esc="o.partner_id.bank_ids[0].acc_number"/>
+
+                                    </t>
+                                </td>
+                                <td style="width:5%;"></td>
+                                <td style="width:17%;">CHEQUE NO</td>
+                                <td style="width:3%;">:</td>
+                                <td style="width:25%;"></td>
+                            </tr>
+                             <tr>
+                                <td>ETA / ETD</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.freight_booking">
+                                        <span t-field="o.freight_booking.port_of_discharge_eta"/>&#160;/&#160;<span t-field="o.freight_booking.port_of_loading_eta"/>
+                                    </t>
+                                </td>
+                                 <td style="width:5%;"></td>
+                                <td style="width:17%;">DATED</td>
+                                <td style="width:3%;">:</td>
+                                <td style="width:25%;"></td>
+                             </tr>
+                            <tr>
+                                <td>JOB NO.</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.freight_booking">
+                                        <span t-field="o.freight_booking.booking_no"/>
+                                    </t>
+                                </td>
+                                <td></td>
+                                <td>VESSEL</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.freight_booking">
+                                        <span t-field="o.freight_booking.vessel_name.name"/>&#160;/&#160;<span t-field="o.freight_booking.voyage_no"/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>MAWB / OBL NO</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.freight_booking">
+                                        <span t-field="o.freight_booking.obl_no"/>
+                                    </t>
+                                </td>
+                                <td></td>
+                                 <td>POL / POD</td>
+                                <td>:</td>
+                                <td>
+                                    <t t-if="o.freight_booking">
+                                        <span t-field="o.freight_booking.port_of_loading.name"/>&#160;/&#160;<span t-field="o.freight_booking.port_of_discharge.name"/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>SUPPLIER INV No</td>
+                                <td>:</td>
+                                <td colspan="5"><strong><span t-esc="o.reference"/></strong></td>
+                            </tr>
+                            <tr>
+                                <td>DESCRIPTIONS</td>
+                                <td>:</td>
+                                <td colspan="5"><span t-esc="o.invoice_description"/></td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table name="invoice_line_table1" style="line-height: 150%; font-size:9pt; width:100%;">
+                            <thead name="invoice_thead1">
+                                <tr>
+                                    <th class="text-left" style="width:3%; border-top:1pt solid black; border-bottom:1pt solid black;"><span></span></th>
+                                    <th class="text-left" style="width:29%; border-top:1pt solid black; border-bottom:1pt solid black;"><span>DESCRIPTION</span></th>
+                                    <th class="text-right" style="width:8%; border-top:1pt solid black; border-bottom:1pt solid black;"><span>QTY</span></th>
+                                    <th class="text-right" style="width:8%; border-top:1pt solid black; border-bottom:1pt solid black;"><span>CUR</span></th>
+                                    <th class="text-right" style="width:8%; border-top:1pt solid black; border-bottom:1pt solid black;"><span>RATE</span></th>
+                                    <th class="text-right" style="width:8%; border-top:1pt solid black; border-bottom:1pt solid black;"><span>EXC</span></th>
+                                    <th class="text-right" style="width:8%; border-top:1pt solid black; border-bottom:1pt solid black;"><span>SST</span></th>
+                                    <th class="text-right" style="width:14%; border-top:1pt solid black; border-bottom:1pt solid black;"><span>BEFORE TAX</span></th>
+                                    <th class="text-right" style="width:14%; border-top:1pt solid black; border-bottom:1pt solid black;"><span>INCLUDE TAX</span></th>
+                                </tr>
+                            </thead>
+                            <tbody class="invoice_tbody1" name="invoice_tbody1">
+                                <t t-set="line_no" t-value="0"/>
+                                <t t-set="max_line" t-value="12"/>
+                                <t t-foreach="o.invoice_line_ids" t-as="line">
+                                    <t t-set="line_no" t-value="line_no + 1"/>
+                                    <t t-set="max_line" t-value="max_line-1"/>
+                                    <tr>
+                                        <td class="text-left"><span t-esc="line_no" /></td>
+                                        <td class="text-left"><span t-field="line.name"/></td>
+                                        <td class="text-right"><span t-field="line.quantity"/></td>
+                                        <td class="text-right"><span t-field="line.freight_currency.name"/></td>
+                                        <td class="text-right"><span t-field="line.freight_foreign_price"/></td>
+                                        <td class="text-right"><span t-field="line.freight_currency_rate"/></td>
+                                        <td class="text-right">
+                                            <span t-esc="'%.2f'%  float(line.price_tax)"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="'%.2f'%  float(line.price_subtotal)"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="'%.2f'%  float(line.price_total)"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <t t-foreach="range(max_line)" t-as="l">
+                                    <tr height="20px">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <div id="total">
+                            <div>
+                                <div style="border-top: 1px solid black;"/>
+                                <table width="100%" style="line-height: 200%;" name="total">
+                                    <tr>
+                                        <td width="44%">
+                                        </td>
+                                        <td width="20%">
+                                            <strong>TOTAL (<span t-field="o.currency_id.name"/>):</strong>
+                                        </td>
+
+                                        <td class="text-right" width="8%">
+                                            <strong>
+                                                <span t-esc="'%.2f'%  float(o.amount_tax)"/>
+                                            </strong>
+                                        </td>
+                                        <td class="text-right" width="14%">
+                                            <strong>
+                                                <span t-esc="'%.2f'%  float(o.amount_untaxed)"/>
+                                            </strong>
+                                        </td>
+                                        <td class="text-right" width="14%">
+                                            <strong>
+                                                <span t-esc="'%.2f'%  float(o.amount_total)"/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div style="border-top: 1px solid black;"/>
+                            </div>
+                            <div>
+                                <table width="100%">
+                                    <tr>
+                                        <td width="70%" style="font-size:10pt;">
+                                            <strong>
+                                                <!--<span t-field="o.currency_id.currency_unit_label"/> :-->
+                                                <span t-esc="o.currency_id.amount_to_text(o.amount_total).upper()"/>
+                                                ONLY
+                                            </strong>
+                                            <br/><br/>
+                                        </td>
+                                        <td width="5%"></td>
+                                        <td width="25%"></td>
+                                    </tr>
+                                    <tr height="22px">
+                                        <td colspan="3">** NOTE: PLEASE ATTACHED TOGETHER WITH THE COPY INVOICE FOR PAYMENT APPROVAL</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </div>
+
+                         <br/>
+                         <br/>
+                         <br/>
+                        <table style="font-family:san-serif;font-size:12px">
+                            <tr>
+                                <td style="line-height: 1.6;" width="18%">
+
+
+                                    ........................................
+                                    <br/> <strong>OPERATION:</strong><span t-esc="user.name"/>
+                                    <br/>
+
+                                </td>
+                                <td style="text-align:left" width="15%">
+
+
+                                    ...................................
+                                    <br/><strong>ACCOUNT:</strong>
+                                     <br/>
+                                </td>
+                                <td style="text-align:left" width="15%">
+
+
+                                    ....................................
+                                    <br/><strong>AUTHORIZER:</strong>
+                                     <br/>
+                                </td>
+                                <td style="text-align:left" width="15%">
+
+
+                                    ....................................
+                                    <br/><strong>MANAGEMENT:</strong>
+                                     <br/>
+                                </td>
+                                <td style="text-align:left" width="15%">
+
+
+                                    ....................................
+                                    <br/><strong>RECEIVED BY:</strong>
+                                     <br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    <br/>
+                                    INVOICE NO:
+                                </td>
+                            </tr>
+                            <tr>
+                                 <td colspan="5">
+                                    <br/>
+                                </td>
+                            </tr>
+                             <tr>
+
+                                <td colspan="5">
+                                    AMOUNT:
+                                </td>
+                             </tr>
+                        </table>
+
+                     </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+
+
+
+</odoo>

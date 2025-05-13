@@ -1,0 +1,13 @@
+Version 12.0.4 - 30 August 2024 - Kenny
+===================================
+FIXED
+    - Validation to prevent analytic line generated more than once
+
+------------------------------------------------------------
+
+Version 12.0.5 - 13 November 2024 - Kenny
+===================================
+FIXED
+    - singleton bug in account move post
+
+------------------------------------------------------------

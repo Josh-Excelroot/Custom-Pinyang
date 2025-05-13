@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.dynamic.reports</field>
+            <field name="model">res.config.settings</field>
+            <field eval="40" name="priority"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='currency_exchange_journal_id']" position="after">
+                    <label for="unrealized_forex_gain_account_id" class="col-lg-3 o_light_label"/>
+                    <field name="unrealized_forex_gain_account_id" can_create="true" can_write="true"/>
+                    <label for="unrealized_forex_loss_account_id" class="col-lg-3 o_light_label"/>
+                    <field name="unrealized_forex_loss_account_id" can_create="true" can_write="true"/>
+                </xpath>
+
+                <xpath expr="//div[hasclass('settings')]/div[hasclass('app_settings_block')]/div[@id='invoicing_settings']"
+                       position="after">
+                    <h2>Dynamic Reports Settings</h2>
+                    <div class="row mt16 o_settings_container" name="dynamic_reports_setting_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <h2>General</h2>
+                            <br/>
+                            <div class="o_setting_left_pane">
+                                <field name="load_last_dynamic_reports_record"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label string="Load Last Record" for="load_last_dynamic_reports_record"/>
+                                <div class="text-muted">
+                                    Load last printed/viewed record
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="o_setting_left_pane">
+                                <field name="unposted_entries_dynamic_reports"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label string="Include Unposted Entries" for="unposted_entries_dynamic_reports"/>
+                                <div class="text-muted">
+                                    Set default to show unposted entries also
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <h2>Partner Ageing</h2>
+                            <br/>
+                            <div class="o_setting_left_pane">
+                                <field name="partner_ageing_exch_entries"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label string="Include Exch Rate Entries" for="partner_ageing_exch_entries"/>
+                                <div class="text-muted">
+                                    Set default on include entries from exchange journal
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="o_setting_left_pane">
+
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label string="Exclude Accounts" for="partner_ageing_exclude_accounts"/>
+                                <div class="text-muted">
+                                    Exclude moves which have these accounts in lines
+                                </div>
+                                <field name="partner_ageing_exclude_accounts" widget="many2many_tags"/>
+
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <h2>General Ledger</h2>
+                            <br/>
+                            <div class="o_setting_left_pane">
+                                <field name="general_ledger_exch_entries"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label string="Include Exch Rate Entries" for="general_ledger_exch_entries"/>
+                                <div class="text-muted">
+                                    Set default on include entries from exchange journal
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

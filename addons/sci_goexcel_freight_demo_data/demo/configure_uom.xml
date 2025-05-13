@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!--   Yulia 12032025 demo data for  uom categories     -->
+        <record id="product_uom_category_trip" model="uom.category">
+            <field name="name">TRIP</field>
+        </record>
+        <record id="product_uom_category_ctn" model="uom.category">
+            <field name="name">CTN</field>
+        </record>
+
+        <!--   Yulia 12032025 set reference for trip and CTN     -->
+        <record id="product_uom_uom_trip_reference" model="uom.uom">
+            <field name="category_id" ref="product_uom_category_trip"/>
+            <field name="name">TRIP</field>
+            <field name="rounding">1.00000</field>
+            <field name="factor" eval="1"/>
+            <field name="uom_type">reference</field>
+        </record>
+
+        <record id="product_uom_uom_ctn_reference" model="uom.uom">
+            <field name="category_id" ref="product_uom_category_ctn"/>
+            <field name="name">CTN</field>
+            <field name="rounding">0.01000</field>
+            <field name="factor" eval="1"/>
+            <field name="uom_type">reference</field>
+        </record>
+
+        <!--    Yulia 12032025 demo data for uom uom    -->
+        <record id="product_uom_uom_20" model="uom.uom">
+            <field name="category_id" ref="product_uom_category_trip"/>
+            <field name="name">20'</field>
+            <field name="rounding">0.01000</field>
+            <field name="factor" eval="1000"/>
+            <field name="uom_type">smaller</field>
+        </record>
+
+        <record id="product_uom_uom_units" model="uom.uom">
+            <field name="name">Unit(s)</field>
+            <field name="category_id" ref="uom.product_uom_categ_unit"/>
+            <field name="factor" eval="1000"/>
+            <field name="uom_type">bigger</field>
+            <field name="rounding">0.00100</field>
+        </record>
+
+    </data>
+</odoo>

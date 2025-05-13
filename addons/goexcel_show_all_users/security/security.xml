@@ -1,0 +1,85 @@
+<?xml version="1.0" ?>
+<odoo>
+  <data noupdate="0">
+<!--  	<record id="user_show_company_record_group" model="res.groups">-->
+<!--        <field name="name">User : Show company wise</field>-->
+<!--    </record>-->
+
+
+<!--    <record id="users_allow_rule_show_company" model="ir.rule">-->
+<!--        <field name="name">users Allowed rule</field>-->
+<!--        <field name="model_id" ref="base.model_res_users"/>-->
+<!--        <field name="groups" eval="[(4, ref('user_show_company_record_group'))]"/>-->
+<!--        <field name="domain_force">[('company_ids','child_of',[user.company_id.id])]</field>-->
+<!--    </record>-->
+<!--    <record id="PARTNERS_allow_rule_show_COPMANY" model="ir.rule">-->
+<!--        <field name="name">users Allowed rule</field>-->
+<!--        <field name="model_id" ref="base.model_res_partner"/>-->
+<!--        <field name="groups" eval="[(4, ref('user_show_company_record_group'))]"/>-->
+<!--        <field name="domain_force">['|', ('company_ids', 'in', user.company_id.ids), ('visible_for_all_companies', '=', True)]</field>-->
+<!--    </record>-->
+  </data>
+    <data noupdate="1">
+
+	<record id="user_show_all_record_group" model="res.groups">
+        <field name="name">User : Show all users</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+
+
+<!--    <record id="users_allow_rule_show-all" model="ir.rule">-->
+<!--        <field name="name">Product Allowed rule</field>-->
+<!--        <field name="model_id" ref="base.model_res_users"/>-->
+<!--        <field name="groups" eval="[(4, ref('user_show_all_record_group'))]"/>-->
+<!--        <field name="domain_force">[(1,'=',1)]</field>-->
+<!--    </record>-->
+<!--    <record id="users_allow_rule_show-all" model="ir.rule">-->
+<!--        <field name="name">Product Allowed rule</field>-->
+<!--        <field name="model_id" ref="base.model_res_partner"/>-->
+<!--        <field name="groups" eval="[(4, ref('user_show_all_record_group'))]"/>-->
+<!--        <field name="domain_force">[(1,'=',1)]</field>-->
+<!--    </record>-->
+
+
+    <!-- <record id="group_sales_team" model="res.groups">
+        <field name="name">User: Sales Team</field>
+        <field name="category_id" ref="base.module_category_sales_management"/>
+        <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+    </record>-->
+
+    <!--<record id="sales_team.group_sale_salesman_all_leads" model="res.groups">
+        <field name="implied_ids" eval="[(6, 0, [ref('group_sales_team')])]"/>
+    </record>
+-->
+
+     <!--   <record id="sale_order_team_rule" model="ir.rule">
+            <field name="name">Sales Orders</field>
+            <field ref="sale.model_sale_order" name="model_id"/>
+            <field name="domain_force">['|', ('team_id', '=', user.sale_team_id.id), ('team_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_sales_team'))]"/>
+        </record>
+
+        <record id="sale_order_report_team_rule" model="ir.rule">
+            <field name="name">Sales Orders Analysis</field>
+            <field ref="sale.model_sale_report" name="model_id"/>
+            <field name="domain_force">['|', ('team_id', '=', user.sale_team_id.id), ('team_id', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_sales_team'))]"/>
+        </record>-->
+
+<!--        <record id="sale_order_line_team_rule" model="ir.rule">-->
+<!--            <field name="name">Sales Order Lines</field>-->
+<!--            <field ref="sale.model_sale_order_line" name="model_id"/>-->
+<!--            <field name="domain_force">['|', ('order_id.team_id', '=', user.sale_team_id.id), ('order_id.team_id', '=', False)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('group_sales_team'))]"/>-->
+<!--        </record>-->
+
+<!--        <record id="res_partner_team_rule" model="ir.rule">-->
+<!--            <field name="name">Res Partner</field>-->
+<!--            <field ref="base.model_res_partner" name="model_id"/>-->
+<!--            <field name="domain_force">['|', ('team_id', '=', user.sale_team_id.id), ('team_id', '=', False)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('group_sales_team'))]"/>-->
+<!--        </record>-->
+
+     </data>
+</odoo>
+

@@ -1,0 +1,39 @@
+<odoo>
+    <data noupdate="0">
+        <record id="001" model="">
+            <field name="name">Black list payment</field>
+            <field name="active">True</field>
+            <field name="full_name">Black list payment</field>
+        </record>
+        <record id="002" model="">
+            <field name="name">Black list reputation</field>
+            <field name="active">True</field>
+            <field name="full_name">Black list reputation</field>
+        </record>
+        <record id="003" model="">
+            <field name="name">Disqualified small</field>
+            <field name="active">True</field>
+            <field name="full_name">Disqualified small</field>
+        </record>
+        <record id="004" model="">
+            <field name="name">Disqualified non user</field>
+            <field name="active">True</field>
+            <field name="full_name">Disqualified non user</field>
+        </record>
+        <record id="005" model="">
+            <field name="name">Legal case</field>
+            <field name="active">True</field>
+            <field name="full_name">Legal case</field>
+        </record>
+        <record id="006" model="">
+            <field name="name">Lost Order</field>
+            <field name="active">True</field>
+            <field name="full_name">Lost Order</field>
+        </record>
+        <record id="007" model="">
+            <field name="name">Lost customer</field>
+            <field name="active">True</field>
+            <field name="full_name">Lost customer</field>
+        </record>
+    </data>
+</odoo>

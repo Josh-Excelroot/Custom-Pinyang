@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="ppi_payroll_upload_file_form_view">
+            <field name="name">ppi.payroll.upload.file.form</field>
+            <field name="model">upload.xls.wiz</field>
+            <field name="arch" type="xml">
+                <form string="upload xls file">
+		                <group col="4" colspan="3">
+	                        <field name="in_file" filename="datas_fname" colspan="4"/>
+	                        <field name="date_start" colspan="2" required="1"/>
+	                        <field name="date_end" colspan="2" required="1"/>
+	                        <field name="clear_all_prev_value" colspan="2"/>
+	                        <field name="datas_fname" invisible="1"/>
+		                </group>
+                        <footer>
+		                       <button name="upload_file" string="Upload" type="object" class="oe_highlight"/>
+		                       or
+		                       <button special="cancel" string="Cancel" />
+                        </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="Upload file" key2="client_action_multi"
+            res_model="upload.xls.wiz" id="action_ppi_payroll_upload_xls_file_wiz"
+            view_mode="form" target="new" view_type="form"/>
+        
+        <!-- <menuitem action="action_ppi_payroll_upload_xls_file_wiz" groups="l10n_my_payroll.group_hr_payroll_admin,hr_payroll.group_hr_payroll_manager,-hr.group_hr_manager,-hr.group_hr_user" id="menu_ppi_payroll_upload_file" parent="hr_payroll.menu_hr_payroll_root"/> -->
+
+    </data>
+</odoo>

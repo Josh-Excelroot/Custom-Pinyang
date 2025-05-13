@@ -1,0 +1,39 @@
+<odoo>
+    <data noupdate="0">
+        <record id="001" model="">
+            <field name="name">Save cost</field>
+            <field name="active">True</field>
+            <field name="full_name">Save cost</field>
+        </record>
+        <record id="002" model="">
+            <field name="name">Fear of down time</field>
+            <field name="active">True</field>
+            <field name="full_name">Fear of down time</field>
+        </record>
+        <record id="003" model="">
+            <field name="name">Comfort and convenience</field>
+            <field name="active">True</field>
+            <field name="full_name">Comfort and convenience</field>
+        </record>
+        <record id="004" model="">
+            <field name="name">Security and protection</field>
+            <field name="active">True</field>
+            <field name="full_name">Security and protection</field>
+        </record>
+        <record id="005" model="">
+            <field name="name">Pride of ownership</field>
+            <field name="active">True</field>
+            <field name="full_name">Pride of ownership</field>
+        </record>
+        <record id="006" model="">
+            <field name="name">Relationship</field>
+            <field name="active">True</field>
+            <field name="full_name">Relationship</field>
+        </record>
+        <record id="006" model="">
+            <field name="name">Relationship</field>
+            <field name="active">True</field>
+            <field name="full_name">Relationship</field>
+        </record>
+    </data>
+</odoo>

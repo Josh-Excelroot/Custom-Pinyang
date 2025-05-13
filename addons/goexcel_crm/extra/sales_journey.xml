@@ -1,0 +1,74 @@
+<odoo>
+    <data noupdate="0">
+        <record id="001" model="">
+            <field name="name">Suspect - Lead of buyer</field>
+            <field name="active">True</field>
+            <field name="full_name">Suspect - Lead of buyer</field>
+        </record>
+        <record id="002" model="">
+            <field name="name">Prospect of customer</field>
+            <field name="active">True</field>
+            <field name="full_name">Prospect of customer</field>
+        </record>
+        <record id="003" model="">
+            <field name="name">Identify Pain and Problem</field>
+            <field name="active">True</field>
+            <field name="full_name">Identify Pain and Problem</field>
+        </record>
+        <record id="004" model="">
+            <field name="name">Share common problem</field>
+            <field name="active">True</field>
+            <field name="full_name">Share common problem</field>
+        </record>
+        <record id="005" model="">
+            <field name="name">Presentation and content</field>
+            <field name="active">True</field>
+            <field name="full_name">Presentation and content</field>
+        </record>
+        <record id="006" model="">
+            <field name="name">Offer</field>
+            <field name="active">True</field>
+            <field name="full_name">Offer</field>
+        </record>
+        <record id="007" model="">
+            <field name="name">Proofing product and service</field>
+            <field name="active">True</field>
+            <field name="full_name">Proofing product and service</field>
+        </record>
+        <record id="008" model="">
+            <field name="name">Answer and Convince</field>
+            <field name="active">True</field>
+            <field name="full_name">Answer and Convince</field>
+        </record>
+        <record id="009" model="">
+            <field name="name">Close sales</field>
+            <field name="active">True</field>
+            <field name="full_name">Close sales</field>
+        </record>
+        <record id="010" model="">
+            <field name="name">Order</field>
+            <field name="active">True</field>
+            <field name="full_name">Order</field>
+        </record>
+        <record id="011" model="">
+            <field name="name">Delivery</field>
+            <field name="active">True</field>
+            <field name="full_name">Delivery</field>
+        </record>
+        <record id="012" model="">
+            <field name="name">After sales - Cross sell and upsell</field>
+            <field name="active">True</field>
+            <field name="full_name">After sales - Cross sell and upsell</field>
+        </record>
+        <record id="013" model="">
+            <field name="name">Satisfaction of after sales</field>
+            <field name="active">True</field>
+            <field name="full_name">Satisfaction of after sales</field>
+        </record>
+        <record id="014" model="">
+            <field name="name">Ask for Referal</field>
+            <field name="active">True</field>
+            <field name="full_name">Ask for Referal</field>
+        </record>
+    </data>
+</odoo>

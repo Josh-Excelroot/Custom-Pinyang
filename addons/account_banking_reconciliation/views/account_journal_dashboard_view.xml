@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_journal_dashboard_kanban_view_recon" model="ir.ui.view">
+        <field name="name">account.journal.dashboard.kanban</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.account_journal_dashboard_kanban_view"/>
+        <field name="arch" type="xml">
+            <!--<xpath expr='//span[@name="import_statement"]' position='replace'>
+            </xpath>
+            <xpath expr='//a[@name="import_statement"]' position='replace'>
+            </xpath>-->
+            <div name="latest_statement" position="replace">
+                <div class="row" name="latest_statement" t-if="dashboard.last_balance"
+                    groups="account.group_account_user">
+                    <div class="col-7">
+                        <span title="Latest Statement">Latest Statement</span>
+                    </div>
+                    <div class="col-5 text-right">
+                        <span><t t-esc="dashboard.last_balance"/></span>
+                    </div>
+                </div>
+                <div class="row" name="difference" t-if="dashboard.difference"
+                     groups="account.group_account_user">
+                    <div class="col-7">
+                        <span title="Balance Difference">Difference</span>
+                    </div>
+                    <div class="col-5 text-right">
+                        <span><t t-esc="dashboard.difference"/></span>
+                    </div>
+                </div>
+            </div>
+             <xpath expr='//div[@name="bank_statement_create_button"]' position='replace'>
+                 <div name="bank_statement_create_button" t-if="dashboard.bank_statements_source != 'online_sync'" groups="account.group_account_user">
+                     <a type="object" name="create_bank_statement" class="oe_inline">Create Statement</a><span name="button_import_placeholder"/>
+                 </div>
+            </xpath>
+             <xpath expr='//div[@name="latest_statement"]' position='replace'>
+                  <div class="row" name="latest_statement" groups="account.group_account_user">
+                      <div class="col-7">
+                        <span title="Latest Statement">Latest Statement</span>
+                         <t t-if="dashboard.last_balance_date">
+                            (<span><t t-esc="dashboard.last_balance_date"/></span>)
+                         </t>
+                      </div>
+                      <div class="col-5 text-right">
+                        <span><t t-esc="dashboard.last_balance"/></span>
+                      </div>
+                  </div>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="journal_dashboard_view_inherit_recon" model="ir.ui.view">
+        <field name="name">account.journal.dashboard.kanban.inherit</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account_bank_statement_import.journal_dashboard_view_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr='//span[@name="button_import_placeholder"]' position='replace'>
+            </xpath>
+            <xpath expr='//a[@name="import_statement"]' position='replace'>
+            </xpath>
+        </field>
+    </record>
+</odoo>

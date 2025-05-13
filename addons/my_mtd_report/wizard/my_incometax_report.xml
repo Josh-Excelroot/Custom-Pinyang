@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="wiz_incometax_report_form" model="ir.ui.view">
+        <field name="name">wiz.incometax.report.form</field>
+        <field name="model">wiz.income.tax.report</field>
+        <field name="arch" type="xml">
+            <form string="Income Tax">
+                <group col="4" colspan="2">
+                    <field name="from_date" style="width:50%" required="1"/>
+                    <field name="to_date" style="width:50%" required="1"/>
+                </group>
+                <separator string="Employees" colspan="4"/>
+                <group>
+                    <tree string="Employees">
+                        <field name="employee_ids" required="1" options="{'no_create': True}"/>
+                    </tree>
+                </group>
+                <footer>
+                    <button name="print_pdf_report" string="Print" type="object" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="wiz_incometax_report_action" model="ir.actions.act_window">
+        <field name="name">Income Tax EA</field>
+        <field name="res_model">wiz.income.tax.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_my_incometax_report" name="Income-tax EA" action="wiz_incometax_report_action" parent="my_mtd_report.mtd_report_main"/>
+</odoo>

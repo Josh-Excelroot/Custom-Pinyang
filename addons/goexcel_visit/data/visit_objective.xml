@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="visit_spanco_purpose__close_order" model="visit.spanco.purpose">
+            <field name="name">Close Order</field>
+        </record>
+
+        <record id="visit_spanco_value__collect_payment" model="visit.spanco.value">
+            <field name="name">Collect Payment</field>
+        </record>
+
+        <record id="visit_spanco_value__cross_sales" model="visit.spanco.value">
+            <field name="name">Cross Sales</field>
+        </record>
+
+        <record id="visit_spanco_value__upsell" model="visit.spanco.value">
+            <field name="name">Upsell</field>
+        </record>
+
+        <record id="visit_spanco_value__collect_order" model="visit.spanco.value">
+            <field name="name">Collect Order</field>
+        </record>
+
+        <record id="visit_spanco_value__deliver_product" model="visit.spanco.value">
+            <field name="name">Deliver Product</field>
+        </record>
+
+        <record id="visit_spanco_value__settle_dispute" model="visit.spanco.value">
+            <field name="name">Settle Dispute</field>
+        </record>
+    </data>
+
+
+</odoo>

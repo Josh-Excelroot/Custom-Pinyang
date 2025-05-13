@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paperformat_job_sheet" model="report.paperformat">
+        <field name="name">Job Sheet A4</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">297</field>
+        <field name="page_width">210</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">28</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report id="report_job_sheet_action"
+            model="freight.booking"
+            string="Job Sheet"
+            report_type="qweb-pdf"
+            name="sci_goexcel_job_sheet.report_job_sheet_details"
+            file="sci_goexcel_job_sheet.report_job_sheet_details"
+            paperformat="paperformat_job_sheet"
+            print_report_name="'Job Sheet %s' % (object.booking_no)"
+    />
+
+
+    <template id="report_job_sheet_details">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <table class="table table-sm table-bordered" style="font-size:13px">
+                            <thead>
+
+                            </thead>
+                            <tbody>
+                                <t t-if="o.operation_line_ids">
+                                    <t t-set="container_no" t-value=""/>
+                                    <t t-set="container" t-value=""/>
+                                    <t t-set="is_first" t-value="True"/>
+                                    <t t-foreach="o.operation_line_ids" t-as="line">
+                                        <t t-if="not is_first">
+                                            <!--             Yulia 08042025 error parsing container                                 -->
+                                            <t t-if="container_no != False and line.container_no != False">
+                                                  <t t-set="container_no" t-value="(container_no or '') + ' / ' + (line.container_no or '')"/>
+                                            </t>
+                                            <t t-if="container != False and line.container_product_id.name != False">
+                                                 <t t-set="container" t-value="(container or '') + ' / ' + (line.container_product_id.name or '')"/>
+                                            </t>
+                                        </t>
+                                        <t t-if="is_first">
+                                            <t t-set="container_no" t-value="line.container_no"/>
+                                            <t t-set="container" t-value="line.container_product_id.name"/>
+                                        </t>
+                                        <t t-set="is_first" t-value="False"/>
+                                    </t>
+                                </t>
+                                <tr style="background:#e0e0e0;">
+                                    <td class="text-left" colspan="4">
+                                        <span t-field="o.company_id.name"/>
+                                    </td>
+                                    <td colspan="4">
+                                        <h1>
+                                            <strong>JOB SHEET</strong>
+                                        </h1>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">
+                                        <strong>DATE:</strong>
+                                    </td>
+                                    <td class="text-left">
+                                        <span t-field="o.booking_date_time"/>
+                                    </td>
+                                    <td class="text-left">
+                                        <strong>SALES PERSON:</strong>
+                                    </td>
+                                    <td class="text-left">
+                                        <span t-field="o.sales_person"/>
+                                    </td>
+                                    <td class="text-left">
+                                        <strong>SHIPMENT MODE:</strong>
+                                    </td>
+                                    <td class="text-left">
+                                        <span t-field="o.service_type"/>
+                                    </td>
+                                    <td class="text-left">
+                                        <strong>DIRECTION:</strong>
+                                    </td>
+                                    <td class="text-left">
+                                        <span t-field="o.direction"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left" colspan="2">
+                                        <strong>SHIPPER:</strong>
+                                    </td>
+                                    <td class="text-left" colspan="2">
+                                        <span t-field="o.shipper"/>
+                                    </td>
+                                    <td class="text-left" colspan="2">
+                                        <strong>JOB NO:</strong>
+                                    </td>
+                                    <td class="text-left" colspan="2">
+                                        <span t-field="o.booking_no"/>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td class="text-left" colspan="2">
+                                        <strong>CONSIGNEE:</strong>
+                                    </td>
+                                    <td class="text-left" colspan="2">
+                                        <span t-field="o.consignee"/>
+                                    </td>
+                                    <td class="text-left" colspan="2">
+                                        <t t-if="o.service_type == 'air'">
+                                            <strong>HAWB NO:</strong>
+                                        </t>
+                                        <t t-else="">
+                                            <strong>HBL NO:</strong>
+                                        </t>
+                                    </td>
+                                    <td class="text-left" colspan="2">
+                                        <t t-set="related_bols" t-value="env['freight.bol'].search([('booking_ref', '=', o.id)])"/>
+                                        <t t-if="related_bols">
+                                            <span t-esc="related_bols[0].bol_no"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-if="o.service_type == 'air'">
+                                                <t t-if="o.awb_no">
+                                                    <span t-field="o.awb_no"/>
+                                                </t>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-field="o.hbl_no"/>
+                                            </t>
+                                        </t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left" colspan="2">
+                                        <t t-if="o.service_type == 'ocean'">
+                                            <strong>VESSEL/VOYAGE:</strong>
+                                        </t>
+                                        <t t-elif="o.service_type == 'air'">
+                                            <strong>FLIGHT CARRIER NO:</strong>
+                                        </t>
+                                    </td>
+                                    <td class="text-left" colspan="2">
+                                        <t t-if="o.service_type == 'ocean'">
+                                            <span t-field="o.vessel_name.name"/>&#160;/&#160;<span t-field="o.voyage_no"/>
+                                        </t>
+                                        <t t-elif="o.service_type == 'air'">
+                                            <span t-field="o.first_carrier_flight_no.name"/>
+                                        </t>
+                                    </td>
+                                    <!--<td class="text-left" colspan="2">
+                                       <strong>TEL/FAX:</strong>
+                                    </td>
+                                     <td class="text-left" colspan="2">
+                                        <span t-field="o.customer_name.phone"/>/<span t-field="o.customer_name.fax"/>
+                                    </td>-->
+                                    <td class="text-left" colspan="2">
+                                        <t t-if="o.service_type == 'air'">
+                                            <strong>MAWB NO:</strong>
+                                        </t>
+                                        <t t-else="">
+                                            <strong>MBL NO:</strong>
+                                        </t>
+                                    </td>
+                                    <td class="text-left" colspan="2">
+                                        <t t-if="o.service_type == 'air'">
+                                            <span t-field="o.mawb_no"/>
+                                        </t>
+                                        <t t-else="">
+                                            <span t-field="o.obl_no"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <!-- <td class="text-left" colspan="2">
+                                        <strong>AGENT:</strong>
+                                     </td>
+                                      <td class="text-left" colspan="2">
+                                         <span t-field="o.oversea_agent"/>
+                                     </td>-->
+                                    <td class="text-left" colspan="2">
+                                        <t t-if="o.service_type == 'ocean'">
+                                            <strong>VESSEL ID:</strong>
+                                        </t>
+                                        <t t-elif="o.service_type == 'air'">
+                                            <strong>AIRLINE/CARRIER:</strong>
+                                        </t>
+                                    </td>
+                                    <td class="text-left" colspan="2">
+                                        <t t-if="o.service_type == 'ocean'">
+                                            <span t-field="o.vessel_id"/>
+                                        </t>
+                                        <t t-elif="o.service_type == 'air'">
+                                            <span t-field="o.carrier.name"/>
+                                        </t>
+
+                                    </td>
+                                    <td class="text-left" colspan="2">
+                                        <strong>CARRIER BOOKING NO:</strong>
+                                    </td>
+                                    <td class="text-left" colspan="2">
+                                        <span t-field="o.carrier_booking_no"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left" colspan="2">
+                                        <t t-if="o.service_type == 'ocean'">
+                                            <strong>CONTAINER:</strong>
+                                        </t>
+                                        <t t-elif="o.service_type == 'air'">
+                                            <strong>NO OF PACKAGES:</strong>
+                                        </t>
+
+                                    </td>
+                                    <td class="text-left" colspan="2">
+                                        <!--                                        <t t-if="o.container_product_id">-->
+                                        <!--                                            <span t-field="o.container_qty"/>&#160;X&#160;<span t-field="o.container_product_id.name"/>-->
+                                        <!--                                        </t>-->
+                                        <t t-if="o.service_type == 'ocean'">
+                                            <t t-set="container_type1" t-value=""/>
+                                            <t t-set="container_type2" t-value=""/>
+                                            <t t-set="container_type3" t-value=""/>
+                                            <t t-set="container_type4" t-value=""/>
+                                            <t t-set="container_no1" t-value="0"/>
+                                            <t t-set="container_no2" t-value="0"/>
+                                            <t t-set="container_no3" t-value="0"/>
+                                            <t t-set="container_no4" t-value="0"/>
+                                            <t t-foreach="o.operation_line_ids" t-as="line">
+                                                <t t-set="is_first" t-value="False"/>
+                                                <t t-if="not container_type1">
+                                                    <t t-set="container_type1"
+                                                       t-value="line.container_product_id.name"/>
+                                                    <t t-set="container_no1" t-value="container_no1+1"/>
+                                                    <t t-set="is_first" t-value="True"/>
+                                                </t>
+                                                <t t-if="container_type1 and not is_first">
+                                                    <t t-if="container_type1 != line.container_product_id.name">
+                                                        <t t-if="not container_type2">
+                                                            <t t-set="container_type2"
+                                                               t-value="line.container_product_id.name"/>
+                                                            <t t-set="container_no2"
+                                                               t-value="container_no2+1"/>
+                                                            <t t-set="is_first" t-value="True"/>
+                                                        </t>
+                                                        <t t-if="container_type2 and not is_first">
+                                                            <t t-if="container_type2 != line.container_product_id.name">
+                                                                <t t-if="not container_type3">
+                                                                    <t t-set="container_type3"
+                                                                       t-value="line.container_product_id.name"/>
+                                                                    <t t-set="container_no3"
+                                                                       t-value="container_no3+1"/>
+                                                                    <t t-set="is_first" t-value="True"/>
+                                                                </t>
+                                                                <t t-if="container_type3 and not is_first">
+                                                                    <t t-if="container_type3 != line.container_product_id.name">
+                                                                        <t t-if="not container_type4">
+                                                                            <t t-set="container_type4"
+                                                                               t-value="line.container_product_id.name"/>
+                                                                            <t t-set="container_no4"
+                                                                               t-value="container_no4+1"/>
+                                                                            <t t-set="is_first"
+                                                                               t-value="True"/>
+                                                                        </t>
+                                                                        <t t-if="container_type4 and not is_first">
+                                                                            <t t-if="container_type4 != line.container_product_id.name">
+                                                                                <t t-set="container_no4"
+                                                                                   t-value="container_no4+1"/>
+                                                                            </t>
+                                                                            <t t-if="container_type4 == line.container_product_id.name">
+                                                                                <t t-set="container_no4"
+                                                                                   t-value="container_no4+1"/>
+                                                                            </t>
+                                                                        </t>
+                                                                    </t>
+                                                                    <t t-if="container_type3 == line.container_product_id.name">
+                                                                        <t t-set="container_no3"
+                                                                           t-value="container_no3+1"/>
+                                                                    </t>
+                                                                </t>
+                                                            </t>
+                                                            <t t-if="container_type2 == line.container_product_id.name">
+                                                                <t t-set="container_no2"
+                                                                   t-value="container_no2+1"/>
+                                                            </t>
+                                                        </t>
+                                                    </t>
+                                                    <t t-if="container_type1 == line.container_product_id.name">
+                                                        <t t-set="container_no1" t-value="container_no1+1"/>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                            <t t-if="container_no1 > 0">
+                                                <span t-esc="container_no1"/>
+                                                X
+                                                <span t-esc="container_type1"/>
+                                            </t>
+                                            <t t-if="container_no2 > 0">
+                                                /&#160;<span t-esc="container_no2"/>
+                                                X
+                                                <span t-esc="container_type2"/>
+                                            </t>
+                                            <t t-if="container_no3 > 0">
+                                                /&#160;<span t-esc="container_no3"/>
+                                                X
+                                                <span t-esc="container_type3"/>
+                                            </t>
+                                            <t t-if="container_no4 > 0">
+                                                /&#160;<span t-esc="container_no4"/>
+                                                X
+                                                <span t-esc="container_type4"/>
+                                            </t>
+                                        </t>
+                                        <t t-elif="o.service_type == 'air'">
+                                            <t t-if="o.operation_line_ids2">
+                                                <span t-field="o.operation_line_ids2[0].packages_no"/> <span t-field="o.operation_line_ids2[0].packages_no_uom.name"/>
+                                            </t>
+
+                                        </t>
+
+
+                                    </td>
+<!--                                    <t t-if="o.direction == 'export'">-->
+<!--                                        <td class="text-left" colspan="2">-->
+<!--                                            <strong>ETD:</strong>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-left" colspan="2">-->
+<!--                                            <span t-field="o.port_of_loading_eta"/>-->
+<!--                                        </td>-->
+<!--                                    </t>-->
+<!--                                    <t t-if="o.direction == 'import'">-->
+<!--                                        <td class="text-left" colspan="2">-->
+<!--                                            <strong>ETA:</strong>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-left" colspan="2">-->
+<!--                                            <span t-field="o.port_of_discharge_eta"/>-->
+<!--                                        </td>-->
+<!--                                    </t>-->
+                                    <td class="text-left" colspan="2">
+                                        <strong>SCN NO:</strong>
+                                    </td>
+                                    <td class="text-left" colspan="2">
+                                        <span t-field="o.scn_code"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left" colspan="2">
+                                        <t t-if="o.service_type == 'ocean'">
+                                            <strong>CONTAINER NO:</strong>
+                                        </t>
+                                        <t t-elif="o.service_type == 'air'">
+                                            <strong>WEIGHT(KG)/VOL(M3)</strong>
+                                        </t>
+                                    </td>
+                                    <td class="text-left" colspan="2">
+                                        <t t-if="o.service_type == 'ocean'">
+                                            <span t-esc="container_no"/>
+                                        </t>
+                                        <t t-elif="o.service_type == 'air'">
+                                           <t t-if="o.operation_line_ids2">
+                                                <span t-esc="'{0:,.2f}'.format(o.operation_line_ids2[0].exp_gross_weight)"/>/<span t-esc="'{0:,.2f}'.format(o.operation_line_ids2[0].exp_vol)"/>
+                                            </t>
+                                        </t>
+
+                                    </td>
+<!--                                    <td class="text-left" colspan="2">-->
+<!--                                        <strong>SCN NO:</strong>-->
+<!--                                    </td>-->
+<!--                                    <td class="text-left" colspan="2">-->
+<!--                                        <span t-field="o.scn_code"/>-->
+<!--                                    </td>-->
+                                    <t t-if="o.service_type == 'air'">
+                                        <td class="text-left" colspan="2">
+                                            <strong>ETD:</strong>
+                                        </td>
+                                        <td class="text-left" colspan="2">
+                                            <!--TODO: Fix this-->
+                                            <t t-if="o.first_carrier_etd">
+                                                <span t-field="o.first_carrier_etd" t-options='{"format": "dd MMMM, yyyy"}'/>
+                                            </t>
+                                        </td>
+                                    </t>
+                                    <t t-else="">
+                                        <td class="text-left" colspan="2">
+                                            <strong>Loading ETA:</strong>
+                                        </td>
+                                        <td class="text-left" colspan="2">
+                                            <span t-field="o.port_of_loading_eta"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                                <tr>
+                                    <td class="text-left" colspan="2">
+                                        <strong>CARGO TYPE:</strong>
+                                    </td>
+                                    <td class="text-left" colspan="2">
+                                        <t t-if="o.service_type == 'land'">
+                                            <span t-field="o.land_cargo_type"/>
+                                        </t>
+                                        <t t-elif="o.service_type == 'ocean'">
+                                            <span t-field="o.cargo_type"/>
+                                        </t>
+
+                                    </td>
+                                    <t t-if="o.service_type == 'air'">
+                                        <td class="text-left" colspan="2">
+                                            <strong>ETD VIA PORT:</strong>
+                                        </td>
+                                        <td class="text-left" colspan="2">
+                                            <t t-if="o.second_carrier_eta">
+                                                <span t-field="o.second_carrier_etd" t-options='{"format": "dd MMMM, yyyy"}'/>
+                                            </t>
+                                        </td>
+                                    </t>
+                                    <t t-else="">
+                                        <td class="text-left" colspan="2">
+                                            <strong>ETA VIA PORT:</strong>
+                                        </td>
+                                        <td class="text-left" colspan="2">
+                                            <span t-field="o.port_of_tranship_eta"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                                <tr>
+                                    <td class="text-left" colspan="2"/>
+                                    <td class="text-left" colspan="2"/>
+                                    <t t-if="o.service_type == 'air'">
+                                        <td class="text-left" colspan="2">
+                                            <strong>ETA:</strong>
+                                        </td>
+                                        <td class="text-left" colspan="2">
+                                            <t t-if="o.third_carrier_eta">
+                                                <span t-field="o.third_carrier_eta" t-options='{"format": "dd MMMM, yyyy"}'/>
+                                            </t>
+                                            <t t-if="not o.third_carrier_eta">
+                                                <t t-if="o.second_carrier_eta">
+                                                    <span t-field="o.second_carrier_eta" t-options='{"format": "dd MMMM, yyyy"}'/>
+                                                </t>
+                                                <t t-if="not o.second_carrier_eta">
+                                                    <t t-if="o.first_carrier_eta">
+                                                        <span t-field="o.first_carrier_eta" t-options='{"format": "dd MMMM, yyyy"}'/>
+                                                    </t>
+
+                                                </t>
+                                            </t>
+                                        </td>
+                                    </t>
+                                    <t t-else="">
+                                        <td class="text-left" colspan="2">
+                                            <strong>ETA:</strong>
+                                        </td>
+                                        <td class="text-left" colspan="2">
+                                            <span t-field="o.port_of_discharge_eta"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-sm table-bordered" style="font-size:13px">
+                            <thead>
+                                <tr>
+                                    <t t-set="cnp_line" t-value="o.cost_profit_ids"/>
+                                    <t t-set="curr_sale" t-value="cnp_line[0].profit_currency.name if len(cnp_line) > 0 else ''"/>
+                                    <t t-set="curr_cost" t-value="cnp_line[0].cost_currency.name if len(cnp_line) > 0 else ''"/>
+                                    <!--If either is MYR then both is MYR-->
+                                    <t t-if="curr_sale == 'MYR' or curr_cost == 'MYR'">
+                                        <t t-set="curr_symbol" t-value="'MYR'"/>
+                                    </t>
+                                    <t t-else="curr_sale == 'USD' and curr_cost == 'USD'">
+                                        <!--But if both are USD, then use USD-->
+                                        <t t-set="curr_symbol" t-value="'MYR'"/>
+                                    </t>
+
+                                    <th style="width:60%; padding-left: 5px;">
+                                        ITEMS
+                                    </th>
+                                    <th style="width:20%; padding-left: 5px;">
+                                        COSTING(<span t-esc="curr_symbol"/>)
+                                    </th>
+                                    <th style="width:20%; padding-left: 5px;">
+                                        BILLING(<span t-esc="curr_symbol"/>)
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="sale_total" t-value="0.00"/>
+                                <t t-set="cost_total" t-value="0.00"/>
+                                <t t-foreach="cost_profit_ids1" t-as="cost">
+                                    <!--
+                                    <t t-set="sale_total" t-value="sale_total+line.sale_total"/>
+                                    <t t-set="cost_total" t-value="cost_total+line.cost_total"/>
+                                    -->
+                                    <tr>
+                                        <td>
+                                            <span t-esc="cost['product_name']"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="'{0:,.2f}'.format(float(cost['costing']))"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="'{0:,.2f}'.format(float(cost['billing']))"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <t t-if="cost_total == 0">
+                                    <t t-set="cost_total" t-value="1"/>
+                                </t>
+                                <t t-set="margin" t-value="'{0:,.2f}'.format(float(sale_total*100/cost_total))"/>
+                                <t t-set="profit" t-value="'{0:,.2f}'.format(float(sale_total-cost_total))"/>
+                                <tr>
+                                    <t t-foreach="info_ids1" t-as="info">
+                                        <td>
+                                            <b>PROFIT (<span t-esc="curr_symbol"/>) :
+                                            </b>
+                                            <u>
+                                                <t t-esc="'{0:,.2f}'.format(float(info['profit']))"/>
+                                                (<t t-esc=" '%.2f'% info['margin']"/>%)
+                                            </u>
+                                            <span style="float:right;">
+                                                <b>TOTAL (<span t-esc="curr_symbol"/>) :
+                                                </b>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <u>
+                                                <t t-esc="'{0:,.2f}'.format(float(info['cost_total']))"/>
+                                            </u>
+                                        </td>
+                                        <td>
+                                            <u>
+                                                <t t-esc="'{0:,.2f}'.format(float(info['sale_total']))"/>
+                                            </u>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-sm table-bordered" style="font-size:13px">
+                            <thead>
+                                <tr>
+                                    <th style="width:20%; padding-left: 5px;">
+                                        DOC
+                                    </th>
+                                    <th style="width:35%; padding-left: 5px;">
+                                        NAME
+                                    </th>
+                                    <th style="width:15%; padding-left: 5px;">
+                                        INVOICE NO.
+                                    </th>
+                                    <th style="width:5%; padding-left: 5px;">
+                                        TERM
+                                    </th>
+                                    <th style="width:5%; padding-left: 5px;">
+                                        CUR
+                                    </th>
+                                    <th style="width:15%; padding-left: 5px;">
+                                        AMOUNT
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="invoice_ids1" t-as="invoice">
+                                    <tr>
+                                        <td>
+                                            <span t-esc="invoice['type']"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="invoice['partner_id']"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="invoice['number']"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="invoice['term']"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="invoice['currency_id']"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="'{0:,.2f}'.format(float(invoice['amount_total']))"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

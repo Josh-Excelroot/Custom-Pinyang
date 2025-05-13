@@ -1,0 +1,69 @@
+<odoo>
+    <!-- Inherited the vendor bill view and add freight booking id -->
+	<record model="ir.ui.view" id="view_account_bank_journal_form_generic">
+		<field name="name">Purchase Receipt Generic</field>
+		<field name="model">account.journal</field>
+        <field name="type">form</field>
+		<field name="priority" eval="1"/>
+		<field name="inherit_id" ref="account.view_account_bank_journal_form"/>
+		<field name="arch" type="xml">
+            <xpath expr="//field[@name='bank_account_id']" position="attributes">
+				<attribute name="invisible">1</attribute>
+            </xpath>
+			<xpath expr="//field[@name='bank_id']" position="attributes">
+				<attribute name="required">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='bank_id']" position="after">
+				<field name="default_debit_account_id"/>
+				<field name="default_credit_account_id"/>
+			</xpath>
+			<xpath expr="//field[@name='default_debit_account_id']" position="attributes">
+				<attribute name="required">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='default_credit_account_id']" position="attributes">
+				<attribute name="required">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='bank_acc_number']" position="attributes">
+				<attribute name="required">1</attribute>
+			</xpath>
+			<field name="currency_id" position="attributes">
+				<attribute name="required">1</attribute>
+			</field>
+
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_account_journal_form_generic">
+		<field name="name">Account Journal Sequence</field>
+		<field name="model">account.journal</field>
+		<field name="type">form</field>
+		<field name="priority" eval="100"/>
+		<field name="inherit_id" ref="account.view_account_journal_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='sequence_id']" position="attributes">
+				<attribute name="groups"></attribute>
+			</xpath>
+			<xpath expr="//field[@name='refund_sequence_id']" position="attributes">
+				<attribute name="groups"></attribute>
+			</xpath>
+			<xpath expr="//field[@name='debitnote_sequence_id']" position="attributes">
+				<attribute name="groups"></attribute>
+			</xpath>
+			<xpath expr="//field[@name='update_posted']" position="attributes">
+				<attribute name="groups"></attribute>
+			</xpath>
+			<xpath expr="/form/sheet/notebook//page[@name='journal_entries']/group//group[1]//div[2]" position="after">
+				<field name="customer_payment_sequence_id"
+					   attrs="{'invisible': [('type', 'not in', ['sale'])]}"/>
+				<field name="vendor_payment_sequence_id"
+					   attrs="{'invisible': [('type', 'not in', ['purchase'])]}"/>
+				<field name="contra_sequence_id"
+					   attrs="{'invisible': [('type', 'not in', ['purchase', 'sale'])]}"/>
+			</xpath>
+		</field>
+	</record>
+
+
+
+</odoo>

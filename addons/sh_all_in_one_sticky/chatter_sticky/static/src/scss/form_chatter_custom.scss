@@ -1,0 +1,17 @@
+.o_chatter_topbar {
+        position: sticky !important;
+        top: 35px;
+        z-index: 1;
+       background-color: #fff;
+ }
+
+@media only screen and (min-width: 1534px){
+.o_chatter_topbar {
+        position: sticky;
+        top: 0px !important;
+        margin-top: 0px !important;
+        z-index: 1;
+        background-color: #fff;
+ }
+
+}

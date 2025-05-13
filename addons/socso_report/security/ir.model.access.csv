@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_socso_user,employee.socso,model_employee_socso,base.group_user,1,1,1,1
+access_employee_socso_view_user,employee.socso.view,model_employee_socso_view,base.group_user,1,1,1,1
+access_employee_eis_user,employee.eis,model_employee_eis,base.group_user,1,1,1,1
+access_employee_eis_view_user,employee.eis.view,model_employee_eis_view,base.group_user,1,1,1,1

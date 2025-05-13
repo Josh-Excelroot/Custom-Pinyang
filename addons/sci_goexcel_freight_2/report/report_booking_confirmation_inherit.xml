@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_booking_confirmation_inherit_ion" inherit_id="sci_goexcel_freight.report_booking_confirmation">
+        <xpath expr="//div[@class='page']" position="replace">
+            <div class="page" style="font-size:12px">
+                <style>
+                    .my_table {
+
+                    line-height: 150%;
+                    width:100%"
+                    }
+                </style>
+                <!-- Report header content -->
+                <br/>
+                <h3 style="border-top:1pt solid black;border-bottom:1pt solid black;width:100%">
+                    <b><center><span>&#160;BOOKING CONFIRMATION</span></center></b>
+                </h3>
+                <br/>
+
+                <table style="width:100%;line-height: 200%;">
+                    <tr>
+                        <th style="text-align:left" width="18%">BOOKING DATE</th>
+                        <th style="text-align:center" width="2%">:</th>
+                        <td style="text-align:left" width="30%"><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/></td>
+                        <th style="text-align:left" width="18%">JOB NO.</th>
+                        <th style="text-align:center" width="2%">:</th>
+                        <td style="text-align:left" width="30%"><span t-field="o.booking_no"/></td>
+                    </tr>
+                    <!--                    <tr>-->
+                    <!--                        <td style="text-align:left" width="18%"></td>-->
+                    <!--                        <td style="text-align:center" width="2%"></td>-->
+                    <!--                        <td style="text-align:left" width="30%"></td>-->
+                    <!--                        <th style="text-align:left">BOOKING NO.</th>-->
+                    <!--                        <th style="text-align:center">:</th>-->
+                    <!--                        <td style="text-align:left"><span t-field="o.booking_no"/></td>-->
+                    <!--                    </tr>-->
+                    <tr>
+                        <th style="text-align:left" colspan="3">Dear Sir</th>
+                        <th style="text-align:left">CUST REF NO.</th>
+                        <th style="text-align:center">:</th>
+                        <td style="text-align:left"><span t-field="o.cust_ref"/></td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:left" colspan="3">We are pleased to confirm your booking with us as follows:</th>
+                        <th style="text-align:left"></th>
+                        <th style="text-align:center"></th>
+                        <td style="text-align:left"></td>
+                    </tr>
+                </table>
+                <br/>
+                <table style="width:100%;line-height: 200%;">
+                    <tr>
+                        <th style="text-align:left" width="23%">CARRIER REF. No.</th>
+                        <th style="text-align:center" width="2%">:</th>
+                        <t t-if="o.cargo_type != 'lcl'">
+                            <td style="text-align:left" width="35%"><b><span style="font-size:14px" t-field="o.carrier_booking_no"/></b></td>
+                        </t>
+                        <t t-if="o.cargo_type == 'lcl'">
+                            <t t-if="o.service_type == 'air'">
+                                <td style="text-align:left" width="35%"><span t-field="o.carrier_booking_no"/></td>
+                            </t>
+                            <t t-if="o.service_type != 'air'">
+                                <td style="text-align:left" width="35%"><span t-field="o.coloader_reference_no"/></td>
+                            </t>
+                        </t>
+                        <th style="text-align:left" width="18%"></th>
+                        <th style="text-align:center" width="2%"></th>
+                        <td style="text-align:left" width="20%"></td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:left">CUSTOMER</th>
+                        <th style="text-align:center">:</th>
+                        <td style="text-align:left" colspan="4"><span t-field="o.customer_name"/></td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:left">ATTN</th>
+                        <th style="text-align:center">:</th>
+                        <td style="text-align:left" colspan="4"><span t-field="o.contact_name"/></td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:left;border-bottom:1pt solid black;">FORWARDING AGENT</th>
+                        <th style="text-align:center;border-bottom:1pt solid black;">:</th>
+                        <td style="text-align:left;border-bottom:1pt solid black;" colspan="4"><span t-field="o.forwarding_agent_code.name"/></td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:left">SHIPPER</th>
+                        <th style="text-align:center">:</th>
+                        <td style="text-align:left" colspan="4"><span t-field="o.shipper"/></td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:left">CONSIGNEE</th>
+                        <th style="text-align:center">:</th>
+                        <td style="text-align:left" colspan="4"><span t-field="o.consignee"/></td>
+                    </tr>
+                    <tr>
+                        <t t-if="o.service_type != 'air'">
+                            <th style="text-align:left">FEEDER VESSEL</th>
+                            <th style="text-align:center">:</th>
+                            <td style="text-align:left" colspan="4"><span t-field="o.feeder_vessel_name"/>/<span t-field="o.feeder_voyage_no"/></td>
+                        </t>
+                        <t t-if="o.service_type == 'air'">
+                            <th style="text-align:left">FIRST FLIGHT</th>
+                            <th style="text-align:center">:</th>
+                            <td style="text-align:left" colspan="4">
+                                <t t-if="o.first_carrier_flight_no">
+                                    <span t-field="o.first_carrier_flight_no.name"/>
+                                </t></td>
+                        </t>
+                    </tr>
+                    <tr>
+                        <t t-if="o.service_type != 'air'">
+                            <th style="text-align:left">MOTHER VESSEL</th>
+                            <th style="text-align:center">:</th>
+                            <td style="text-align:left"><span t-field="o.vessel_name.name"/>/<span t-field="o.voyage_no"/></td>
+                        </t>
+                        <t t-if="o.service_type == 'air'">
+                            <th style="text-align:left">SECOND FLIGHT</th>
+                            <th style="text-align:center">:</th>
+                            <td style="text-align:left">
+                                <t t-if="o.second_carrier_flight_no">
+                                    <span t-field="o.second_carrier_flight_no.name"/>
+                                </t>
+                            </td>
+                        </t>
+                        <th style="text-align:left">VESSEL ID</th>
+                        <th style="text-align:center">:</th>
+                        <td style="text-align:left"><span t-field="o.vessel_id"/></td>
+                    </tr>
+                    <tr>
+                        <t t-if="o.service_type != 'air'">
+                            <th style="text-align:left">PORT OF LOADING</th>
+                            <th style="text-align:center">:</th>
+                            <td style="text-align:left"><span t-field="o.port_of_loading"/></td>
+                            <th style="text-align:left">ETA</th>
+                            <th style="text-align:center">:</th>
+                            <td style="text-align:left"><span t-field="o.port_of_loading_eta"/></td>
+                        </t>
+                        <t t-if="o.service_type == 'air'">
+                            <th style="text-align:left">AIRPORT OF ORIGIN</th>
+                            <th style="text-align:center">:</th>
+                            <td style="text-align:left">
+                                <t t-if="o.airport_departure">
+                                    <span t-field="o.airport_departure.name"/>
+                                </t></td>
+                            <th style="text-align:left">ETD</th>
+                            <th style="text-align:center">:</th>
+                            <td style="text-align:left">
+                                <t t-if="o.first_carrier_etd">
+                                    <span t-esc="context_timestamp(o.first_carrier_etd).strftime('%d/%m/%Y %H:%M:%S')"/>
+                                </t>
+                            </td>
+                        </t>
+
+                    </tr>
+                    <tr>
+                        <t t-if="o.service_type != 'air'">
+                            <th style="text-align:left">VIA PORT</th>
+                            <th style="text-align:center">:</th>
+                            <td style="text-align:left"><span t-field="o.port_of_tranship"/></td>
+                            <th style="text-align:left">ETA VIA PORT</th>
+                            <th style="text-align:center">:</th>
+                            <td style="text-align:left"><span t-field="o.port_of_tranship_eta"/></td>
+                        </t>
+                        <t t-if="o.service_type == 'air'">
+                            <th style="text-align:left">VIA AIRPORT</th>
+                            <th style="text-align:center">:</th>
+                            <td style="text-align:left">
+                                <t t-if="o.second_carrier_to">
+                                    <span t-field="o.second_carrier_to.name"/>
+                                </t>
+                            </td>
+                            <th style="text-align:left">ETD VIA PORT</th>
+                            <th style="text-align:center">:</th>
+                            <td style="text-align:left"><span t-field="o.second_carrier_etd"/></td>
+                        </t>
+
+                    </tr>
+                    <tr>
+                        <t t-if="o.service_type != 'air'">
+                            <th style="text-align:left">PORT OF DISCHARGE</th>
+                            <th style="text-align:center">:</th>
+                            <td style="text-align:left"><span t-field="o.port_of_discharge"/></td>
+                            <th style="text-align:left">ETA</th>
+                            <th style="text-align:center">:</th>
+                            <td style="text-align:left"><span t-field="o.port_of_discharge_eta"/></td>
+                        </t>
+                        <t t-if="o.service_type == 'air'">
+                            <th style="text-align:left">AIRPORT OF DESTINATION</th>
+                            <th style="text-align:center">:</th>
+                            <td style="text-align:left">
+                                <t t-if="o.airport_destination">
+                                    <span t-field="o.airport_destination.name"/>
+                                </t>
+                            </td>
+                            <th style="text-align:left">ETA</th>
+                            <th style="text-align:center">:</th>
+                            <td style="text-align:left">
+                                <t t-if="o.third_carrier_eta">
+                                    <span t-field="o.third_carrier_eta"/>
+                                </t>
+                                <t t-if="not o.third_carrier_eta">
+                                    <t t-if="o.second_carrier_eta">
+                                        <span t-field="o.second_carrier_eta"/>
+                                    </t>
+                                    <t t-if="not o.second_carrier_eta">
+                                        <t t-if="o.first_carrier_eta">
+                                            <span t-field="o.first_carrier_eta"/>
+                                        </t>
+                                    </t>
+                                </t>
+                            </td>
+                        </t>
+                    </tr>
+                    <tr>
+                        <th style="text-align:left">PLACE OF DELIVERY</th>
+                        <th style="text-align:center">:</th>
+                        <td style="text-align:left"><span t-field="o.place_of_delivery"/></td>
+                        <th style="text-align:left">ETA DEST</th>
+                        <th style="text-align:center">:</th>
+                        <td style="text-align:left"><span t-field="o.port_of_discharge_eta"/></td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:left">CLOSING TIME</th>
+                        <th style="text-align:center">:</th>
+                        <td style="text-align:left" colspan="4"><span t-field="o.shipment_close_date_time"/></td>
+                    </tr>
+                    <tr>
+                        <t t-if="o.service_type != 'air'">
+                            <th style="text-align:left;border-bottom:1pt solid black;">CARRIER / COLOADER</th>
+                            <th style="text-align:center;border-bottom:1pt solid black;">:</th>
+                            <t t-if="o.coloader and o.carrier.name">
+                                <td style="text-align:left;border-bottom:1pt solid black;" colspan="4"><span t-field="o.carrier.name"/> / <span t-field="o.coloader.name"/></td>
+                            </t>
+                            <t t-elif="o.carrier.name">
+                                <td style="text-align:left;border-bottom:1pt solid black;" colspan="4"><span t-field="o.carrier.name"/></td>
+                            </t>
+                            <t t-else="o.coloader">
+                                <td style="text-align:left;border-bottom:1pt solid black;" colspan="4"><span t-field="o.coloader.name"/></td>
+                            </t>
+                        </t>
+                        <t t-if="o.service_type == 'air'">
+                            <th style="text-align:left;border-bottom:1pt solid black;">AIRLINE</th>
+                            <th style="text-align:center;border-bottom:1pt solid black;">:</th>
+                            <td style="text-align:left;border-bottom:1pt solid black;" colspan="4"><span t-field="o.carrier.name"/></td>
+                        </t>
+
+                    </tr>
+                    <!-- <tr>
+                         <th style="text-align:left">SHIPPING LINE</th>
+                         <th style="text-align:center">:</th>
+                         <td style="text-align:left" colspan="4"><span t-field="o.carrier.name"/></td>
+                     </tr>
+                     <tr>
+                         <th style="text-align:left;border-bottom:1pt solid black;">SHIPPING LINE REF NO</th>
+                         <th style="text-align:center;border-bottom:1pt solid black;">:</th>
+                         <td style="text-align:left;border-bottom:1pt solid black;" colspan="4"><span t-field="o.carrier_booking_no"/></td>
+                     </tr>-->
+                    <t t-set="container_no" t-value="0"/>
+                    <t t-if="o.cargo_type == 'fcl'">
+                        <t t-if="o.operation_line_ids">
+                            <t t-foreach="o.operation_line_ids" t-as="line">
+                                <t t-set="container_no" t-value="container_no+1"/>
+                                <!--
+                                                                    <t t-set="container_type" t-value="line.container_product_id.name"/>
+                                -->
+                            </t>
+                        </t>
+                    </t>
+
+                    <t t-if="o.cargo_type == 'lcl'">
+                        <t t-if="o.operation_line_ids2">
+                            <t t-foreach="o.operation_line_ids2" t-as="line">
+                                <t t-set="container_no" t-value="container_no+1"/>
+                                <!--<t t-set="container_type" t-value="line.container_product_id.name"/>-->
+                            </t>
+                        </t>
+                    </t>
+                    <tr>
+                        <th style="text-align:left;">NO. OF CONTAINER </th>
+                        <th style="text-align:center;">:</th>
+                        <td style="text-align:left;" colspan="4">
+                            <t t-if="o.cargo_type =='fcl'">
+                                <t t-set="container_no" t-value="0"/>
+                                <t t-set="container_no" t-value="0"/>
+                                <t t-set="container_type1" t-value=""/>
+                                <t t-set="container_type2" t-value=""/>
+                                <t t-set="container_type3" t-value=""/>
+                                <t t-set="container_type4" t-value=""/>
+                                <t t-set="container_no1" t-value="0"/>
+                                <t t-set="container_no2" t-value="0"/>
+                                <t t-set="container_no3" t-value="0"/>
+                                <t t-set="container_no4" t-value="0"/>
+                                <t t-if="o.operation_line_ids">
+                                    <t t-foreach="o.operation_line_ids" t-as="line">
+                                        <t t-set="is_first" t-value="False"/>
+                                        <t t-set="container_no" t-value="container_no+1"/>
+                                        <t t-if="not container_type1">
+                                            <t t-set="container_type1" t-value="line.container_product_id.name"/>
+                                            <t t-set="container_no1"  t-value="container_no1+1"/>
+                                            <t t-set="is_first" t-value="True"/>
+                                        </t>
+                                        <t t-if="container_type1 and not is_first">
+                                            <t t-if="container_type1 != line.container_product_id.name">
+                                                <t t-if="not container_type2">
+                                                    <t t-set="container_type2" t-value="line.container_product_id.name"/>
+                                                    <t t-set="container_no2"  t-value="container_no2+1"/>
+                                                    <t t-set="is_first" t-value="True"/>
+                                                </t>
+                                                <t t-if="container_type2 and not is_first">
+                                                    <t t-if="container_type2 != line.container_product_id.name">
+                                                        <t t-if="not container_type3">
+                                                            <t t-set="container_type3" t-value="line.container_product_id.name"/>
+                                                            <t t-set="container_no3"  t-value="container_no3+1"/>
+                                                            <t t-set="is_first" t-value="True"/>
+                                                        </t>
+                                                        <t t-if="container_type3 and not is_first">
+                                                            <t t-if="container_type3 != line.container_product_id.name">
+                                                                <t t-if="not container_type4">
+                                                                    <t t-set="container_type4" t-value="line.container_product_id.name"/>
+                                                                    <t t-set="container_no4"  t-value="container_no4+1"/>
+                                                                    <t t-set="is_first" t-value="True"/>
+                                                                </t>
+                                                                <t t-if="container_type4 and not is_first">
+                                                                    <t t-if="container_type4 != line.container_product_id.name">
+                                                                        <t t-set="container_no4"  t-value="container_no4+1"/>
+                                                                    </t>
+                                                                    <t t-if="container_type4 == line.container_product_id.name">
+                                                                        <t t-set="container_no4"  t-value="container_no4+1"/>
+                                                                    </t>
+                                                                </t>
+                                                            </t>
+                                                            <t t-if="container_type3 == line.container_product_id.name">
+                                                                <t t-set="container_no3"  t-value="container_no3+1"/>
+                                                            </t>
+                                                        </t>
+                                                    </t>
+                                                    <t t-if="container_type2 == line.container_product_id.name">
+                                                        <t t-set="container_no2"  t-value="container_no2+1"/>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                            <t t-if="container_type1 == line.container_product_id.name">
+                                                <t t-set="container_no1"  t-value="container_no1+1"/>
+                                            </t>
+                                        </t>
+                                        <!--
+                                                                        <t t-set="container_type" t-value="line.container_product_id.name"/>
+                                        -->
+                                    </t>
+                                </t>
+                                <t t-if="container_no1 > 0">
+                                    <span t-esc="container_no1"/> X <span t-esc="container_type1"/>
+                                </t>
+                                <t t-if="container_no2 > 0">
+                                    ,&#160;<span t-esc="container_no2"/> X <span t-esc="container_type2"/>
+                                </t>
+                                <t t-if="container_no3 > 0">
+                                    ,&#160;<span t-esc="container_no3"/> X <span t-esc="container_type3"/>
+                                </t>
+                                <t t-if="container_no4 > 0">
+                                    ,&#160;<span t-esc="container_no4"/> X <span t-esc="container_type4"/>
+                                </t>
+                                <br/>
+                                <!--<t t-if="o.operation_line_ids"><span t-esc="container_no"/>
+                                     X <span t-field="o.operation_line_ids[0].container_product_id.name"/><br/>
+                                </t>-->
+                            </t>
+                            <t t-if="o.cargo_type =='lcl'">
+                                <t t-if="o.operation_line_ids2">
+                                    <span t-field="o.operation_line_ids2[0].packages_no"/>&#160;
+                                    <span t-field="o.operation_line_ids2[0].packages_no_uom.name"/>&#160;//&#160;
+                                    <span t-field="o.operation_line_ids2[0].exp_gross_weight"/>&#160;KG&#160;//
+                                    <span t-field="o.operation_line_ids2[0].exp_vol"/>&#160;M3
+                                    <br/>
+                                </t>
+                            </t>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:left;border-bottom:1pt solid black;">CONTAINER NO</th>
+                        <th style="text-align:center;border-bottom:1pt solid black;">:</th>
+                        <td style="text-align:left;border-bottom:1pt solid black;" colspan="4">
+                            <t t-if="o.cargo_type =='fcl'">
+                                <t t-if="o.operation_line_ids">
+                                    <t t-set="line_no" t-value="0"/>
+                                    <t t-foreach="o.operation_line_ids" t-as="line">
+                                        <t t-if="line_no &gt; 0 and line.container_no">
+                                            /
+                                        </t>
+                                        <t t-set="line_no" t-value="line_no + 1"/>
+                                        <t t-if="line.container_no">
+                                            <span t-field="line.container_no"/>
+                                        </t>
+                                    </t>
+                                </t>
+                                <br/>
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+                <table style="width:100%;line-height: 200%;">
+                    <tr>
+                        <th style="text-align:left" width="23%" height="40px">COMMODITY</th>
+                        <th style="text-align:center" width="2%">:</th>
+                        <td style="text-align:left" width="20%"><span t-field="o.commodity1.name"/></td>
+                        <th style="text-align:left" width="18%">WAREHOUSE LOCATION</th>
+                        <th style="text-align:center" width="2%">:</th>
+                        <td style="text-align:left" width="10%"><span t-field="o.unstuff_at"/></td>
+                        <td style="text-align:left" width="13%"></td>
+                        <td style="text-align:center" width="2%"></td>
+                        <td style="text-align:left" width="10%"></td>
+                    </tr>
+                    <tr></tr>
+                    <tr>
+                        <th style="text-align:left" width="23%">DEPOT</th>
+                        <th style="text-align:center" width="2%">:</th>
+                        <td style="text-align:left" width="20%"><span t-field="o.depot_name.name"/></td>
+                        <th style="text-align:left" width="18%">SCN CODE</th>
+                        <th style="text-align:center" width="2%">:</th>
+                        <td style="text-align:left" width="10%"><span t-field="o.scn_code"/></td>
+                        <!--                        <th style="text-align:left" width="13%">Operator Code</th>-->
+                        <!--                        <th style="text-align:center" width="2%">:</th>-->
+                        <!--                        <td style="text-align:left" width="10%"><span t-field="o.operator_code.name"/></td>-->
+                    </tr>
+                    <tr>
+                        <th style="text-align:left;border-bottom:1pt solid black;" width="23%">PORT CODE</th>
+                        <th style="text-align:center;border-bottom:1pt solid black;" width="2%">:</th>
+                        <td style="text-align:left;border-bottom:1pt solid black;" width="20%"><span t-field="o.terminal.name"/></td>
+                        <th style="text-align:left;border-bottom:1pt solid black;" width="18%">SA CODE</th>
+                        <th style="text-align:center;border-bottom:1pt solid black;" width="2%">:</th>
+                        <td style="text-align:left;border-bottom:1pt solid black;" width="10%" colspan="4"><span t-field="o.shipping_agent_smk_code"/></td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:left;border-bottom:1pt solid black;">REMARK</th>
+                        <th style="text-align:center;border-bottom:1pt solid black;">:</th>
+                        <td style="text-align:left;border-bottom:1pt solid black;" colspan="7"><span t-field="o.note"/></td>
+                    </tr>
+                </table>
+                <br/><br/>
+                THANK YOU &amp; BEST REGARDS,<br/>
+                <span t-esc="user.name"></span>
+                <br/><br/>
+                <t t-if="o.bc_sale_term">
+                    <span t-field="o.bc_sale_term"/>
+                </t>
+            </div>
+        </xpath>
+    </template>
+</odoo>

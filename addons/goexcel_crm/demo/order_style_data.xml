@@ -1,0 +1,108 @@
+<odoo>
+    <data noupdate="0">
+        <record id="order_style_001" model="order.style">
+            <field name="name">Face to face</field>
+            <field name="active">True</field>
+            <field name="full_name">Face to face</field>
+        </record>
+        <record id="order_style_002" model="order.style">
+            <field name="name">PO</field>
+            <field name="active">True</field>
+            <field name="full_name">Purchase Order</field>
+        </record>
+        <record id="order_style_003" model="order.style">
+            <field name="name">Outbound call</field>
+            <field name="active">True</field>
+            <field name="full_name">Outbound call</field>
+        </record>
+        <record id="order_style_004" model="order.style">
+            <field name="name">Call in</field>
+            <field name="active">True</field>
+            <field name="full_name">Call in</field>
+        </record>
+
+        <!-- payment ode data -->
+
+        <record id="payment_mode_001" model="payment.mode">
+            <field name="name">Cheque</field>
+            <field name="active">True</field>
+            <field name="full_name">Cheque</field>
+        </record>
+        <record id="payment_mode_002" model="payment.mode">
+            <field name="name">E-Fund</field>
+            <field name="active">True</field>
+            <field name="full_name">Electronict Fund Transfer</field>
+        </record>
+        <record id="payment_mode_003" model="payment.mode">
+            <field name="name">NEFT</field>
+            <field name="active">True</field>
+            <field name="full_name">NEFT</field>
+        </record>
+        <record id="payment_mode_004" model="payment.mode">
+            <field name="name">RTGS</field>
+            <field name="active">True</field>
+            <field name="full_name">RTGS</field>
+        </record>
+        <record id="payment_mode_005" model="payment.mode">
+            <field name="name">Cash</field>
+            <field name="active">True</field>
+            <field name="full_name">Cash</field>
+        </record>
+
+        <!-- order style data -->
+        <record id="order_style_001" model="order.style">
+            <field name="name">Face to face</field>
+            <field name="active">True</field>
+            <field name="full_name">Face to face</field>
+        </record>
+        <record id="order_style_002" model="order.style">
+            <field name="name">PO</field>
+            <field name="active">True</field>
+            <field name="full_name">Purchase Order</field>
+        </record>
+        <record id="order_style_003" model="order.style">
+            <field name="name">Outbound call</field>
+            <field name="active">True</field>
+            <field name="full_name">Outbound call</field>
+        </record>
+        <record id="order_style_004" model="order.style">
+            <field name="name">Call in</field>
+            <field name="active">True</field>
+            <field name="full_name">Call in</field>
+        </record>
+
+        <!-- technical plan data -->
+        <record id="technical_plan_001" model="technical.plan">
+            <field name="name">Lube coach</field>
+            <field name="active">True</field>
+            <field name="full_name">Lube coach</field>
+        </record>
+        <record id="technical_plan_002" model="technical.plan">
+            <field name="name">Plant audit</field>
+            <field name="active">True</field>
+            <field name="full_name">Plant audit</field>
+        </record>
+        <record id="technical_plan_003" model="technical.plan">
+            <field name="name">Lube survey</field>
+            <field name="active">True</field>
+            <field name="full_name">Lube survey</field>
+        </record>
+        <record id="technical_plan_004" model="technical.plan">
+            <field name="name">Lube test</field>
+            <field name="active">True</field>
+            <field name="full_name">Lube test</field>
+        </record>
+        <record id="technical_plan_005" model="technical.plan">
+            <field name="name">DVR</field>
+            <field name="active">True</field>
+            <field name="full_name">DVR</field>
+        </record>
+        <record id="technical_plan_006" model="technical.plan">
+            <field name="name">Video check</field>
+            <field name="active">True</field>
+            <field name="full_name">Video check</field>
+        </record>
+    </data>
+
+
+</odoo>

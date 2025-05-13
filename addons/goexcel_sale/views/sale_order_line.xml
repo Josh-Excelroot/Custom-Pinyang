@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sale_order_line_pivot" model="ir.ui.view">
+        <field name="name">sale.order.line.pivot</field>
+        <field name="model">sale.order.line</field>
+        <field name="arch" type="xml">
+            <pivot disable_linking="True" string="Sales Orders Line">
+                <field name="price_subtotal" type="measure"/>
+                <field name="price_unit" type="measure"/>
+                <field name="product_uom_qty" type="measure"/>
+                <field name="qty_delivered" type="measure"/>
+                <field name="qty_invoiced" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_sale_order_line_tree" model="ir.ui.view">
+        <field name="name">sale.order.line.tree</field>
+        <field name="model">sale.order.line</field>
+        <field name="arch" type="xml">
+            <tree create="false" delete="false" edit="false" string="Sales Order Lines">
+                <field name="order_id"/>
+                <field name="sale_order_date"/>
+                <field name="state"/>
+                <field name="order_partner_id"/>
+                <field name="product_id"/>
+                <field name="sale_product_category" string="Product Category"/>
+                <field name="product_uom_qty" string="Qty"/>
+                <field groups="product.group_uom" name="product_uom" string="Unit of Measure"/>
+                <field name="qty_delivered"/>
+                <field name="qty_invoiced"/>
+                <field name="salesman_id"/>
+                <field name="sale_volume" sum="Vol"/>
+                <field name="sale_invoiced_volume" invisible="1"/>
+                <field name="sale_invoiced_amount" invisible="1"/>
+                <field name="sale_invoiced_volume_2" sum="Inv Vol"/>
+                <field name="sale_invoiced_amount_2" sum="Inv Amount"/>
+                <field name="price_unit"/>
+                <field name="tax_id" widget="many2many_tags"/>
+                <field name="price_subtotal" sum="Total" widget="monetary"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_sales_order_line_filter" model="ir.ui.view">
+        <field name="name">sale.order.line.select</field>
+        <field name="model">sale.order.line</field>
+        <field name="priority" eval="15"/>
+        <field name="arch" type="xml">
+            <search string="Search Sales Order Lines">
+                <field name="name" string="Sales Order" filter_domain="['|','|',('name','ilike',self),('client_order_ref','ilike',self),('partner_id','child_of',self)]"/>
+<!--                <field name="sale_product_category" string="Product Category"/>-->
+                <field name="state" string="Order" filter_domain="[('state','=','sale')]"/>
+                <filter string="Order Date" name="filter_sale_order_date" date="sale_order_date"/>
+                <filter string="My Sales" name="my_sale_order_line" domain="[('salesman_id', '=', uid)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Order#" name="sale_order_id" domain="[]" context="{'group_by':'order_id'}"/>
+                    <filter string="Salesperson" name="salesperson" domain="[]" context="{'group_by':'salesman_id'}"/>
+                    <filter name="customer" string="Customer" domain="[]" context="{'group_by':'order_partner_id'}"/>
+                    <filter string="Product" name="order_product" domain="[]" context="{'group_by':'product_id'}"/>
+                    <filter string="Product Category" name="product_cat" domain="[]" context="{'group_by':'sale_product_category'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+
+    <record id="open_view_order_line_tree" model="ir.actions.act_window">
+        <field name="name">Quotation and Order Lines</field>
+        <field name="res_model">sale.order.line</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,pivot</field>
+        <field name="domain">[('display_type', '=', False)]</field>
+<!--        <field name="context">{'search_default_sale_order_id':1}</field>-->
+        <field name="view_id" ref="view_sale_order_line_tree"/>
+        <field name="search_view_id" ref="view_sales_order_line_filter"/>
+    </record>
+
+    <!--<menuitem action="open_view_order_line_tree" id="menu_order_line_templates" name="Quotation and Order Lines" parent="sale.sale_order_menu" sequence="4"/>-->
+</odoo>

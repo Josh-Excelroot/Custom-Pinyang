@@ -1,0 +1,68 @@
+<odoo>
+    <data>
+        <record id="ins_partner_payment_wizard" model="ir.ui.view">
+            <field name="name">ins.partner.payment.view</field>
+            <field name="model">ins.partner.payment</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group col="4">
+                        <field name="date_range"/>
+                        <field groups="base.group_multi_company" name="company_id"/>
+                        <field name="reconciled" widget="radio"/>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                        <field help="It will show detailed lines in reports" name="include_details"/>
+                        <field name="include_partner_ref"/>
+                        <field name="payment_type" widget="radio"/>
+                        <field name="partner_type" widget="radio"/>
+                        <field invisible="1" name="financial_year"/>
+                    </group>
+                    <group col="2">
+                        <field domain="[('company_id','=',company_id)]" name="account_ids" options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}" widget="many2many_tags"/>
+                        <field domain="[('company_id','=',company_id)]" name="journal_ids" options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}" widget="many2many_tags"/>
+                        <field domain="[('parent_id','=', False),                                         '|',('company_id','=',company_id),('company_id','=',False)]" name="partner_ids" options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}" widget="many2many_tags"/>
+                        <field name="partner_category_ids" options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}" widget="many2many_tags"/>
+                    </group>
+                    <footer>
+                        <button class="oe_highlight" name="action_pdf" string="PDF" type="object"/>
+                        <button class="oe_highlight" name="action_xlsx" string="XLSX" type="object"/>
+                        <button class="oe_highlight" name="action_view" string="VIEW" type="object"/>
+                        <button class="btn-default" special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_ins_partner_payment_wizard" model="ir.actions.act_window">
+            <field name="name">Partner Payments</field>
+            <field name="res_model">ins.partner.payment</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="ins_partner_payment_wizard"/>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="account_dynamic_reports.model_ins_partner_payment"/>
+            <field name="binding_type">report</field>
+        </record>
+        <!--        <report-->
+        <!--            id="action_ins_partner_ledger_xlsx"-->
+        <!--            model="ins.partner.ledger"-->
+        <!--            string="Partner Ledger"-->
+        <!--            report_type="xlsx"-->
+        <!--            name="account_dynamic_reports.ins_partner_ledger_xlsx"-->
+        <!--            file="account_dynamic_reports.ins_partner_ledger_xlsx"-->
+        <!--            attachment_use="False"-->
+        <!--            print_report_name="'PartnerLedger - %s/%s' % (object.date_from,object.date_to)"-->
+        <!--        />-->
+        <record id="action_dynamic_allinone_pp_report" model="ir.actions.client">
+            <field name="name">Partner Payment Report</field>
+            <field name="tag">dynamic.pp</field>
+        </record>
+        <record id="action_dynamic_allinone_pi_report" model="ir.actions.client">
+            <field name="name">Partner Invoice Report</field>
+            <field name="tag">dynamic.pi</field>
+        </record>
+        <menuitem action="action_ins_partner_payment_wizard" groups="account.group_account_user" id="account_report_pp"
+                  name="Partner Payment" parent="account_dynamic_reports.account_partner_report_parent_menu" sequence="20"/>
+        <!--        <menuitem id="account_report_pp_wiz" sequence="20" action="action_dynamic_allinone_pp_report"-->
+        <!--                  name="Partner Payment" parent="account_reports_ins_wiz" groups="account.group_account_user"/>-->
+    </data>
+</odoo>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_netting_form" model="ir.ui.view">
+        <field name="name">account.netting.form</field>
+        <field name="model">account.netting</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" statusbar_visible="draft,posted" widget="statusbar"/>
+                    <button attrs="{'invisible': [('state', '!=', 'draft')]}" class="oe_highlight" name="action_post"
+                            string="Post" type="object"/>
+                    <button attrs="{'invisible': [('state', '=', 'draft')]}" name="button_cancel" string="Cancel"
+                            type="object"/>
+                    <button attrs="{'invisible': ['|',('amount_residual','=', 0),('state','=','posted')]}"
+                            class="oe_highlight" name="action_register_payment" string="Register Payment"
+                            type="object"/>
+                    <button name="reload_data" string="Reload Data" type="object" invisible="1"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button attrs="{'invisible': [('payment_count','=', 0)]}" class="oe_stat_button"
+                                icon="fa-dollar" name="action_view_payments" type="object">
+                            <field name="payment_count" string="Payments" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="contra_type" required="1" widget="radio" options="{'horizontal': True}"/>
+                            <field name="receivable_partner_id" string="Receivable Partner"/>
+                            <field name="payable_partner_id" string="Payable Partner"/>
+                            <field name="ref"/>
+                            <field name="temp_payment_id"/>
+                            <field name="analytic_tag_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field groups="base.group_multi_company" name="company_id" options="{'no_create': True}"/>
+                            <field name="journal_id"/>
+                            <field groups="base.group_multi_currency" name="currency_id" options="{'no_create': True}"/>
+                            <field attrs="{'invisible': [('move_id', '=', False)]}" name="move_id"/>
+                        </group>
+                    </group>
+                    <group string="Balance">
+                        <group>
+                            <field name="receivable_balance"/>
+                            <field name="payable_balance"/>
+                        </group>
+                        <group>
+                            <field name="balance"/>
+                            <field name="balance_type"/>
+                            <field name="amount_residual"/>
+                            <field attrs="{'invisible': [('payment_state', '=', False)]}" name="payment_state"/>
+                        </group>
+                    </group>
+                    <group name="receivable" string="Receivable"
+                           attrs="{'invisible':[('receivable_line_ids','!=', [])]}">
+                        <group>
+                            <group attrs="{'invisible':['|', ('state','!=','draft'),('contra_receivable_ids','!=',[])]}">
+                                <button name="action_refresh_lines" type="object" string="Get Receivable Lines"
+                                        class="oe_highlight"
+                                        attrs="{'invisible':['|', ('state','!=','draft'),('contra_receivable_ids','!=',[])]}"
+                                        help="Get lines from database" context="{'ttype':'receivable'}"/>
+                            </group>
+                            <group>
+                                <group>
+                                    <button name="action_refresh_lines" type="object" string="Reset Lines"
+                                            attrs="{'invisible':['|',('state','!=','draft'),('contra_receivable_ids','=',[])]}"
+                                            help="Get lines from database and existed lines will be removed"
+                                            context="{'ttype':'receivable'}"/>
+                                    <button name="action_refresh_lines" type="object" string="Update Lines"
+                                            class="oe_highlight"
+                                            attrs="{'invisible':['|',('state','!=','draft'),('contra_receivable_ids','=',[])]}"
+                                            help="Get new lines and delete existed lines which are now reconciled or not in database"
+                                            context="{'ttype':'receivable', 'update_only':True}"/>
+                                </group>
+                            </group>
+                        </group>
+                        <field name="contra_receivable_ids" nolabel="1" widget="section_and_note_one2many_field_search">
+                            <tree create="false" editable="bottom" limit="1000">
+                                <field name="line" string="Ref" readonly="1"/>
+                                <field name="name"/>
+                                <field name="date"/>
+                                <field name="account_id"/>
+                                <field name="amount_currency"/>
+                                <field name="currency_id"/>
+                                <field name="debit" string="Original Amount" sum="Amount Debit"/>
+                                <field name="amount_residual" string="Amount Due" sum="Amount Due"/>
+                                <field invisible="1" name="company_currency_id"/>
+                                <field name="amount_residual_currency" string="Amount Due in Currency"/>
+                                <field name="reconcile"/>
+                                <field name="contra_amount" sum="Total Contra Amount"/>
+                                <field name="payment_amount" sum="Total Paid Amount"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group name="payable" string="Payable"
+                           attrs="{'invisible':[('payable_line_ids','!=', [])]}">
+                        <group>
+                            <group attrs="{'invisible':['|', ('state','!=','draft'),('contra_payable_ids','!=',[])]}">
+                                <button name="action_refresh_lines" type="object" string="Get Payable Lines"
+                                        class="oe_highlight"
+                                        attrs="{'invisible':['|', ('state','!=','draft'),('contra_payable_ids','!=',[])]}"
+                                        help="Get lines from database" context="{'ttype':'payable'}"/>
+                            </group>
+                            <group>
+                                <group>
+                                    <button name="action_refresh_lines" type="object" string="Reset Lines"
+                                            attrs="{'invisible':['|',('state','!=','draft'),('contra_payable_ids','=',[])]}"
+                                            help="Get lines from database and existed lines will be removed"
+                                            context="{'ttype':'payable'}"/>
+                                    <button name="action_refresh_lines" type="object" string="Update Lines"
+                                            class="oe_highlight"
+                                            attrs="{'invisible':['|',('state','!=','draft'),('contra_payable_ids','=',[])]}"
+                                            help="Get new lines and delete existed lines which are now reconciled or not in database"
+                                            context="{'ttype':'receivable', 'update_only':True}"/>
+                                </group>
+                            </group>
+                        </group>
+                        <field name="contra_payable_ids" nolabel="1" widget="section_and_note_one2many_field_search">
+                            <tree create="false" editable="bottom" limit="1000">
+                                <field name="line" string="Ref"/>
+                                <field name="move_id"/>
+                                <field name="name"/>
+                                <field name="date"/>
+                                <field name="account_id"/>
+                                <field name="amount_currency"/>
+                                <field name="currency_id"/>
+                                <field name="credit" string="Original Amount" sum="Amount Credit"/>
+                                <field name="amount_residual" string="Amount Due" sum="Amount Due"/>
+                                <field invisible="1" name="company_currency_id"/>
+                                <field name="amount_residual_currency" string="Amount Due in Currency"/>
+                                <field name="reconcile"/>
+                                <field name="contra_amount" sum="Total Contra Amount"/>
+                                <field name="payment_amount" sum="Total Paid Amount"/>
+                                <!--<field name="currency_id" />-->
+                            </tree>
+                        </field>
+                    </group>
+
+                    <group name="receivable_2" string="Receivable"
+                           attrs="{'invisible':[('receivable_line_ids','=', [])]}">
+                        <field domain="[('partner_id','=', receivable_partner_id), ('account_id.internal_type', '=', 'receivable'),('parent_state','=', 'posted'), '|', ('amount_residual','&gt;', 0), ('amount_residual_currency','&gt;', 0)]"
+                               name="receivable_line_ids" nolabel="1">
+                            <tree>
+                                <field name="move_id"/>
+                                <field name="name"/>
+                                <field name="date"/>
+                                <field name="account_id"/>
+                                <field name="amount_currency"/>
+                                <field name="currency_id"/>
+                                <field name="debit" string="Original Amount" sum="Amount Debit"/>
+                                <field name="amount_residual" string="Amount Due" sum="Amount Due"/>
+                                <field invisible="1" name="company_currency_id"/>
+                                <field name="amount_residual_currency" string="Amount Due in Currency"/>
+                                <!--<field name="currency_id" />-->
+                            </tree>
+                        </field>
+                    </group>
+                    <group name="payable_2" string="Payable"
+                           attrs="{'invisible':[('payable_line_ids','=', [])]}">
+                        <field domain="[('partner_id','=', payable_partner_id), ('account_id.internal_type', '=', 'payable'),('reconciled','=',False),('parent_state','=', 'posted'), '|', ('amount_residual','&lt;', 0), ('amount_residual_currency','&lt;', 0)]"
+                               name="payable_line_ids" nolabel="1">
+                            <tree>
+                                <field name="move_id"/>
+                                <field name="name"/>
+                                <field name="date"/>
+                                <field name="account_id"/>
+                                <field name="amount_currency"/>
+                                <field name="currency_id"/>
+                                <field name="credit" string="Original Amount" sum="Amount Credit"/>
+                                <field name="amount_residual" string="Amount Due" sum="Amount Due"/>
+                                <field invisible="1" name="company_currency_id"/>
+                                <field name="amount_residual_currency" string="Amount Due in Currency"/>
+                                <!--<field name="currency_id" />-->
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="view_account_netting_tree" model="ir.ui.view">
+        <field name="name">account.netting.tree</field>
+        <field name="model">account.netting</field>
+        <field name="arch" type="xml">
+            <!--Ahmad Zaman - 22/11/24 - Based default order on date upon user's request-->
+            <tree default_order="date desc">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="ref"/>
+                <field name="receivable_partner_id" string="Receivable Partner"/>
+                <field name="payable_partner_id"/>
+                <field name="state"/>
+                <field name="payment_state"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_account_netting_search" model="ir.ui.view">
+        <field name="name">account.netting.search</field>
+        <field name="model">account.netting</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="ref"/>
+                <field name="receivable_partner_id" string="Receivable Partner"/>
+                <field name="payable_partner_id"/>
+                <field name="contra_type"/>
+                <separator/>
+                <filter domain="[('state','=','draft')]" name="draft" string="Draft"/>
+                <filter domain="[('state', '=', 'posted')]" name="posted" string="Posted"/>
+                <separator/>
+                <filter domain="[('payment_state', '=', 'paid'), ('state', '=', 'posted')]" name="paid" string="Paid"/>
+                <filter domain="[('payment_state', '=', 'partial'), ('state', '=', 'posted')]" name="partial"
+                        string="Partially Paid"/>
+                <filter domain="[('payment_state', '=', 'not_paid'), ('state', '=', 'posted')]" name="unpaid"
+                        string="Not Paid"/>
+                <separator/>
+                <filter domain="[('contra_type', '=', 'same_partner')]" name="same_partner"
+                        string="Same Partner Contra"/>
+                <filter domain="[('contra_type', '=', 'diffetner_partner')]" name="diffetner_partner"
+                        string="Different Partner Contra"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter context="{'group_by':'receivable_partner_id'}" name="group_partner"
+                            string="Receivable Partner"/>
+                    <filter string="Payable Partner" name="group_payable_partner"
+                            context="{'group_by':'payable_partner_id'}"/>
+                    <filter context="{'group_by':'state'}" name="group_status" string="Status"/>
+                    <filter context="{'group_by':'payment_state'}" name="group_payment_state" string="Payment Status"/>
+                    <filter context="{'group_by': 'date'}" name="group_date" string="Date"/>
+                    <filter context="{'group_by': 'contra_type'}" name="contra_type" string="Contra Type"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

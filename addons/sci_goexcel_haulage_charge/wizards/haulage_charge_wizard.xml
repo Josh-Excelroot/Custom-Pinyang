@@ -1,0 +1,48 @@
+<odoo>
+
+ 		<record id="haulage_charge_wizard_view_form" model="ir.ui.view">
+            <field name="name">Haulage Charge Wizard View Form</field>
+            <field name="model">charge.wizard</field>
+            <field name="type">form</field>
+            <field name="priority" eval="1"/>
+            <field name="inherit_id" ref="sci_goexcel_charge_base.charge_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='main']" position="after">
+                    <group attrs="{'invisible': ['|',('service', '!=', 'haulage_charge'),('haulage_charge_check', '=', False)]}">
+                        <field name="port_of_loading" attrs="{'required': [('service','=', 'haulage_charge')]}"/>
+                        <field name="place_of_delivery" domain="[('port_of_loading','=',port_of_loading),('state','=','active')]" attrs="{'required': [('service','=', 'haulage_charge')]}"/>
+                        <field name="vendor_list" invisible="1"/>
+                        <field name="vendor" domain="[('id','in',vendor_list)]"/>
+                        <field name="haulage_charge_check" invisible="1"/>
+                        <field name="trucking_service_check" invisible="1"/>
+                        <field name="currency"/>
+                        <field name="haulage_charge"/>
+                        <field name="haulage_cost"/>
+                    </group>
+
+                    <group attrs="{'invisible': ['|',('service', '!=', 'trucking_service'),('trucking_service_check', '=', False)]}">
+                        <field name="port_of_loading" attrs="{'required': [('service','=', 'trucking_service')]}"/>
+                        <field name="place_of_delivery" domain="[('port_of_loading','=',port_of_loading),('state','=','active')]" attrs="{'required': [('service','=', 'trucking_service')]}"/>
+                        <field name="haulage_charge_check" invisible="1"/>
+                        <field name="trucking_service_check" invisible="1"/>
+                        <field name="trucking_service_weight" widget="radio" options="{'horizontal': true}"/>
+                        <field name="trucking_service_charge"/>
+                    </group>
+
+                    <group attrs="{'invisible': ['|',('service', '!=', 'haulage_charge'),('haulage_charge_check', '=', True)]}">
+                        <p>Haulage is not activated</p>
+                    </group>
+
+                    <group attrs="{'invisible': ['|',('service', '!=', 'trucking_service'),('trucking_service_check', '=', True)]}">
+                        <p>Trucking is not activated</p>
+                    </group>
+                </xpath>
+                <xpath expr="//footer[@name='action']" position="after">
+                    <button name="action_haulage" attrs="{'invisible': ['|',('service', '!=', 'haulage_charge'),('haulage_charge_check', '=', False)]}"
+                                string="Add" type="object" class="btn-primary"/>
+                        <button name="action_trucking" attrs="{'invisible': ['|',('service', '!=', 'trucking_service'),('trucking_service_check', '=', False)]}"
+                                string="Add" type="object" class="btn-primary"/>
+                </xpath>
+            </field>
+        </record>
+</odoo>

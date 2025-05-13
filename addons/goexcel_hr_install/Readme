@@ -1,0 +1,7 @@
+pip3 install geopy
+pip3 install selenium
+pip install webdriver-manager
+pip install selenium_stealth
+pip install pytesseract
+pip install pdf2image
+pip install huggingface_hub

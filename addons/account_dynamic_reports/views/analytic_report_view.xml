@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="account_dynamic_reports.analytic_report">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <style>.pims_report_content{
+                            font-size: 14px;
+                            font-family&quot; 'Arial';
+                        }
+
+                        .pims_report_line_table {
+                            width:100%;
+                        }
+
+                        .pims_report_line_main_tr {
+                            font-weight:bold;
+                            font-size: 14px;
+                            font-family&quot; 'Arial';
+                            border-bottom:1px solid grey;
+                        }
+
+                        .pims_report_line_initial_tr {
+                            font-style:italic;
+                        }
+
+                        .pims_report_line_data_tr {
+                            font-style:inherit;
+                        }
+
+                        .pims_report_line_subtotal {
+                            font-weight:bold;
+                            background-color: white;
+                            border:1px solid grey;
+                        }
+                    </style>
+                    <h3>
+                        <span t-esc="res_company.name"/>: Analytic Report</h3>
+                    <div>
+                        <div class="row mt32 pims_report_content">
+                            <div class="col-3">
+                                <strong>Date From:</strong>
+                                <p t-esc="Filters['date_from']" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                            </div>
+                            <div class="col-3">
+                                <strong>Date To:</strong>
+                                <p t-esc="Filters['date_to']" t-options="{&quot;widget&quot;: &quot;date&quot;}"/>
+                            </div>
+                            <div class="col-3">
+                                <strong>Analytic Tag:</strong>
+                                <p t-esc="', '.join([ lt or '' for lt in Filters['analytic_tags'] ])"/>
+                            </div>
+                        </div>
+                        <div class="row pims_report_content">
+                            <div class="col-3">
+                                <strong>Partners:</strong>
+                                <p t-esc="', '.join([ lt or '' for lt in Filters['partners'] ])"/>
+                            </div>
+                            <div class="col-3">
+                                <strong>Analytic:</strong>
+                                <p t-esc="', '.join([ lt or '' for lt in Filters['analytics'] ])"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <!-- Rajeel | Analytic Report | 29/03/2023 -->
+                        <table class="pims_report_line_table pims_report_content">
+                            <thead>
+                                <tr><th colspan="1" class="p-1">Analytic Tag</th></tr>
+                                <tr class="text-center">
+                                    <th style="text-align:left;"/>
+                                    <th style="text-align:left;" class="p-2">Reference</th>
+                                    <th style="text-align:left;">Partner</th>
+                                    <th style="text-align:right;">Sales</th>
+                                    <th style="text-align:right;">Cost</th>
+                                    <th style="text-align:right;">Profit</th>
+                                </tr>
+                            </thead>
+                            <t t-as="line" t-foreach="Ledger_data">
+                                <tr class="pims_report_line_main_tr">
+                                    <td t-raw="line['name']" class="pb-2 pt-2" colspan="5"/>
+                                    <td colspan="4">
+                                        <span>Total Profit: </span><span t-esc="line['balance']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                    </td>
+                                </tr>
+                                <t t-as="item" t-foreach="line['lines']">
+                                <tr class="pims_report_line_main_tr">
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <span t-esc="item.get('reference', '')"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="item.get('partner', '')"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="item['credit']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="item['debit']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="item['balance']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                    </td>
+                                </tr>
+                                </t>
+                            </t>
+                            <tr class="pims_report_line_main_tr">
+                                <td/>
+                                <td/>
+                                <td/>
+                                <td/>
+                                <td>Total</td>
+                                <td class="text-right">
+                                    <span t-esc="Final_balance" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- Rajeel | END -->
+                    </div>
+                    <br/>
+                    <p style="text-align:center">*** END OF DOCUMENT ***</p>
+                </div>
+            </t>
+        </t>
+    </template>
+    <report file="account_dynamic_reports.analytic_report" id="action_print_analytic_report" menu="False"
+            model="ins.analytic.report" name="account_dynamic_reports.analytic_report" report_type="qweb-pdf"
+            string="General Ledger" paperformat="account_dynamic_reports.paperformat_compact_dynamic_reports"/>
+</odoo>

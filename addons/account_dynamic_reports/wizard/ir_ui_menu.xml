@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <menuitem id="account_statement_report_parent_menu"
+                  groups="account.group_account_user"
+                  name="Statement Reports"
+                  parent="account_reports_ins"
+                  sequence="1"/>
+
+        <menuitem id="account_audit_report_parent_menu"
+                  groups="account.group_account_user"
+                  name="Audit Reports"
+                  parent="account_reports_ins"
+                  sequence="2"/>
+
+        <menuitem id="account_partner_report_parent_menu"
+                  groups="account.group_account_user"
+                  name="Partner Reports"
+                  parent="account_reports_ins"
+                  sequence="3"/>
+
+        <menuitem id="account_management_report_parent_menu"
+                  groups="account.group_account_user"
+                  name="Management"
+                  parent="account_reports_ins"
+                  sequence="4"/>
+    </data>
+</odoo>

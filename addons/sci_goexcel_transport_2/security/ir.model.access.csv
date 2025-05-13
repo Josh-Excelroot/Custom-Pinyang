@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_transport_rft,access.transport.rft,model_transport_rft,base.group_user,1,1,1,1
+access_transport_job_type,access.transport.job.type,model_transport_job_type,base.group_user,1,1,1,1
+access_temperature_type,access.temperature.type,model_temperature_type,base.group_user,1,1,1,1
+access_transport_job_type,access.transport.job.type,model_transport_job_type,base.group_user,2,2,2,2
+access_temperature_type,access.temperature.type,model_temperature_type,base.group_user,2,2,2,2

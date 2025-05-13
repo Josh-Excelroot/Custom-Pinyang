@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="create_picking_wizard_form_view" model="ir.ui.view">
+        <field name="name">create.picking.wizard.form.view</field>
+        <field name="model">sale.order.picking</field>
+        <field name="arch" type="xml">
+            <form string="Create DO">
+                <group string="DO will be created for below lines">
+                    <field name='orderline_ids' nolabel="1" domain="[('product_id.type','!=','service'),('order_id','=',active_id)]">
+                        <tree create="false">
+                            <field name="product_id"/>
+                            <field name="name"/>
+                            <field name="product_uom_qty"/>
+                            <field name="qty_delivered"/>
+                            <field name="qty_invoiced"/>
+                            <field name="price_unit"/>
+                            <field name="tax_id"/>
+                            <field name="price_subtotal"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button name="action_create_picking" string="Confirm"
+                        type="object" default_focus="1" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link"
+                        special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    
+    <record id="action_sale_picking"
+        model="ir.actions.act_window">
+        <field name="name">Create DO</field>
+        <field name="res_model">sale.order.picking</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

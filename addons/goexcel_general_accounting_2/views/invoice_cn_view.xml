@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--   Tree view     -->
+        <record id='view_invoice_credit_debit_note' model="ir.ui.view">
+            <field name="name">Invoice Debit and CN</field>
+            <field name="model">account.invoice</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="state == 'draft'" decoration-muted="state == 'cancel'" string="Invoice">
+                    <field name="partner_id" groups="base.group_user" string="Customer"/>
+                    <field name="date_invoice"/>
+                    <field name="number"/>
+                    <field name="commercial_partner_id" invisible="1"/>
+                    <field name="reference" invisible="1"/>
+                    <field name="name" invisible="1"/>
+                    <field name="journal_id" invisible="1"/>
+                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                    <field name="user_id"/>
+                    <field name="date_due"/>
+                    <field name="origin"/>
+                    <field name="amount_untaxed_invoice_signed" string="Tax Excluded" sum="Total"/>
+                    <field name="amount_tax_signed" string="Tax" sum="Total"/>
+                    <field name="amount_total_signed" string="Total" sum="Total"/>
+                    <field name="residual_signed" string="Amount Due" sum="Amount Due"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="company_currency_id" invisible="1"/>
+                    <field name="state"/>
+                    <field name="type" invisible="context.get('type',True)"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Ahmad Zaman - 24/12/24 - Added Pivot view -->
+        <record id="view_invoice_credit_debit_note_pivot" model="ir.ui.view">
+            <field name="name">Invoice Debit and CN Pivot</field>
+            <field name="model">account.invoice</field>
+            <field name="arch" type="xml">
+                <pivot string="Invoice Pivot">
+                    <field name="amount_total_signed" type="measure" string="Total"/>
+                    <field name="residual_signed" type="measure" string="Amount Due"/>
+                    <field name="date_invoice" type="row" interval="month" string="Invoice Date"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="action_view_invoice_credit_debit_note" model="ir.actions.act_window">
+            <field name="name">Invoice, Debit Note and Credit Note</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,pivot</field>
+            <field name="domain">['|', '|',
+                ('type', '=', 'out_invoice'),
+                ('type', '=', 'out_refund'),
+                '&amp;', ('journal_id.type', '=', 'sale'),
+                '|', ('customer_debit_note', '=', 1),
+                ('debit_invoice_id', '!=', False)
+                ]
+            </field>
+            <field
+                    name="view_ids"
+                    eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_invoice_credit_debit_note')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('account.invoice_form')})]"
+            />
+        </record>
+
+        <menuitem name="Invoice + CN" id="invoice_cn_dn" action="action_view_invoice_credit_debit_note"
+                  parent="account.menu_finance_receivables" sequence="15"
+        />
+    </data>
+</odoo>

@@ -1,0 +1,9 @@
+<odoo>
+    <template id="internal_layout_extended" inherit_id="web.internal_layout">
+       <xpath expr="//div[hasclass('row')] //div[2]" position="replace">
+            <div class="col-2 offset-2 text-center" style="white-space: nowrap;">
+                <span t-esc="company.name"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

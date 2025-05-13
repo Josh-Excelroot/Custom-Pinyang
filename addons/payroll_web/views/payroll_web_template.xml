@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_frontend" inherit_id="website.assets_frontend" name="My scripts">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/goexcel_customer_registration/static/src/js/lcl-buttons.js"></script>
+        </xpath>
+    </template>
+
+    <template id="payroll_generate" name="Payroll">
+        <t t-call="website.layout">
+            <div class="wrap">
+                <div class="oe_structure">
+                    <div class="container">
+                        <section>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h1 class="text-center">Payroll Calculator</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <form action="/payroll_generate/create" method="POST" class="form-horizontal mt32 container"
+                              enctype="multipart/form-data">
+                            <div class="row o_portal_details">
+                                <div class="col-lg-12">
+                                    <div class='row'>
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <table width="75%" border="0" cellpadding="0" cellspacing="0"
+                                               style="float: left" class="table table-noline">
+                                            <!-- <t t-set="partner_ids" t-value="website.get_insurer_insured_client()"/> -->
+                                            <tbody>
+                                                <tr>
+                                                    <td bgcolor="#369F81" colspan="2">
+                                                    <label class="control-label">
+                                                        <strong style="font-size:15px;color:#fff">Salary and Bonus
+                                                        </strong>
+                                                    </label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label class="control-label">
+                                                            <strong>Salary (RM)</strong>
+                                                        </label>
+                                                        <input class="form-control" style="width: auto !important"
+                                                               size="75" name="salary" id="salary" required="True"/>
+                                                    </td>
+                                                    <td>
+                                                        <label class="control-label">
+                                                            <strong>Bonus (RM)</strong>
+                                                        </label>
+                                                        <input class="form-control" style="width: auto !important"
+                                                               size="75" name="bonus" id="bonus"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td bgcolor="#369F81" colspan="2">
+                                                        <label class="control-label">
+                                                            <strong style="font-size:15px;color:#fff">Salary Options
+                                                            </strong>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+
+                                                    <td>
+                                                        <label class="control-label" id="label_15"
+                                                               for="type_of_business">
+                                                            <strong>Tax Category</strong>
+                                                        </label>
+
+                                                        <select id="marital" name="marital"
+                                                                class="form-control" style="width: auto !important"
+                                                                required="True">
+                                                            <option value="select">Please Select</option>
+                                                            <option value="single" selected="True">Single</option>
+                                                            <option value="single_ch">Single With Children
+                                                                child</option>
+                                                            <option value="married">Married and Spouse is Working</option>
+                                                            <option value="divorced">Divorced or Widowed</option>
+                                                            <option value="married_sp_nwork">Married and Spouse is Not Working</option>
+                                                            <option value="married_sp_dsbl">Married and Spouse is Disable</option>
+                                                        </select>
+
+
+                                                    </td>
+
+
+                                                    <td>
+                                                        <label class="control-label" id="label_16"
+                                                               for="industry_sector">
+                                                            <strong>Employee EPF Rate</strong>
+                                                        </label>
+
+                                                        <select id="employee_epf_rate" name="employee_epf_rate"
+                                                                class="form-control" style="width: auto !important"
+                                                                required="True">
+                                                            <option value="select">Please Select</option>
+                                                            <option value="a">8%</option>
+                                                            <option value="c">9%</option>
+                                                            <option value="d">10%</option>
+                                                            <option value="b" selected="True">11%</option>
+                                                            <option value="e">12%</option>
+                                                            <option value="f">13%</option>
+                                                            <option value="g">14%</option>
+                                                            <option value="h">15%</option>
+                                                            <option value="i">16%</option>
+                                                            <option value="j">17%</option>
+                                                            <option value="k">18%</option>
+                                                            <option value="l">19%</option>
+                                                            <option value="m">20%</option>
+                                                        </select>
+
+                                                    </td>
+
+                                                </tr>
+
+
+                                                <tr>
+                                                    <td width="25%" colspan="1">
+                                                        <label class="control-label" for="partner_id">
+                                                            <strong>Tax Resident</strong>
+                                                        </label>
+                                                        <select id="tax_resident" name="tax_resident"
+                                                                class="form-control" style="width: auto !important"
+                                                                required="True">
+                                                            <option value="select" >Please Select</option>
+                                                            <option value="resident" selected="True">Resident</option>
+                                                            <option value="nonresident">Non-resident</option>
+                                                        </select>
+                                                    </td>
+
+                                                    <td>
+                                                        <label class="control-label">
+                                                            <strong>Employer EPF Rate</strong>
+                                                        </label>
+
+                                                        <select id="employer_epf_rate" name="employer_epf_rate"
+                                                                class="form-control" style="width: auto !important"
+                                                                required="True">
+                                                            <option value="select">Please Select</option>
+                                                            <option value="a" selected="True">12/13%</option>
+                                                            <option value="b">14%</option>
+                                                            <option value="c">15%</option>
+                                                            <option value="d">16%</option>
+                                                            <option value="e">17%</option>
+                                                            <option value="f">18%</option>
+                                                            <option value="g">19%</option>
+                                                            <option value="h">20%</option>
+
+                                                        </select>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+
+<!--                                                    <td width="25%" colspan="1">-->
+<!--                                                        <label class="control-label" for="partner_id">-->
+<!--                                                            <strong>Calculate For</strong>-->
+<!--                                                        </label>-->
+<!--                                                        <select id="calculation_purpose" name="calculate_for"-->
+<!--                                                                class="form-control" style="width: auto !important"-->
+<!--                                                                required="True">-->
+<!--                                                            <option value="select">Please Select</option>-->
+<!--                                                            <option value="salary_and_bonus">Salary and Bonus</option>-->
+<!--                                                            <option value="bonus_only">Bonus Only</option>-->
+<!--                                                        </select>-->
+<!--                                                    </td>-->
+                                                    <td width="25%">
+                                                        <label class="control-label">
+                                                            <strong>Socso Category</strong>
+                                                        </label>
+                                                        <select id="socso_category" name="socso_category"
+                                                                class="form-control" style="width: auto !important"
+                                                                required="True">
+                                                            <option value="select">Please Select</option>
+                                                            <option value="a">No Applicable</option>
+                                                            <option value="b" selected="True">Employment
+                                                                Injury Scheme and Invalidity Scheme
+                                                            </option>
+                                                            <option value="c">Employment Injury Only
+                                                            </option>
+
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <label class="control-label">
+                                                            <strong>PCB (MTD)/SOCSO</strong>
+                                                        </label>
+                                                        <!--                                                    </td>-->
+                                                        <!--                                                    <td >-->
+
+                                                        <select id="year_of_cal" name="pcb_mtd"
+                                                                class="form-control" style="width: auto !important"
+                                                                required="True">
+                                                            <option value="year_2022">2022</option>
+                                                            <option value="year_2021">2021</option>
+                                                        </select>
+                                                    </td>
+
+
+                                                </tr>
+
+                                                <tr>
+
+
+                                                    <td>
+                                                        <label class="control-label">
+                                                            <strong>EIS Contribution</strong>
+                                                        </label>
+                                                        <!--                                                    </td>-->
+                                                        <!--                                                    <td>-->
+                                                        <select id="eis_contribution" name="eis_contribution"
+                                                                class="form-control" style="width: auto !important"
+                                                                required="True">
+                                                            <option value="eis_contribution_yes" selected="True">Yes</option>
+                                                            <option value="eis_contribution_no">No</option>
+                                                        </select>
+                                                    </td>
+
+                                                    <td>
+                                                        <label class="control-label">
+                                                            <strong>Muslim Zakat Fund</strong>
+                                                        </label>
+                                                        <!--                                                    </td>-->
+                                                        <!--                                                    <td>-->
+                                                        <input class="form-control" style="width: auto !important"
+                                                               size="75" name="zakat_fund" id="zakat_fund"
+                                                               t-attf-value="#{''}" type="text" placeholder="Muslim Zakat Fund"/>
+                                                    </td>
+                                                </tr>
+<!--                                                <tr>-->
+<!--                                                    <td>-->
+<!--                                                        <label class="control-label">-->
+<!--                                                            <strong>Allowable Deduction</strong>-->
+<!--                                                        </label>-->
+<!--                                                        &lt;!&ndash;                                                    </td>&ndash;&gt;-->
+<!--                                                        &lt;!&ndash;                                                    <td >&ndash;&gt;-->
+
+<!--                                                        <input class="form-control" style="width: auto !important"-->
+<!--                                                               size="75" name="allowable_deduction" id="allowable_deduction"-->
+<!--                                                               t-attf-value="#{''}" type="text" placeholder="Allowable Deduction"/>-->
+<!--                                                    </td>-->
+
+
+<!--                                                </tr>-->
+                                                <tr>
+                                                    <td colspan="2" class="form-group">
+                                                        <button type="submit"  class="btn btn-primary btn-lg">Submit</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="new_line_id_edit" name="Request for Payroll Thank You">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+                <section>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4 class="text-center">Salary Statement (in RM)</h4>
+                                <style>
+                                    .tab {
+                                        display: inline-block;
+                                        margin-left: 40px;
+                                    }
+                                </style>
+                                <t t-foreach="payslip_id.line_ids" t-as="line_id">
+                                    <t t-if="line_id.code=='BASIC'">
+                                         <td class="text-left">
+                                            Salary:<span class="tab" t-field="line_id.total" t-value="'{0:,.2f}'.format(round(line_id.total,2))"/><br/>
+                                         </td>
+                                    </t>
+                                </t>
+                                <t t-foreach="payslip_id.input_line_ids" t-as="input_line_id">
+                                    <t t-if="input_line_id.code=='PBONUS'">
+                                         <td class="text-left">
+                                            Bonus:<span class="tab" t-field="input_line_id.amount" t-value="'{0:,.3f}'.format(round(input_line_id.amount,2))"/><br/>
+                                         </td>
+                                    </t>
+                                </t>
+                                <t t-foreach="payslip_id.line_ids" t-as="line_id">
+                                    <t t-if="line_id.code=='NET'">
+                                         <td class="text-left">
+                                            Net Salary:&amp;emsp;<span t-field="line_id.total" t-value="'{0:,.2f}'.format(round(line_id.total,2))"/>
+                                         </td>
+                                    </t>
+                                </t>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        <!--<xpath expr="//div[@name='info1']" position="replace">-->
+            <div class="container">
+            <div name="info1" class="row" style="font-size:12px">
+                <table class="table table-sm o_main_table" >
+                    <thead style="font-size:12px;">
+                        <tr>
+                            <th class="text-center">        </th>
+                            <th class="text-right">Employer</th>
+                            <th class="text-right">Employee</th>
+                            <th class="text-right">Sub-Total</th>
+                        </tr>
+                    <tbody class="payroll_tbody" style="font-size:12px;">
+                        <t t-set="epf_employer" t-value="0"/>
+                        <t t-set="epf_employee" t-value="0"/>
+                        <t t-set="total_epf" t-value="0"/>
+                        <t t-set="scs_employee" t-value="0"/>
+                        <t t-set="scs_employer" t-value="0"/>
+                        <t t-set="total_scs" t-value="0"/>
+                        <t t-set="eis_employee" t-value="0"/>
+                        <t t-set="eis_employer" t-value="0"/>
+                        <t t-set="total_eis" t-value="0"/>
+                        <t t-set="tax_employee" t-value="0"/>
+                        <t t-set="total_tax" t-value="0"/>
+                        <t t-set="total_employer" t-value="0"/>
+                        <t t-set="total_employee" t-value="0"/>
+                        <t t-set="sub_total" t-value="0"/>
+
+                        <t t-foreach="payslip_id.line_ids" t-as="line_id">
+                            <t t-if="line_id.name=='EPF (Employer)'">
+                                <t t-set="epf_employer" t-value="round(epf_employer + line_id.total,2)"/>
+                            </t>
+                            <t t-if="line_id.name=='EPF (Employee)'">
+                                <t t-set="epf_employee" t-value="round(epf_employee + line_id.total,2)"/>
+                            </t>
+                             <t t-if="epf_employer>0 and epf_employee>0">
+                                <t t-set="total_epf" t-value="round(epf_employer + epf_employee,2)"/>
+                             </t>
+                            <t t-if="line_id.name=='SCS (Employee)'">
+                                <t t-set="scs_employee" t-value="round(scs_employee + line_id.total,2)"/>
+                            </t>
+                            <t t-if="line_id.name=='SCS (Employer)'">
+                                <t t-set="scs_employer" t-value="round(scs_employer + line_id.total,2)"/>
+                            </t>
+                            <t t-if="scs_employer>0 and scs_employee>0">
+                                <t t-set="total_scs" t-value="round(scs_employer + scs_employee,2)"/>
+                            </t>
+                            <t t-if="line_id.name=='EIS (Employee)'">
+                                <t t-set="eis_employee" t-value="round(eis_employee + line_id.total,2)"/>
+                            </t>
+                            <t t-if="line_id.name=='EIS (Employer)'">
+                                <t t-set="eis_employer" t-value="round(eis_employer + line_id.total,2)"/>
+                            </t>
+                            <t t-if="eis_employer>0 and eis_employee>0">
+                                <t t-set="total_eis" t-value="round(eis_employer + eis_employee,2)"/>
+                            </t>
+                            <t t-if="line_id.name=='PCB'">
+                                <t t-set="tax_employee" t-value="round(tax_employee + line_id.total,2)"/>
+                            </t>
+                            <t t-if="tax_employee>0">
+                                <t t-set="total_tax" t-value="round(tax_employee,2)"/>
+                            </t>
+                            <t t-set="total_employer" t-value="eis_employer + scs_employer + epf_employer"/>
+                            <t t-set="total_employee" t-value="round(tax_employee + eis_employee + scs_employee + epf_employee,2)"/>
+                            <t t-set="sub_total" t-value="round(total_tax + total_eis + total_scs + total_epf,2)"/>
+                        </t>
+                        <tr t-att-class="'bg-200 font-weight-bold o_line_section'">
+                            <td class="text-left">
+                                <span>EPF:</span>
+                            </td>
+                            <td class="text-right">
+                                <t t-if="epf_employer>0">
+                                    <span t-esc="'{0:,.2f}'.format(round(epf_employer,2))"/>
+                                </t>
+                            </td>
+                            <td class="text-right">
+                               <t t-if="epf_employee>0">
+                                    <span t-esc="'{0:,.2f}'.format(round(epf_employee,2))"/>
+                               </t>
+                            </td>
+                            <td class="text-right">
+                                <t t-if="total_epf>0">
+                                    <span t-esc="'{0:,.2f}'.format(round(total_epf,2))"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr t-att-class="'bg-200 font-weight-bold o_line_section'">
+                            <td class="text-left">
+                                <span>SOCSO:</span>
+                            </td>
+                            <td class="text-right">
+                                <t t-if="scs_employer>0">
+                                    <span t-esc="'{0:,.2f}'.format(round(scs_employer,2))"/>
+                                </t>
+                            </td>
+                            <td class="text-right">
+                               <t t-if="scs_employee>0">
+                                    <span t-esc="'{0:,.2f}'.format(round(scs_employee,2))"/>
+                               </t>
+                            </td>
+                            <td class="text-right">
+                                <t t-if="total_scs>0">
+                                    <span t-esc="'{0:,.2f}'.format(round(total_scs,2))"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr t-att-class="'bg-200 font-weight-bold o_line_section'">
+                            <td class="text-left">
+                                <span>EIS:</span>
+                            </td>
+                            <td class="text-right">
+                                <t t-if="eis_employer>0">
+                                    <span t-esc="'{0:,.2f}'.format(round(eis_employer,2))"/>
+                                </t>
+                            </td>
+                            <td class="text-right">
+                               <t t-if="eis_employee>0">
+                                    <span t-esc="'{0:,.2f}'.format(round(eis_employee,2))"/>
+                               </t>
+                            </td>
+                            <td class="text-right">
+                                <t t-if="total_eis>0">
+                                    <span t-esc="'{0:,.2f}'.format(round(total_eis,2))"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr t-att-class="'bg-200 font-weight-bold o_line_section'">
+                            <td class="text-left">
+                                <span>PCB:</span>
+                            </td>
+                            <td class="text-right">
+                                <t t-if="tax_employee>0">
+                                    <span      />
+                                </t>
+                            </td>
+                            <td class="text-right">
+                               <t t-if="tax_employee>0">
+                                    <span t-esc="'{0:,.2f}'.format(round(tax_employee,2))"/>
+                               </t>
+                            </td>
+                            <td class="text-right">
+                                <t t-if="total_tax>0">
+                                    <span t-esc="'{0:,.2f}'.format(round(total_tax,2))"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr t-att-class="'bg-200 font-weight-bold o_line_section'">
+                            <td class="text-left">
+                                <span>TOTAL:</span>
+                            </td>
+                            <td class="text-right">
+                                <t t-if="total_employer>0">
+                                    <span t-esc="'{0:,.2f}'.format(round(total_employer,2))"/>
+                                </t>
+                            </td>
+                            <td class="text-right">
+                               <t t-if="total_employee>0">
+                                    <span t-esc="'{0:,.2f}'.format(round(total_employee,2))"/>
+                               </t>
+                            </td>
+                            <td class="text-right">
+                                <t t-if="sub_total>0">
+                                    <span t-esc="'{0:,.2f}'.format(round(sub_total,2))"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </tbody>
+                    </thead>
+                </table>
+            </div>
+            </div>
+       <!-- </xpath>-->
+        </t>
+    </template>
+
+</odoo>

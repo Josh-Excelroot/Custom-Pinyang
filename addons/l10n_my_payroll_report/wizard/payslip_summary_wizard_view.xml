@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ##############  Details  ##############-->
+
+    <record id="payslip_incometax_report_wiz" model="ir.ui.view">
+        <field name="name">payslip.incometax.report.wiz</field>
+        <field name="model">payslip.incometax.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="View Income Tax">
+                <separator string="Employees" colspan="4" />
+                <field name="employee_ids" required="1" colspan="4" nolabel="1" options="{'no_create': True}">
+                    <tree string="Employees">
+                        <field name="name"/>
+                        <field name="department_id"/>
+                        <field name="work_email"/>
+                    </tree>
+                </field>
+                <group col="4" colspan="2">
+                    <field name="date_from" required="1"/>
+                    <field name="date_to" required="1"/>
+                </group>
+                <footer>
+                    <button name="print_incometax_report" string="Print" type="object" colspan="2" class="oe_highlight"/>
+                    or
+                    <button special="cancel" string="Cancel" colspan="2"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_print_incometax_report" model="ir.actions.act_window">
+        <field name="name">Details</field>
+        <field name="res_model">payslip.incometax.report.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Payroll Posting wizard -->
+    <record id="payroll_posting_wiz" model="ir.ui.view">
+        <field name="name">Payroll Posting</field>
+        <field name="model">payroll.posting.wiz</field>
+        <field name="arch" type="xml">
+            <form string="Payroll Posting">
+                <group>
+                    <group>
+                        <field name="posting" attrs="{'required': [('bulk_payment_file_bank_id','=',False)]}"/>
+                        <field name="bulk_payment_file_bank_id"/>
+
+                    </group>
+                    <group>
+                        <field name="date_start"  required="1"/>
+                        <field name="end_date"  required="1"/>
+                        <field name="journal_id" attrs="{'invisible': [('posting', '=', 'individual')], 'required': [('posting', '=', 'group')]}"/>
+                    </group>
+                </group>
+                <field name="payslip_ids" colspan="4" nolabel="1" options="{'no_create': True}">
+                    <tree string="Payslip">
+                        <field name="employee_id"/>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                        <field name="state" invisible="1"/>
+                    </tree>
+                </field>
+                <footer>
+                    <button name="generate_journal" string="Generate Journal" type="object" colspan="2" class="oe_highlight" attrs="{'invisible': [('bulk_payment_file_bank_id','!=',False)]}"/>
+                    <button name="download_bank_file" string="Download Bank File" type="object" colspan="2" class="oe_highlight" attrs="{'invisible': [('bulk_payment_file_bank_id','=',False)]}"/>
+                    or
+                    <button special="cancel" string="Cancel" colspan="2"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_payroll_posting_wiz" model="ir.actions.act_window">
+        <field name="name">Payroll Posting</field>
+        <field name="res_model">payroll.posting.wiz</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!--##########  Payslip pdf report  ##########-->
+    <record id="payslip_details_report_wiz" model="ir.ui.view">
+        <field name="name">payslip.details.report.wiz</field>
+        <field name="model">payslip.details.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="View Payslip Details">
+                <separator string="Employees" colspan="4" />
+                <field name="employee_ids" required="1" colspan="4" nolabel="1" options="{'no_create': True}">
+                    <tree string="Employees">
+                        <field name="name"/>
+                        <field name="department_id"/>
+                        <field name="work_email"/>
+                    </tree>
+                </field>
+                <group col="4" colspan="2">
+                    <field name="date_from" required="1"/>
+                    <field name="date_to" required="1"/>
+                </group>
+                <footer>
+                    <button name="print_payslipdetails_report" string="Print" type="object" colspan="2" class="oe_highlight"/>
+                    <button name="send_mail_payslip" string="Send Email" type="object" colspan="2" class="oe_highlight"/>
+                    or
+                    <button special="cancel" string="Cancel" colspan="2"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_print_payslipdetails_report" model="ir.actions.act_window">
+        <field name="name">Print Payslips</field>
+        <field name="res_model">payslip.details.report.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_execl_report_wiz" model="ir.ui.view">
+        <field name="name">view.excel.export.summay.report.wiz</field>
+        <field name="model">excel.export.summay</field>
+        <field name="arch" type="xml">
+            <form string="Excel Export">
+                <group colspan="2" col="2">
+                    <field name="name" invisible="1"/>
+                    <h4>Click On Link To Download Xls File: &#160;
+                        <field name="file" filename="name" nolabel="1"/></h4>
+                </group>
+                <footer>
+                    <button special="cancel" string="Cancel" colspan="2"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_bank_summary_report_wiz" model="ir.ui.view">
+        <field name="name">view.bank.summary.report.wiz</field>
+        <field name="model">view.bank.summary.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="View Bank Summary">
+                <separator string="Employees" colspan="4" />
+                <field name="employee_ids" required="1" colspan="4" nolabel="1" options="{'no_create': True}">
+                    <tree string="Employees">
+                        <field name="name"/>
+                        <field name="department_id"/>
+                        <field name="work_email"/>
+                    </tree>
+                </field>
+                <group col="8" colspan="6">
+                    <field name="date_start" required="1"/>
+                    <field name="date_end" required="1"/>
+                    <field name="export_report" required="1"/>
+                </group>
+                <footer>
+                    <button name="print_bank_summary_report" string="Save" type="object" colspan="2" class="oe_highlight"/>
+                    or
+                    <button special="cancel" string="Cancel" colspan="2"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_print_bank_summary_report" model="ir.actions.act_window">
+        <field name="name">Bank Summary</field>
+        <field name="res_model">view.bank.summary.report.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_execl_report_cheque_wiz" model="ir.ui.view">
+        <field name="name">view.excel.export.cheque.summay.report.wiz</field>
+        <field name="model">excel.export.cheque.summay</field>
+        <field name="arch" type="xml">
+            <form string="Excel Export">
+                <group cospan="2" col="2">
+                    <field name="name" invisible="1"/>
+                    <h4>Click On Link To Download Xls File: &#160;<field name="file" filename="name" nolabel="1"/></h4>
+                </group>
+                <footer>
+                    <button special="cancel" string="Cancel" colspan="2"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_cheque_summary_report_wiz" model="ir.ui.view">
+        <field name="name">view.cheque.summary.report.wiz</field>
+        <field name="model">view.cheque.summary.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="View Cheque Summary">
+                <separator string="Employees" colspan="4" />
+                <field name="employee_ids" required="1" colspan="4" nolabel="1" options="{'no_create': True}">
+                    <tree string="Employees">
+                        <field name="name"/>
+                        <field name="department_id"/>
+                        <field name="work_email"/>
+                    </tree>
+                </field>
+                <group col="8" colspan="6">
+                    <field name="date_start" required="1"/>
+                    <field name="date_end" required="1"/>
+                    <field name="export_report" required="1"/>
+                </group>
+                <footer>
+                    <button name="print_cheque_summary_report" string="Save" type="object" class="oe_highlight"/>
+                    or
+                    <button special="cancel" string="Cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_print_cheque_summary_report" model="ir.actions.act_window">
+        <field name="name">Cheque Summary</field>
+        <field name="res_model">view.cheque.summary.report.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+    <!-- Payroll Generic Summary Excel Report View -->
+    <record id="view_ihrms_payroll_execl_generic_report_wiz" model="ir.ui.view">
+        <field name="name">view.payroll.generic.summary.wizard</field>
+        <field name="model">payroll.excel.export.summay</field>
+        <field name="arch" type="xml">
+            <form string="Excel Export">
+                <group>
+                    <field name="name" invisible="1"/>
+                    <h4>Click On Link To Download Xls File: &#160;<field name="file" filename="name" nolabel="1"/></h4>
+                </group>
+                <footer>
+                    <button special="cancel" string="Cancel" colspan="2"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <!--############  Generic Summary  ############-->
+    <record id="payroll_summary_generic_report_wiz" model="ir.ui.view">
+        <field name="name">view.payroll.generic.summary.wizard</field>
+        <field name="model">payroll.generic.summary.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Payroll Generic Summary">
+                <separator string="Employees" colspan="4"/>
+                <field name="employee_ids" required="1" colspan="4" nolabel="1" options="{'no_create': True}">
+                    <tree string="Employees">
+                        <field name="name"/>
+                        <field name="department_id"/>
+                        <field name="work_email"/>
+                    </tree>
+                </field>
+                <separator string="Salary Rules" colspan="4"/>
+                <field name="salary_rule_ids" nolabel="1" required="1">
+                    <tree string="Salary Rule">
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="category_id"/>
+                        <field name="active"/>
+                    </tree>
+                </field>
+                <group col="4" colspan="2">
+                    <field name="date_from" required="1"/>
+                    <field name="date_to" required="1"/>
+                    <!--                        <field name="export_report" required="1"/-->
+                </group>
+                <footer>
+                    <button name="print_order" string="Print" type="object" colspan="2" class="oe_highlight"/>
+                    or
+                    <button special="cancel" string="Cancel" colspan="2"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_print_generic_summaryorder" model="ir.actions.act_window">
+        <field name="name">Generic Summary</field>
+        <field name="res_model">payroll.generic.summary.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_payroll_execl_report_wiz" model="ir.ui.view">
+        <field name="name">view.payroll_excel.export.summay.report.wiz</field>
+        <field name="model">payroll.excel.export.summay</field>
+        <field name="arch" type="xml">
+            <form string="Excel Export">
+                <group colspan="2" col="2">
+                    <field name="name" invisible="1"/>
+                    <h4>Click On Link To Download Xls File: &#160;<field name="file" filename="name" nolabel="1"/></h4>
+                </group>
+                <footer>
+                    <button special="cancel" string="Cancel" colspan="2"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+
+
+    <record id="hr_payroll_summary_wiz" model="ir.ui.view">
+        <field name="name">hr.payroll.summary.wiz</field>
+        <field name="model">hr.payroll.summary.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Payroll Summary Details">
+                <separator string="Employees" colspan="4"/>
+                <field name="employee_ids" required="1" colspan="4" nolabel="1" options="{'no_create': True}">
+                    <tree string="Employees">
+                        <field name="name"/>
+                        <field name="department_id"/>
+                        <field name="work_email"/>
+                    </tree>
+                </field>
+                <group col="4" colspan="2">
+                    <field name="date_from" required="1"/>
+                    <field name="date_to" required="1"/>
+                </group>
+                <footer>
+                    <button name="print_hr_payroll" string="Print" type="object" colspan="2" class="oe_highlight"/>
+                    <button name="print_hr_payroll_xlsx" string="Print Xlsx" type="object" colspan="2" class="oe_highlight"/>
+                    or
+                    <button special="cancel" string="Cancel" colspan="2"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_print_hr_payroll_report" model="ir.actions.act_window">
+        <field name="name">View Payroll Summary Details</field>
+        <field name="res_model">hr.payroll.summary.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Bank List WIZARD VIEW -->
+
+    <record id="hr_bank_list_xls_wiz" model="ir.ui.view">
+        <field name="name">hr.bank.list.xls.wiz</field>
+        <field name="model">bank.list.xls</field>
+        <field name="arch" type="xml">
+            <form string="View Bank List File">
+                <separator string="Employees" colspan="4" />
+                <field name="employee_ids" required="1" colspan="4" nolabel="1" options="{'no_create': True}">
+                    <tree string="Employees">
+                        <field name="name"/>
+                        <field name="department_id"/>
+                        <field name="work_email"/>
+                    </tree>
+                </field>
+                <group col="4" colspan="2">
+                    <field name="date_start" required="1"/>
+                    <field name="date_end" required="1"/>
+                </group>
+                <footer>
+                    <button name="download_bank_list_xls_file" string="Print" type="object" colspan="2" class="oe_highlight"/>
+                    or
+                    <button special="cancel" string="Cancel" colspan="2"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_bank_list_xls_file_print" model="ir.actions.act_window">
+        <field name="name">Bank List</field>
+        <field name="res_model">bank.list.xls</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="bank_list_export_summay_xls_file" model="ir.ui.view">
+        <field name="name">binary.bank.list.export.summay.file</field>
+        <field name="model">bank.list.export.summay</field>
+        <field name="arch" type="xml">
+            <form string="View Bank List File">
+                <group cospan="2" col="2">
+                    <field name="name" invisible="1"/>
+                    <h4>Click On Link To Download Xls File: &#160;<field name="file" filename="name" nolabel="1"/></h4>
+                </group>
+                <separator string="" colspan="4"/>
+                <footer>
+                    <button special="cancel" string="Cancel" colspan="2"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <menuitem id="menu_report_payroll_misc" name= "Misc" parent="l10n_my_payroll.menu_report_payroll" sequence="4"/>
+    <!--<menuitem id="menu_report_payroll_income_tax" name= "Income Tax" parent="l10n_my_payroll.menu_report_payroll" sequence="2"/>
+    <menuitem action="action_print_incometax_report" id="menu_print_incometax_rep" parent="menu_report_payroll_income_tax" sequence="1" groups="hr.group_hr_manager"/>-->
+    <menuitem action="action_print_payslipdetails_report" id="menu_print_payslipdetails_rep" parent="menu_report_payroll_misc" sequence="1" groups="hr.group_hr_manager,l10n_my_payroll.group_hr_payroll_admin,hr_payroll.group_hr_payroll_manager"/>
+
+    <menuitem action="action_payroll_posting_wiz" id="menu_payroll_posting" parent="menu_report_payroll_misc" sequence="1" groups="hr.group_hr_manager,l10n_my_payroll.group_hr_payroll_admin,hr_payroll.group_hr_payroll_manager"/>
+    <menuitem action="action_menu_eps_eis_mtd" id="menu_eps_eis_mtd" parent="menu_report_payroll_misc" string="EPF / SOCSO / PCB(MTD) Download" sequence="2" groups="hr.group_hr_manager,l10n_my_payroll.group_hr_payroll_admin,hr_payroll.group_hr_payroll_manager"/>
+    <!-- <menuitem action="action_print_bank_summary_report" id="menu_print_banksummary_rep" parent="menu_report_payroll_misc" sequence="3" groups="hr.group_hr_manager"/> -->
+    <!-- <menuitem action="action_print_cheque_summary_report" id="menu_print_chequesummary_rep" parent="menu_report_payroll_misc" sequence="4" groups="hr.group_hr_manager"/>
+    <menuitem action="action_print_generic_summaryorder" id="menu_print_generic_report" parent="menu_report_payroll_misc" sequence="2" groups="hr.group_hr_manager"/> -->
+    <menuitem action="action_print_hr_payroll_report" id="menu_print_payroll_summary_rep" parent="menu_report_payroll_misc" sequence="5" groups="hr.group_hr_manager,l10n_my_payroll.group_hr_payroll_admin,hr_payroll.group_hr_payroll_manager"/>
+    <!--        <menuitem action="action_bank_list_xls_file_print" id="menu_print_bank_list_xls_report" parent="menu_report_payroll_misc" sequence="8" groups="hr.group_hr_manager"/> -->
+</odoo>

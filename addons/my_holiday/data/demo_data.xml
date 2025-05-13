@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Casual leave -->
+    <record id="hr_holidays.holiday_status_cl" model="hr.leave.type">
+        <field name="name">Annual Leaves</field>
+        <field name="validity_start" eval="time.strftime('01/01/2021')" />
+        <field name="validity_stop" eval="time.strftime('2099-12-31')"/>
+        <field name="color_name">black</field>
+        <field name="code">AL</field>
+    </record>
+
+    <!-- Sick leave -->
+    <record id="hr_holidays.holiday_status_sl" model="hr.leave.type">
+        <field name="name">Sick Leaves</field>
+        <field name="color_name">red</field>
+        <field name="code">SL</field>
+        <field name="validity_start" eval="time.strftime('01/01/2021')"/>
+        <field name="validity_stop" eval="time.strftime('2099-12-31')"/>
+        <field name="allocation_type">fixed</field>
+    </record>
+
+    <!-- Compensatory Days -->
+    <record id="hr_holidays.holiday_status_comp" model="hr.leave.type">
+        <field name="name">Compassionate Days</field>
+        <field name="validity_start" eval="time.strftime('01/01/2021')" />
+        <field name="validity_stop" eval="time.strftime('2099-12-31')"/>
+        <field name="color_name">lavender</field>
+        <field name="code">CD</field>
+    </record>
+
+    <!--Unpaid Leave -->
+    <record id="hr_holidays.holiday_status_unpaid" model="hr.leave.type">
+        <field name="name">Unpaid</field>
+        <field name="validity_start" eval="time.strftime('01/01/2021')" />
+        <field name="validity_stop" eval="time.strftime('2099-12-31')"/>
+        <field name="color_name">brown</field>
+        <field name="code">UP</field>
+        <field name="allocation_type">no</field>
+        <field name="unpaid" eval="True"></field>
+    </record>
+    
+    <record id="holiday_status_maternity" model="hr.leave.type">
+        <field name="name">Maternity Leaves</field>
+        <field name="validity_start" eval="time.strftime('01/01/2021')" />
+        <field name="validity_stop" eval="time.strftime('2099-12-31')"/>
+        <field name="color_name">brown</field>
+        <field name="code">ML</field>
+    </record>
+    
+    <record id="holiday_status_paternity" model="hr.leave.type">
+        <field name="name">Paternity Leaves</field>
+        <field name="validity_start" eval="time.strftime('01/01/2021')" />
+        <field name="validity_stop" eval="time.strftime('2099-12-31')"/>
+        <field name="color_name">brown</field>
+        <field name="code">PL</field>
+    </record>
+    
+    <record id="holiday_status_marriage" model="hr.leave.type">
+        <field name="name">Marriage Leaves</field>
+        <field name="validity_start" eval="time.strftime('01/01/2021')" />
+        <field name="validity_stop" eval="time.strftime('2099-12-31')"/>
+        <field name="color_name">brown</field>
+        <field name="code">WL</field>
+    </record>
+    
+    <record id="holiday_status_study" model="hr.leave.type">
+        <field name="name">Study Leave</field>
+        <field name="validity_start" eval="time.strftime('01/01/2021')" />
+        <field name="validity_stop" eval="time.strftime('2099-12-31')"/>
+        <field name="color_name">brown</field>
+        <field name="code">SL</field>
+    </record>
+    
+    <record id="holiday_status_hospital" model="hr.leave.type">
+        <field name="name">Hospital Leave</field>
+        <field name="validity_start" eval="time.strftime('01/01/2021')" />
+        <field name="validity_stop" eval="time.strftime('2099-12-31')"/>
+        <field name="color_name">brown</field>
+        <field name="code">HL</field>
+    </record>
+    
+    <record id="holiday_status_child_mrg" model="hr.leave.type">
+        <field name="name">Child Marriage Leave</field>
+        <field name="validity_start" eval="time.strftime('01/01/2021')" />
+        <field name="validity_stop" eval="time.strftime('2099-12-31')"/>
+        <field name="color_name">brown</field>
+        <field name="code">CL</field>
+    </record>
+
+    <record id="holiday_status_ph" model="hr.leave.type">
+        <field name="name">Public Holiday</field>
+        <field name="validity_start" eval="time.strftime('01/01/2021')" />
+        <field name="validity_stop" eval="time.strftime('2099-12-31')"/>
+        <field name="color_name">brown</field>
+        <field name="code">PH</field>
+    </record>
+
+    <record id="event_type_holiday" model="calendar.event.type">
+        <field name="name">Holidays</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record model="ir.ui.view" id="inherit_manila_day_view_holiday_simple">
+            <field name="name">hr.employee.contract.inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2"></field>
+            <field name="arch" type="xml">
+                <field name="manager" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+				<field name="children" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</field>
+                <field name="bank_account_id" position="after">
+                    <field name="payslip_generate" />
+                </field>
+				<xpath expr="//field[@name='marital']" position="after">
+                    <field name="disable_status"/>
+					<field name="dsc_category1" groups="l10n_my_payroll.group_dsc_category"/>
+					<field name="d_amount"  groups="l10n_my_payroll.group_dsc_category"/>
+					<field name="s_amount"  groups="l10n_my_payroll.group_dsc_category"/>
+					<field name="c_amount"  groups="l10n_my_payroll.group_dsc_category"/>
+                </xpath>
+				<xpath expr="//page[@name='personal_information']/group" position="after">
+					<separator string="Dependent children"/>
+					<field name="emp_child_ids">
+						<tree editable="bottom">
+							<field name="name" required="1"/>
+							<field name="dependent_children" required="1"/>
+                            <field name="child_percent" required="1"/>
+						</tree>
+					</field>
+				</xpath>
+            </field>
+        </record>
+
+		<record model="ir.ui.view" id="inherit_employee_view_form_freelancer">
+            <field name="name">hr.employee.freelancer.inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"></field>
+            <field name="arch" type="xml">
+				<xpath expr="//field[@name='job_title']" position="after">
+                    <field name="is_non_permanent_employee"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    <record model="ir.ui.menu" id="hr.menu_hr_root">
+        <field name="groups_id" eval="[(4,ref('hr.group_hr_manager')),(4,ref('hr.group_hr_user')), (3, ref('base.group_user'))]"/>
+    </record>
+	</data>
+</odoo>

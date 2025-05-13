@@ -1,0 +1,1834 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report id="report_borang_e" string="Borang E" model="hr.employee" report_type="qweb-pdf" name="my_mtd_report.borang_e_report_my" menu="False"/>
+
+    <template id="include_vat_notice_report_internal" inherit_id="web.internal_layout">
+        <xpath expr="//div[hasclass('row')] //div[2]" position="replace">
+            <div class="col-3 offset-1 text-center">
+                <span t-esc="company.name"/>
+            </div>
+        </xpath>
+    </template>
+    <template id="borang_e_report_my">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <t t-set="data_report_margin_top" t-value="11"/>
+                <t t-set="data_report_margin_bottom" t-value="9"/>
+                <div class="page">
+                    <t t-foreach="docs" t-as="o">
+                        <style>
+                            .padding {
+                                padding: 3px;
+                            }
+                        </style>
+                        <table width="100%" style="border-radius: 25px;border:2px solid black;">
+                            <tr>
+                                <td width="15%" style="padding-left:5px">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="20%" rowspan="2"><img src="/my_mtd_report/static/src/img/borang_e.png" height="80" width="120"/></td>
+                                            <td width="90%" style="padding-top:10px">
+                                                <b>Borang<br/>
+                                                    <span style="font-size:35px">
+                                                        <center>E</center>
+                                                    </span>
+                                                </b>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="65%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="100%" style="text-align:center;font-size:12px">
+                                                <b>LEMBAGA HASIL DALAM NEGERI MALAYSIA<br/>
+                                                    PENYATA OLEH MAJIKAN<br/>DI BAWAH SUBSEKSYEN 83(1) AKTA CUKAI PENDAPATAN 1967</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" style="text-align:center;font-size:10px">Borang ini ditetapkan di bawah seksyen 152 Akta Cukai Pendapatan 1967</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="20%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="100%" style="font-size:10px;text-align:center">SARAAN BAGI TAHUN</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100%" style="font-size:20px;text-align:center">
+                                                <b>2016</b><br/>
+                                                <span style="font-size:9px">C P 8-Pin. 2016</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="padding-top:15px">
+                            <tr>
+                                <td width="6%" style="border-radius: 10px;border:1px solid black;;text-align:center;font-size:12px">
+                                    <b>1</b>
+                                </td>
+                                <td width="20%" style="font-size:12px;padding-left:5px">Nama Majikan Seperti Didaftarkan</td>
+                                <td width="74%">
+                                    <table width="100%" style="border-spacing: 0">
+                                        <t t-set="counter" t-value="0"/>
+                                        <t t-set="cmp_name" t-value="''"/>
+                                        <t t-set="cmp_name_aft" t-value="''"/>
+                                        <t t-foreach="res_company.name" t-as="n">
+                                            <t t-set="counter" t-value="counter+1"/>
+                                            <t t-if="counter &lt;= 27">
+                                                <t t-set="cmp_name" t-value="cmp_name+n"/>
+                                            </t>
+                                            <t t-if="counter &gt; 27 and counter &lt;= 54">
+                                                <t t-set="cmp_name_aft" t-value="cmp_name_aft+n"/>
+                                            </t>
+                                        </t>
+                                        <tr>
+                                            <t t-foreach="cmp_name" t-as="nm">
+                                                <td width="3%" style="border-spacing:1;border:1px solid black;font-size:12px;text-align:center"><span t-esc="nm"/></td>
+                                            </t>
+                                            <t t-set="counter" t-value="len(cmp_name)"/>
+                                            <t t-if="counter &lt; 27" t-foreach="27" t-as="a">
+                                                <t t-set="counter" t-value="counter + 1"/>
+                                                <td width="3%" style="border-spacing:1;border:1px solid black;font-size:12px;text-align:center">
+                                                    <span></span>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <t t-foreach="cmp_name_aft" t-as="nm_aft">
+                                                <td width="3%" style="border-spacing:1;border:1px solid black;font-size:12px;text-align:center"><span t-esc="nm_aft"/></td>
+                                            </t>
+                                            <t t-set="counter" t-value="len(cmp_name_aft)"/>
+                                            <t t-if="counter &lt; 27" t-foreach="27" t-as="b">
+                                                <t t-set="counter" t-value="counter + 1"/>
+                                                <td width="3%" style="border-spacing:1;border:1px solid black;font-size:12px;text-align:center">
+                                                    <span><br/></span>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="6%">
+                                    <span></span>
+                                </td>
+                                <td width="20%">
+                                    <span></span>
+                                </td>
+                                <td width="74%">
+                                    <table width="100%" style="border-spacing: 0">
+                                        <t t-set="counter" t-value="0"/>
+                                        <t t-set="cmp_name_two" t-value="''"/>
+                                        <t t-set="cmp_name_three" t-value="''"/>
+                                        <t t-foreach="res_company.name" t-as="n">
+                                            <t t-set="counter" t-value="counter+1"/>
+                                            <t t-if="counter &gt; 54 and counter &lt;= 81">
+                                                <t t-set="cmp_name_two" t-value="cmp_name_two+n"/>
+                                            </t>
+                                            <t t-if="counter &gt; 81 and counter &lt;= 108">
+                                                <t t-set="cmp_name_three" t-value="cmp_name_three+n"/>
+                                            </t>
+                                        </t>
+                                        <tr>
+                                            <t t-foreach="cmp_name_two" t-as="nm_two">
+                                                <td width="3%" style="border-spacing:1;border:1px solid black;font-size:12px;text-align:center"><span t-esc="nm_two"/></td>
+                                            </t>
+                                            <t t-set="counter" t-value="len(cmp_name_two)"/>
+                                            <t t-if="counter &lt; 27" t-foreach="27" t-as="c">
+                                                <t t-set="counter" t-value="counter + 1"/>
+                                                <td width="3%" style="border-spacing:0;border:1px solid black;font-size:12px;text-align:center">
+                                                    <span><br/></span>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <t t-foreach="cmp_name_three" t-as="nm_three">
+                                                <td width="3%" style="border-spacing:1;border:1px solid black;font-size:12px;text-align:center"><span t-esc="nm_three"/></td>
+                                            </t>
+                                            <t t-set="counter" t-value="len(cmp_name_three)"/>
+                                            <t t-if="counter &lt; 27" t-foreach="27" t-as="d">
+                                                <t t-set="counter" t-value="counter + 1"/>
+                                                <td width="3%" style="border-spacing:0;border:1px solid black;font-size:12px;text-align:center">
+                                                    <span><br/></span>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="6%" style="border-radius: 10px;border:1px solid black;text-align:center;font-size:12px">
+                                    <b>2</b>
+                                </td>
+                                <td width="20%" style="font-size:12px;padding-left:5px">No. Majikan</td>
+                                <td width="74%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="5%">
+                                                <table width="100%">
+                                                    <tr>
+                                                        <td style="border:1px solid black;text-align:center">
+                                                            <b>E</b>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td width="45%">
+                                                <table width="100%" style="border-spacing: 0">
+                                                    <tr>
+                                                        <t t-set="counter" t-value="0"/>
+                                                        <t t-set="cmp_eno" t-value="''"/>
+                                                        <t t-foreach="res_company.e_number1" t-as="cen1" t-if="res_company.e_number1">
+                                                            <t t-set="cmp_eno" t-value="cmp_eno+cen1"/>
+                                                        </t>
+                                                        <t t-foreach="res_company.e_number2" t-as="cen2" t-if="res_company.e_number2">
+                                                            <t t-set="cmp_eno" t-value="cmp_eno+cen2"/>
+                                                        </t>
+                                                        <t t-foreach="cmp_eno" t-as="cm_eno">
+                                                            <t t-set="counter" t-value="counter+1"/>
+                                                            <td width="5%" style="padding-top:5px;border:1px solid black;font-size:12px;text-align:center"><span t-esc="cm_eno"/></td>
+                                                        </t>
+                                                        <t t-set="counter" t-value="len(cmp_eno)"/>
+                                                        <t t-if="counter &lt; 10" t-foreach="10" t-as="d">
+                                                            <t t-set="counter" t-value="counter + 1"/>
+                                                            <td width="5%" style="padding-top:5px;border:1px solid black;font-size:12px;text-align:center">
+                                                                <span><br/></span>
+                                                            </td>
+                                                        </t>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td width="50%">
+                                                <span></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="6%" style="border-radius: 10px;border:1px solid black;text-align:center;font-size:12px">
+                                    <b>3</b>
+                                </td>
+                                <td width="20%" style="font-size:12px;padding-left:5px">Status Majikan</td>
+                                <td width="74%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="5%">
+                                                <table width="100%">
+                                                    <tr>
+                                                        <td style="border:1px solid black;text-align:center">
+                                                            <span><br/></span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td width="20%" style="font-size:12px">1 = Kerajaan</td>
+                                            <td width="20%" style="font-size:12px">2 = Berkanun</td>
+                                            <td width="20%" style="font-size:12px">3 = Swasta</td>
+                                            <td width="35%">
+                                                <span></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="padding-top:15px">
+                            <tr>
+                                <td width="6%" style="border-radius: 10px;border:1px solid black;text-align:center;font-size:12px">
+                                    <b>4</b>
+                                </td>
+                                <td width="20%" style="font-size:12px;padding-left:5px">Status Perniagaan</td>
+                                <td width="74%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="5%">
+                                                <table width="100%">
+                                                    <tr>
+                                                        <td style="border:1px solid black;text-align:center">
+                                                            <span><br/></span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td width="20%" style="font-size:12px">1 = Beroperasi</td>
+                                            <td width="20%" style="font-size:12px">2 = Dorman</td>
+                                            <td width="45%" style="font-size:12px">3 = Dalam Proses Pengguiungan</td>
+                                            <td width="10%">
+                                                <span></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="padding-top:15px">
+                            <tr>
+                                <td width="6%" style="border-radius: 10px;border:1px solid black;text-align:center;font-size:12px">
+                                    <b>5</b>
+                                </td>
+                                <td width="20%" style="font-size:12px;padding-left:5px">No. Cukai Pendapatan</td>
+                                <td width="74%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="60%">
+                                                <table width="100%">
+                                                    <tr>
+                                                        <td width="14%" style="font-size:10px">01 = SG<br/>02 = OG</td>
+                                                        <td width="14%" style="font-size:10px">03 = D<br/>04 = C</td>
+                                                        <td width="14%" style="font-size:10px">05 = J<br/>06 = F</td>
+                                                        <td width="14%" style="font-size:10px">07 = TP<br/>08 = TA</td>
+                                                        <td width="14%" style="font-size:10px">09 = TC<br/>10 = CS</td>
+                                                        <td width="14%" style="font-size:10px">11 = TR<br/>12 = PT</td>
+                                                        <td width="14%" style="font-size:10px">13 = TN<br/>14 = LE</td>
+                                                        <td width="2%">
+                                                            <span></span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td width="40%">
+                                                <table width="100%" style="border-spacing:0">
+                                                    <tr>
+                                                        <td width="7%" style="border:1px solid black;font-size:12px;text-align:center">0</td>
+                                                        <td width="7%" style="border:1px solid black;font-size:12px;text-align:center">4</td>
+                                                        <td width="1%">
+                                                            <span></span>
+                                                        </td>
+                                                        <t t-foreach="res_company.c_number" t-as="ecno" t-if="res_company.c_number">
+                                                            <td width="7%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="ecno"/></td>
+                                                        </t>
+                                                        <t t-if="not res_company.c_number">
+                                                            <td width="7%" style="border:1px solid black;font-size:12px">
+                                                                <span></span>
+                                                            </td>
+                                                            <td width="7%" style="border:1px solid black;font-size:12px">
+                                                                <span></span>
+                                                            </td>
+                                                            <td width="7%" style="border:1px solid black;font-size:12px">
+                                                                <span></span>
+                                                            </td>
+                                                            <td width="7%" style="border:1px solid black;font-size:12px">
+                                                                <span></span>
+                                                            </td>
+                                                            <td width="7%" style="border:1px solid black;font-size:12px">
+                                                                <span></span>
+                                                            </td>
+                                                            <td width="7%" style="border:1px solid black;font-size:12px">
+                                                                <span></span>
+                                                            </td>
+                                                            <td width="7%" style="border:1px solid black;font-size:12px">
+                                                                <span></span>
+                                                            </td>
+                                                            <td width="7%" style="border:1px solid black;font-size:12px">
+                                                                <span></span>
+                                                            </td>
+                                                            <td width="7%" style="border:1px solid black;font-size:12px">
+                                                                <span></span>
+                                                            </td>
+                                                            <td width="7%" style="border:1px solid black;font-size:12px">
+                                                                <span></span>
+                                                            </td>
+                                                            <td width="7%" style="border:1px solid black;font-size:12px">
+                                                                <span></span>
+                                                            </td>
+                                                        </t>
+                                                        <td width="8%">
+                                                            <span></span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="padding-top:15px">
+                            <tr>
+                                <td width="6%" style="border-radius: 10px;border:1px solid black;text-align:center;font-size:12px">
+                                    <b>6</b>
+                                </td>
+                                <td width="20%" style="font-size:12px;padding-left:5px">No. Pengenalan</td>
+                                <td width="74%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="50%">
+                                                <table width="100%" style="border-spacing:0">
+                                                    <!-- <t t-foreach="o.get('identification')" t-as="idno" t-if="o.get('identification')"> <td style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="idno"/></td> </t> <t t-if="not o.get('identification')"> -->
+                                                    <tr>
+                                                        <td width="8%" style="border:1px solid black;text-align:center">
+                                                            <span><br/></span>
+                                                        </td>
+                                                        <td width="8%" style="border:1px solid black;text-align:center">
+                                                            <span><br/></span>
+                                                        </td>
+                                                        <td width="8%" style="border:1px solid black;text-align:center">
+                                                            <span><br/></span>
+                                                        </td>
+                                                        <td width="8%" style="border:1px solid black;text-align:center">
+                                                            <span><br/></span>
+                                                        </td>
+                                                        <td width="8%" style="border:1px solid black;text-align:center">
+                                                            <span><br/></span>
+                                                        </td>
+                                                        <td width="8%" style="border:1px solid black;text-align:center">
+                                                            <span><br/></span>
+                                                        </td>
+                                                        <td width="8%" style="border:1px solid black;text-align:center">
+                                                            <span><br/></span>
+                                                        </td>
+                                                        <td width="8%" style="border:1px solid black;text-align:center">
+                                                            <span><br/></span>
+                                                        </td>
+                                                        <td width="8%" style="border:1px solid black;text-align:center">
+                                                            <span><br/></span>
+                                                        </td>
+                                                        <td width="8%" style="border:1px solid black;text-align:center">
+                                                            <span><br/></span>
+                                                        </td>
+                                                        <td width="8%" style="border:1px solid black;text-align:center">
+                                                            <span><br/></span>
+                                                        </td>
+                                                        <td width="8%" style="border:1px solid black;text-align:center">
+                                                            <span><br/></span>
+                                                        </td>
+                                                        <td width="4%">
+                                                            <span><br/></span>
+                                                        </td>
+                                                    </tr>
+                                                    <!-- </t> -->
+                                                </table>
+                                            </td>
+                                            <td width="50%">
+                                                <span></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="padding-top:15px">
+                            <tr>
+                                <td width="6%" style="border-radius: 10px;border:1px solid black;text-align:center;font-size:12px">
+                                    <b>7</b>
+                                </td>
+                                <td width="20%" style="font-size:12px;padding-left:5px">No. Pasport</td>
+                                <td width="74%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="50%">
+                                                <table width="100%" style="border-spacing:0">
+                                                    <!-- <t t-foreach="o.get('passport')" t-as="ps" t-if="o.get('passport')"> <td style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="ps"/></td> </t> -->
+                                                    <!-- <t t-if="not o.get('passport')"> -->
+                                                    <td width="8%" style="border:1px solid black;text-align:center">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="8%" style="border:1px solid black;text-align:center">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="8%" style="border:1px solid black;text-align:center">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="8%" style="border:1px solid black;text-align:center">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="8%" style="border:1px solid black;text-align:center">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="8%" style="border:1px solid black;text-align:center">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="8%" style="border:1px solid black;text-align:center">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="8%" style="border:1px solid black;text-align:center">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="8%" style="border:1px solid black;text-align:center">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="8%" style="border:1px solid black;text-align:center">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="8%" style="border:1px solid black;text-align:center">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="8%" style="border:1px solid black;text-align:center">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="4%">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <!-- </t> -->
+                                                </table>
+                                            </td>
+                                            <td width="50%">
+                                                <span></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table width="100%">
+                            <tr>
+                                <td width="6%" style="border-radius: 10px;border:1px solid black;text-align:center;font-size:12px">
+                                    <b>8</b>
+                                </td>
+                                <td width="20%" style="font-size:12px;padding-left:5px">No. Pendaftaran Dengan SSM Atau Lain-Lain</td>
+                                <td width="74%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="50%">
+                                                <table width="100%" style="border-spacing:0">
+                                                    <t t-set="counter" t-value="0"/>
+                                                    <t t-set="cmp_reg" t-value="''"/>
+                                                    <t t-foreach="res_company.company_registry" t-as="rg" t-if="res_company.company_registry">
+                                                        <t t-set="counter" t-value="counter + 1"/>
+                                                        <t t-set="cmp_reg" t-if="counter &lt;= 12" t-value="cmp_reg+rg"/>
+                                                    </t>
+                                                    <t t-foreach="cmp_reg" t-as="cr">
+                                                        <td width="8%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="cr"/></td>
+                                                    </t>
+                                                    <t t-set="counter" t-value="len(cmp_reg)"/>
+                                                    <t t-if="counter &lt; 12" t-foreach="12" t-as="d">
+                                                        <t t-set="counter" t-value="counter + 1"/>
+                                                        <td width="8%" style="border:1px solid black;font-size:12px;text-align:center">
+                                                            <span><br/></span>
+                                                        </td>
+                                                    </t>
+                                                </table>
+                                            </td>
+                                            <td width="50%">
+                                                <span></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table width="100%">
+                            <tr>
+                                <td width="6%" style="border-radius: 10px;border:1px solid black;text-align:center;font-size:12px">
+                                    <b>9</b>
+                                </td>
+                                <td width="20%" style="font-size:12px;padding-left:5px">Alamat Surat-menyurat</td>
+                                <td width="74%">
+                                    <table width="100%">
+                                        <td width="15%">
+                                            <span></span>
+                                        </td>
+                                        <td width="85%">
+                                            <table width="100%" style="border-spacing:0">
+                                                <t t-set="counter" t-value="0"/>
+                                                <t t-set="cmp_srt" t-value="''"/>
+                                                <t t-foreach="res_company.street" t-as="cst" t-if="res_company.street">
+                                                    <t t-set="cmp_srt" t-value="cmp_srt+cst"/>
+                                                </t>
+                                                <t t-foreach="res_company.street2" t-as="cst2" t-if="res_company.street">
+                                                    <t t-set="cmp_srt" t-value="cmp_srt+cst2"/>
+                                                </t>
+                                                <t t-set="cmp_srt1" t-value="''"/>
+                                                <t t-foreach="cmp_srt" t-as="cm_sr">
+                                                    <t t-set="counter" t-value="counter+1"/>
+                                                    <t t-if="counter &lt;= 24">
+                                                        <t t-set="cmp_srt1" t-value="cmp_srt1+cm_sr"/>
+                                                    </t>
+                                                </t>
+                                                <t t-foreach="cmp_srt1" t-as="cm_sr1" t-if="cmp_srt1">
+                                                    <td width="3%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="cm_sr1"/></td>
+                                                </t>
+                                                <t t-set="counter" t-value="len(cmp_srt1)"/>
+                                                <t t-if="counter &lt; 24" t-foreach="24" t-as="d">
+                                                    <t t-set="counter" t-value="counter + 1"/>
+                                                    <td width="3%" style="border:1px solid black;font-size:12px;text-align:center">
+                                                        <span><br/></span>
+                                                    </td>
+                                                </t>
+                                            </table>
+                                        </td>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="6%">
+                                    <span></span>
+                                </td>
+                                <td width="20%">
+                                    <span></span>
+                                </td>
+                                <td width="74%">
+                                    <table width="100%">
+                                        <td width="15%">
+                                            <span></span>
+                                        </td>
+                                        <td width="85%">
+                                            <table width="100%" style="border-spacing:0">
+                                                <t t-set="counter" t-value="0"/>
+                                                <t t-set="cmp_srt" t-value="''"/>
+                                                <t t-foreach="res_company.street" t-as="cst" t-if="res_company.street">
+                                                    <t t-set="cmp_srt" t-value="cmp_srt+cst"/>
+                                                </t>
+                                                <t t-foreach="res_company.street2" t-as="cst2" t-if="res_company.street">
+                                                    <t t-set="cmp_srt" t-value="cmp_srt+cst2"/>
+                                                </t>
+                                                <t t-set="cmp_srt2" t-value="''"/>
+                                                <t t-foreach="cmp_srt" t-as="cm_sr">
+                                                    <t t-set="counter" t-value="counter+1"/>
+                                                    <t t-if="counter &gt; 24 and counter &lt;= 48">
+                                                        <t t-set="cmp_srt2" t-value="cmp_srt2+cm_sr"/>
+                                                    </t>
+                                                </t>
+                                                <t t-foreach="cmp_srt2" t-as="cm_sr2" t-if="cmp_srt2">
+                                                    <td width="3%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="cm_sr2"/></td>
+                                                </t>
+                                                <t t-set="counter" t-value="len(cmp_srt2)"/>
+                                                <t t-if="counter &lt; 24" t-foreach="24" t-as="d">
+                                                    <t t-set="counter" t-value="counter + 1"/>
+                                                    <td width="3%" style="border:1px solid black;font-size:12px;text-align:center">
+                                                        <span><br/></span>
+                                                    </td>
+                                                </t>
+                                            </table>
+                                        </td>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="6%">
+                                    <span></span>
+                                </td>
+                                <td width="20%">
+                                    <span></span>
+                                </td>
+                                <td width="74%">
+                                    <table width="100%">
+                                        <td width="15%">
+                                            <span></span>
+                                        </td>
+                                        <td width="85%">
+                                            <table width="100%" style="border-spacing:0">
+                                                <t t-set="counter" t-value="0"/>
+                                                <t t-set="cmp_srt" t-value="''"/>
+                                                <t t-foreach="res_company.street" t-as="cst" t-if="res_company.street">
+                                                    <t t-set="cmp_srt" t-value="cmp_srt+cst"/>
+                                                </t>
+                                                <t t-foreach="res_company.street2" t-as="cst2" t-if="res_company.street">
+                                                    <t t-set="cmp_srt" t-value="cmp_srt+cst2"/>
+                                                </t>
+                                                <t t-set="cmp_srt3" t-value="''"/>
+                                                <t t-foreach="cmp_srt" t-as="cm_sr">
+                                                    <t t-set="counter" t-value="counter+1"/>
+                                                    <t t-if="counter &gt; 48 and counter &lt;= 72">
+                                                        <t t-set="cmp_srt3" t-value="cmp_srt3+cm_sr"/>
+                                                    </t>
+                                                </t>
+                                                <t t-foreach="cmp_srt3" t-as="cm_sr3" t-if="cmp_srt3">
+                                                    <td width="3%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="cm_sr3"/></td>
+                                                </t>
+                                                <t t-set="counter" t-value="len(cmp_srt3)"/>
+                                                <t t-if="counter &lt; 24" t-foreach="24" t-as="d">
+                                                    <t t-set="counter" t-value="counter + 1"/>
+                                                    <td width="3%" style="border:1px solid black;font-size:12px;text-align:center">
+                                                        <span><br/></span>
+                                                    </td>
+                                                </t>
+                                            </table>
+                                        </td>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="6%">
+                                    <span></span>
+                                </td>
+                                <td width="20%">
+                                    <span></span>
+                                </td>
+                                <td width="74%">
+                                    <table width="100%">
+                                        <td width="14%">
+                                            <table width="100%" style="border-spacing:0">
+                                                <tr>
+                                                    <td width="100%" style="border:1px solid black;text-align:center;font-size:12px">Poskod</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td width="1%">
+                                            <span></span>
+                                        </td>
+                                        <td width="20%">
+                                            <table width="100%" style="border-spacing:0">
+                                                <t t-set="counter" t-value="0"/>
+                                                <t t-set="cmp_zip" t-value="''"/>
+                                                <t t-foreach="res_company.zip" t-as="pc" t-if="res_company.zip">
+                                                    <t t-set="counter" t-value="counter+1"/>
+                                                    <t t-set="cmp_zip" t-if="counter &lt;= 5" t-value="cmp_zip+pc"/>
+                                                </t>
+                                                <t t-foreach="cmp_zip" t-as="cmz">
+                                                    <td width="20%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="cmz"/></td>
+                                                </t>
+                                                <t t-set="counter" t-value="len(cmp_zip)"/>
+                                                <t t-if="counter &lt; 5" t-foreach="5" t-as="d">
+                                                    <t t-set="counter" t-value="counter + 1"/>
+                                                    <td width="20%" style="border:1px solid black;font-size:12px;text-align:center">
+                                                        <span><br/></span>
+                                                    </td>
+                                                </t>
+                                            </table>
+                                        </td>
+                                        <td width="1%">
+                                            <span></span>
+                                        </td>
+                                        <td width="13%" style="border:1px solid black;text-align:center;font-size:12px">Bandar</td>
+                                        <td width="1%">
+                                            <span></span>
+                                        </td>
+                                        <td width="50%">
+                                            <table width="100%" style="border-spacing:0">
+                                                <t t-set="counter" t-value="0"/>
+                                                <t t-set="cmp_cty" t-value="''"/>
+                                                <t t-foreach="res_company.city" t-as="ct" t-if="res_company.city">
+                                                    <t t-set="counter" t-value="counter+1"/>
+                                                    <t t-set="cmp_cty" t-if="counter &lt;= 15" t-value="cmp_cty+ct"/>
+                                                </t>
+                                                <t t-foreach="cmp_cty" t-as="cty">
+                                                    <td width="6%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="cty"/></td>
+                                                </t>
+                                                <t t-set="counter" t-value="len(cmp_cty)"/>
+                                                <t t-if="counter &lt; 15" t-foreach="15" t-as="d">
+                                                    <t t-set="counter" t-value="counter + 1"/>
+                                                    <td width="6%" style="border:1px solid black;font-size:12px;text-align:center">
+                                                        <span><br/></span>
+                                                    </td>
+                                                </t>
+                                            </table>
+                                        </td>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="6%">
+                                    <span></span>
+                                </td>
+                                <td width="20%">
+                                    <span></span>
+                                </td>
+                                <td width="74%">
+                                    <table width="100%">
+                                        <td width="14%">
+                                            <table width="100%" style="border-spacing:0">
+                                                <tr>
+                                                    <td width="100%" style="border:1px solid black;text-align:center;font-size:12px">Negeri</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td width="1%">
+                                            <span></span>
+                                        </td>
+                                        <td width="85%">
+                                            <table width="100%" style="border-spacing:0">
+                                                <t t-set="counter" t-value="0"/>
+                                                <t t-set="cmp_st" t-value="''"/>
+                                                <t t-foreach="res_company.state_id.name" t-as="st" t-if="res_company.state_id.name">
+                                                    <t t-set="counter" t-value="counter+1"/>
+                                                    <t t-set="cmp_st" t-if="counter &lt;= 24" t-value="cmp_st+st"/>
+                                                </t>
+                                                <t t-foreach="cmp_st" t-as="cm_st">
+                                                    <td width="4%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="cm_st"/></td>
+                                                </t>
+                                                <t t-set="counter" t-value="len(cmp_st)"/>
+                                                <t t-if="counter &lt; 24" t-foreach="24" t-as="d">
+                                                    <t t-set="counter" t-value="counter + 1"/>
+                                                    <td width="4%" style="border:1px solid black;font-size:12px;text-align:center">
+                                                        <span><br/></span>
+                                                    </td>
+                                                </t>
+                                            </table>
+                                        </td>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td style="border-bottom:4px solid black">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    <b>UNTUK KEGUNAAN PEJABAT</b>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="border-spacing:0;padding-top:5px">
+                            <tr>
+                                <td width="4%">
+                                    <span></span>
+                                </td>
+                                <td width="32" style="border:1px solid black;height:60">
+                                    <span><br/></span>
+                                </td>
+                                <td width="32" style="border:1px solid black;height:60">
+                                    <span><br/></span>
+                                </td>
+                                <td width="32" style="border:1px solid black;height:60">
+                                    <span><br/></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="4%">
+                                    <span></span>
+                                </td>
+                                <td width="32" style="font-size:12px;text-align:center">Tarikh terima (1)</td>
+                                <td width="32" style="font-size:12px;text-align:center">Tarikh terima (2)</td>
+                                <td width="32" style="font-size:12px;text-align:center">Tarikh terima (3)</td>
+                            </tr>
+                        </table>
+                        <p style="page-break-after:always;"></p>
+                        <table width="100%">
+                            <tr>
+                                <td width="10%" style="font-size:12px">Nama</td>
+                                <td width="35%" style="border-bottom:1px solid black;font-size:12px"><span t-esc="res_company.name"/></td>
+                                <td width="5%">
+                                    <span></span>
+                                </td>
+                                <td width="10%" style="font-size:12px">No. Majikan</td>
+                                <td width="5%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="100%" style="border:1px solid black;text-align:center;font-size:12px">E</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="35%">
+                                    <table width="100%" style="border-spacing:0">
+                                        <t t-set="counter" t-value="0"/>
+                                        <t t-set="cmp_eno" t-value="''"/>
+                                        <t t-foreach="res_company.e_number1" t-as="cen1" t-if="res_company.e_number1">
+                                            <t t-set="cmp_eno" t-value="cmp_eno+cen1"/>
+                                        </t>
+                                        <t t-foreach="res_company.e_number2" t-as="cen2" t-if="res_company.e_number2">
+                                            <t t-set="cmp_eno" t-value="cmp_eno+cen2"/>
+                                        </t>
+                                        <t t-foreach="cmp_eno" t-as="cm_eno">
+                                            <t t-set="counter" t-value="counter+1"/>
+                                            <td width="10%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="cm_eno"/></td>
+                                        </t>
+                                        <t t-set="counter" t-value="len(cmp_eno)"/>
+                                        <t t-if="counter &lt; 10" t-foreach="10" t-as="d">
+                                            <t t-set="counter" t-value="counter + 1"/>
+                                            <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">
+                                                <span><br/></span>
+                                            </td>
+                                        </t>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="10%">
+                                    <span></span>
+                                </td>
+                                <td width="35%" style="border-bottom:1px solid black;">
+                                    <span><br/></span>
+                                </td>
+                                <td width="55%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td style="border-bottom:2px solid black">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="padding-top:5px">
+                            <tr>
+                                <td width="6%" style="border-radius: 10px;border:1px solid black;text-align:center;font-size:12px;height:30">
+                                    <b>10</b>
+                                </td>
+                                <td width="20%" style="font-size:12px;padding-left:5px">No. Telefon</td>
+                                <td width="74%">
+                                    <table width="100%">
+                                        <td width="50%">
+                                            <table width="100%" style="border-spacing:0">
+                                                <t t-set="counter" t-value="0"/>
+                                                <t t-set="cmp_ph" t-value="''"/>
+                                                <t t-set="phone" t-value="res_company.phone.replace(' ','')"/>
+                                                <t t-foreach="phone" t-as="cph" t-if="phone">
+                                                    <t t-set="counter" t-value="counter+1"/>
+                                                    <t t-set="cmp_ph" t-if="counter &lt;= 14" t-value="cmp_ph+cph"/>
+                                                </t>
+                                                <t t-foreach="cmp_ph" t-as="cm_ph">
+                                                    <td width="7%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="cm_ph"/></td>
+                                                </t>
+                                                <t t-set="counter" t-value="len(cmp_ph)"/>
+                                                <t t-if="counter &lt; 14" t-foreach="14" t-as="d">
+                                                    <t t-set="counter" t-value="counter + 1"/>
+                                                    <td width="7%" style="border:1px solid black;font-size:12px;text-align:center">
+                                                        <span><br/></span>
+                                                    </td>
+                                                </t>
+                                            </table>
+                                        </td>
+                                        <td width="50%">
+                                            <span></span>
+                                        </td>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="padding-top:5px">
+                            <tr>
+                                <td width="6%" style="border-radius: 10px;border:1px solid black;text-align:center;font-size:12px;height:30">
+                                    <b>11</b>
+                                </td>
+                                <td width="20%" style="font-size:12px;padding-left:5px">No. Telefon Bimbit</td>
+                                <td width="74%">
+                                    <table width="100%">
+                                        <td width="50%">
+                                            <table width="100%" style="border-spacing:0">
+                                                <tr>
+                                                    <td width="7%" style="border:1px solid black;text-align:center;font-size:12px">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="7%" style="border:1px solid black;text-align:center;font-size:12px">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="7%" style="border:1px solid black;text-align:center;font-size:12px">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="7%" style="border:1px solid black;text-align:center;font-size:12px">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="7%" style="border:1px solid black;text-align:center;font-size:12px">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="7%" style="border:1px solid black;text-align:center;font-size:12px">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="7%" style="border:1px solid black;text-align:center;font-size:12px">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="7%" style="border:1px solid black;text-align:center;font-size:12px">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="7%" style="border:1px solid black;text-align:center;font-size:12px">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="7%" style="border:1px solid black;text-align:center;font-size:12px">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="7%" style="border:1px solid black;text-align:center;font-size:12px">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="7%" style="border:1px solid black;text-align:center;font-size:12px">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="7%" style="border:1px solid black;text-align:center;font-size:12px">
+                                                        <span><br/></span>
+                                                    </td>
+                                                    <td width="9%"></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td width="50%">
+                                            <span></span>
+                                        </td>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="padding-top:5px">
+                            <tr>
+                                <td width="6%" style="border-radius: 10px;border:1px solid black;text-align:center;font-size:12px;height:30">
+                                    <b>12</b>
+                                </td>
+                                <td width="20%" style="font-size:12px;padding-left:5px">e-Mel</td>
+                                <td width="74%">
+                                    <table width="100%" style="border-spacing:0">
+                                        <t t-set="counter" t-value="0"/>
+                                        <t t-set="cmp_mel" t-value="''"/>
+                                        <t t-foreach="res_company.email" t-as="cml" t-if="res_company.email">
+                                            <t t-set="cmp_mel" t-value="cmp_mel+cml"/>
+                                        </t>
+                                        <t t-set="cmp_mel1" t-value="''"/>
+                                        <t t-foreach="cmp_mel" t-as="cm_ml">
+                                            <t t-set="counter" t-value="counter+1"/>
+                                            <t t-set="cmp_mel1" t-if="counter &lt;= 27" t-value="cmp_mel1+cm_ml"/>
+                                        </t>
+                                        <t t-foreach="cmp_mel1" t-as="cm_ml1">
+                                            <td width="3%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="cm_ml1"/></td>
+                                        </t>
+                                        <t t-set="counter" t-value="len(cmp_mel1)"/>
+                                        <t t-if="counter &lt; 27" t-foreach="27" t-as="d">
+                                            <t t-set="counter" t-value="counter + 1"/>
+                                            <td width="3%" style="border:1px solid black;font-size:12px;text-align:center">
+                                                <span><br/></span>
+                                            </td>
+                                        </t>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="6%">
+                                    <span></span>
+                                </td>
+                                <td width="20%">
+                                    <span></span>
+                                </td>
+                                <td width="74%">
+                                    <table width="100%" style="border-spacing:0">
+                                        <t t-set="counter" t-value="0"/>
+                                        <t t-set="cmp_mel" t-value="''"/>
+                                        <t t-foreach="res_company.email" t-as="cml" t-if="res_company.email">
+                                            <t t-set="cmp_mel" t-value="cmp_mel+cml"/>
+                                        </t>
+                                        <t t-set="cmp_mel2" t-value="''"/>
+                                        <t t-foreach="cmp_mel" t-as="cm_ml">
+                                            <t t-set="counter" t-value="counter+1"/>
+                                            <t t-set="cmp_mel2" t-if="counter &gt; 27 and counter &lt;= 54" t-value="cmp_mel2+cm_ml"/>
+                                        </t>
+                                        <t t-foreach="cmp_mel2" t-as="cm_ml2">
+                                            <td width="3%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="cm_ml2"/></td>
+                                        </t>
+                                        <t t-set="counter" t-value="len(cmp_mel2)"/>
+                                        <t t-if="counter &lt; 27" t-foreach="27" t-as="d">
+                                            <t t-set="counter" t-value="counter + 1"/>
+                                            <td width="3%" style="border:1px solid black;font-size:12px;text-align:center">
+                                                <span><br/></span>
+                                            </td>
+                                        </t>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="padding-top:15px">
+                            <tr>
+                                <td width="6%" style="border-radius: 10px;border:1px solid black;text-align:center;font-size:12px;height:30">
+                                    <b>13</b>
+                                </td>
+                                <td width="25%" style="font-size:12px;padding-left:5px">Cara Pengemukaan C.P. 8D</td>
+                                <td width="3%" style="border:1px solid black">
+                                    <span><br/></span>
+                                </td>
+                                <td width="22%" style="font-size:12px;padding-left:5px">1 = Bersama Borang E</td>
+                                <td width="22%" style="font-size:12px">2 = Melalui Data Praisi</td>
+                                <td width="22%" style="font-size:12px">3 = Cakera Padat</td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table width="100%">
+                            <tr>
+                                <td style="font-size:15px;color:white;background:black;padding-left:5px">BAHAGIAN A: MAKLUMAT BILANGAN PEKERJA BAGI TAHUN BERAKHIR 31 DISEMBER 2016</td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="padding-top:5px">
+                            <tr>
+                                <td width="6%" style="border-radius: 10px;border:1px solid black;text-align:center;font-size:12px;height:30">
+                                    <b>A1</b>
+                                </td>
+                                <td width="20%" style="font-size:12px;padding-left:5px">Bilangan pekerja</td>
+                                <td width="24%">
+                                    <table width="100%" style="border-spacing:0">
+                                        <tr>
+                                            <t t-set="counter" t-value="0"/>
+                                            <t t-set="len_emp_ids" t-value="''"/>
+                                            <t t-set="len_emp_ids" t-value="len_emp_ids+str(len(o.employee_ids))"/>
+                                            <t t-foreach="len_emp_ids" t-as="len_emp">
+                                                <t t-set="counter" t-value="counter+1"/>
+                                                <td width="16%" style="border:1px solid black;text-align:center;font-size:12px"><span t-esc="len_emp"/></td>
+                                            </t>
+                                            <t t-if="counter &lt; 6" t-foreach="6" t-as="d">
+                                                <t t-set="counter" t-value="counter+1"/>
+                                                <td width="16%" style="border:1px solid black;text-align:center">
+                                                    <span></span>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="6%" style="border-radius: 10px;border:1px solid black;text-align:center;font-size:12px;height:30">
+                                    <b>A2</b>
+                                </td>
+                                <td width="20%" style="font-size:12px;padding-left:5px">Bilangan pekerja tertakluk kepada PCB</td>
+                                <td width="24%">
+                                    <table width="100%" style="border-spacing:0">
+                                        <tr>
+                                            <t t-set="counter" t-value="0"/>
+                                            <t t-set="total_pcb_emp" t-value="0"/>
+                                            <t t-set="total_emp_pcb" t-value="''"/>
+                                            <t t-foreach="get_data" t-as="d">
+                                                <t t-set="total_pcb_emp" t-value="total_pcb_emp + d.get('total_emp_pcb')"/>
+                                            </t>
+                                            <t t-set="total_emp_pcb" t-value="total_emp_pcb + str(total_pcb_emp)"/>
+                                            <t t-foreach="total_emp_pcb" t-as="pcb_emp">
+                                                <t t-set="counter" t-value="counter+1"/>
+                                                <td width="16%" style="border:1px solid black;text-align:center;font-size:12px"><span t-esc="pcb_emp"/></td>
+                                            </t>
+                                            <t t-if="counter &lt; 6" t-foreach="6" t-as="d">
+                                                <t t-set="counter" t-value="counter+1"/>
+                                                <td width="16%" style="border:1px solid black;text-align:center">
+                                                    <span></span>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="padding-top:15px">
+                            <tr>
+                                <td width="6%" style="border-radius: 10px;border:1px solid black;text-align:center;font-size:12px;height:30">
+                                    <b>A3</b>
+                                </td>
+                                <td width="20%" style="font-size:12px;padding-left:5px">Bilangan pekerja baru</td>
+                                <td width="24%">
+                                    <table width="100%" style="border-spacing:0">
+                                        <tr>
+                                            <t t-set="counter" t-value="0"/>
+                                            <t t-set="total_join_later_emp" t-value="0"/>
+                                            <t t-set="total_emp_join_later" t-value="''"/>
+                                            <t t-foreach="get_data" t-as="data">
+                                                <t t-set="total_join_later_emp" t-value="total_join_later_emp+data.get('total_join_emp')"/>
+                                            </t>
+                                            <t t-set="total_emp_join_later" t-value="total_emp_join_later+str(total_join_later_emp)"/>
+                                            <t t-foreach="total_emp_join_later" t-as="join_emp">
+                                                <t t-set="counter" t-value="counter+1"/>
+                                                <td width="16%" style="border:1px solid black;text-align:center;font-size:12px"><span t-esc="join_emp"/></td>
+                                            </t>
+                                            <t t-if="counter &lt; 6" t-foreach="6" t-as="d">
+                                                <t t-set="counter" t-value="counter+1"/>
+                                                <td width="16%" style="border:1px solid black;text-align:center">
+                                                    <span></span>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="6%" style="border-radius: 10px;border:1px solid black;text-align:center;font-size:12px;height:30">
+                                    <b>A4</b>
+                                </td>
+                                <td width="20%" style="font-size:12px;padding-left:5px">Bilangan pekerja berhenti</td>
+                                <td width="24%">
+                                    <table width="100%" style="border-spacing:0">
+                                        <tr>
+                                            <t t-set="counter" t-value="0"/>
+                                            <t t-set="total_stop_wrk_emp" t-value="0"/>
+                                            <t t-set="total_emp_stop_wrk" t-value="''"/>
+                                            <t t-foreach="get_data" t-as="data">
+                                                <t t-set="total_stop_wrk_emp" t-value="total_stop_wrk_emp+data.get('total_wrk_stp_emp')"/>
+                                            </t>
+                                            <t t-set="total_emp_stop_wrk" t-value="total_emp_stop_wrk+str(total_stop_wrk_emp)"/>
+                                            <t t-foreach="total_emp_stop_wrk" t-as="emp_stp_wrk">
+                                                <t t-set="counter" t-value="counter+1"/>
+                                                <td width="16%" style="border:1px solid black;text-align:center;font-size:12px"><span t-esc="emp_stp_wrk"/></td>
+                                            </t>
+                                            <t t-if="counter &lt; 6" t-foreach="6" t-as="d">
+                                                <t t-set="counter" t-value="counter+1"/>
+                                                <td width="16%" style="border:1px solid black;text-align:center">
+                                                    <span><br/></span>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="padding-top:15px">
+                            <tr>
+                                <td width="6%" style="border-radius: 10px;border:1px solid black;text-align:center;font-size:12px;height:30">
+                                    <b>A5</b>
+                                </td>
+                                <td width="20%" style="font-size:12px;padding-left:5px">Bilangan pekerja yang berhenti kerja untuk meninggalkan Malaysia</td>
+                                <td width="24%">
+                                    <table width="100%" style="border-spacing:0">
+                                        <tr>
+                                            <td width="16%" style="border:1px solid black;text-align:center;font-size:12px">0</td>
+                                            <td width="16%" style="border:1px solid black">
+                                                <span></span>
+                                            </td>
+                                            <td width="16%" style="border:1px solid black">
+                                                <span></span>
+                                            </td>
+                                            <td width="16%" style="border:1px solid black">
+                                                <span></span>
+                                            </td>
+                                            <td width="16%" style="border:1px solid black">
+                                                <span></span>
+                                            </td>
+                                            <td width="16%" style="border:1px solid black">
+                                                <span></span>
+                                            </td>
+                                            <td width="4%">
+                                                <span></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="6%" style="border-radius: 10px;border:1px solid black;text-align:center;font-size:12px;height:30">
+                                    <b>A6</b>
+                                </td>
+                                <td width="30%" style="font-size:12px;padding-left:5px">Telah melaporkan kepada LHDNM?<br/>(Jika A5 berkaitan)</td>
+                                <td width="4%" style="border:1px solid black">
+                                    <span><br/></span>
+                                </td>
+                                <td width="1%">
+                                    <span></span>
+                                </td>
+                                <td width="9%" style="font-size:12px">1 = Ya<br/>2 = Tidak</td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table width="100%" style="font-size:15px;color:white;background:black;padding-left:5px">
+                            <tr>
+                                <td width="50%">BAHAGIAN B:</td>
+                                <td width="50%">AKUAN</td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="padding-top:5px">
+                            <tr>
+                                <td width="26%" style="font-size:12px">Saya</td>
+                                <td width="74%">
+                                    <table width="100%" style="border-spacing:0">
+                                        <tr>
+                                            <t t-set="counter" t-value="0"/>
+                                            <t t-set="hr_user" t-value="''"/>
+                                            <t t-foreach="get_data" t-as="data">
+                                                <t t-set="hr_user" t-value="data.get('hr_user')"/>
+                                            </t>
+                                            <t t-set="hr_user_1" t-value="''"/>
+                                            <t t-foreach="hr_user" t-as="user">
+                                                <t t-set="counter" t-value="counter+1"/>
+                                                <t t-set="hr_user_1" t-if="counter &lt;= 27" t-value="hr_user_1+user"/>
+                                            </t>
+                                            <t t-foreach="hr_user_1" t-as="user_1">
+                                                <td width="3%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="user_1"/></td>
+                                            </t>
+                                            <t t-set="counter" t-value="len(hr_user_1)"/>
+                                            <t t-if="counter &lt; 27" t-foreach="27" t-as="d">
+                                                <t t-set="counter" t-value="counter + 1"/>
+                                                <td width="3%" style="border:1px solid black;font-size:12px;text-align:center">
+                                                    <span><br/></span>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="26%">
+                                    <span></span>
+                                </td>
+                                <td width="74%">
+                                    <table width="100%" style="border-spacing:0">
+                                        <tr>
+                                            <t t-set="counter" t-value="0"/>
+                                            <t t-set="hr_user" t-value="''"/>
+                                            <t t-foreach="get_data" t-as="data">
+                                                <t t-set="hr_user" t-value="data.get('hr_user')"/>
+                                            </t>
+                                            <t t-set="hr_user_2" t-value="''"/>
+                                            <t t-foreach="hr_user" t-as="user">
+                                                <t t-set="counter" t-value="counter+1"/>
+                                                <t t-set="hr_user_2" t-if="counter &gt; 27 and counter &lt;= 54" t-value="hr_user_2+user"/>
+                                            </t>
+                                            <t t-foreach="hr_user_2" t-as="user_2">
+                                                <td width="3%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="user_2"/></td>
+                                            </t>
+                                            <t t-set="counter" t-value="len(hr_user_2)"/>
+                                            <t t-if="counter &lt; 27" t-foreach="27" t-as="d">
+                                                <t t-set="counter" t-value="counter + 1"/>
+                                                <td width="3%" style="border:1px solid black;font-size:12px;text-align:center">
+                                                    <span><br/></span>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="30%" style="font-size:12px">No. Pengenalan / Pasport *<br/>
+                                    <span style="font-size:10px">(* Potong yang tidak berkenaan)</span>
+                                </td>
+                                <td width="40%">
+                                    <table width="100%" style="border-spacing:0">
+                                        <tr>
+                                            <t t-set="counter" t-value="0"/>
+                                            <t t-set="hr_user_ident" t-value="''"/>
+                                            <t t-foreach="get_data" t-as="data">
+                                                <t t-set="hr_user_ident" t-value="data.get('hr_user_ident')"/>
+                                            </t>
+                                            <t t-if="hr_user_ident" t-foreach="hr_user_ident" t-as="ident">
+                                                <t t-set="counter" t-value="counter+1"/>
+                                                <td width="8%" t-if="counter &lt;= 12" style="border:1px solid black;text-size:12px;text-align:center;font-size:12px"><span t-esc="ident"/></td>
+                                            </t>
+                                            <t t-set="counter" t-value="len(hr_user_ident)"/>
+                                            <t t-if="counter &lt; 12" t-foreach="12" t-as="d">
+                                                <t t-set="counter" t-value="counter + 1"/>
+                                                <td width="8%" style="border:1px solid black;font-size:12px;text-align:center">
+                                                    <span><br/></span>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="30%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="padding-top:15px">
+                            <tr>
+                                <td style="font-size:12px">dengan ini mengakui bahawa penyata oleh majikan ini mengandungi maklumat yang benar, lengkap dan betul seperti mana yang dikehendaki di bawah Akta Cukai Pendapatan 1967.</td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="padding-top:15px">
+                            <tr>
+                                <td width="60%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="30%" style="font-size:12px">Tandatangan</td>
+                                            <td width="60%" style="border:1px solid black;height:100"></td>
+                                            <td width="10%">
+                                                <span></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="40%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="20%" style="font-size:12px;text-align:centerpadding-left:10px">Tarikh:</td>
+                                            <td width="80%" style="padding-left:5px;padding-top:8px">
+                                                <table width="100%" style="border-spacing:0">
+                                                    <tr>
+                                                        <t t-foreach="datetime.datetime.today().strftime('%d%m%Y')" t-as="dt">
+                                                            <td width="12%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="dt"/></td>
+                                                        </t>
+                                                        <td width="4%">
+                                                            <span></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2" style="text-align:center;font-size:9px">Hari</td>
+                                                        <td colspan="2" style="text-align:center;font-size:9px">Bulan</td>
+                                                        <td colspan="4" style="text-align:center;font-size:9px">Tahun</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="padding-top:5px">
+                            <td width="26%" style="font-size:12px">Jawatan</td>
+                            <td width="74%">
+                                <table width="100%" style="border-spacing:0">
+                                    <tr>
+                                        <t t-set="counter" t-value="0"/>
+                                        <t t-set="hr_user_pos" t-value="''"/>
+                                        <t t-foreach="get_data" t-as="data">
+                                            <t t-set="hr_user_pos" t-value="data.get('hr_position')"/>
+                                        </t>
+                                        <t t-set="hr_user_pos_1" t-value="''"/>
+                                        <t t-foreach="hr_user_pos" t-as="user_pos">
+                                            <t t-set="counter" t-value="counter+1"/>
+                                            <t t-set="hr_user_pos_1" t-if="counter &lt;= 27" t-value="hr_user_pos_1+user_pos"/>
+                                        </t>
+                                        <t t-foreach="hr_user_pos_1" t-as="user_pos1">
+                                            <td width="3%" style="border:1px solid black;text-align:center;font-size:12px"><span t-esc="user_pos1"/></td>
+                                        </t>
+                                        <t t-set="counter" t-value="len(hr_user_pos_1)"/>
+                                        <t t-if="counter &lt; 27" t-foreach="27" t-as="d">
+                                            <t t-set="counter" t-value="counter + 1"/>
+                                            <td width="3%" style="border:1px solid black;font-size:12px;text-align:center">
+                                                <span><br/></span>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </table>
+                            </td>
+                        </table>
+                        <table width="100%" style="padding-top:5px">
+                            <tr>
+                                <td width="26%">
+                                    <span></span>
+                                </td>
+                                <td width="74%">
+                                    <table width="100%" style="border-spacing:0">
+                                        <tr>
+                                            <t t-set="counter" t-value="0"/>
+                                            <t t-set="hr_user_pos" t-value="''"/>
+                                            <t t-foreach="get_data" t-as="data">
+                                                <t t-set="hr_user_pos" t-value="data.get('hr_position')"/>
+                                            </t>
+                                            <t t-set="hr_user_pos_2" t-value="''"/>
+                                            <t t-foreach="hr_user_pos" t-as="user_pos">
+                                                <t t-set="counter" t-value="counter+1"/>
+                                                <t t-set="hr_user_pos_2" t-if="counter &gt; 27 and counter &lt;=54" t-value="hr_user_pos_2+user_pos"/>
+                                            </t>
+                                            <t t-foreach="hr_user_pos_2" t-as="user_pos2">
+                                                <td width="3%" style="border:1px solid black;text-align:center;font-size:12px"><span t-esc="user_pos2"/></td>
+                                            </t>
+                                            <t t-set="counter" t-value="len(hr_user_pos_2)"/>
+                                            <t t-if="counter &lt; 27" t-foreach="27" t-as="d">
+                                                <t t-set="counter" t-value="counter + 1"/>
+                                                <td width="3%" style="border:1px solid black;font-size:12px;text-align:center">
+                                                    <span><br/></span>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="5%" style="font-size:12px">
+                                    <b>NOTA:</b>
+                                </td>
+                                <td width="95%" style="font-size:12px">Pengakuan ini perlu dibuat oleh majikan mengikut kategori majikan selaras dengan peruntukan Seksyen 66 hingga 76, Akta Cukai Pendapatan 1967</td>
+                            </tr>
+                        </table>
+                        <p style="page-break-after:always;"></p>
+                        <table width="100%">
+                            <tr>
+                                <td width="10%" style="font-size:12px">Nama</td>
+                                <td width="35%" style="border-bottom:1px solid black;font-size:12px"><span t-esc="res_company.name"/></td>
+                                <td width="5%">
+                                    <span></span>
+                                </td>
+                                <td width="10%" style="font-size:12px">No. Majikan</td>
+                                <td width="5%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="100%" style="border:1px solid black;text-align:center;font-size:12px">E</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="35%">
+                                    <table width="100%" style="border-spacing:0">
+                                        <t t-set="counter" t-value="0"/>
+                                        <t t-set="cmp_eno" t-value="''"/>
+                                        <t t-foreach="res_company.e_number1" t-as="cen1" t-if="res_company.e_number1">
+                                            <t t-set="cmp_eno" t-value="cmp_eno+cen1"/>
+                                        </t>
+                                        <t t-foreach="res_company.e_number2" t-as="cen2" t-if="res_company.e_number2">
+                                            <t t-set="cmp_eno" t-value="cmp_eno+cen2"/>
+                                        </t>
+                                        <t t-foreach="cmp_eno" t-as="cm_eno">
+                                            <t t-set="counter" t-value="counter+1"/>
+                                            <td width="10%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="cm_eno"/></td>
+                                        </t>
+                                        <t t-set="counter" t-value="len(cmp_eno)"/>
+                                        <t t-if="counter &lt; 10" t-foreach="10" t-as="d">
+                                            <t t-set="counter" t-value="counter + 1"/>
+                                            <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">
+                                                <span><br/></span>
+                                            </td>
+                                        </t>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="10%">
+                                    <span></span>
+                                </td>
+                                <td width="35%" style="border-bottom:1px solid black;">
+                                    <span><br/></span>
+                                </td>
+                                <td width="55%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table width="100%">
+                            <tr>
+                                <td style="font-size:10px">(C.P.8D-Pin. 2016)</td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td style="font-size:15px;color:white;background:black;padding-left:5px;text-align:center">PENYATA SARAAN DARIPADA PENGGAJIAN, TUNTUTAN POTONGAN DAN<br/>
+                                    MAKLUMAT MENGENAI POTONGAN CUKAI DI BAWAH KAEDAH-KAEDAH CUKAI PENDAPATAN<br/>(POTONGAN DARIPADA SARAAN) 1994 BAGI TAHUN BERAKHIR 31 DISEMBER 2016</td>
+                            </tr>
+                        </table>
+                        <table width="100%" style="padding-top:2px">
+                            <tr>
+                                <td style="font-size:12px">Majikan dikehendaki mengisi penyata ini untuk semua pekerja bagi tahun 2016. Majikan yang telah menghantar maklumat melalui e-Data Praisi tidak perlu mengisi dan menghantar Borang C.P.8D.</td>
+                            </tr>
+                        </table>
+                        <table style="border-spacing:0;padding-top:2px">
+                            <tr>
+                                <td width="5%" style="border:1px solid black;font-size:12px;text-align:center">
+                                    <b>A</b>
+                                </td>
+                                <td width="20%" style="border:1px solid black;font-size:12px;text-align:center">
+                                    <b>B</b>
+                                </td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">
+                                    <b>C</b>
+                                </td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">
+                                    <b>D</b>
+                                </td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">
+                                    <b>E</b>
+                                </td>
+                                <td width="15%" style="border:1px solid black;font-size:12px;text-align:center">
+                                    <b>F</b>
+                                </td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">
+                                    <b>G</b>
+                                </td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">
+                                    <b>H</b>
+                                </td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">
+                                    <b>I</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2" width="5%" style="border:1px solid black;font-size:12px;text-align:center">Bil.</td>
+                                <td rowspan="2" width="20%" style="border:1px solid black;font-size:12px;text-align:center">Nama Pekerja</td>
+                                <td rowspan="2" width="10%" style="border:1px solid black;font-size:12px;text-align:center">No. Cukai Pendapatan</td>
+                                <td rowspan="2" width="10%" style="border:1px solid black;font-size:12px;text-align:center">No. Pengenalan /Pasport</td>
+                                <td rowspan="2" width="10%" style="border:1px solid black;font-size:12px;text-align:center">Kategori Pekerja</td>
+                                <td rowspan="2" width="15%" style="border:1px solid black;font-size:12px;text-align:center">Cukai Yang Layak Ditanggung Oleh Majikan (Isikan 1 atau 2)<br/>
+                                    1 = Ya
+                                    <br/>2 = Tidak</td>
+                                <td colspan="2" width="20%" style="border:1px solid black;font-size:12px;text-align:center">Pelepasan Anak Yang Layak</td>
+                                <td rowspan="2" width="10%" style="border:1px solid black;font-size:12px;text-align:center;padding-top:10px">Jumlah Saraan2 Kasar<br/><br/><br/>
+                                    <b>RM</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">Bilangan Anak</td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center;padding-top:10px">Jumlah Pelepasan<br/><br/>
+                                    <b>RM</b>
+                                </td>
+                            </tr>
+                            <t t-set="counter" t-value="1"/>
+                            <t t-set="qty_total" t-value="0.0"/>
+                            <t t-set="qua_child_total" t-value="0.0"/>
+                            <tr t-foreach="get_data" t-as="data" style="page-break-inside: avoid;">
+                                <td width="5%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="counter"/></td>
+                                <td width="20%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="data.get('emp_name')"/></td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="data.get('emp_incometax')"/></td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="data.get('identification_no')"/></td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">
+                                    <span></span>
+                                </td>
+                                <td width="15%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="data.get('tax_accured')"/></td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="data.get('child_no')"/></td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="'{0:,.2f}'.format(float(data.get('qua_child')))"/></td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="'{0:,.2f}'.format(float(data.get('gross')))"/></td>
+                                <t t-set="counter" t-value="counter+1"/>
+                                <t t-set="qty_total" t-value="qty_total+data.get('gross')"/>
+                                <t t-set="qua_child_total" t-value="qua_child_total+data.get('qua_child')"/>
+                            </tr>
+                            <tr style="page-break-inside: avoid;">
+                                <td width="5%" colspan="7" style="background:#CCD1D1;text-align:right;padding-right:15px;font-size:14px;border-top:2px solid black;border-right:2px solid black;border-bottom:3px solid black;border-left:3px solid black">
+                                    <b>JUMLAH</b>
+                                </td>
+                                <td width="10%" style="background:#CCD1D1;font-size:12px;text-align:center;border-top:2px solid black;border-right:2px solid black;border-bottom:3px solid black;border-left:2px solid black"><span t-esc="'{0:,.2f}'.format(float(qua_child_total))"/></td>
+                                <td width="10%" style="background:#CCD1D1;font-size:12px;text-align:center;border-top:2px solid black;border-right:3px solid black;border-bottom:3px solid black;border-left:2px solid black"><span t-esc="'{0:,.2f}'.format(float(qty_total))"/></td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="5%" style="font-size:12px">Nota :</td>
+                                <td width="3%" style="font-size:12px">1</td>
+                                <td width="92%" style="font-size:12px">
+                                    <u>Kategori Pekerja (Seperti dalam Jadual PCB)</u>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="5%">
+                                    <span></span>
+                                </td>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="92%" style="font-size:12px">Kategori 1 : Bujang</td>
+                            </tr>
+                            <tr>
+                                <td width="5%">
+                                    <span></span>
+                                </td>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="92%" style="font-size:12px">Kategori 2 : Berkahwin dan suami atau isteri tidak bekerja</td>
+                            </tr>
+                            <tr>
+                                <td width="5%">
+                                    <span></span>
+                                </td>
+                                <td width="3%">
+                                    <span></span>
+                                </td>
+                                <td width="92%" style="font-size:12px">Kategori 3 : Berkahwin dan suami atau isteri bekerja, bercerai atau kematian suami atau isteri, atau bujang yang mempunyai anak angkat</td>
+                            </tr>
+                            <tr>
+                                <td width="5%">
+                                    <span></span>
+                                </td>
+                                <td width="3%" style="font-size:12px">2</td>
+                                <td width="92%" style="font-size:12px">Termasuk manfaat berupa barangan, manfaat nilai tempat kediaman dan tunggakan saraan kasar tahun-tahun terdahulu.</td>
+                            </tr>
+                        </table>
+                        <p style="page-break-after:always;"></p>
+                        <table width="100%">
+                            <tr>
+                                <td width="10%" style="font-size:12px">Nama</td>
+                                <td width="35%" style="border-bottom:1px solid black;font-size:12px"><span t-esc="res_company.name"/></td>
+                                <td width="5%">
+                                    <span></span>
+                                </td>
+                                <td width="10%" style="font-size:12px">No. Majikan</td>
+                                <td width="5%">
+                                    <table width="100%">
+                                        <tr>
+                                            <td width="100%" style="border:1px solid black;text-align:center;font-size:12px">E</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td width="35%">
+                                    <table width="100%" style="border-spacing:0">
+                                        <t t-set="counter" t-value="0"/>
+                                        <t t-set="cmp_eno" t-value="''"/>
+                                        <t t-foreach="res_company.e_number1" t-as="cen1" t-if="res_company.e_number1">
+                                            <t t-set="cmp_eno" t-value="cmp_eno+cen1"/>
+                                        </t>
+                                        <t t-foreach="res_company.e_number2" t-as="cen2" t-if="res_company.e_number2">
+                                            <t t-set="cmp_eno" t-value="cmp_eno+cen2"/>
+                                        </t>
+                                        <t t-foreach="cmp_eno" t-as="cm_eno">
+                                            <t t-set="counter" t-value="counter+1"/>
+                                            <td width="10%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="cm_eno"/></td>
+                                        </t>
+                                        <t t-set="counter" t-value="len(cmp_eno)"/>
+                                        <t t-if="counter &lt; 10" t-foreach="10" t-as="d">
+                                            <t t-set="counter" t-value="counter + 1"/>
+                                            <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">
+                                                <span><br/></span>
+                                            </td>
+                                        </t>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td width="10%">
+                                    <span></span>
+                                </td>
+                                <td width="35%" style="border-bottom:1px solid black;">
+                                    <span><br/></span>
+                                </td>
+                                <td width="55%">
+                                    <span></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table width="100%">
+                            <tr>
+                                <td style="font-size:10px">(C.P.8D-Pin. 2016)</td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td style="font-size:15px;color:white;background:black;padding-left:5px;text-align:center">PENYATA SARAAN DARIPADA PENGGAJIAN, TUNTUTAN POTONGAN DAN<br/>
+                                    MAKLUMAT MENGENAI POTONGAN CUKAI DI BAWAH KAEDAH-KAEDAH CUKAI PENDAPATAN<br/>
+                                    (POTONGAN DARIPADA SARAAN) 1994 BAGI TAHUN BERAKHIR 31 DISEMBER 2016</td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table width="100%" style="border-spacing:0">
+                            <tr>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">
+                                    <b>J</b>
+                                </td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">
+                                    <b>K</b>
+                                </td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">
+                                    <b>L</b>
+                                </td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">
+                                    <b>M</b>
+                                </td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">
+                                    <b>N</b>
+                                </td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">
+                                    <b>O</b>
+                                </td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">
+                                    <b>P</b>
+                                </td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">
+                                    <b>Q</b>
+                                </td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">
+                                    <b>R</b>
+                                </td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center">
+                                    <b>S</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2" width="10%" style="border:1px solid black;font-size:12px;text-align:center">Manfaat Berupa Barangan<br/><br/><br/><br/><br/><br/>
+                                    <b>RM</b>
+                                </td>
+                                <td rowspan="2" width="10%" style="border:1px solid black;font-size:12px;text-align:center">Nilai Tempat Kediaman<br/><br/><br/><br/><br/><br/><br/>
+                                    <b>RM</b>
+                                </td>
+                                <td rowspan="2" width="10%" style="border:1px solid black;font-size:12px;text-align:center">Manfaat Skim Opsyen Saham Pekerja (ESOS)<br/><br/><br/>
+                                    <b>RM</b>
+                                </td>
+                                <td rowspan="2" width="10%" style="border:1px solid black;font-size:12px;text-align:center">Elaun/<br/>Perkuisit/<br/>Pemberian/<br/>Manfaat Yang
+                                    <br/>Dikecualikan Cukai<br/><br/>
+                                    <b>RM</b>
+                                </td>
+                                <td width="20%" style="border:1px solid black;font-size:12px;text-align:center" colspan="2">Jumlah Tuntutan Potongan Oleh Pekerja Melalui Borang TP1</td>
+                                <td rowspan="2" width="10%" style="border:1px solid black;font-size:12px;text-align:center">Caruman Kepada Kumpulan Wang Simpanan Pekerja<br/><br/><br/>
+                                    <b>RM</b>
+                                </td>
+                                <td rowspan="2" width="10%" style="border:1px solid black;font-size:12px;text-align:center">Zakat Yang Dibayar Melalui Potongan Gaji<br/><br/><br/><br/>
+                                    <b>RM</b>
+                                </td>
+                                <td width="20%" style="border:1px solid black;font-size:12px;text-align:center" colspan="2">Jumlah Potongan Cukai</td>
+                            </tr>
+                            <tr>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center;padding-top:10px">Pelepasan<br/><br/><br/><br/>
+                                    <b>RM</b>
+                                </td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center;padding-top:10px">Zakat 3<br/><br/><br/><br/>
+                                    <b>RM</b>
+                                </td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center;padding-top:10px">PCB<br/><br/><br/><br/>
+                                    <b>RM</b>
+                                </td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center;padding-top:10px">CP 38<br/><br/><br/><br/>
+                                    <b>RM</b>
+                                </td>
+                            </tr>
+                            <t t-set="counter" t-value="1"/>
+                            <t t-set="total_ytd_bik" t-value="0.0"/>
+                            <t t-set="total_ytd_vola" t-value="0.0"/>
+                            <t t-set="total_ytd_esos" t-value="0.0"/>
+                            <t t-set="total_non_tx_allw" t-value="0.0"/>
+                            <t t-set="total_ytd_dedu" t-value="0.0"/>
+                            <t t-set="total_ytd_zakat_tp1" t-value="0.0"/>
+                            <t t-set="total_ytd_epf_e" t-value="0.0"/>
+                            <t t-set="total_ytd_zakat_ded" t-value="0.0"/>
+                            <t t-set="total_ytd_pcb_ded" t-value="0.0"/>
+                            <t t-set="total_ytd_cp38_ded" t-value="0.0"/>
+                            <tr t-foreach="get_data" t-as="data" style="page-break-inside: avoid;">
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="'{0:,.2f}'.format(float(data.get('ytd_bik')))"/></td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="'{0:,.2f}'.format(float(data.get('ytd_vola')))"/></td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="'{0:,.2f}'.format(float(data.get('ytd_esos')))"/></td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="'{0:,.2f}'.format(float(data.get('non_tx_allw')))"/></td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="'{0:,.2f}'.format(float(data.get('ytd_dedu')))"/></td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="'{0:,.2f}'.format(float(data.get('ytd_zakat_tp1')))"/></td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="'{0:,.2f}'.format(float(data.get('ytd_epf_e')))"/></td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="'{0:,.2f}'.format(float(data.get('ytd_zakat_ded')))"/></td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="'{0:,.2f}'.format(float(data.get('ytd_pcb_ded')))"/></td>
+                                <td width="10%" style="border:1px solid black;font-size:12px;text-align:center"><span t-esc="'{0:,.2f}'.format(float(data.get('ytd_cp38_ded')))"/></td>
+                                <t t-set="total_ytd_bik" t-value="total_ytd_bik+data.get('ytd_bik')"/>
+                                <t t-set="total_ytd_vola" t-value="total_ytd_vola+data.get('ytd_vola')"/>
+                                <t t-set="total_ytd_esos" t-value="total_ytd_esos+data.get('ytd_esos')"/>
+                                <t t-set="total_non_tx_allw" t-value="total_non_tx_allw+data.get('non_tx_allw')"/>
+                                <t t-set="total_ytd_dedu" t-value="total_ytd_dedu+data.get('ytd_dedu')"/>
+                                <t t-set="total_ytd_zakat_tp1" t-value="total_ytd_zakat_tp1+data.get('ytd_zakat_tp1')"/>
+                                <t t-set="total_ytd_epf_e" t-value="total_ytd_epf_e+data.get('ytd_epf_e')"/>
+                                <t t-set="total_ytd_zakat_ded" t-value="total_ytd_zakat_ded+data.get('ytd_zakat_ded')"/>
+                                <t t-set="total_ytd_pcb_ded" t-value="total_ytd_pcb_ded+data.get('ytd_pcb_ded')"/>
+                                <t t-set="total_ytd_cp38_ded" t-value="total_ytd_cp38_ded+data.get('ytd_cp38_ded')"/>
+                            </tr>
+                            <tr style="page-break-inside: avoid;">
+                                <td width="10%" style="text-align:center;background:#CCD1D1;font-size:12px;border-top:2px solid black;border-right:1px solid black;border-bottom:3px solid black;border-left:3px solid black"><span t-esc="'{0:,.2f}'.format(float(total_ytd_bik))"/></td>
+                                <td width="10%" style="text-align:center;background:#CCD1D1;font-size:12px;border-top:2px solid black;border-right:1px solid black;border-bottom:3px solid black;border-left:2px solid black"><span t-esc="'{0:,.2f}'.format(float(total_ytd_vola))"/></td>
+                                <td width="10%" style="text-align:center;background:#CCD1D1;font-size:12px;border-top:2px solid black;border-right:1px solid black;border-bottom:3px solid black;border-left:2px solid black"><span t-esc="'{0:,.2f}'.format(float(total_ytd_esos))"/></td>
+                                <td width="10%" style="text-align:center;background:#CCD1D1;font-size:12px;border-top:2px solid black;border-right:1px solid black;border-bottom:3px solid black;border-left:2px solid black"><span t-esc="'{0:,.2f}'.format(float(total_non_tx_allw))"/></td>
+                                <td width="10%" style="text-align:center;background:#CCD1D1;font-size:12px;border-top:2px solid black;border-right:1px solid black;border-bottom:3px solid black;border-left:2px solid black"><span t-esc="'{0:,.2f}'.format(float(total_ytd_dedu))"/></td>
+                                <td width="10%" style="text-align:center;background:#CCD1D1;font-size:12px;border-top:2px solid black;border-right:1px solid black;border-bottom:3px solid black;border-left:2px solid black"><span t-esc="'{0:,.2f}'.format(float(total_ytd_zakat_tp1))"/></td>
+                                <td width="10%" style="text-align:center;background:#CCD1D1;font-size:12px;border-top:2px solid black;border-right:1px solid black;border-bottom:3px solid black;border-left:2px solid black"><span t-esc="'{0:,.2f}'.format(float(total_ytd_epf_e))"/></td>
+                                <td width="10%" style="text-align:center;background:#CCD1D1;font-size:12px;border-top:2px solid black;border-right:1px solid black;border-bottom:3px solid black;border-left:2px solid black"><span t-esc="'{0:,.2f}'.format(float(total_ytd_zakat_ded))"/></td>
+                                <td width="10%" style="text-align:center;background:#CCD1D1;font-size:12px;border-top:2px solid black;border-right:1px solid black;border-bottom:3px solid black;border-left:2px solid black"><span t-esc="'{0:,.2f}'.format(float(total_ytd_pcb_ded))"/></td>
+                                <td width="10%" style="text-align:center;background:#CCD1D1;font-size:12px;border-top:2px solid black;border-right:2px solid black;border-bottom:3px solid black;border-left:3px solid black"><span t-esc="'{0:,.2f}'.format(float(total_ytd_cp38_ded))"/></td>
+                            </tr>
+                        </table>
+                        <table width="100%">
+                            <tr>
+                                <td style="font-size:12px">Nota : &#160;&#160;&#160;3 &#160;&#160;&#160;Amaun zakat SELAIN yang dibayar melalui potongan gaji bulanan</td>
+                            </tr>
+                        </table>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
