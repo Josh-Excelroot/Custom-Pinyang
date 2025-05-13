@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template and notification section -->
+    <data noupdate="1">
+        <record id="email_template_quotation" model="mail.template">
+            <field name="name">Sales quotation: Send by email</field>
+            <field name="model_id" ref="sci_goexcel_freight.model_freight_website_si"/>
+            <field name="email_from"></field>
+            <field name="email_to">${object.get_email_ids(object.user_id, object.team_id)|safe}</field>
+            <field name="subject">Sales Quotation (${object.name or ''})</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear Sir/Madam,
+                        <br />
+                        <br />
+        Here is the Quotation for <strong>(Ref ${object.name or ''})</strong> created
+        on ${object.create_date or 'n/a' }
+                        <br />
+Port of Loading: ${object.POL or 'n/a' }
+                        <br />
+Port of Discharge: ${object.POD or 'n/a' }
+                    </p>
+                </div>
+            </field>
+            <field name="report_template" ref="action_si_report"/>
+            <field name="report_name">Shipping Instruction</field>
+            <field name="lang">${object.customer_name.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record>
+    </data>
+</odoo>
