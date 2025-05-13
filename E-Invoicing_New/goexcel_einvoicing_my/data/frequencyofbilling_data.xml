@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="frequency_billing_01" model="frequency.of.billing">
+            <field name="billing_code">01</field>
+            <field name="billing_name">Daily</field>
+        </record>
+
+
+        <record id="frequency_billing_02" model="frequency.of.billing">
+            <field name="billing_code">02</field>
+            <field name="billing_name">Weekly</field>
+        </record>
+
+
+        <record id="frequency_billing_03" model="frequency.of.billing">
+            <field name="billing_code">03</field>
+            <field name="billing_name">Biweekly</field>
+        </record>
+
+
+        <record id="frequency_billing_04" model="frequency.of.billing">
+            <field name="billing_code">04</field>
+            <field name="billing_name">Monthly</field>
+        </record>
+
+
+        <record id="frequency_billing_05" model="frequency.of.billing">
+            <field name="billing_code">05</field>
+            <field name="billing_name">Bimonthly</field>
+        </record>
+
+
+        <record id="frequency_billing_06" model="frequency.of.billing">
+            <field name="billing_code">06</field>
+            <field name="billing_name">Quarterly</field>
+        </record>
+
+
+        <record id="frequency_billing_07" model="frequency.of.billing">
+            <field name="billing_code">07</field>
+            <field name="billing_name">Half-yearly</field>
+        </record>
+
+
+        <record id="frequency_billing_08" model="frequency.of.billing">
+            <field name="billing_code">08</field>
+            <field name="billing_name">Yearly</field>
+        </record>
+
+
+        <record id="frequency_billing_09" model="frequency.of.billing">
+            <field name="billing_code">09</field>
+            <field name="billing_name">Others / Not Applicable</field>
+        </record>
+
+    </data>
+</odoo>

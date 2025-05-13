@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+<!-- unece.code.list
+Source : https://www.unece.org/fileadmin/DAM/trade/untdid/d16b/tred/tred5153.htm  -->
+
+<record id="tax_type_sale" model="unece.code.list">
+    <field name="type">tax_type</field>
+    <field name="code">02</field>
+    <field name="name">Service Tax</field>
+    <field name="description">Sales Tax</field>
+</record>
+
+
+<!--<record id="tax_type_service" model="unece.code.list">-->
+<!--    <field name="type">tax_type</field>-->
+<!--    <field name="code">02</field>-->
+<!--    <field name="name">Service Tax</field>-->
+<!--    <field name="description">Service Tax</field>-->
+<!--</record>-->
+
+
+<!--<record id="tax_type_tourism" model="unece.code.list">-->
+<!--    <field name="type">tax_type</field>-->
+<!--    <field name="code">03</field>-->
+<!--    <field name="name">Tourism Tax</field>-->
+<!--    <field name="description">Tourism Tax</field>-->
+<!--</record>-->
+
+
+<!--<record id="tax_type_goods_tax" model="unece.code.list">-->
+<!--    <field name="type">tax_type</field>-->
+<!--    <field name="code">04</field>-->
+<!--    <field name="name">High Value Goods Tax</field>-->
+<!--    <field name="description">High Value Goods Tax</field>-->
+<!--</record>-->
+
+
+<!--<record id="tax_type_sale_goods_tax" model="unece.code.list">-->
+<!--    <field name="type">tax_type</field>-->
+<!--    <field name="code">05</field>-->
+<!--    <field name="name">Sale Tax on Low Value Goods</field>-->
+<!--    <field name="description">Sale Tax on Low Value Goods</field>-->
+<!--</record>-->
+
+<!--    <record id="tax_type_not_applicable" model="unece.code.list">-->
+<!--    <field name="type">tax_type</field>-->
+<!--    <field name="code">06</field>-->
+<!--    <field name="name">Not Applicable</field>-->
+<!--    <field name="description">Not Applicable</field>-->
+<!--    </record>-->
+
+<!--    <record id="tax_type_exemption" model="unece.code.list">-->
+<!--    <field name="type">tax_type</field>-->
+<!--    <field name="code">E</field>-->
+<!--    <field name="name">Tax Exemption</field>-->
+<!--    <field name="description">Tax Exemption</field>-->
+<!--    </record>-->
+
+
+
+
+</odoo>

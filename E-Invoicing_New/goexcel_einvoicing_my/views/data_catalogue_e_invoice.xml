@@ -1,0 +1,336 @@
+<odoo>
+        <record id="einvoice_uom_form_view" model="ir.ui.view">
+        <field name="name">einvoice.uom</field>
+        <field name="model">einvoice.uom</field>
+        <field name="arch" type="xml">
+            <form string="E-Invoice Code">
+                <group>
+                    <field name="uom_code"/>
+                    <field name="uom_name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="einvoice_uom_tree_view" model="ir.ui.view">
+        <field name="name">einvoice.uom</field>
+        <field name="model">einvoice.uom</field>
+        <field name="arch" type="xml">
+            <tree string="E-Invoice Code">
+
+                <field name="uom_code"/>
+                <field name="uom_name"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_einvoice_uom" model="ir.actions.act_window">
+        <field name="name">E Invoice UOM</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">einvoice.uom</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new UOM code
+            </p>
+            <p>
+                Create and manage the New Einvoice Uom .
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="action_einvoice_uom" id="menu_einvoice_uom" parent="base.menu_users"/>
+
+<!--    /////////////////////////////////////////////-->
+
+    <record id="msic_code_form_view" model="ir.ui.view">
+        <field name="name">msic.code</field>
+        <field name="model">msic.code</field>
+        <field name="arch" type="xml">
+            <form string="MSIC Code">
+                <group>
+                    <field name="msic_code"/>
+                    <field name="msic_name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="msic_code_tree_view" model="ir.ui.view">
+        <field name="name">msic.code</field>
+        <field name="model">msic.code</field>
+        <field name="arch" type="xml">
+            <tree string="MSIC Code">
+
+                <field name="msic_code"/>
+                <field name="msic_name"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_msic_code" model="ir.actions.act_window">
+        <field name="name">MSIC</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">msic.code</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new code
+            </p>
+            <p>
+                Create and manage the New MSIC .
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="action_msic_code" id="menu_msic_code" parent="base.menu_users"/>
+
+
+
+
+    <record id="frequency_of_billing_form_view" model="ir.ui.view">
+        <field name="name">frequency.of.billing</field>
+        <field name="model">frequency.of.billing</field>
+        <field name="arch" type="xml">
+            <form string="Frequency Of Billing">
+                <group>
+                    <field name="billing_code"/>
+                    <field name="billing_name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="frequency_of_billing_tree_view" model="ir.ui.view">
+        <field name="name">frequency.of.billing</field>
+        <field name="model">frequency.of.billing</field>
+        <field name="arch" type="xml">
+            <tree string="Frequency Of Billing">
+
+                <field name="billing_code"/>
+                <field name="billing_name"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_frequency_of_billing" model="ir.actions.act_window">
+        <field name="name">Frequency Of Billing</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">frequency.of.billing</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Frequency of billing
+            </p>
+            <p>
+                Create and manage the New frequency of billing .
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem action="action_frequency_of_billing" id="menu_frequency_of_billing" parent="base.menu_users"/>
+
+
+
+
+    <record id="classification_type_form_view" model="ir.ui.view">
+        <field name="name">classification.type</field>
+        <field name="model">classification.type</field>
+        <field name="arch" type="xml">
+            <form string="Classification Type">
+                <group>
+                    <field name="classification_code"/>
+                    <field name="classification_name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="classification_type_tree_view" model="ir.ui.view">
+        <field name="name">classification.type</field>
+        <field name="model">classification.type</field>
+        <field name="arch" type="xml">
+            <tree string="Classification Type">
+
+                <field name="classification_code"/>
+                <field name="classification_name"/>
+
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_classification" model="ir.actions.act_window">
+        <field name="name">Classification</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">classification.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Classification Type
+            </p>
+            <p>
+                Create and manage the classification type .
+            </p>
+        </field>
+    </record>
+
+
+     <menuitem action="action_classification" id="menu_classification" parent="base.menu_users"/>
+
+
+
+
+
+    <record id="tax_type_form_view" model="ir.ui.view">
+        <field name="name">tax.type</field>
+        <field name="model">tax.type</field>
+        <field name="arch" type="xml">
+            <form string="Tax Type">
+                <group>
+                    <field name="tax_code"/>
+                    <field name="tax_name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="tax_type_tree_view" model="ir.ui.view">
+        <field name="name">tax.type</field>
+        <field name="model">tax.type</field>
+        <field name="arch" type="xml">
+            <tree string="Tax Type">
+
+                <field name="tax_code"/>
+                <field name="tax_name"/>
+
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_tax_type" model="ir.actions.act_window">
+        <field name="name">Tax Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">tax.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Tax Type
+            </p>
+            <p>
+                Create and manage the tax type .
+            </p>
+        </field>
+    </record>
+
+
+     <menuitem action="action_tax_type" id="menu_tax_type" parent="base.menu_users"/>
+
+
+
+
+    <record id="payment_method_form_view" model="ir.ui.view">
+        <field name="name">payment.method</field>
+        <field name="model">payment.method</field>
+        <field name="arch" type="xml">
+            <form string="Payment Method">
+                <group>
+                    <field name="payment_code"/>
+                    <field name="payment_name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="payment_method_tree_view" model="ir.ui.view">
+        <field name="name">payment.method</field>
+        <field name="model">payment.method</field>
+        <field name="arch" type="xml">
+            <tree string="Payment Method">
+
+                <field name="payment_code"/>
+                <field name="payment_name"/>
+
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="action_payment_method" model="ir.actions.act_window">
+        <field name="name">Payment Method</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">payment.method</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Payment Method
+            </p>
+            <p>
+                Create and manage the Payment Method
+            </p>
+        </field>
+    </record>
+
+
+     <menuitem action="action_payment_method" id="menu_payment_method" parent="base.menu_users"/>
+
+
+    <record id="einvoice_res_country_form_view" model="ir.ui.view">
+        <field name="name">einvoice.res.country</field>
+        <field name="model">einvoice.res.country</field>
+        <field name="arch" type="xml">
+            <form string="Country">
+                <group>
+                    <field name="country_code"/>
+                    <field name="country_name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="einvoice_res_country_tree_view" model="ir.ui.view">
+        <field name="name">einvoice.res.country</field>
+        <field name="model">einvoice.res.country</field>
+        <field name="arch" type="xml">
+            <tree string="Country">
+
+                <field name="country_code"/>
+                <field name="country_name"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_einvoice_res_country" model="ir.actions.act_window">
+        <field name="name">Country</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">einvoice.res.country</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Country
+            </p>
+            <p>
+                Create and manage the Country And Codes
+            </p>
+        </field>
+    </record>
+
+
+     <menuitem action="action_einvoice_res_country" id="menu_einvoice_res_country" parent="base.menu_users"/>
+
+
+
+</odoo>

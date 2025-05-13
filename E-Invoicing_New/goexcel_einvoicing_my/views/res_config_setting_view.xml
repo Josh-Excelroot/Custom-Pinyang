@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form_inherit_einvoice_configuration" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.envoice</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="40"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]/div[hasclass('app_settings_block')]/div[@id='invoicing_settings']"
+                       position="after">
+                    <h2>E-Invoice</h2>
+                    <div class="row mt16 o_settings_container" name="e-invoice_setting_container">
+                        <div class="col-12 col-lg-6 o_setting_box"
+                             title="This Amount is check when any new invoice/bill created.">
+
+                            <div class="o_setting_right_pane">
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label for="enable_e_invoice" class="col-lg-4"/>
+
+                                        <field name="enable_e_invoice"/>
+
+                                    </div>
+                                </div>
+                                <div class="content-group">
+                                    <div class="row mt16" attrs="{'invisible': [('enable_e_invoice', '=', False)]}">
+                                        <label string="Login TaxPayer URL" for="login_url_taxpayer_einv"
+                                               class="col-lg-4 o_light_label"/>
+                                        <field name="login_url_taxpayer_einv"/>
+                                        <label string="Client ID" for="client_id_einv" class="col-lg-4 o_light_label"/>
+                                        <field name="client_id_einv"/>
+                                        <label string="Clinet Secret ID" for="client_secret_id_einv"
+                                               class="col-lg-4 o_light_label"/>
+                                        <field name="client_secret_id_einv"/>
+                                        <label string="Authorization Token" for="authorization_token_einv"
+                                               class="col-lg-4 o_light_label"/>
+                                        <field name="authorization_token_einv"/>
+                                        <label string="Token  Expiry Time" for="token_expiry_time"
+                                               class="col-lg-4 o_light_label"/>
+                                        <field name="token_expiry_time"/>
+
+                                    </div>
+                                    <button name="generate_token_einvoice" string="Generate Token" class="oe_highlight"
+                                            type="object" attrs="{'invisible': [('enable_e_invoice', '=', False)]}"/>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="col-12 col-lg-6 o_setting_box"
+                             title="This Amount is check when any new invoice/bill created.">
+
+                            <div class="o_setting_right_pane">
+
+                                <div class="content-group">
+
+                                    <div class="row mt16" attrs="{'invisible': [('enable_e_invoice', '=', False)]}">
+
+                                        <!--                                        <label string="Invoice Send URL" for="sned_url_einv" class="col-lg-4 o_light_label"/>-->
+                                        <!--                                        <field name="sned_url_einv"/>-->
+                                        <!--                                    -->
+                                        <label string="Qr Code URL" for="qrcode_url_einv"
+                                               class="col-lg-4 o_light_label"/>
+                                        <field name="qrcode_url_einv"/>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+    </data>
+
+</odoo>

@@ -1,0 +1,30 @@
+<odoo>
+
+    <record model="ir.ui.view" id="res_partner_view_uniship">
+        <field name="name">Partner</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field name="priority" eval="10"/>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[last()]" position="after">
+                <page string="E-invoicing" >
+                    <group>
+                        <field name="enable_e_invoice" invisible="1"/>
+                        <field name="buyer_tin_no"/>
+                        <field name="brn_no"/>
+                        <field name="buyer_sst_no"/>
+                        <field name="ttx_no" />
+                        <field name="msic_code"  widget="many2one_tags" options="{'no_create':1,'no_create_edit':1}" />
+                         <field name="consolidated_general_public" />
+                        <field name="vaildate_tin_status" readonly="1" />
+                    </group>
+                    <group>
+                        <button name="vaildate_tin" string="Validate Taxpayer's TIN"  class="oe_highlight" type="object"    attrs="{'invisible': ['|', ('buyer_tin_no', '=', False), ('vaildate_tin_status', '!=', False)]}"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

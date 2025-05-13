@@ -1,0 +1,25 @@
+<odoo>
+
+    <record id="res_compnay_view_form_e_invoice" model="ir.ui.view">
+        <field name="name">res.company.view.form.inherit.google.drive</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[last()]" position="after">
+                <page string="E-invoicing" invisible="1">
+                    <group>
+                                                <field name="enable_e_invoice" invisible="1"/>
+
+<!--                        <field name="supplier_registration_no"/>-->
+<!--                        <field name="supplier_sst_no"/>-->
+                        <field name="supplier_tourism_tax_reg_no"/>
+                        <field name="supplier_msic_code"/>
+                        <field name="supplier_buisness_activity_desc"/>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

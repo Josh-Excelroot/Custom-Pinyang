@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ir_cron_status_check_action" model="ir.cron">
+            <field name="name">Status Check</field>
+            <field name="model_id" ref="model_account_invoice"/>
+            <field name="state">code</field>
+            <field name="code">model.status_e_invoice_check()</field>
+            <field name="interval_number">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+<!--            <field name="active" eval="False"/>-->
+        </record>
+
+          <record id="ir_cron_generate_token_action" model="ir.cron">
+            <field name="name">Generate Token</field>
+            <field name="model_id" ref="model_account_invoice"/>
+            <field name="state">code</field>
+            <field name="code">model.generate_token()</field>
+            <field name="interval_number">58</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+<!--            <field name="active" eval="False"/>-->
+        </record>
+
+    </data>
+</odoo>

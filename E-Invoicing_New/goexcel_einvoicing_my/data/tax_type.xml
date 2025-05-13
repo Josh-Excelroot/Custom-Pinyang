@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="tax_type_01" model="tax.type">
+            <field name="tax_name">Sale Tax</field>
+            <field name="tax_code">01</field>
+        </record>
+
+
+        <record id="tax_type_02" model="tax.type">
+            <field name="tax_name">Service Tax</field>
+            <field name="tax_code">02</field>
+        </record>
+
+
+        <record id="tax_type_03" model="tax.type">
+            <field name="tax_name">Tourism Tax</field>
+            <field name="tax_code">03</field>
+        </record>
+
+    </data>
+</odoo>

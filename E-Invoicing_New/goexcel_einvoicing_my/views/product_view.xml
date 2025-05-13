@@ -1,0 +1,23 @@
+<odoo>
+
+    <record id="custom_product_normal_form_view_inherit" model="ir.ui.view" >
+      <field name="name">product.product.form</field>
+        <field name="model">product.product</field>
+         <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//page[last()]" position="after">
+                <page string="E-invoicing" attrs="{'invisible': [('enable_e_invoice','=',False)]}">
+                    <group>
+                        <field name="enable_e_invoice" invisible="1"/>
+                         <field name="classification_item" />
+                        <field name="self_bill_classification_item" />
+                    </group>
+                </page>
+            </xpath>
+
+
+            </field>
+    </record>
+
+</odoo>

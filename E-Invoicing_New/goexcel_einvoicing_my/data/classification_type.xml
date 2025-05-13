@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="classification_type_001" model="classification.type">
+            <field name="classification_code">001</field>
+            <field name="classification_name">Breastfeeding equipment</field>
+        </record>
+        <record id="classification_type_002" model="classification.type">
+            <field name="classification_code">002</field>
+            <field name="classification_name">Child care centres and kindergartens fees</field>
+        </record>
+        <record id="classification_type_003" model="classification.type">
+            <field name="classification_code">003</field>
+            <field name="classification_name">Computer, smartphone or tablet</field>
+        </record>
+        <record id="classification_type_004" model="classification.type">
+            <field name="classification_code">004</field>
+            <field name="classification_name">Consolidated e-Invoice</field>
+        </record>
+        <record id="classification_type_005" model="classification.type">
+            <field name="classification_code">005</field>
+            <field name="classification_name">Construction materials (as defined in Lembaga Pembangunan Industri
+                Pembinaan Malaysia Act 1994)
+            </field>
+        </record>
+        <record id="classification_type_006" model="classification.type">
+            <field name="classification_code">006</field>
+            <field name="classification_name">Disbursement</field>
+        </record>
+        <record id="classification_type_007" model="classification.type">
+            <field name="classification_code">007</field>
+            <field name="classification_name">Donation</field>
+        </record>
+        <record id="classification_type_008" model="classification.type">
+            <field name="classification_code">008</field>
+            <field name="classification_name">e-Commerce - e-Invoice to buyer / purchaser</field>
+        </record>
+        <record id="classification_type_009" model="classification.type">
+            <field name="classification_code">009</field>
+            <field name="classification_name">e-Commerce - Self-billed e-Invoice to seller, logistics, etc.</field>
+        </record>
+        <record id="classification_type_010" model="classification.type">
+            <field name="classification_code">010</field>
+            <field name="classification_name">Education fees</field>
+        </record>
+        <record id="classification_type_011" model="classification.type">
+            <field name="classification_code">011</field>
+            <field name="classification_name">Goods on consignment (Consignor)</field>
+        </record>
+        <record id="classification_type_012" model="classification.type">
+            <field name="classification_code">012</field>
+            <field name="classification_name">Goods on consignment (Consignee)</field>
+        </record>
+        <record id="classification_type_013" model="classification.type">
+            <field name="classification_code">013</field>
+            <field name="classification_name">Gym membership</field>
+        </record>
+        <record id="classification_type_014" model="classification.type">
+            <field name="classification_code">014</field>
+            <field name="classification_name">Insurance - Education and medical benefits</field>
+        </record>
+        <record id="classification_type_015" model="classification.type">
+            <field name="classification_code">015</field>
+            <field name="classification_name">Insurance - Takaful or life insurance</field>
+        </record>
+        <record id="classification_type_016" model="classification.type">
+            <field name="classification_code">016</field>
+            <field name="classification_name">Interest and financing expenses</field>
+        </record>
+        <record id="classification_type_017" model="classification.type">
+            <field name="classification_code">017</field>
+            <field name="classification_name">Internet subscription</field>
+        </record>
+        <record id="classification_type_018" model="classification.type">
+            <field name="classification_code">018</field>
+            <field name="classification_name">Land and building</field>
+        </record>
+        <record id="classification_type_019" model="classification.type">
+            <field name="classification_code">019</field>
+            <field name="classification_name">Medical examination for learning disabilities and early intervention or
+                rehabilitation treatments of learning disabilities
+            </field>
+        </record>
+        <record id="classification_type_020" model="classification.type">
+            <field name="classification_code">020</field>
+            <field name="classification_name">Medical examination or vaccination expenses</field>
+        </record>
+        <record id="classification_type_021" model="classification.type">
+            <field name="classification_code">021</field>
+            <field name="classification_name">Medical expenses for serious diseases</field>
+        </record>
+        <record id="classification_type_022" model="classification.type">
+            <field name="classification_code">022</field>
+            <field name="classification_name">Others</field>
+        </record>
+        <record id="classification_type_023" model="classification.type">
+            <field name="classification_code">023</field>
+            <field name="classification_name">Petroleum operations (as defined in Petroleum (Income Tax) Act 1967)
+            </field>
+        </record>
+        <record id="classification_type_024" model="classification.type">
+            <field name="classification_code">024</field>
+            <field name="classification_name">Private retirement scheme or deferred annuity scheme</field>
+        </record>
+        <record id="classification_type_025" model="classification.type">
+            <field name="classification_code">025</field>
+            <field name="classification_name">Purchase of motor vehicle</field>
+        </record>
+        <record id="classification_type_026" model="classification.type">
+            <field name="classification_code">026</field>
+            <field name="classification_name">Purchase or subscription of books / journals / magazines / newspapers /
+                other similar publications
+            </field>
+        </record>
+        <record id="classification_type_027" model="classification.type">
+            <field name="classification_code">027</field>
+            <field name="classification_name">Reimbursement</field>
+        </record>
+        <record id="classification_type_028" model="classification.type">
+            <field name="classification_code">028</field>
+            <field name="classification_name">Rental of motor vehicle</field>
+        </record>
+        <record id="classification_type_029" model="classification.type">
+            <field name="classification_code">029</field>
+            <field name="classification_name">Rental or purchase of EV charging facilities</field>
+        </record>
+        <record id="classification_type_030" model="classification.type">
+            <field name="classification_code">030</field>
+            <field name="classification_name">Repair and maintenance</field>
+        </record>
+        <record id="classification_type_031" model="classification.type">
+            <field name="classification_code">031</field>
+            <field name="classification_name">Research and development</field>
+        </record>
+        <record id="classification_type_032" model="classification.type">
+            <field name="classification_code">032</field>
+            <field name="classification_name">Self-billed - Foreign income</field>
+        </record>
+        <record id="classification_type_033" model="classification.type">
+            <field name="classification_code">033</field>
+            <field name="classification_name">Self-billed - Betting and gaming</field>
+        </record>
+        <record id="classification_type_034" model="classification.type">
+            <field name="classification_code">034</field>
+            <field name="classification_name">Self-billed - Importation of goods</field>
+        </record>
+        <record id="classification_type_035" model="classification.type">
+            <field name="classification_code">035</field>
+            <field name="classification_name">Self-billed - Importation of services</field>
+        </record>
+        <record id="classification_type_036" model="classification.type">
+            <field name="classification_code">036</field>
+            <field name="classification_name">Self-billed - Others</field>
+        </record>
+        <record id="classification_type_037" model="classification.type">
+            <field name="classification_code">037</field>
+                    <field name="classification_name">Self-billed - Monetary Payment to agents, dealers or distributors</field>
+        </record>
+        <record id="classification_type_038" model="classification.type">
+            <field name="classification_code">038</field>
+            <field name="classification_name">Sports equipment, rental / entry fees for sports facilities, registration in sports competition or sports training fees imposed by associations / sports clubs / companies registered with the Sports Commissioner or Companies Commission of Malaysia and carrying out sports activities as listed under the Sports Development Act 1997
+            </field>
+        </record>
+        <record id="classification_type_039" model="classification.type">
+            <field name="classification_code">039</field>
+            <field name="classification_name">Supporting equipment for disabled person</field>
+        </record>
+        <record id="classification_type_040" model="classification.type">
+            <field name="classification_code">040</field>
+            <field name="classification_name">Voluntary contribution to approved provident fund</field>
+        </record>
+        <record id="classification_type_041" model="classification.type">
+            <field name="classification_code">041</field>
+            <field name="classification_name">Dental examination or treatment</field>
+        </record>
+         <record id="classification_type_042" model="classification.type">
+            <field name="classification_code">042</field>
+            <field name="classification_name">Fertility treatment</field>
+        </record>
+         <record id="classification_type_043" model="classification.type">
+            <field name="classification_code">043</field>
+            <field name="classification_name">Treatment and home care nursing, daycare centres and residential care centers</field>
+        </record>
+        <record id="classification_type_044" model="classification.type">
+            <field name="classification_code">044</field>
+            <field name="classification_name">Vouchers, gift cards, loyalty points, etc</field>
+        </record>
+        <record id="classification_type_045" model="classification.type">
+            <field name="classification_code">045</field>
+            <field name="classification_name">Self-billed - Non-monetary payment to agents, dealers or distributors</field>
+        </record>
+
+
+
+    </data>
+</odoo>

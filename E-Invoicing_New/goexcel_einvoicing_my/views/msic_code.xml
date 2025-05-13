@@ -1,0 +1,12 @@
+<odoo>
+    <record id="view_msic_code_search" model="ir.ui.view">
+        <field name="name">msic.code.search</field>
+        <field name="model">msic.code</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="msic_code"/>
+                <field name="msic_name"/>
+            </search>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,53 @@
+<odoo>
+    <data>
+
+        <record id="payment_method_01" model="payment.method">
+            <field name="payment_name">Cash</field>
+            <field name="payment_code">01</field>
+        </record>
+
+
+        <record id="payment_method_02" model="payment.method">
+            <field name="payment_name">Cheque</field>
+            <field name="payment_code">02</field>
+        </record>
+
+
+        <record id="payment_method_03" model="payment.method">
+            <field name="payment_name">Bank Transfer</field>
+            <field name="payment_code">03</field>
+        </record>
+
+
+        <record id="payment_method_04" model="payment.method">
+            <field name="payment_name">Credit Card</field>
+            <field name="payment_code">04</field>
+        </record>
+
+
+        <record id="payment_method_05" model="payment.method">
+            <field name="payment_name">Debit Card</field>
+            <field name="payment_code">05</field>
+        </record>
+
+
+        <record id="payment_method_06" model="payment.method">
+            <field name="payment_name">e-Wallet / Digital Wallet</field>
+            <field name="payment_code">06</field>
+        </record>
+
+
+        <record id="payment_method_07" model="payment.method">
+            <field name="payment_name">Digital Bank</field>
+            <field name="payment_code">07</field>
+        </record>
+
+
+        <record id="payment_method_08" model="payment.method">
+            <field name="payment_name">Others</field>
+            <field name="payment_code">08</field>
+        </record>
+
+
+    </data>
+</odoo>

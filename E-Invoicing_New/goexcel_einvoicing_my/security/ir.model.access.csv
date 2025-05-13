@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_msic_code,access_msic_code,model_msic_code,base.group_user,1,0,0,0
+access_frequency_of_billing,access_frequency_of_billing,model_frequency_of_billing,base.group_user,1,0,0,0
+access_classification_type,access_classification_type,model_classification_type,base.group_user,1,0,0,0
+access_tax_type,access_tax_type,model_tax_type,base.group_user,1,0,0,0
+access_payment_method,access_payment_method,model_payment_method,base.group_user,1,0,0,0
+access_einvoice_res_country,access_einvoice_res_country,model_einvoice_res_country,base.group_user,1,0,0,0
+access_einvoice_uom,access_einvoice_uom,model_einvoice_uom,base.group_user,1,0,0,0
