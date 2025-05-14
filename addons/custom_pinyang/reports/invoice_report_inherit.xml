@@ -1008,52 +1008,43 @@
                     <table style="font-size:9pt; width:100%;">
                         <thead>
                             <tr>
-                                <th
-                                        style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:5%;">
-                                    <span>No.</span>
+                                <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:5%; padding:0">
+                                    <span>No</span>
                                 </th>
-                                <th
-                                        style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:25%;padding:0;">
+                                <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:35%;padding:0;">
                                     <span>DESCRIPTION</span>
                                 </th>
-                                <th
-                                        style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:8%">
+                                <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:5%">
                                     <span>Qty</span>
                                 </th>
-                                <th
-                                        style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:15%">
-                                    <span>Currency</span>
+                                <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:5%">
+                                    <span>UOM</span>
                                 </th>
-                                <th
-                                        style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:15%">
+                                <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:5%">
+                                    <span>Curr.</span>
+                                </th>
+                                <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:10%; text-align:center;">
                                     <span>Price/Unit</span>
                                 </th>
-                                <th
-                                        style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:15%">
-                                    <span>Ex. Rate</span>
+                                <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:5% ; text-align:right;">
+                                    <span>Rate</span>
                                 </th>
-                                <th
-                                        style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:8%">
+                                <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:10% ; text-align:right;">
                                     <span>SST</span>
                                 </th>
-                                <!--                                <th class="text-right" style="border-top:1pt solid black; border-bottom:1pt solid black;"><span>SST</span></th>
-                            <th colspan="4" class="text-right" style="border-top:1pt solid black; border-bottom:1pt solid black;"><span>BEFORE TAX</span></th>-->
-                                <th
-                                        style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:15%;text-align:center;">
-                                    <span>Sub Total</span>
+                                <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:10%;text-align:right;">
+                                    <span>Sub-Tot.</span>
                                 </th>
-                                <th
-                                        style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:14%;text-align:right;">
+                                <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:10%;text-align:right;">
                                     <span>Total(<t t-esc="o.currency_id.name"/>)
                                     </span>
-                                    <!--                                    <span>Total(RM)</span>-->
-                                    <!--                                    <span t-esc="o.currency_id.symbol"/>-->
                                 </th>
                             </tr>
                             <tr height="1px"/>
                         </thead>
                         <tbody>
                             <tr>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -1079,9 +1070,12 @@
                                             <span t-esc="int(line.quantity)"/>
                                         </td>
                                         <td style="font-size: 9pt;">
-                                          <span t-field="line.freight_currency.name"/>
+                                            <span t-esc="line.uom_id.name"/>
                                         </td>
                                         <td style="font-size: 9pt;">
+                                          <span t-field="line.freight_currency.name"/>
+                                        </td>
+                                        <td style="font-size: 9pt;text-align:center;">
                                             <t t-if="line.freight_currency_rate > 1">
                                                 <span t-esc="'%.2f'% float(line.freight_foreign_price)"/>
                                             </t>
@@ -1089,7 +1083,7 @@
                                                 <span t-esc="'{0:,.2f}'.format(float(line.price_unit))"/>
                                             </t>
                                         </td>
-                                        <td style="font-size: 9pt;">
+                                        <td style="font-size: 9pt;text-align:right;">
                                             <t t-if="line.freight_currency_rate &gt; 1">
                                                   
                                                 <span t-esc="'%.4f'%  float(line.freight_currency_rate)"/>
@@ -1098,7 +1092,7 @@
                                                   1.0000
                                             </t>
                                         </td>
-                                        <td>
+                                        <td style="font-size: 9pt; text-align:right;">
                                             <span t-field="line.price_tax"/>
                                         </td>
                                         <!-- <td class="text-right">
@@ -1153,62 +1147,52 @@
                     <div class="page">
                         <t t-if="len(o.invoice_line_ids) &lt;= 8">
                             <div t-if="o.freight_booking.service_type != 'air'">
-                                <div style="height:365px;"></div>
+                                <div style="height:410px;"/>
                             </div>
                             <div t-else="">
-                                <div style="height: 280px;"/>
+                                <div style="height: 310px;"/>
                             </div>
-                            <!--TODO: Add index to the table-->
                             <t t-set="index" t-value="0"/>
-                            <table style="font-size:10pt; width:100%;">
+                            <table style="font-size:9pt; width:100%;" border="1">
                                 <thead>
                                     <tr>
-                                        <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:5%;">
-                                            <span>No.</span>
+                                        <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:5%; padding:0">
+                                            <span>No</span>
                                         </th>
-
-                                        <th
-                                                style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:25%;padding:0;">
+                                        <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:35%;padding:0;">
                                             <span>DESCRIPTION</span>
                                         </th>
-                                        <th
-                                                style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:8%">
+                                        <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:5%">
                                             <span>Qty</span>
                                         </th>
-                                        <th
-                                                style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:15%">
-                                            <span>Currency</span>
+                                        <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:5%">
+                                            <span>UOM</span>
                                         </th>
-                                        <th
-                                                style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:15%">
+                                        <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:5%">
+                                            <span>Curr.</span>
+                                        </th>
+                                        <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:10%; text-align:center;">
                                             <span>Price/Unit</span>
                                         </th>
-                                        <th
-                                                style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:15%">
-                                            <span>Ex. Rate</span>
+                                        <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:5% ; text-align:right;">
+                                            <span>Rate</span>
                                         </th>
-                                        <th
-                                                style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:8%">
+                                        <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:10% ; text-align:right;">
                                             <span>SST</span>
                                         </th>
-                                        <!--                                <th class="text-right" style="border-top:1pt solid black; border-bottom:1pt solid black;"><span>SST</span></th>
-                                    <th colspan="4" class="text-right" style="border-top:1pt solid black; border-bottom:1pt solid black;"><span>BEFORE TAX</span></th>-->
-                                        <th
-                                                style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:15%;text-align:center;">
+                                        <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:10%;text-align:right;">
                                             <span>Sub-Tot.</span>
                                         </th>
-                                        <th
-                                                style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 11pt;width:14%;text-align:right;">
+                                        <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:10%;text-align:right;">
                                             <span>Total(<t t-esc="o.currency_id.name"/>)
                                             </span>
-                                            <!--                                    <span>Total(RM)</span>-->
-                                            <!--                                    <span t-esc="o.currency_id.symbol"/>-->
                                         </th>
                                     </tr>
                                     <tr height="1px"/>
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -1234,9 +1218,12 @@
                                                     <span t-esc="int(line.quantity)"/>
                                                 </td>
                                                 <td style="font-size: 9pt;">
-                                                    <span t-field="line.freight_currency.name"/>
+                                                    <span t-esc="line.uom_id.name"/>
                                                 </td>
                                                 <td style="font-size: 9pt;">
+                                                    <span t-field="line.freight_currency.name"/>
+                                                </td>
+                                                <td style="font-size: 9pt; text-align:center;">
                                                     <t t-if="line.freight_currency_rate > 1">
                                                         <span t-esc="'%.2f'% float(line.freight_foreign_price)"/>
                                                     </t>
@@ -1244,16 +1231,16 @@
                                                         <span t-esc="'{0:,.2f}'.format(float(line.price_unit))"/>
                                                     </t>
                                                 </td>
-                                                <td style="font-size: 9pt;">
+                                                <td style="font-size: 9pt; text-align:right;">
                                                     <t t-if="line.freight_currency_rate &gt; 1">
                                                           
-                                                        <span t-esc="'%.4f'%  float(line.freight_currency_rate)"/>
+                                                        <span t-esc="'%.3f'%  float(line.freight_currency_rate)"/>
                                                     </t>
                                                     <t t-if="line.freight_currency_rate == 1">
-                                                          1.0000
+                                                          1.000
                                                     </t>
                                                 </td>
-                                                <td>
+                                                <td style="font-size: 9pt; text-align:right;">
                                                     <span t-field="line.price_tax"/>
                                                 </td>
                                                 <!-- <td class="text-right">
@@ -1298,7 +1285,7 @@
                             <style>
                                 body {
                                 font-family: georgia;
-                                font-size:10pt;
+                                font-size:9pt;
                                 }
                             </style>
                             <div class="last-page">
@@ -1446,11 +1433,33 @@
                                             <td width="70%">
                                                 <span style="font-size:8pt;" t-field="o.sale_term"/>
                                             </td>
+                                            <td width="30%"/>
+                                        </tr>
+                                        <tr>
+                                            <td/>
                                             <td width="30%" style="text-align:center; vertical-align:bottom;">
-                                                <div style="padding-top: 30px;">
+                                                <t t-if="o.template_id">
+                                                    <t t-if="o.template_id.doc_type == 'invoice'">
+                                                        <t t-if="o.template_id.currency_id.name == 'MYR'">
+                                                            <div style="padding-top:30px">
+                                                                <hr width="100%" style="border: 1px solid black; margin: 0 auto;" />
+                                                                <span style="font-size:8pt;">AUTHORISED SIGNATURE</span>
+                                                            </div>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <hr width="100%" style="border: 1px solid black; margin: 0 auto;" />
+                                                            <span style="font-size:8pt;">AUTHORISED SIGNATURE</span>
+                                                        </t>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <hr width="100%" style="border: 1px solid black; margin: 0 auto;" />
+                                                        <span style="font-size:8pt;">AUTHORISED SIGNATURE</span>
+                                                    </t>
+                                                </t>
+                                                <t t-else="">
                                                     <hr width="100%" style="border: 1px solid black; margin: 0 auto;" />
                                                     <span style="font-size:8pt;">AUTHORISED SIGNATURE</span>
-                                                </div>
+                                                </t>
                                             </td>
                                         </tr>
                                     </table>
