@@ -61,16 +61,67 @@ class FreightBooking(models.Model):
         if self.booking_no != new_no:
             self.booking_no = new_no
 
+    def copy(self, default=None):
+        default = dict(default or {})
+        default.update({
+            'booking_no': self.env['ir.sequence'].next_by_code('draft'),
+            'booking_date_time': fields.Date.context_today(self)
+        })
+        _logger.info(">> COPY: injected draft booking_no = %r", default['booking_no'])
+        return super(FreightBooking, self).copy(default)
+
+    @api.multi
+    def write(self, vals):
+        # res = super(FreightBooking, self).write(vals)
+        # for rec in self:
+        #     if rec.booking_no.startswith('DRAFT-'):
+        #         rec.set_booking_no()
+        # return res
+        _logger.info("WRITE.START: draft=%r, vals keys=%r",
+                     self.booking_no.startswith('DRAFT-'), list(vals.keys()))
+        res = super(FreightBooking, self).write(vals)
+        if 'booking_date_time' in vals:
+            for rec in self:
+                if isinstance(rec.booking_no, str) and rec.booking_no.startswith('DRAFT-'):
+                    _logger.info("WRITE: date changed, regenerating booking_no for rec=%s", rec.id)
+                    rec.set_booking_no()
+                    _logger.info("WRITE: new booking_no=%r", rec.booking_no)
+        return res
 
     @api.model
     def create(self, vals):
         # if not vals['booking_date_time']:
         #     raise ValidationError(_('Please Enter ETA/ETD Date!'))
-        res = super(FreightBooking, self).create(vals)
-        _logger.info("LOGGER: After super, %s", vals['booking_no'])
+        raw_booking_no = vals.get('booking_no')
+        booking_no_str = raw_booking_no if isinstance(raw_booking_no, str) else ''
+        is_draft = booking_no_str.startswith('DRAFT-')
 
-        # res.set_booking_no(vals)
+        res = super(FreightBooking, self).create(vals)
+        if is_draft:
+            res.booking_no = raw_booking_no
+        else:
+            res.set_booking_no(vals)
         return res
+        # raw_no = vals.get('booking_no')
+        # is_draft = isinstance(raw_no, str) and raw_no.startswith('DRAFT-')
+        # _logger.info("CREATE.START: is_draft=%s, incoming booking_no=%r", is_draft, raw_no)
+        #
+        # # 2) Call the super-create (this will pull from fb sequence)
+        # rec = super(FreightBooking, self).create(vals)
+        # _logger.info("CREATE.AFTER_SUPER: rec.booking_no=%r", rec.booking_no)
+        #
+        # # 3) If it really was a draft copy, force that back onto the record
+        # if is_draft:
+        #     rec.booking_no = raw_no
+        #     _logger.info("CREATE.DRAFT: forced draft booking_no=%r back on rec.id=%s",
+        #                  raw_no, rec.id)
+        #     return rec
+        #
+        # # 4) Otherwise it’s a brand-new booking — generate the real number
+        # _logger.info("CREATE.FINAL: generating real sequence")
+        # rec.set_booking_no()
+        # _logger.info("CREATE.DONE: rec.booking_no=%r", rec.booking_no)
+        # return rec
 
     # @api.model
     # def create(self, vals):
