@@ -110,17 +110,6 @@ class FreightBooking2(models.Model):
 
     # ////////////////////////////////////////////////////////////////
     # Josh 07052025: Edit copy/duplicate button function
-    # @api.multi
-    # @api.returns('self', lambda value: value.id)
-    # def copy(self, default=None):
-    #     if not isinstance(default, dict):
-    #         default = {}
-    #     default = dict(default)
-    #     default.update({
-    #         'vendor_bill_count': 0,
-    #     })
-    #
-    #     return super(FreightBooking2, self).copy(default)
     def copy(self, default=None):
         default = dict(default or {})
         default.update({
@@ -1312,6 +1301,9 @@ class FreightBooking2(models.Model):
             self.update({
                 'vendor_bill_count': 0,
             })
+        #     self.update({
+        #         'vendor_bill_count': len(unique_list),
+        #     })
 
 
     @api.multi
@@ -2038,6 +2030,15 @@ class FreightOperationLine3(models.Model):
 
 class CostProfit(models.Model):
     _inherit = 'freight.cost_profit'
+
+    # def copy(self, default=None):
+    #     default = dict(default or {})
+    #     default.update({
+    #         'vendor_bill_id': False,
+    #         'vendor_bill_ids': [(6, 0, [])],  # clear all linked vendor bills
+    #         'invoiced': False  # reset invoiced flag
+    #     })
+    #     return super(CostProfit, self).copy(default)
 
     @api.onchange('product_id')
     def _onchange_product_id(self):
