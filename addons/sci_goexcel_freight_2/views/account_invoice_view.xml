@@ -32,7 +32,7 @@
 				<field name="freight_currency_rate"/>
 			</xpath>
 			<xpath expr="//field[@name='invoice_description']" position="after">
-				<field name="move_id" position="move"/>
+				<field name="move_id" readonly="1"/>
 			</xpath>
 
 		</field>
@@ -55,7 +55,7 @@
 				<field name="reference" string="Vendor Invoice"/>
 			</xpath>
 			<xpath expr="//field[@name='reference']" position="after">
-				<field name="move_id" position="move"/>
+				<field name="move_id" readonly="1"/>
 			</xpath>
 			<xpath expr="//field[@name='invoice_line_ids']/tree[1]/field[@name='uom_id']" position="after">
 				<field name="freight_currency"/>
@@ -73,7 +73,7 @@
 		<field name="priority" eval="16"/>
 		<field name="arch" type="xml">
 			<xpath expr="//field[@name='reference']" position="after">
-				<field name="move_id" position="move"/>
+				<field name="move_id" readonly="1"/>
 			</xpath>
 		</field>
 	</record>
@@ -87,7 +87,7 @@
 		<field name="priority" eval="16"/>
 		<field name="arch" type="xml">
 			<xpath expr="//field[@name='company_id']" position="after">
-				<field name="move_id" position="move"/>
+				<field name="move_id" readonly="1"/>
 			</xpath>
 		</field>
 	</record>

@@ -13,6 +13,17 @@ class AccountInvoice(models.Model):
     include_signature = fields.Boolean(string="Include Signature", default=True)
     booking_date = fields.Date(string='ETA/ETD Date', copy=False, store=True)
 
+    #Josh 16052025, add lcl consolidation field and bl reference
+    lcl_consolidation = fields.Boolean(string='LCL Consolidation', compute="_bol_is_lcl")
+    freight_bol = fields.Many2one('freight.bol', string='Freight BOL')
+
+    @api.model('freight_booking.lcl_consolidation')
+    def _bol_is_lcl(self):
+        # we know the booking is a lcl consolidation job, so invoice created from bl should also be lcl consolidation
+        for record in self:
+            record.lcl_consolidation = record.freight_booking.lcl_consolidation if record.freight_booking else False
+
+
     def _get_package_weight(self):
         pkgs = []
         weight = []

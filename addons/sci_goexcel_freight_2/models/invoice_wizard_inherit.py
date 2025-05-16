@@ -167,6 +167,7 @@ class InvoiceWizard1(models.TransientModel):
                     'user_id': bl.sales_person.id,
                     'invoice_type': invoice_type,
                     'invoice_description': self.container_product_name,
+                    'freight_bol':bl.id or False
                 }
                 invoice = inv_obj.create(inv_val)
                 for bl_line in self.cost_profit_bl_ids:
