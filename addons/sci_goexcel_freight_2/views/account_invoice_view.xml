@@ -34,6 +34,10 @@
 			<xpath expr="//field[@name='invoice_description']" position="after">
 				<field name="move_id" readonly="1"/>
 			</xpath>
+			<xpath expr="//field[@name='partner_id']" position="after">
+				<field name="freight_bol" readonly="1" />
+				<field name="lcl_consolidation" readonly="1"/>
+			</xpath>
 
 		</field>
 	</record>
