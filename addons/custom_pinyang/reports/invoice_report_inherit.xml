@@ -1008,10 +1008,10 @@
                     <table style="font-size:9pt; width:100%;">
                         <thead>
                             <tr>
-                                <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:5%; padding:0">
+                                <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:2.5%; padding:0">
                                     <span>No</span>
                                 </th>
-                                <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:35%;padding:0;">
+                                <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:32.5%;padding:0;">
                                     <span>DESCRIPTION</span>
                                 </th>
                                 <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:5%">
@@ -1026,7 +1026,7 @@
                                 <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:10%; text-align:center;">
                                     <span>Price/Unit</span>
                                 </th>
-                                <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:5% ; text-align:right;">
+                                <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:10% ; text-align:right;">
                                     <span>Rate</span>
                                 </th>
                                 <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:10% ; text-align:right;">
@@ -1156,10 +1156,10 @@
                             <table style="font-size:9pt; width:100%;" border="1">
                                 <thead>
                                     <tr>
-                                        <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:5%; padding:0">
+                                        <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:2.5%; padding:0">
                                             <span>No</span>
                                         </th>
-                                        <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:35%;padding:0;">
+                                        <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:32.5%;padding:0;">
                                             <span>DESCRIPTION</span>
                                         </th>
                                         <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:5%">
@@ -1174,7 +1174,7 @@
                                         <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:10%; text-align:center;">
                                             <span>Price/Unit</span>
                                         </th>
-                                        <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:5% ; text-align:right;">
+                                        <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:10% ; text-align:right;">
                                             <span>Rate</span>
                                         </th>
                                         <th style="border-top:1pt solid black; border-bottom:1pt solid black; font-size: 9pt;width:10% ; text-align:right;">
