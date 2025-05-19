@@ -767,6 +767,8 @@ class FreightBooking2(models.Model):
                     chargeable = max(wt_t, vol)
                     total_volume += chargeable
 
+                    cargo.write({'chargeable_weight': chargeable})
+
             _logger.info("BOOKING.ONCHANGE, Total Volume Charge: %s")
 
             # 2) Distribute each master cost line proportionally
@@ -795,6 +797,7 @@ class FreightBooking2(models.Model):
                             'cost_amount': amount,
                             'cost_currency_rate': rate,
                             'cost_currency': currency,
+                            'profit_qty': cbm
                         }
                         if existing:
                             existing.write(vals)
