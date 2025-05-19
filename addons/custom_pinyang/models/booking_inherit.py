@@ -22,19 +22,15 @@ class FreightBooking(models.Model):
                     _("Please save the booking before selecting a Sales Quotation.")
                 )
         self.original_direction = self.direction
-        # original_service_type = self.service_type
-        _logger.info("LOG: Original Direction = %s", self.original_direction)
+        # _logger.info("LOG: Original Direction = %s", self.original_direction)
 
         res = super(FreightBooking, self).onchange_sq_reference()
         return res
 
     def set_booking_no(self, vals=False):
-        # if not self.booking_date_time:
-        #     raise ValidationError(_('Please Enter ETA/ETD Date!'))
-        # else:
         eta_etd = self.booking_date_time
         if isinstance(eta_etd, str):
-            _logger.info("LOGGER: ETA/ETD is a string, %s", eta_etd)
+            # _logger.info("LOGGER: ETA/ETD is a string, %s", eta_etd)
             eta_etd = fields.Date.from_string(eta_etd)
         sequence = self.env['ir.sequence'].with_context(ir_sequence_date=eta_etd)
 
@@ -48,7 +44,7 @@ class FreightBooking(models.Model):
         else:
             raw = sequence.next_by_code('tnpt')
             dir_letter = 'T'
-        _logger.info("LOGGER:In Set function, %s", raw)
+        # _logger.info("LOGGER:In Set function, %s", raw)
         if not raw:
             raise ValidationError(_('Can\'t find sequence: Sequence does not exist or is not currently active'))
 
@@ -67,25 +63,20 @@ class FreightBooking(models.Model):
             'booking_no': self.env['ir.sequence'].next_by_code('draft'),
             'booking_date_time': fields.Date.context_today(self)
         })
-        _logger.info(">> COPY: injected draft booking_no = %r", default['booking_no'])
+        # _logger.info(">> COPY: injected draft booking_no = %r", default['booking_no'])
         return super(FreightBooking, self).copy(default)
 
     @api.multi
     def write(self, vals):
-        # res = super(FreightBooking, self).write(vals)
-        # for rec in self:
-        #     if rec.booking_no.startswith('DRAFT-'):
-        #         rec.set_booking_no()
-        # return res
-        _logger.info("WRITE.START: draft=%r, vals keys=%r",
-                     self.booking_no.startswith('DRAFT-'), list(vals.keys()))
+        # _logger.info("WRITE.START: draft=%r, vals keys=%r",
+        #              self.booking_no.startswith('DRAFT-'), list(vals.keys()))
         res = super(FreightBooking, self).write(vals)
         if 'booking_date_time' in vals:
             for rec in self:
                 if isinstance(rec.booking_no, str) and rec.booking_no.startswith('DRAFT-'):
-                    _logger.info("WRITE: date changed, regenerating booking_no for rec=%s", rec.id)
+                    # _logger.info("WRITE: date changed, regenerating booking_no for rec=%s", rec.id)
                     rec.set_booking_no()
-                    _logger.info("WRITE: new booking_no=%r", rec.booking_no)
+                    # _logger.info("WRITE: new booking_no=%r", rec.booking_no)
         return res
 
     @api.model
