@@ -665,6 +665,8 @@ class CostProfit(models.Model):
 class CargoLine(models.Model):
     _inherit = 'freight.bol.cargo'
 
+    chargeable_weight = fields.Float(string='Chargeable Weight', default=0.0, help="This field is only visible for LCL consolidation")
+
     @api.multi
     def write(self, vals):
         # _logger.warning("in write")
