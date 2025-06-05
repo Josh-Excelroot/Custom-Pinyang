@@ -293,6 +293,18 @@
                 </t>
             </t>
         </xpath>
+        <xpath expr="//form" position="attributes">
+            <attribute name="action">/contactus</attribute>
+            <attribute name="method">post</attribute>
+            <attribute name="enctype">multipart/form-data</attribute>
+            <attribute name="data-model_name" remove="True"/>
+            <attribute name="data-success_page" remove="True"/>
+            <attribute name="class">container-fluid mt32</attribute>
+        </xpath>
+        <xpath expr="//a[contains(@class, 'o_website_form_send')]" position="replace">
+            <button type="submit" class="btn btn-primary btn-lg">Send</button>
+        </xpath>
+
     </template>
     <template id="website.page_404">
         <t t-call="website.404">

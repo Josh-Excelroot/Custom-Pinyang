@@ -41,7 +41,8 @@
         'views/product_tabs_view.xml',
         'views/product_quick_view_template.xml',
         'views/product_tags_view.xml',
-        'views/product_tag_templates.xml'
+        'views/product_tag_templates.xml',
+        'data/mail_template.xml',
     ],
     'live_test_url': 'http://theme-alan.atharvasystem.com',
     'demo': [

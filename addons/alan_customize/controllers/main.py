@@ -683,3 +683,32 @@ class WebsiteSale(WebsiteSale):
         view_rec = request.env['ir.ui.view'].search(
             [('key', '=like', 'alan_customize.product_picture_magnify')])
         return {'status': view_rec.active if view_rec else False}
+
+
+class ContactUsController(http.Controller):
+    @http.route('/contactus', type='http', auth='public', website=True, methods=['GET'])
+    def contactus_form(self, **kw):
+        # Render the contact form template
+        return request.render('website.contactus')
+    
+    # Controller
+    @http.route('/contactus', type='http', auth='public', website=True, methods=['POST'], csrf=False)
+    def contactus_submit(self, **post):
+        contact = request.env['alan_customize.contactus'].sudo().create({
+            'name': post.get('name'),
+            'contact_name': post.get('contact_name'),
+            'email_from': post.get('email_from'),
+            'phone': post.get('phone'),
+            'partner_name': post.get('partner_name'),
+            'description': post.get('description'),
+        })
+        template = request.env.ref('alan_customize.email_template_contactus')
+        if template:
+            template.send_mail(contact.id, force_send=True)
+        else:
+            print("Template not found!")
+        return request.redirect('/contactus-thank-you')
+    
+    @http.route('/contactus-thank-you', type='http', auth='public', website=True)
+    def contactus_thank_you(self, **kw):
+        return request.render('website_crm.contactus_thanks')

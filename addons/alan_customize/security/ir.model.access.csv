@@ -20,3 +20,6 @@ access_product_tab_products,tab.products.all,model_tab_products,,1,0,0,0
 access_product_tab_products_designer,tab.products.designer,model_tab_products,website.group_website_designer,1,1,1,1
 access_product_tab_brands,tab.brands,model_tab_brands,,1,1,1,1
 access_product_tag,product_tag,model_product_tag,,1,1,1,1
+access_contactus_user,access_contactus_user,model_alan_customize_contactus,base.group_user,1,1,1,1
+access_contactus_portal,access_contactus_portal,model_alan_customize_contactus,base.group_portal,1,0,1,0
+access_contactus_public,access_contactus_public,model_alan_customize_contactus,base.group_public,1,0,1,0

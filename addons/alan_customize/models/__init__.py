@@ -10,3 +10,4 @@ from . import custom_shop
 from . import product_tabs
 from . import product_tags
 from . import ir_view
+from . import contactus

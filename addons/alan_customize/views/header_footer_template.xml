@@ -53,7 +53,7 @@
                 <div class="top-header">
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-6 d-none d-md-block">
+                            <!-- <div class="col-md-6 d-none d-md-block">
                                 <ul class="htl-social">
                                     <li>
                                         <a href="#">
@@ -81,10 +81,10 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> -->
                             <div class="col-md-6">
                                 <div class="ht-right">
-                                    <div class="h-col h-search">
+                                    <!-- <div class="h-col h-search">
                                         <i class="flaticon-magnifying-glass search_open"></i>
                                         <div class="as-search">
                                             <form action='/shop' method="get">
@@ -113,64 +113,31 @@
                                                 </sup>
                                             </a>
                                         </div>
-                                    </t>
+                                    </t> -->
                                     <!-- h-col h-setting -->
                                     <div class="h-col h-setting">
-                                        <i class="ti-settings"></i>
-                                        <t t-esc="current_language"/>
-                                        <div class="h-col-hover">
-                                            <div class="form-language hed-drop">
-                                                <h4 t-if="(request.is_frontend_multilang)">Language</h4>
-                                                <ul id="lang" t-if="(request.is_frontend_multilang and len(languages) &gt; 1) or editable" class="js_language_selector">
-                                                    <li>
-                                                        <label data-toggle="dropdown" type="button" data-caret="true" class="dropdown-toggle">
-                                                            <t t-foreach="languages" t-as="lgs">
-                                                                <t t-if="request.lang and request.lang==lgs[0]">
-                                                                    <t t-esc="lgs[1].split('/').pop()"/></t>
-                                                            </t>
-                                                            <i class="fa fa-angle-down"></i>
-                                                        </label>
-                                                        <ul role="menu" class="dropdown-menu dropdown-menu-right js_language_selector">
-                                                            <t t-foreach="languages" t-as="lg">
-                                                                <li t-att-class="'active' if request.lang== lg[0] else None">
-                                                                    <a  class="js_change_lang" t-att-data-lang="lg[0]" t-att-href="url_for(request.httprequest.path + '?' + keep_query(), lang=lg[0])">
-                                                                        <t t-esc="lg[1].split('/').pop()"/>
-                                                                    </a>
-                                                                </li>
-                                                            </t>
-                                                            <li groups="website.group_website_publisher">
-                                                                <t t-set="url_return" t-value="url_for('', '[lang]') + '?' + keep_query()"/>
-                                                                <a t-attf-href="/web#action=base.action_view_base_language_install&amp;website_id=#{website.id}&amp;url_return=#{url_return}">
-                                                                    <i class="fa fa-plus-circle"/>Add...
-                                  
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <!-- .form-language hed-drop -->
-                                            <div class="price-list hed-drop">
-                                                <t t-set="website_sale_pricelists" t-value="website.get_pricelist_available(show_visible=True)"/>
-                                                <div t-attf-class="#{website_sale_pricelists and len(website_sale_pricelists)>1 and 'dropdown' or 'd-none'}">
-                                                    <t t-set="curr_pl" t-value="website.get_current_pricelist()"/>
-                                                    <h4>Currency</h4>
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                                        <t t-esc="curr_pl and curr_pl.name or ' - '" />
-                                                        <span class="fa fa-angle-down"></span>
-                                                    </a>
-                                                    <ul class="dropdown-menu" role="menu">
-                                                        <li t-foreach="website_sale_pricelists" t-as="pl" >
-                                                            <a t-att-href="'/shop/change_pricelist/%s' % pl.id">
-                                                                <span class='switcher_pricelist' t-att-data-pl_id="pl.id" t-esc="pl.name"/>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
+                                        <div class="ht-right">
+                                            <div class="js_language_selector d-print-none">
+                                                <div role="menu" class="list-inline">
+                                                    <t t-set="first" t-value="True"/>
+                                                    <t t-foreach="languages" t-as="lg">
+                                                        <t t-if="not first">
+                                                            <span class="list-inline-item">|</span>
+                                                        </t>
+                                                        <a class="js_change_lang list-inline-item"
+                                                        t-att-class="'js_change_lang list-inline-item' + (' active' if request.lang == lg[0] else '')"
+                                                        role="menuitem"
+                                                        t-att-href="url_for(request.httprequest.path, lang=lg[0])"
+                                                        t-att-data-lang="lg[0]"
+                                                        t-att-data-url_code="lg[0]"
+                                                        t-att-title="lg[1].split('/').pop()">
+                                                            <t t-esc="lg[1].split('/').pop()"/>
+                                                        </a>
+                                                        <t t-set="first" t-value="False"/>
+                                                    </t>
                                                 </div>
                                             </div>
-                                            <!--.price-list hed-drop  -->
                                         </div>
-                                        <!--.h-col-hover  -->
                                     </div>
                                     <!-- .h-col h-setting -->
                                 </div>
