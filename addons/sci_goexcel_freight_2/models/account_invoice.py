@@ -1,3 +1,5 @@
+from email.policy import default
+
 from odoo import api, fields, models, exceptions
 import logging
 from datetime import date
@@ -12,6 +14,17 @@ class AccountInvoice(models.Model):
     running_id = fields.Integer(string="Running ID")
     include_signature = fields.Boolean(string="Include Signature", default=True)
     booking_date = fields.Date(string='ETA/ETD Date', copy=False, store=True)
+
+    #Josh 16052025, add lcl consolidation field and bl reference
+    freight_bol = fields.Many2one('freight.bol', string='Freight BOL')
+    lcl_consolidation = fields.Boolean(string='LCL Consolidation', compute="_bol_is_lcl", default=False)
+
+    @api.depends('freight_bol')
+    def _bol_is_lcl(self):
+        # we know the booking is a lcl consolidation job, so invoice created from bl should also be lcl consolidation
+        for record in self:
+            record.lcl_consolidation = record.freight_bol.lcl_consolidation if record.freight_bol else False
+
 
     def _get_package_weight(self):
         pkgs = []

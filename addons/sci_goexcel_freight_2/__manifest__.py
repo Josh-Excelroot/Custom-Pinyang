@@ -11,7 +11,6 @@
     'application': True,
     "data": [
         'security/ir.model.access.csv',
-        'report/goexcel_freight_pivot_view.xml',
         'views/booking_view.xml',
         'views/account_invoice_view.xml',
         'report/report_twb.xml',
@@ -43,19 +42,16 @@
         'report/si_report_carrier_inherit.xml',
         'report/bl_booking_confirmation_report.xml',
         'report/si_xlc_report.xml',
-
         'report/si_bol_xlc_report.xml',
         'report/bol_xls_report.xml',
         'report/bl_report_inherit.xml',
         'report/report_notice_of_arrival_wo_rate.xml',
         'data/bl_booking_confirmation_mail_template.xml',
         'views/awd_repot.xml',
-
         'views/delivery_service_view.xml',
-        'report/report_delivery_note.xml'
-
-
-
+        'report/report_delivery_note.xml',
+        # Add the pivot view at the end to ensure models are loaded first
+        'report/goexcel_freight_pivot_view.xml',
     ],
     "application": True,
     "installable": True,

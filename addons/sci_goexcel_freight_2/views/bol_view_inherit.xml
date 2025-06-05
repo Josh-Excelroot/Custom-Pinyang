@@ -228,6 +228,9 @@
              <xpath expr="//field[@name='commodity1']" position="after">
                 <field name="sq_reference" domain="[('partner_id','=',customer_name), ('validity_date','&gt;', (context_today()).strftime('%%Y-%%m-%%d') )]"/>
              </xpath>
+             <xpath expr="//field[@name='sq_reference']" position="after">
+                <field name="lcl_consolidation" readonly="1"/>
+             </xpath>
              <xpath expr="//tree[@name='cost_profit_tree']/field[@name='cost_qty']" position="attributes">
                  <attribute name="options">{
                      "bg_color": "#babcbe: True",
@@ -283,6 +286,9 @@
                         context="{'search_view_ref': 'account.account_tax_view_search'}"
                         domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"/>
 
+             </xpath>
+             <xpath expr="//field[@name='cargo_line_ids']/tree//field[@name='exp_vol']" position="after">
+                 <field name="chargeable_weight" attrs="{'column_invisible': [('parent.lcl_consolidation', '=', False)]}"/>
              </xpath>
              <xpath expr="//field[@name='customer_name']" position="attributes">
                     <attribute name="options">{'no_create': True, 'no_create_edit':True}</attribute>

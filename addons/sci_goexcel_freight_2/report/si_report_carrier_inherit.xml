@@ -291,10 +291,10 @@
                                     <t t-if="o.lcl_line_ids">
                                         <tr>
                                             <td style="vertical-align: top; padding-left: 5px;" height="200px">
-                                                <span t-esc="line.container_no"/> /
-                                                <span t-esc="line.seal_no"/><br/>
                                                 <t t-foreach="o.lcl_line_ids" t-as="line">
-                                                    <span t-field="line.remark"/><br/><br/>
+                                                    <span t-esc="line.container_no"/> /
+                                                    <span t-esc="line.seal_no"/><br/>
+                                                    <span t-field="line.shipping_mark"/><br/><br/>
                                                 </t>
                                             </td>
                                             <td style="vertical-align: top; padding-left: 5px;">
@@ -305,7 +305,7 @@
                                                 <t t-if="o.shipper_load">
                                                     Shipper’s Load, Seal and Count<br/>
                                                 </t>
-                                                <span t-esc="o.lcl_line_ids[0].container_product_name"/><br/><br/>
+                                                <span t-esc="o.lcl_line_ids[0].container_product_name" style="white-space: pre-line;"/><br/><br/>
                                                 <t t-if="o.booking_ref.hs_code">
                                                     HS CODE: <span t-field="o.booking_ref.hs_code"/><br/><br/>
                                                 </t>

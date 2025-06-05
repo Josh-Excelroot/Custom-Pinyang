@@ -93,7 +93,7 @@
                     <t t-if="o.freight_booking.service_type != 'air'">
                         <t t-if="o.should_containers_list_on_every_page() or not show_container_list">
 
-                            <table style="table-layout: fixed; font-size:10pt; width:100%;">
+                            <table style="table-layout: fixed; font-size:10pt; width:100%;" border="1">
                                 <thead>
                                     <tr>
                                         <td style="width:3%;"/>
@@ -319,7 +319,12 @@
                                         <td>:</td>
                                         <td colspan="5">
                                             <!--           Yulia 22102024 make no pkgs comma separated                                 -->
-                                            <span t-esc="report_data['packages']"/>
+                                            <t t-if="o.lcl_consolidation">
+                                                <span t-field="o.freight_bol.cargo_line_ids[0].packages_no_value"/> <span t-field="o.freight_bol.cargo_line_ids[0].packages_no_uom.name"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-esc="report_data['packages']"/>
+                                            </t>
                                             <!--                                            <span t-esc="sum(o.freight_booking.operation_line_ids.mapped('packages_no'))"/>-->
                                             <!--                                            <span t-esc="o.freight_booking.operation_line_ids.packages_no_uom.name"/>-->
                                         </td>
@@ -335,7 +340,25 @@
                                         <td>:</td>
                                         <td colspan="5">
                                             <!--        Yulia 22102024 make meas/weight comma separated                                    -->
-                                            <span t-esc="report_data['weight']"/>
+                                            <t t-if="o.lcl_consolidation">
+                                                <t t-if="o.freight_bol.cargo_line_ids[0].exp_vol > 0">
+                                                    <span t-esc="'%.2f'% float(o.freight_bol.cargo_line_ids[0].exp_vol)"/>
+                                                </t>
+                                                <t t-else="">
+                                                    0.00
+                                                </t>
+                                                 M3/
+                                                <t t-if="o.freight_bol.cargo_line_ids[0].exp_gross_weight > 0">
+                                                    <span t-esc="'%.2f'% float(o.freight_bol.cargo_line_ids[0].exp_gross_weight)" />
+                                                </t>
+                                                <t t-else="">
+                                                    0.00
+                                                </t>
+                                                 KG
+                                            </t>
+                                            <t t-else="">
+                                                <span t-esc="report_data['weight']"/>
+                                            </t>
                                             <!--                                            <span t-esc="'{:.2f}'.format(float(o.freight_booking.operation_line_ids.exp_vol))"/>-->
                                             <!--                                            M3 /-->
                                             <!--                                            <span t-esc="'{:.2f}'.format(sum(o.freight_booking.operation_line_ids.mapped('exp_gross_weight')))"/>-->
@@ -345,7 +368,12 @@
                                         <td colspan="2">HBL NO</td>
                                         <td colspan="2">:</td>
                                         <td colspan="2">
-                                            <span t-field="o.freight_booking.hbl_no"/>
+                                            <t t-if="o.lcl_consolidation">
+                                                <span t-field="o.freight_bol.bol_no"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-field="o.freight_booking.hbl_no"/>
+                                            </t>
                                         </td>
                                     </tr>
                                     <tr>
@@ -358,7 +386,12 @@
                                         <td colspan="2">CONSIGNEE</td>
                                         <td colspan="2">:</td>
                                         <td colspan="2">
-                                            <span t-field="o.freight_booking.consignee.name"/>
+                                            <t t-if="o.lcl_consolidation">
+                                                <span t-field="o.freight_bol.consignee_id.name"/>
+                                            </t>
+                                            <t t-else="">
+                                               <span t-field="o.freight_booking.consignee.name"/>
+                                            </t>
                                         </td>
                                     </tr>
                                     <tr>
@@ -376,9 +409,18 @@
                                             </t>
                                         </td>
                                         <td></td>
-                                        <td colspan="2"></td>
-                                        <td colspan="2"></td>
-                                        <td colspan="2"></td>
+                                        <t t-if="o.lcl_consolidation">
+                                            <td colspan="2">CHARGE WT.</td>
+                                            <td colspan="2">:</td>
+                                            <td colspan="2">
+                                                <span t-esc="o.freight_bol.cargo_line_ids[0].chargeable_weight"/>
+                                            </td>
+                                        </t>
+                                        <t t-else="">
+                                            <td colspan="2"></td>
+                                            <td colspan="2"></td>
+                                            <td colspan="2"></td>
+                                        </t>
                                     </tr>
                                     <tr>
                                         <t t-if="not o.freight_booking.service_type == 'air'">
@@ -1207,12 +1249,11 @@
                     <div class="page">
                         <t t-if="len(o.invoice_line_ids) &lt;= 8">
                             <div t-if="o.freight_booking.service_type != 'air'">
-                                <div style="height:330px;"></div>
+                                <div style="height:380px;"></div>
                             </div>
                             <div t-else="">
-                                <div style="height: 280px;"/>
+                                <div style="height: 330px;"/>
                             </div>
-                            <!--TODO: Add index to the table-->
                             <t t-set="index" t-value="0"/>
                             <table style="font-size:10pt; width:100%;">
                                 <thead>

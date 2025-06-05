@@ -633,121 +633,187 @@ class FreightBooking2(models.Model):
                 # self.write({'container_qty': count,})
                 self.container_qty = count
 
-    #Added for lcl consolidation
+    # #Added for lcl consolidation
+    # @api.onchange('cost_profit_ids')
+    # def _onchange_cost_profit_ids(self):
+    #     #for cost_profit_ids in self.cost_profit_ids:
+    #     if self.lcl_consolidation:
+    #         bols = self.env['freight.bol'].search([('booking_ref', '=', self._origin.id),])
+    #         booking = self.env['freight.booking'].search([('id', '=', self._origin.id),])
+    #         #print('booking id=', booking.id)
+    #         total_volume = 0.00
+    #         total_freight_rate = 0.00
+    #         cost_currency_rate = 1.00
+    #         cost_currency = False
+    #         chargeable_vol = 0.0
+    #         #print('>>>>> _onchange_cost_price id=', self._origin.id)
+    #         #Get the total volume from all the HBL
+    #         for bol in bols:
+    #             for cargo_line in bol.cargo_line_ids:
+    #                 if cargo_line:
+    #                     exp_gross_weight_tonne = float_round(cargo_line.exp_gross_weight / 1000, 2, rounding_method='HALF-UP')
+    #                     if exp_gross_weight_tonne > cargo_line.exp_vol:
+    #                         chargeable_vol = exp_gross_weight_tonne
+    #                     else:
+    #                         chargeable_vol = cargo_line.exp_vol
+    #                 else:
+    #                     chargeable_vol = cargo_line.exp_vol
+    #                 total_volume += chargeable_vol
+    #                 #print('>>>>> _onchange_cost_profit_ids chargeable_vol=', chargeable_vol)
+    #         #print('>>>>> _onchange_cost_profit_ids total_volume=', total_volume)
+    #         #Update the cost for each of the HBL
+    #         if self.cost_profit_ids:
+    #             #print('>>>>> after self.cost_profit_ids 1')
+    #             for master_cost_profit_id in self.cost_profit_ids:
+    #                 #print('>>>>> after self.cost_profit_ids 2')
+    #                 if master_cost_profit_id.cost_price > 0:
+    #                     #print('>>>>> after self.cost_profit_ids 3')
+    #                     total_freight_rate = master_cost_profit_id.cost_total
+    #                     cost_currency_rate = master_cost_profit_id.cost_currency_rate
+    #                     cost_currency = master_cost_profit_id.cost_currency.id
+    #                 for bol in bols:
+    #                     #print('>>>>> bol=', bol.bol_no)
+    #                     cost_price = 0.00
+    #                     converted_cost_price = 0.00
+    #                     is_matched = False
+    #                     for cost_profit_id in bol.cost_profit_ids:
+    #                         #print('>>>>> after self.cost_profit_ids 5')
+    #                         #total_freight_rate = cost_profit_id.cost_total
+    #                         #cost_currency_rate = cost_profit_id.cost_currency_rate
+    #                         #cost_currency = cost_profit_id.cost_currency.id
+    #                         cost_price = 0.00
+    #                         #converted_cost_price = 0.00
+    #                         #cost_currency = False
+    #                         #for bol in bols:
+    #                         exp_gross_weight_tonne = 0.00
+    #                         chargeable_vol = 0.00
+    #                         #print('>>>>> after self.cost_profit_ids 6')
+    #                         if total_volume > 0 and (bol.cargo_line_ids[0].exp_vol or bol.cargo_line_ids[0].exp_gross_weight):
+    #                             #print('>>>>> after self.cost_profit_ids 6-1')
+    #                             if bol.cargo_line_ids[0].exp_gross_weight > 0:
+    #                                 exp_gross_weight_tonne = float_round(bol.cargo_line_ids[0].exp_gross_weight / 1000, 2, rounding_method='HALF-UP')
+    #                                 #print('>>>>> after self.cost_profit_ids 6-1-1')
+    #                                 if exp_gross_weight_tonne > bol.cargo_line_ids[0].exp_vol:
+    #                                     chargeable_vol = exp_gross_weight_tonne
+    #                                     #print('>>>>> after self.cost_profit_ids 6-1-2')
+    #                                 else:
+    #                                     chargeable_vol = cargo_line.exp_vol
+    #                                     #print('>>>>> after self.cost_profit_ids 6-1-3')
+    #                                 #print('>>>>> after self.cost_profit_ids 6-2')
+    #                             else:
+    #                                 chargeable_vol = bol.cargo_line_ids[0].exp_vol
+    #                             #print('>>>>>>>> _onchange_product_id total_volume 2=', total_volume, ' , chargeable_vol=', chargeable_vol)
+    #                             #print('>>>>>>>>> total_freight_rate= ', total_freight_rate)
+    #                             converted_cost_price = total_freight_rate / total_volume
+    #                             #print('>>>>>>>>>> converted_cost_price=', converted_cost_price)
+    #                             #if cost_currency_rate
+    #                             cost_price = float_round(converted_cost_price / cost_currency_rate, 2,
+    #                                                      rounding_method='HALF-UP')
+    #                             #print('>>>>> after self.cost_profit_ids 6-2-1')
+    #                         #print('>>>>> after self.cost_profit_ids 6-3')
+    #                         if cost_profit_id and cost_profit_id.product_id:
+    #                             #print('>>>>>>>> cost_profit_id product=', cost_profit_id.product_id.name)
+    #                             #print('>>>>>>>> _onchange_product_id cost_price=', cost_price, ' , converted_cost_price=', converted_cost_price)
+    #                             if master_cost_profit_id.product_id.id == cost_profit_id.product_id.id:
+    #                                 #print('>>>>>>>> bol_cost_profit_id=', cost_profit_id.product_id.name, ' , rate=', cost_currency_rate)
+    #                                 is_matched = True
+    #                                 cost_profit_id.write({
+    #                                     'cost_price': cost_price or 0.0,
+    #                                     'cost_qty': chargeable_vol,
+    #                                     #'cost_currency': cost_currency,
+    #                                     'cost_amount': float_round(cost_price * chargeable_vol, 2,
+    #                                                                rounding_method='HALF-UP'),
+    #                                     'cost_currency_rate': cost_currency_rate,
+    #                                 })
+    #                                 if cost_currency:
+    #                                     cost_profit_id.write({
+    #                                         'cost_currency': cost_currency,
+    #                                     })
+    #                                 break
+    #                     if not is_matched:
+    #                         if master_cost_profit_id and master_cost_profit_id.product_id:
+    #                             #print('>>>>>>>> cost_profit_id=', cost_profit_id.product_id.name)
+    #                             cost_profit = self.env['freight.bol.cost.profit']
+    #                             cost_line = cost_profit.create({
+    #                                 'bol_id': bol.id,
+    #                                 'product_id': master_cost_profit_id.product_id.id,
+    #                                 'product_name': master_cost_profit_id.product_id.name,
+    #                                 'cost_price': cost_price or 0.0,
+    #                                 'cost_qty': chargeable_vol or 0.0,
+    #                                 'cost_currency': cost_currency or self.env.user.company_id.currency_id.id,
+    #                                 'cost_amount': float_round(cost_price * chargeable_vol, 2,
+    #                                                            rounding_method='HALF-UP'),
+    #                                 'cost_currency_rate': cost_currency_rate,
+    #
+    #                             })
     @api.onchange('cost_profit_ids')
     def _onchange_cost_profit_ids(self):
-        #for cost_profit_ids in self.cost_profit_ids:
         if self.lcl_consolidation:
-            bols = self.env['freight.bol'].search([('booking_ref', '=', self._origin.id),])
-            booking = self.env['freight.booking'].search([('id', '=', self._origin.id),])
-            #print('booking id=', booking.id)
-            total_volume = 0.00
-            total_freight_rate = 0.00
-            cost_currency_rate = 1.00
-            cost_currency = False
-            chargeable_vol = 0.0
-            #print('>>>>> _onchange_cost_price id=', self._origin.id)
-            #Get the total volume from all the HBL
+            # Delete any cost_profit records without product_id
+            for bol in self.env['freight.bol'].search([('booking_ref', '=', self._origin.id)]):
+                bol.cost_profit_ids.filtered(lambda r: not r.product_id).unlink()
+
+        if self.lcl_consolidation:
+
+            # gather all House B/Ls for this booking
+            bols = self.env['freight.bol'].search([
+                ('booking_ref', '=', self._origin.id),
+            ])
+            total_volume = 0.0
+
+            # 1) Sum each HBL’s chargeable volume (max of weight, vol, or 1 CBM)
             for bol in bols:
-                for cargo_line in bol.cargo_line_ids:
-                    if cargo_line:
-                        exp_gross_weight_tonne = float_round(cargo_line.exp_gross_weight / 1000, 2, rounding_method='HALF-UP')
-                        if exp_gross_weight_tonne > cargo_line.exp_vol:
-                            chargeable_vol = exp_gross_weight_tonne
-                        else:
-                            chargeable_vol = cargo_line.exp_vol
+                for cargo in bol.cargo_line_ids:
+                    wt_t = float_round(cargo.exp_gross_weight / 1000, 2, rounding_method='HALF-UP')
+                    if cargo.exp_vol > 1.0:
+                        vol = cargo.exp_vol
                     else:
-                        chargeable_vol = cargo_line.exp_vol
-                    total_volume += chargeable_vol
-                    #print('>>>>> _onchange_cost_profit_ids chargeable_vol=', chargeable_vol)
-            #print('>>>>> _onchange_cost_profit_ids total_volume=', total_volume)
-            #Update the cost for each of the HBL
-            if self.cost_profit_ids:
-                #print('>>>>> after self.cost_profit_ids 1')
-                for master_cost_profit_id in self.cost_profit_ids:
-                    #print('>>>>> after self.cost_profit_ids 2')
-                    if master_cost_profit_id.cost_price > 0:
-                        #print('>>>>> after self.cost_profit_ids 3')
-                        total_freight_rate = master_cost_profit_id.cost_total
-                        cost_currency_rate = master_cost_profit_id.cost_currency_rate
-                        cost_currency = master_cost_profit_id.cost_currency.id
+                        vol = 1
+                    chargeable = max(wt_t, vol)
+                    total_volume += chargeable
+
+                    cargo.write({'chargeable_weight': chargeable})
+
+            _logger.info("BOOKING.ONCHANGE, Total Volume Charge: %s")
+
+            # 2) Distribute each master cost line proportionally
+            if total_volume > 0:
+                for master in self.cost_profit_ids:
+                    total_rate = master.cost_total
+                    rate = master.cost_currency_rate or 1.0
+                    currency = master.cost_currency.id
+
                     for bol in bols:
-                        #print('>>>>> bol=', bol.bol_no)
-                        cost_price = 0.00
-                        converted_cost_price = 0.00
-                        is_matched = False
-                        for cost_profit_id in bol.cost_profit_ids:
-                            #print('>>>>> after self.cost_profit_ids 5')
-                            #total_freight_rate = cost_profit_id.cost_total
-                            #cost_currency_rate = cost_profit_id.cost_currency_rate
-                            #cost_currency = cost_profit_id.cost_currency.id
-                            cost_price = 0.00
-                            #converted_cost_price = 0.00
-                            #cost_currency = False
-                            #for bol in bols:
-                            exp_gross_weight_tonne = 0.00
-                            chargeable_vol = 0.00
-                            #print('>>>>> after self.cost_profit_ids 6')
-                            if total_volume > 0 and (bol.cargo_line_ids[0].exp_vol or bol.cargo_line_ids[0].exp_gross_weight):
-                                #print('>>>>> after self.cost_profit_ids 6-1')
-                                if bol.cargo_line_ids[0].exp_gross_weight > 0:
-                                    exp_gross_weight_tonne = float_round(bol.cargo_line_ids[0].exp_gross_weight / 1000, 2, rounding_method='HALF-UP')
-                                    #print('>>>>> after self.cost_profit_ids 6-1-1')
-                                    if exp_gross_weight_tonne > bol.cargo_line_ids[0].exp_vol:
-                                        chargeable_vol = exp_gross_weight_tonne
-                                        #print('>>>>> after self.cost_profit_ids 6-1-2')
-                                    else:
-                                        chargeable_vol = cargo_line.exp_vol
-                                        #print('>>>>> after self.cost_profit_ids 6-1-3')
-                                    #print('>>>>> after self.cost_profit_ids 6-2')
-                                else:
-                                    chargeable_vol = bol.cargo_line_ids[0].exp_vol
-                                #print('>>>>>>>> _onchange_product_id total_volume 2=', total_volume, ' , chargeable_vol=', chargeable_vol)
-                                #print('>>>>>>>>> total_freight_rate= ', total_freight_rate)
-                                converted_cost_price = total_freight_rate / total_volume
-                                #print('>>>>>>>>>> converted_cost_price=', converted_cost_price)
-                                #if cost_currency_rate
-                                cost_price = float_round(converted_cost_price / cost_currency_rate, 2,
-                                                         rounding_method='HALF-UP')
-                                #print('>>>>> after self.cost_profit_ids 6-2-1')
-                            #print('>>>>> after self.cost_profit_ids 6-3')
-                            if cost_profit_id and cost_profit_id.product_id:
-                                #print('>>>>>>>> cost_profit_id product=', cost_profit_id.product_id.name)
-                                #print('>>>>>>>> _onchange_product_id cost_price=', cost_price, ' , converted_cost_price=', converted_cost_price)
-                                if master_cost_profit_id.product_id.id == cost_profit_id.product_id.id:
-                                    #print('>>>>>>>> bol_cost_profit_id=', cost_profit_id.product_id.name, ' , rate=', cost_currency_rate)
-                                    is_matched = True
-                                    cost_profit_id.write({
-                                        'cost_price': cost_price or 0.0,
-                                        'cost_qty': chargeable_vol,
-                                        #'cost_currency': cost_currency,
-                                        'cost_amount': float_round(cost_price * chargeable_vol, 2,
-                                                                   rounding_method='HALF-UP'),
-                                        'cost_currency_rate': cost_currency_rate,
-                                    })
-                                    if cost_currency:
-                                        cost_profit_id.write({
-                                            'cost_currency': cost_currency,
-                                        })
-                                    break
-                        if not is_matched:
-                            if master_cost_profit_id and master_cost_profit_id.product_id:
-                                #print('>>>>>>>> cost_profit_id=', cost_profit_id.product_id.name)
-                                cost_profit = self.env['freight.bol.cost.profit']
-                                cost_line = cost_profit.create({
-                                    'bol_id': bol.id,
-                                    'product_id': master_cost_profit_id.product_id.id,
-                                    'product_name': master_cost_profit_id.product_id.name,
-                                    'cost_price': cost_price or 0.0,
-                                    'cost_qty': chargeable_vol or 0.0,
-                                    'cost_currency': cost_currency or self.env.user.company_id.currency_id.id,
-                                    'cost_amount': float_round(cost_price * chargeable_vol, 2,
-                                                               rounding_method='HALF-UP'),
-                                    'cost_currency_rate': cost_currency_rate,
+                        # recalc this BOL’s own chargeable volume
+                        cargo0 = bol.cargo_line_ids and bol.cargo_line_ids[0] #todo: why using 1st cargo line?
+                        if not cargo0:
+                            continue
+                        wt0 = float_round(cargo0.exp_gross_weight / 1000, 2, rounding_method='HALF-UP')
+                        cbm = max(wt0, cargo0.exp_vol, 1.0)
 
-                                })
+                        unit_cost = float_round((total_rate / total_volume) / rate, 2, rounding_method='HALF-UP')
+                        amount = float_round(unit_cost * cbm, 2, rounding_method='HALF-UP')
 
-                    #print('>>>>> after self.cost_profit_ids 10')
+                        # update existing or create new cost line on HBL
+                        existing = bol.cost_profit_ids.filtered(lambda ln: ln.product_id and ln.product_id == master.product_id)
+                        vals = {
+                            'cost_price': unit_cost,
+                            'cost_qty': cbm,
+                            'cost_amount': amount,
+                            'cost_currency_rate': rate,
+                            'cost_currency': currency,
+                            'profit_qty': cbm
+                        }
+                        if existing:
+                            existing.write(vals)
+                        else:
+                            self.env['freight.bol.cost.profit'].create({
+                                'bol_id': bol.id,
+                                'product_id': master.product_id.id,
+                                'product_name': master.product_id.name,
+                                **vals
+                            })
+
 
 
 

@@ -118,6 +118,14 @@ class BillOfLading(models.Model):
     terminal = fields.Char("Terminal")
     vessel_id = fields.Char("Vessel ID")
 
+    #Josh 16052025, add lcl consolidation boolean field, based on booking
+    lcl_consolidation = fields.Boolean(string='LCL Consolidation', compute="_booking_is_lcl")
+
+    @api.depends('booking_ref.lcl_consolidation')
+    def _booking_is_lcl(self):
+        for record in self:
+            record.lcl_consolidation = record.booking_ref.lcl_consolidation if record.booking_ref else False
+
     def _compute_invoice_vendorbill_count(self):
         for rec in self:
             booking = rec.booking_ref
@@ -516,96 +524,148 @@ class BillOfLading(models.Model):
 class CostProfit(models.Model):
     _inherit = 'freight.bol.cost.profit'
 
+    # @api.onchange('product_id')
+    # def _onchange_product_id(self):
+    #     if not self.product_id:
+    #         return {'domain': {'uom_id': []}}
+    #
+    #     vals = {}
+    #     domain = {'uom_id': [('category_id', '=', self.product_id.uom_id.category_id.id)]}
+    #     if not self.uom_id or (self.product_id.uom_id.id != self.uom_id.id):
+    #         vals['uom_id'] = self.product_id.uom_id
+    #         vals['product_name'] = self.product_id.name
+    #
+    #     self.update(vals)
+    #
+    #     if self.bol_id.booking_ref.lcl_consolidation:
+    #         if self.product_id:
+    #             if self.bol_id.booking_ref:
+    #                 total_freight_rate = 0.00
+    #                 total_volume = 0.00
+    #                 cost_currency_rate = 1.00
+    #                 cost_currency = False
+    #                 #get the freight price from the master booking
+    #                 for cost_profit_id in self.bol_id.booking_ref.cost_profit_ids:
+    #                     if cost_profit_id.product_id.id == self.product_id.id:
+    #                         total_freight_rate = cost_profit_id.cost_total
+    #                         cost_currency_rate = cost_profit_id.cost_currency_rate
+    #                         cost_currency = cost_profit_id.cost_currency.id
+    #                         break
+    #                 #print('>>>>>> _onchange_product_id total freight rate=', total_freight_rate, ' , cost_currency_rate=',
+    #                       #cost_currency_rate, ' cost_currency=', cost_currency)
+    #                 #get all the HBL for the booking job
+    #                 bols = self.env['freight.bol'].search([('booking_ref', '=', self.bol_id.booking_ref.id),])
+    #                 #print('>>>>>>>> _onchange_product_id freight rate=', freight_rate)
+    #                 #print('>>>>>>>> _onchange_product_id len bol=', len(bols))
+    #                 for bol in bols:
+    #                     #print('>>>>>>>> _onchange_product_id bol no=', bol.bol_no)
+    #                     #print('>>>>>>>> _onchange_product_id exp_gross_weight=', bol.cargo_line_ids[0].exp_gross_weight,
+    #                     #      ' , exp_vol=', bol.cargo_line_ids[0].exp_vol)
+    #                     if bol.cargo_line_ids:
+    #                         #print('>>>>>>>> _onchange_product_id exp_gross_weight=', bol.cargo_line_ids[0].exp_gross_weight,
+    #                         #      ' , exp_vol=', bol.cargo_line_ids[0].exp_vol)
+    #                         exp_gross_weight_tonne = 0.00
+    #                         chargeable_vol = 0.00
+    #                         if bol.cargo_line_ids[0].exp_gross_weight > 0:
+    #                             exp_gross_weight_tonne = float_round(bol.cargo_line_ids[0].exp_gross_weight / 1000, 2,
+    #                                                                  rounding_method='HALF-UP')
+    #                             if exp_gross_weight_tonne > bol.cargo_line_ids[0].exp_vol:
+    #                                 chargeable_vol = exp_gross_weight_tonne
+    #                             else:
+    #                                 chargeable_vol = bol.cargo_line_ids[0].exp_vol
+    #                         else:
+    #                             chargeable_vol = bol.cargo_line_ids[0].exp_vol
+    #                         total_volume += chargeable_vol
+    #
+    #                         #print('>>>>>>>> _onchange_product_id total_volume 1=', total_volume, ' , chargeable_vol 1=', chargeable_vol)
+    #                 #print('>>>>>>>> _onchange_product_id total_volume=', total_volume)
+    #                 #print('>>>>>>>> _onchange_product_id total_volume 1=', total_volume)
+    #                 #for current BOL, populate the chargeable weight
+    #                 if self.bol_id.cargo_line_ids:
+    #                     if self.bol_id.cargo_line_ids[0].exp_vol or self.bol_id.cargo_line_ids[0].exp_gross_weight:
+    #                         exp_gross_weight_tonne = 0.00
+    #                         chargeable_vol = 0.00
+    #                         if self.bol_id.cargo_line_ids[0].exp_gross_weight > 0:
+    #                             #print('>>>>>>>> _onchange_product_id exp_gross_weight=', self.bol_id.cargo_line_ids[0].exp_gross_weight)
+    #                             exp_gross_weight_tonne = float_round(self.bol_id.cargo_line_ids[0].exp_gross_weight / 1000, 2, rounding_method='HALF-UP')
+    #                             #print('>>>>>>>> _onchange_product_id exp_gross_weight tonne=', exp_gross_weight_tonne)
+    #                             if exp_gross_weight_tonne > self.bol_id.cargo_line_ids[0].exp_vol:
+    #                                 chargeable_vol = exp_gross_weight_tonne
+    #                             else:
+    #                                 chargeable_vol = self.bol_id.cargo_line_ids[0].exp_vol
+    #                         else:
+    #                             chargeable_vol = self.bol_id.cargo_line_ids[0].exp_vol
+    #                         total_volume += chargeable_vol  #cannot get the volume from the above loop
+    #                         #print('>>>>>>>> _onchange_product_id total_volume 2=', total_volume, ' , chargeable_vol=', chargeable_vol)
+    #                         converted_cost_price = total_freight_rate / total_volume
+    #                         cost_price = float_round(converted_cost_price / cost_currency_rate, 2,
+    #                                                  rounding_method='HALF-UP')
+    #
+    #                         #print('>>>>>>>> _onchange_product_id cost_price=', cost_price, ' , converted_cost_price=', converted_cost_price)
+    #                         self.update({
+    #                             'cost_price': cost_price or 0.0,
+    #                             'cost_qty': chargeable_vol,
+    #                             'cost_currency': cost_currency,
+    #                             'cost_amount': float_round(cost_price * chargeable_vol, 2,
+    #                                                        rounding_method='HALF-UP'),
+    #                             'cost_currency_rate': cost_currency_rate,
+    #                         })
+
     @api.onchange('product_id')
     def _onchange_product_id(self):
         if not self.product_id:
             return {'domain': {'uom_id': []}}
 
-        vals = {}
-        domain = {'uom_id': [('category_id', '=', self.product_id.uom_id.category_id.id)]}
-        if not self.uom_id or (self.product_id.uom_id.id != self.uom_id.id):
-            vals['uom_id'] = self.product_id.uom_id
-            vals['product_name'] = self.product_id.name
+        # sync UoM and name
+        if self.uom_id != self.product_id.uom_id:
+            self.uom_id = self.product_id.uom_id
+            self.product_name = self.product_id.name
 
-        self.update(vals)
+        # only for consolidated House B/Ls
+        booking = self.bol_id.booking_ref
+        if booking.lcl_consolidation:
+            # fetch master cost
+            master = booking.cost_profit_ids.filtered(lambda m: m.product_id == self.product_id)
+            if not master:
+                return
+            total_rate = master.cost_total
+            rate = master.cost_currency_rate or 1.0
+            currency = master.cost_currency.id
 
-        if self.bol_id.booking_ref.lcl_consolidation:
-            if self.product_id:
-                if self.bol_id.booking_ref:
-                    total_freight_rate = 0.00
-                    total_volume = 0.00
-                    cost_currency_rate = 1.00
-                    cost_currency = False
-                    #get the freight price from the master booking
-                    for cost_profit_id in self.bol_id.booking_ref.cost_profit_ids:
-                        if cost_profit_id.product_id.id == self.product_id.id:
-                            total_freight_rate = cost_profit_id.cost_total
-                            cost_currency_rate = cost_profit_id.cost_currency_rate
-                            cost_currency = cost_profit_id.cost_currency.id
-                            break
-                    #print('>>>>>> _onchange_product_id total freight rate=', total_freight_rate, ' , cost_currency_rate=',
-                          #cost_currency_rate, ' cost_currency=', cost_currency)
-                    #get all the HBL for the booking job
-                    bols = self.env['freight.bol'].search([('booking_ref', '=', self.bol_id.booking_ref.id),])
-                    #print('>>>>>>>> _onchange_product_id freight rate=', freight_rate)
-                    #print('>>>>>>>> _onchange_product_id len bol=', len(bols))
-                    for bol in bols:
-                        #print('>>>>>>>> _onchange_product_id bol no=', bol.bol_no)
-                        #print('>>>>>>>> _onchange_product_id exp_gross_weight=', bol.cargo_line_ids[0].exp_gross_weight,
-                        #      ' , exp_vol=', bol.cargo_line_ids[0].exp_vol)
-                        if bol.cargo_line_ids:
-                            #print('>>>>>>>> _onchange_product_id exp_gross_weight=', bol.cargo_line_ids[0].exp_gross_weight,
-                            #      ' , exp_vol=', bol.cargo_line_ids[0].exp_vol)
-                            exp_gross_weight_tonne = 0.00
-                            chargeable_vol = 0.00
-                            if bol.cargo_line_ids[0].exp_gross_weight > 0:
-                                exp_gross_weight_tonne = float_round(bol.cargo_line_ids[0].exp_gross_weight / 1000, 2,
-                                                                     rounding_method='HALF-UP')
-                                if exp_gross_weight_tonne > bol.cargo_line_ids[0].exp_vol:
-                                    chargeable_vol = exp_gross_weight_tonne
-                                else:
-                                    chargeable_vol = bol.cargo_line_ids[0].exp_vol
-                            else:
-                                chargeable_vol = bol.cargo_line_ids[0].exp_vol
-                            total_volume += chargeable_vol
+            # sum volumes of all HBLs (floor 1 CBM)
+            total_volume = 0.0
+            for bol in booking.bol_ids:
+                cargo = bol.cargo_line_ids and bol.cargo_line_ids[0]
+                if not cargo:
+                    continue
+                wt = float_round(cargo.exp_gross_weight / 1000, 2, rounding_method='HALF-UP')
+                total_volume += max(wt, cargo.exp_vol, 1.0)
 
-                            #print('>>>>>>>> _onchange_product_id total_volume 1=', total_volume, ' , chargeable_vol 1=', chargeable_vol)
-                    #print('>>>>>>>> _onchange_product_id total_volume=', total_volume)
-                    #print('>>>>>>>> _onchange_product_id total_volume 1=', total_volume)
-                    #for current BOL, populate the chargeable weight
-                    if self.bol_id.cargo_line_ids:
-                        if self.bol_id.cargo_line_ids[0].exp_vol or self.bol_id.cargo_line_ids[0].exp_gross_weight:
-                            exp_gross_weight_tonne = 0.00
-                            chargeable_vol = 0.00
-                            if self.bol_id.cargo_line_ids[0].exp_gross_weight > 0:
-                                #print('>>>>>>>> _onchange_product_id exp_gross_weight=', self.bol_id.cargo_line_ids[0].exp_gross_weight)
-                                exp_gross_weight_tonne = float_round(self.bol_id.cargo_line_ids[0].exp_gross_weight / 1000, 2, rounding_method='HALF-UP')
-                                #print('>>>>>>>> _onchange_product_id exp_gross_weight tonne=', exp_gross_weight_tonne)
-                                if exp_gross_weight_tonne > self.bol_id.cargo_line_ids[0].exp_vol:
-                                    chargeable_vol = exp_gross_weight_tonne
-                                else:
-                                    chargeable_vol = self.bol_id.cargo_line_ids[0].exp_vol
-                            else:
-                                chargeable_vol = self.bol_id.cargo_line_ids[0].exp_vol
-                            total_volume += chargeable_vol  #cannot get the volume from the above loop
-                            #print('>>>>>>>> _onchange_product_id total_volume 2=', total_volume, ' , chargeable_vol=', chargeable_vol)
-                            converted_cost_price = total_freight_rate / total_volume
-                            cost_price = float_round(converted_cost_price / cost_currency_rate, 2,
-                                                     rounding_method='HALF-UP')
+            if total_volume <= 0:
+                return
 
-                            #print('>>>>>>>> _onchange_product_id cost_price=', cost_price, ' , converted_cost_price=', converted_cost_price)
-                            self.update({
-                                'cost_price': cost_price or 0.0,
-                                'cost_qty': chargeable_vol,
-                                'cost_currency': cost_currency,
-                                'cost_amount': float_round(cost_price * chargeable_vol, 2,
-                                                           rounding_method='HALF-UP'),
-                                'cost_currency_rate': cost_currency_rate,
-                            })
+            # this BOL’s share
+            cargo0 = self.bol_id.cargo_line_ids and self.bol_id.cargo_line_ids[0]
+            if cargo0:
+                wt0 = float_round(cargo0.exp_gross_weight / 1000, 2, rounding_method='HALF-UP')
+                cbm = max(wt0, cargo0.exp_vol, 1.0)
+            else:
+                cbm = 0.0
+
+            unit_cost = float_round((total_rate / total_volume) / rate, 2, rounding_method='HALF-UP')
+            amount = float_round(unit_cost * cbm, 2, rounding_method='HALF-UP')
+
+            self.cost_price = unit_cost
+            self.cost_qty = cbm
+            self.cost_amount = amount
+            self.cost_currency = currency
+            self.cost_currency_rate = rate
 
 
 class CargoLine(models.Model):
     _inherit = 'freight.bol.cargo'
+
+    chargeable_weight = fields.Float(string='Chargeable Weight', default=0.0, help="This field is only visible for LCL consolidation")
 
     @api.multi
     def write(self, vals):
