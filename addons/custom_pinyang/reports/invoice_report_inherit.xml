@@ -683,7 +683,7 @@
                                             <td colspan="2">ETD</td>
                                             <td colspan="2">:</td>
                                             <td colspan="2">
-                                                <span t-field="o.freight_booking.first_carrier_etd"/>
+                                                <span t-field="o.freight_booking.first_carrier_etd" t-options="{'widget': 'datetime', 'format': 'dd-MM-yyyy'}"/>
                                             </td>
                                         </t>
                                         <!--Ahmad Zaman - Added ETD for Land bookings-->
@@ -724,14 +724,14 @@
                                             <td colspan="2">:</td>
                                             <td colspan="2">
                                                 <t t-if="o.freight_booking.third_carrier_eta">
-                                                    <span t-field="o.freight_booking.third_carrier_eta"/>
+                                                    <span t-field="o.freight_booking.third_carrier_eta" t-options="{'widget': 'datetime', 'format': 'dd-MM-yyyy'}"/>
                                                 </t>
                                                 <t t-if="not o.freight_booking.third_carrier_eta and o.freight_booking.second_carrier_eta">
-                                                    <span t-field="o.freight_booking.second_carrier_eta"/>
+                                                    <span t-field="o.freight_booking.second_carrier_eta" t-options="{'widget': 'datetime', 'format': 'dd-MM-yyyy'}"/>
                                                 </t>
                                                 <t t-if="not o.freight_booking.third_carrier_eta and not o.freight_booking.second_carrier_eta
                                                 and o.freight_booking.first_carrier_eta">
-                                                    <span t-field="o.freight_booking.first_carrier_eta"/>
+                                                    <span t-field="o.freight_booking.first_carrier_eta" t-options="{'widget': 'datetime', 'format': 'dd-MM-yyyy'}"/>
                                                 </t>
                                             </td>
                                         </t>
