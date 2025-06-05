@@ -749,6 +749,11 @@ class FreightBooking2(models.Model):
     @api.onchange('cost_profit_ids')
     def _onchange_cost_profit_ids(self):
         if self.lcl_consolidation:
+            # Delete any cost_profit records without product_id
+            for bol in self.env['freight.bol'].search([('booking_ref', '=', self._origin.id)]):
+                bol.cost_profit_ids.filtered(lambda r: not r.product_id).unlink()
+
+        if self.lcl_consolidation:
 
             # gather all House B/Ls for this booking
             bols = self.env['freight.bol'].search([
@@ -790,7 +795,7 @@ class FreightBooking2(models.Model):
                         amount = float_round(unit_cost * cbm, 2, rounding_method='HALF-UP')
 
                         # update existing or create new cost line on HBL
-                        existing = bol.cost_profit_ids.filtered(lambda ln: ln.product_id == master.product_id)
+                        existing = bol.cost_profit_ids.filtered(lambda ln: ln.product_id and ln.product_id == master.product_id)
                         vals = {
                             'cost_price': unit_cost,
                             'cost_qty': cbm,
