@@ -22,18 +22,13 @@ class FreightBooking(models.Model):
                     _("Please save the booking before selecting a Sales Quotation.")
                 )
         self.original_direction = self.direction
-        # original_service_type = self.service_type
-
         res = super(FreightBooking, self).onchange_sq_reference()
         return res
 
     def set_booking_no(self, vals=False):
-        # if not self.booking_date_time:
-        #     raise ValidationError(_('Please Enter ETA/ETD Date!'))
-        # else:
         eta_etd = self.booking_date_time
         if isinstance(eta_etd, str):
-            _logger.info("LOGGER: ETA/ETD is a string, %s", eta_etd)
+            # _logger.info("LOGGER: ETA/ETD is a string, %s", eta_etd)
             eta_etd = fields.Date.from_string(eta_etd)
         sequence = self.env['ir.sequence'].with_context(ir_sequence_date=eta_etd)
 
@@ -69,16 +64,10 @@ class FreightBooking(models.Model):
 
     @api.multi
     def write(self, vals):
-        # res = super(FreightBooking, self).write(vals)
-        # for rec in self:
-        #     if rec.booking_no.startswith('DRAFT-'):
-        #         rec.set_booking_no()
-        # return res
         res = super(FreightBooking, self).write(vals)
         if 'booking_date_time' in vals:
             for rec in self:
                 if isinstance(rec.booking_no, str) and rec.booking_no.startswith('DRAFT-'):
-                    rec.set_booking_no()
         return res
 
     @api.model
